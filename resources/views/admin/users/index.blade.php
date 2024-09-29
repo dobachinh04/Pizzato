@@ -51,8 +51,8 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Họ Tên</th>
-                                                <th>Email</th>
                                                 <th>Ảnh</th>
+                                                <th>Email</th>
                                                 <th>Vai Trò</th>
                                                 <th>Tạo Ngày</th>
                                                 <th>Lần Cuối Cập Nhật</th>
@@ -60,16 +60,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($users as $user)
+                                            {{-- Ví dụ về hiển thị Users --}}
+                                            {{-- @foreach ($users as $user)
                                                 <tr>
                                                     <td>{{ $user->id }}</td>
                                                     <td>{{ $user->name }}</td>
-                                                    <td>{{ $user->email }}</td>
+
                                                     <td>
                                                         <img src="{{ asset('storage/images/' . $user->image) }}"
                                                             style="width: 75px; height: 75px; object-fit: cover"
                                                             alt="Ảnh Người Dùng">
                                                     </td>
+
+                                                    <td>{{ $user->email }}</td>
                                                     <td>{{ $user->role->name }}</td>
                                                     <td>{{ $user->created_at }}</td>
                                                     <td>{{ $user->updated_at }}</td>
@@ -90,7 +93,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
                                         </tbody>
                                         <tfoot>
                                             <tr>

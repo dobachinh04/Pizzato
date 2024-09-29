@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Models\Order;
+use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreOrderRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ProductController $product)
+    public function show(Order $order)
     {
         //
     }
@@ -44,7 +44,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductController $product)
+    public function edit(Order $order)
     {
         //
     }
@@ -52,7 +52,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, ProductController $product)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
         //
     }
@@ -60,7 +60,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductController $product)
+    public function destroy(Order $order)
     {
         //
     }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('status')->default('1');
-            $table->string('show_at_home')->default('0');
+            $table->boolean('status')->default('1');
+            // $table->string('show_at_home')->default('0');
             $table->timestamps();
         });
     }

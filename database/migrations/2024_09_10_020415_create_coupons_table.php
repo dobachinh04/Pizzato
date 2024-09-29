@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('expire_date');
             $table->enum('discount_type', ['percent', 'amount']);
             $table->double('discount');
-            $table->boolean('status');
+            $table->boolean('status')->default('1');
         });
     }
 

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->double('offer_price')->default(0);
             $table->integer('quantity');
             $table->string('sku')->nullable();
-            $table->boolean('show_at_home');
-            $table->boolean('status');
+            // $table->boolean('show_at_home');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }

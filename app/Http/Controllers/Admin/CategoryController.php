@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.categories.index');
     }
 
     /**
@@ -22,13 +22,13 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ProductController $product)
+    public function show(Category $category)
     {
         //
     }
@@ -44,15 +44,15 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductController $product)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.categories.update');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, ProductController $product)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         //
     }
@@ -60,7 +60,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductController $product)
+    public function destroy(Category $category)
     {
         //
     }

@@ -21,8 +21,8 @@
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Loại Tin</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Danh Mục Loại Tin</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Danh Mục</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Danh Mục Danh Mục</a></li>
                         </ol>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Danh Mục Loại Tin</h4>
+                                <h4 class="card-title">Danh Mục Danh Mục</h4>
                                 <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Thêm Mới</a>
                             </div>
                             <div class="card-body">
@@ -50,24 +50,19 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Tên</th>
-                                                <th>Ảnh</th>
+                                                <th>Tên SEO</th>
+                                                <th>Trạng Thái</th>
                                                 <th>Tạo Ngày</th>
                                                 <th>Lần Cuối Cập Nhật</th>
                                                 <th>Hành Động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data as $category)
+                                            {{-- Ví dụ cho hiển thị Categories --}}
+                                            {{-- @foreach ($data as $category)
                                                 <tr>
                                                     <td>{{ $category->id }}</td>
                                                     <td>{{ $category->name }}</td>
-
-                                                    <td>
-                                                        <img src="{{ Storage::url($category->image) }}"
-                                                            style="width: 100px; height: 75px; object-fit: cover;"
-                                                            alt="">
-                                                    </td>
-
                                                     <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
                                                     <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>
                                                     <td>
@@ -83,7 +78,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
                                         </tbody>
                                         <tfoot>
                                             <tr>

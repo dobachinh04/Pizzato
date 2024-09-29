@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('min_delivery_time');
             $table->string('max_delivery_time');
             $table->double('delivery_fee');
-            $table->boolean('status');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }

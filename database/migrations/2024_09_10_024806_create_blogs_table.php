@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('description');
-            $table->boolean('status');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }

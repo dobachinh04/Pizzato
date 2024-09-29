@@ -56,7 +56,7 @@
                                             <div class="form-group">
                                                 <select class="form-control" name="category_id"
                                                     value="{{ old('category_id') }}">
-                                                    <option selected disabled>Chọn Loại Tin</option>
+                                                    <option selected disabled>Chọn Danh Mục</option>
                                                     @foreach ($categories as $id => $name)
                                                         <option @selected($post->category_id == $id) value="{{ $id }}">
                                                             {{ $name }}</option>

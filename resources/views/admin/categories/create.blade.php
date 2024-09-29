@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm Mới Loại Tin - NewsX
+    Thêm Mới Danh Mục - NewsX
 @endsection
 
 @section('content')
@@ -25,8 +25,8 @@
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Loại Tin</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Thêm Mới Loại Tin</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Danh Mục</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Thêm Mới Danh Mục</a></li>
                     </ol>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="col-xl-12 col-xxl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Thêm Mới Loại Tin</h4>
+                            <h4 class="card-title">Thêm Mới Danh Mục</h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
@@ -56,18 +56,20 @@
 
                                     <div class="form-group">
                                         <input type="text" name="name" class="form-control input-default "
-                                            placeholder="Tên Loại Tin">
+                                            placeholder="Tên Danh Mục">
                                     </div>
 
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Tải
-                                                Lên</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="image" accept="image/*">
-                                            <label class="custom-file-label">Chọn Ảnh</label>
-                                        </div>
+                                    <div class="form-group">
+                                        <input type="text" name="name" class="form-control input-default "
+                                            placeholder="Tên SEO (VD: san-pham-1)">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select name="status" class="form-control input-default">
+                                            <option selected disabled>Chọn Trạng Thái</option>
+                                            <option value="1">Hoạt Động</option>
+                                            <option value="0">Không Hoạt Động</option>
+                                        </select>
                                     </div>
 
                                     <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">

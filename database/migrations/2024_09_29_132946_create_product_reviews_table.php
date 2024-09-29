@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('rating', 6, 1);
             $table->string('slug');
             $table->text('description');
-            $table->boolean('status');
+            $table->boolean('status')->default('1');
             $table->timestamps();
         });
     }
