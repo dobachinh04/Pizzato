@@ -13,6 +13,7 @@ use App\Http\Middleware\AdminMiddleware;
 
 use Illuminate\Support\Facades\Route;
 
+
 // Client Views:
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
 // Route::get('/categories/{id}',                          [PostController::class, 'categories'])->name('client.category');
@@ -81,7 +82,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/create',                           [UserController::class, 'create'])->name('create');
         Route::post('/',                                [UserController::class, 'store'])->name('store');
-        Route::get('/{user}/edit',                      [UserController::class, 'edit'])->name('edit');
+        Route::get('/edit/{user}',                      [UserController::class, 'edit'])->name('edit');
         Route::put('/{user}',                           [UserController::class, 'update'])->name('update');
         Route::get('/show/{user}',                      [UserController::class, 'show'])->name('show');
         Route::delete('/{user}',                        [UserController::class, 'destroy'])->name('destroy');

@@ -48,29 +48,41 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control input-default"
-                                                    placeholder="Họ và Tên" name="name" value="{{ old('name') }}">
+                                                <input type="text" class="form-control input-default @error ('name') is-invalid @enderror"
+                                                    placeholder="Họ và Tên" name="name"  value="{{ old('name') }}">
+                                                    @error('name')
+                                                    <p>{{$message}}</p>
+                                                    @enderror
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="password" class="form-control input-default"
-                                                    placeholder="Mật Khẩu" name="password">
+                                                <input type="password" class="form-control input-default @error ('password') is-invalid @enderror"
+                                                    placeholder="Mật Khẩu" name="password" value="{{ old('name') }}">
+                                                    @error('password')
+                                                    <p>{{$message}}</p>
+                                                    @enderror
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="password" class="form-control input-default"
-                                                    placeholder="Nhập Lại Mật Khẩu" name="password_confirmation">
+                                                <input type="password" class="form-control input-default @error ('password_confirmation') is-invalid @enderror"
+                                                    placeholder="Nhập Lại Mật Khẩu" name="password_confirmation" value="{{ old('password_confirmation') }}">
+                                                    @error('password_confirmation')
+                                                    <p>{{$message}}</p>
+                                                    @enderror
                                             </div>
                                         </div>
 
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control input-default" placeholder="Email"
-                                                    name="email" value="{{ old('email') }}">
+                                                <input type="text" class="form-control input-default @error ('email') is-invalid @enderror" placeholder="Email"
+                                                    name="email"  value="{{ old('email') }}">
+                                                    @error('email')
+                                                    <p>{{$message}}</p>
+                                                    @enderror
                                             </div>
 
-                                            <div class="form-group">
-                                                <select class="form-control" name="role_id">
+                                            <div class="form-group ">
+                                                <select class="form-control @error ('role_id') is-invalid @enderror" name="role_id" value="{{ old('role_id') }}">
                                                     <option selected disabled>Chọn Vai Trò</option>
                                                     @foreach ($roles as $role)
                                                         {{-- <option value="{{ $role->id }}">{{ $role->name }}</option> --}}
@@ -80,7 +92,11 @@
                                                             {{ $role->name }}
                                                         </option>
                                                     @endforeach
+                                                 
                                                 </select>
+                                                @error('role_id')
+                                                <p>{{$message}}</p>
+                                                @enderror
                                             </div>
 
                                             <div class="input-group mb-3">
@@ -89,12 +105,18 @@
                                                         Lên</span>
                                                 </div>
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="image"
+                                                    <input type="file" class="custom-file-input  @error ('image') is-invalid @enderror" name="image"
                                                         accept="image/*" value="{{ old('image') }}">
                                                     <label class="custom-file-label">Chọn Ảnh</label>
+                                                  
                                                 </div>
+                                               
                                             </div>
+                                            @error('image')
+                                                <p>{{$message}}</p>
+                                                @enderror
                                         </div>
+                                   
                                     </div>
 
                                     <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">

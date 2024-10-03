@@ -61,6 +61,40 @@
                                         </thead>
                                         <tbody>
                                             {{-- Ví dụ về hiển thị Users --}}
+                                            @foreach ($users  as $stt => $user)
+                                            <tr>
+                                                <td>{{ $stt+1 }}</td>
+                                                <td>{{ $user->name }}</td>
+
+                                                <td>
+                                                    <img src="{{ asset('storage/' . $user->image) }}"
+                                                        style="width: 75px; height: 75px; object-fit: cover"
+                                                        alt="Ảnh Người Dùng">
+                                                </td>
+
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->role->name }}</td>
+                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $user->updated_at }}</td>
+                                                 <td>
+                                                    <a href="{{ route('admin.users.show',  $user) }}"
+                                                        class="btn btn-primary">Chi Tiết</a>
+                                                    <a href="{{ route('admin.users.edit',  $user) }}"
+                                                        class="btn btn-warning">Sửa</a>
+
+                                                    <form
+                                                        action="{{ route('admin.users.destroy', $user) }}"
+                                                        method="POST" style="display: inline;"
+                                                        onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                    </form>
+                                                </td> 
+                                            </tr>
+                                        @endforeach 
+
                                             {{-- @foreach ($users as $user)
                                                 <tr>
                                                     <td>{{ $user->id }}</td>
