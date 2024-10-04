@@ -60,7 +60,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- Ví dụ về hiển thị Users --}}
+                                            
                                             @foreach ($users  as $stt => $user)
                                             <tr>
                                                 <td>{{ $stt+1 }}</td>

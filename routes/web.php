@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
@@ -89,13 +90,13 @@ Route::prefix('admin')->name('admin.')->group(function() {
     });
 
     Route::prefix('orders')->name('orders.')->group(function() {
-        Route::get('/',                                 [UserController::class, 'index'])->name('index');
-        Route::get('/create',                           [UserController::class, 'create'])->name('create');
-        Route::post('/',                                [UserController::class, 'store'])->name('store');
-        Route::get('/{order}/edit',                      [UserController::class, 'edit'])->name('edit');
-        Route::put('/{order}',                           [UserController::class, 'update'])->name('update');
-        Route::get('/show/{order}',                      [UserController::class, 'show'])->name('show');
-        Route::delete('/{order}',                        [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/',                                 [OrderController::class, 'index'])->name('index');
+        Route::get('/create',                           [OrderController::class, 'create'])->name('create');
+        Route::post('/',                                [OrderController::class, 'store'])->name('store');
+        Route::get('/{order}/edit',                      [OrderController::class, 'edit'])->name('edit');
+        Route::put('/{order}',                           [OrderController::class, 'update'])->name('update');
+        Route::get('/show/{order}',                      [OrderController::class, 'show'])->name('show');
+        Route::delete('/{order}',                        [OrderController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('shipping')->name('shipping.')->group(function() {

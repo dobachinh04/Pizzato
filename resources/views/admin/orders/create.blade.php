@@ -44,18 +44,103 @@
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
-                                <form action="" method="POST"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('admin.orders.store') }}" method="POST">
                                     @csrf
-
-                                    <div class="form-group">
-                                        <input type="text" name="name" class="form-control input-default "
-                                            placeholder="Tên Danh Mục">
+                            
+                                    <div class="mb-3">
+                                        <label for="invoice_id" class="form-label">Invoice ID</label>
+                                        <input type="text" class="form-control" id="invoice_id" name="invoice_id" required>
                                     </div>
-
-                                    <a href="" class="btn btn-secondary">
-                                        Quay Lại</a>
-                                    <button type="submit" class="btn btn-success">Thêm Mới</button>
+                            
+                                    <div class="mb-3">
+                                        <label for="user_id" class="form-label">User ID</label>
+                                        <input type="text" class="form-control" id="user_id" name="user_id" required>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <textarea class="form-control" id="address" name="address" required></textarea>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="discount" class="form-label">Discount</label>
+                                        <input type="number" step="0.01" class="form-control" id="discount" name="discount" value="0.00">
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="delivery_charge" class="form-label">Delivery Charge</label>
+                                        <input type="number" step="0.01" class="form-control" id="delivery_charge" name="delivery_charge" value="0.00">
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="subtotal" class="form-label">Subtotal</label>
+                                        <input type="number" step="0.01" class="form-control" id="subtotal" name="subtotal" required>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="grand_total" class="form-label">Grand Total</label>
+                                        <input type="number" step="0.01" class="form-control" id="grand_total" name="grand_total" required>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="product_qty" class="form-label">Product Quantity</label>
+                                        <input type="number" class="form-control" id="product_qty" name="product_qty" required>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="payment_method" class="form-label">Payment Method</label>
+                                        <select class="form-select" id="payment_method" name="payment_method" required>
+                                            <option value="credit_card">Credit Card</option>
+                                            <option value="paypal">PayPal</option>
+                                            <option value="bank_transfer">Bank Transfer</option>
+                                        </select>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="payment_status" class="form-label">Payment Status</label>
+                                        <select class="form-select" id="payment_status" name="payment_status" required>
+                                            <option value="pending">Pending</option>
+                                            <option value="completed">Completed</option>
+                                            <option value="failed">Failed</option>
+                                        </select>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="payment_approve_date" class="form-label">Payment Approve Date</label>
+                                        <input type="date" class="form-control" id="payment_approve_date" name="payment_approve_date">
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="transaction_id" class="form-label">Transaction ID</label>
+                                        <input type="text" class="form-control" id="transaction_id" name="transaction_id">
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="coupon_info" class="form-label">Coupon Info</label>
+                                        <input type="text" class="form-control" id="coupon_info" name="coupon_info">
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="currency_name" class="form-label">Currency Name</label>
+                                        <input type="text" class="form-control" id="currency_name" name="currency_name" required>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="order_status" class="form-label">Order Status</label>
+                                        <select class="form-select" id="order_status" name="order_status" required>
+                                            <option value="pending">Pending</option>
+                                            <option value="shipped">Shipped</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="canceled">Canceled</option>
+                                        </select>
+                                    </div>
+                            
+                                    <div class="mb-3">
+                                        <label for="address_id" class="form-label">Address ID</label>
+                                        <input type="text" class="form-control" id="address_id" name="address_id" required>
+                                    </div>
+                            
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
