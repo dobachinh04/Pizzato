@@ -38,17 +38,18 @@
                     <div class="card ">
                         <div class="card-body row">
                             <div class="col-md-6">
+                                
                                 <h1>Chi Tiết Người Dùng ID: {{ $user->id }}</h1>
                                 <h3>Tiêu Đề: {{ $user->title }}</h3>
 
                                 @if ($user->image)
-                                    <img src="{{ asset('storage/images/' . $user->image) }}"
+                                    <img src="{{ asset('storage/' . $user->image) }}"
                                         style="width: 100%; max-width: 250px;" alt="Image">
                                 @endif
 
                                 <div class="mt-3">
                                     <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Quay Lại</a>
-                                    <a href="{{ route('admin.users.edit', ['id' => $user->id]) }}"
+                                    <a href="{{ route('admin.users.edit',$user) }}"
                                         class="btn btn-warning">Sửa</a>
                                 </div>
                             </div>

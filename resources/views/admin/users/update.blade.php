@@ -41,7 +41,7 @@
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
-                                <form action="{{ route('admin.users.update', ['id' => $user->id]) }}" method="POST"
+                                <form action="{{ route('admin.users.update',  $user) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
@@ -49,14 +49,20 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control input-default"
+                                                <input type="text" class="form-control input-default @error ('name') is-invalid @enderror"
                                                     placeholder="Họ và Tên" name="name"
                                                     value="{{ old('name', $user->name) }}">
+                                                    @error('name')
+                                                    <p>{{$message}}</p>
+                                                    @enderror
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control input-default" placeholder="Email"
+                                                <input type="text" class="form-control input-default @error ('email') is-invalid @enderror" placeholder="Email"
                                                     name="email" value="{{ old('email', $user->email) }}">
+                                                    @error('email')
+                                                    <p>{{$message}}</p>
+                                                    @enderror
                                             </div>
 
                                             {{-- <div class="form-group">
@@ -72,7 +78,7 @@
 
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <select class="form-control" name="role_id">
+                                                <select class="form-control @error ('role_id') is-invalid @enderror" name="role_id" value="{{ old('role_id') }}">
                                                     <option selected disabled>Chọn Vai Trò</option>
                                                     @foreach ($roles as $role)
                                                         {{-- <option value="{{ $role->id }}">{{ $role->name }}</option> --}}
@@ -84,6 +90,9 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                @error('role_id')
+                                                <p>{{$message}}</p>
+                                                @enderror
                                             </div>
 
                                             <div class="input-group mb-3">
@@ -92,14 +101,17 @@
                                                         Lên</span>
                                                 </div>
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="image"
+                                                    <input type="file" class="custom-file-input @error ('image') is-invalid @enderror" name="image"
                                                         accept="image/*" value="{{ old('image', $user->image) }}">
                                                     <label class="custom-file-label">Chọn Ảnh</label>
                                                 </div>
+                                             
                                             </div>
-
+                                            @error('image')
+                                            <p>{{$message}}</p>
+                                            @enderror
                                             @if ($user->image)
-                                                <img class="mb-3" src="{{ asset('storage/images/' . $user->image) }}"
+                                                <img class="mb-3" src="{{ asset('storage/' . $user->image) }}"
                                                     style="width: 100px;" alt="Ảnh Cũ">
                                             @endif
                                         </div>
