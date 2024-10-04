@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng phương thức thanh toán
         Schema::create('payment_methods', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->id(); // ID tự tăng
+            $table->foreignId('order_id')->constrained()->onDelete('cascade'); // ID đơn hàng
             $table->string('method'); // 'cash', 'online' 'dư nợ'
             // $table->decimal('amount', 10, 2); // Số tiền đã thanh toán
             $table->timestamps();

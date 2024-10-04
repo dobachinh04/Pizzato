@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng deal hời mỗi ngày
         Schema::create('daily_offers', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->boolean('status')->default(1);
-            $table->timestamps();
+            $table->id(); // ID tự tặng
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade'); // ID sản phẩm
+            $table->boolean('status')->default(1); // Trạng thái bật/tắt
+            $table->timestamps(); // Thời gian tạo
         });
     }
 

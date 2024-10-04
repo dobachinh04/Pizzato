@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng kích thước sản phẩm
         Schema::create('product_sizes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained('products');
-            $table->string('name');
-            $table->double('price');
-            $table->timestamps();
+            $table->id(); // ID tự tăng
+            $table->foreignId('product_id')->constrained('products'); // ID sản phẩm
+            $table->string('name'); // Tên kích cỡ
+            $table->double('price'); // Giá tiền tương ứng
+            $table->timestamps(); // Thời gian tạo
         });
     }
 
