@@ -96,7 +96,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="index.html" class="logo logo-light">
+        <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="/velzon/assets/images/logo-sm.png" alt="" height="22">
             </span>
@@ -116,8 +116,8 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                <li class="nav-item">
+                <li class="menu-title"><span data-key="t-menu">Trang Admin</span></li>
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
@@ -149,8 +149,8 @@
                             </li>
                         </ul>
                     </div>
-                </li> <!-- end Dashboard Menu -->
-                <li class="nav-item">
+                </li> <!-- end Dashboard Menu --> --}}
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-apps-2-line"></i> <span data-key="t-apps">Apps</span>
@@ -544,39 +544,25 @@
                             </li>
                         </ul>
                     </div>
+                </li> --}}
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.dashboard') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarHome">
+                        <i class="fa-solid fa-cube"></i>Bảng Điều Khiển</span>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Layouts</span> <span
-                            class="badge badge-pill bg-danger" data-key="t-hot">Hot</span>
+                    <a class="nav-link menu-link" href="{{ route('admin.chart') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarHome">
+                        <i class="fa-solid fa-chart-line"></i>Thống Kê Doanh Thu</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="layouts-horizontal.html" target="_blank" class="nav-link"
-                                    data-key="t-horizontal">Horizontal</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-detached.html" target="_blank" class="nav-link"
-                                    data-key="t-detached">Detached</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-two-column.html" target="_blank" class="nav-link"
-                                    data-key="t-two-column">Two Column</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-vertical-hovered.html" target="_blank" class="nav-link"
-                                    data-key="t-hovered">Hovered</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> <!-- end Dashboard Menu -->
+                </li>
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Pages</span></li>
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Website</span></li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Authentication</span>
@@ -776,9 +762,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
                         <i class="ri-pages-line"></i> <span data-key="t-pages">Pages</span>
@@ -848,33 +834,182 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarLanding">
-                        <i class="ri-rocket-line"></i> <span data-key="t-landing">Landing</span>
+                    <a class="nav-link menu-link" href="#sidebarCategories" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarCategories">
+                        <i class="fa-solid fa-folder-open"></i> <span data-key="t-landing">Danh Mục Sản Phẩm</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLanding">
+                    <div class="collapse menu-dropdown" id="sidebarCategories">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="landing.html" class="nav-link" data-key="t-one-page"> One Page </a>
+                                <a href="{{ route('admin.categories.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Danh Mục</a>
                             </li>
                             <li class="nav-item">
-                                <a href="nft-landing.html" class="nav-link" data-key="t-nft-landing"> NFT Landing
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="job-landing.html" class="nav-link" data-key="t-job">Job</a>
+                                <a href="{{ route('admin.categories.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Danh Mục</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Components</span>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarProducts" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarProducts">
+                        <i class="fa-solid fa-pizza-slice"></i> <span data-key="t-landing">Sản Phẩm</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarProducts">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Sản Phẩm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.products.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Sản Phẩm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                    data-key="t-nft-landing">Danh Sách Size</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.products.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Size</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                {{-- <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarTags" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarTags">
+                        <i class="fa-solid fa-tags"></i> <span data-key="t-landing">Thẻ</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarTags">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.tags.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Thẻ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.tags.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Thẻ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> --}}
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarOrders" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarOrders">
+                        <i class="fa-solid fa-cart-shopping"></i> <span data-key="t-landing">Đơn Hàng</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarOrders">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.orders.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh
+                                    Sách Đơn Hàng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.orders.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Đơn Hàng</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarBlogs" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarBlogs">
+                        <i class="fa-solid fa-newspaper"></i> <span data-key="t-landing">Blogs</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarBlogs">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.blogs.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Blogs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.blogs.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Blogs</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarUsers">
+                        <i class="fa-solid fa-user-group"></i> <span data-key="t-landing">Người Dùng</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarUsers">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Người Dùng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Người Dùng</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Phương
+                        Thức</span></li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarShipping" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarShipping">
+                        <i class="fa-solid fa-truck-fast"></i> <span data-key="t-landing">Vận Chuyển</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarShipping">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.shipping.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Vận Chuyển</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.shipping.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Vận Chuyển</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarPayment" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarPayment">
+                        <i class="fa-regular fa-credit-card"></i> <span data-key="t-landing">Thanh Toán</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarPayment">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.payment.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Thanh Toán</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.payment.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Thanh Toán</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Điều Hướng</span></li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('client.home') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarHome">
+                        <i class="fa-solid fa-door-open"></i>Quay Về Trang Chủ</span>
+                    </a>
+                </li>
+
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarUI">
                         <i class="ri-pencil-ruler-2-line"></i> <span data-key="t-base-ui">Base UI</span>
@@ -899,8 +1034,7 @@
                                         <a href="ui-cards.html" class="nav-link" data-key="t-cards">Cards</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="ui-carousel.html" class="nav-link"
-                                            data-key="t-carousel">Carousel</a>
+                                        <a href="ui-carousel.html" class="nav-link" data-key="t-carousel">Carousel</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="ui-dropdowns.html" class="nav-link"
@@ -1033,9 +1167,9 @@
                     <a class="nav-link menu-link" href="widgets.html">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Widgets</span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarForms">
                         <i class="ri-file-list-3-line"></i> <span data-key="t-forms">Forms</span>
@@ -1117,9 +1251,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCharts" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCharts">
                         <i class="ri-pie-chart-line"></i> <span data-key="t-charts">Charts</span>
@@ -1145,8 +1279,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-column.html" class="nav-link"
-                                                data-key="t-column">
+                                            <a href="charts-apex-column.html" class="nav-link" data-key="t-column">
                                                 Column </a>
                                         </li>
                                         <li class="nav-item">
@@ -1180,28 +1313,23 @@
                                                 data-key="t-candlstick"> Candlstick </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-boxplot.html" class="nav-link"
-                                                data-key="t-boxplot">
+                                            <a href="charts-apex-boxplot.html" class="nav-link" data-key="t-boxplot">
                                                 Boxplot </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-bubble.html" class="nav-link"
-                                                data-key="t-bubble">
+                                            <a href="charts-apex-bubble.html" class="nav-link" data-key="t-bubble">
                                                 Bubble </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-scatter.html" class="nav-link"
-                                                data-key="t-scatter">
+                                            <a href="charts-apex-scatter.html" class="nav-link" data-key="t-scatter">
                                                 Scatter </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-heatmap.html" class="nav-link"
-                                                data-key="t-heatmap">
+                                            <a href="charts-apex-heatmap.html" class="nav-link" data-key="t-heatmap">
                                                 Heatmap </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-treemap.html" class="nav-link"
-                                                data-key="t-treemap">
+                                            <a href="charts-apex-treemap.html" class="nav-link" data-key="t-treemap">
                                                 Treemap </a>
                                         </li>
                                         <li class="nav-item">
@@ -1300,8 +1428,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
+                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarMultilevel">
                         <i class="ri-share-line"></i> <span data-key="t-multi-level">Multi Level</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarMultilevel">
@@ -1310,9 +1438,9 @@
                                 <a href="#" class="nav-link" data-key="t-level-1.1"> Level 1.1 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarAccount"
-                                    data-key="t-level-1.2"> Level
+                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2">
+                                    Level
                                     1.2
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarAccount">
@@ -1346,7 +1474,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

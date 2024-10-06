@@ -89,6 +89,29 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::delete('/{user}',                        [UserController::class, 'destroy'])->name('destroy');
     });
 
+    // Admin - Blog Categories:
+    Route::prefix('blog-categories')->name('blog-categories.')->group(function() {
+        Route::get('/',                                 [BlogCategoryController::class, 'index'])->name('index');
+        Route::get('/create',                           [BlogCategoryController::class, 'create'])->name('create');
+        Route::post('/',                                [BlogCategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{blogCategory}',              [BlogCategoryController::class, 'edit'])->name('edit');
+        Route::put('/{blogCategory}',                   [BlogCategoryController::class, 'update'])->name('update');
+        Route::get('/show/{blogCategory}',              [BlogCategoryController::class, 'show'])->name('show');
+        Route::delete('/{blogCategory}',                [BlogCategoryController::class, 'destroy'])->name('destroy');
+    });
+
+
+    // Admin - Blogs:
+    Route::prefix('blogs')->name('blogs.')->group(function() {
+        Route::get('/',                                 [UserController::class, 'index'])->name('index');
+        Route::get('/create',                           [UserController::class, 'create'])->name('create');
+        Route::post('/',                                [UserController::class, 'store'])->name('store');
+        Route::get('/edit/{blog}',                      [UserController::class, 'edit'])->name('edit');
+        Route::put('/{blog}',                           [UserController::class, 'update'])->name('update');
+        Route::get('/show/{blog}',                      [UserController::class, 'show'])->name('show');
+        Route::delete('/{blog}',                        [UserController::class, 'destroy'])->name('destroy');
+    });
+
     Route::prefix('orders')->name('orders.')->group(function() {
         Route::get('/',                                 [OrderController::class, 'index'])->name('index');
         Route::get('/create',                           [OrderController::class, 'create'])->name('create');
