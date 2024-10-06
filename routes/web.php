@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
@@ -103,23 +105,23 @@ Route::prefix('admin')->name('admin.')->group(function() {
 
     // Admin - Blogs:
     Route::prefix('blogs')->name('blogs.')->group(function() {
-        Route::get('/',                                 [UserController::class, 'index'])->name('index');
-        Route::get('/create',                           [UserController::class, 'create'])->name('create');
-        Route::post('/',                                [UserController::class, 'store'])->name('store');
-        Route::get('/edit/{blog}',                      [UserController::class, 'edit'])->name('edit');
-        Route::put('/{blog}',                           [UserController::class, 'update'])->name('update');
-        Route::get('/show/{blog}',                      [UserController::class, 'show'])->name('show');
-        Route::delete('/{blog}',                        [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/',                                 [BlogController::class, 'index'])->name('index');
+        Route::get('/create',                           [BlogController::class, 'create'])->name('create');
+        Route::post('/',                                [BlogController::class, 'store'])->name('store');
+        Route::get('/edit/{blog}',                      [BlogController::class, 'edit'])->name('edit');
+        Route::put('/{blog}',                           [BlogController::class, 'update'])->name('update');
+        Route::get('/show/{blog}',                      [BlogController::class, 'show'])->name('show');
+        Route::delete('/{blog}',                        [BlogController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('orders')->name('orders.')->group(function() {
         Route::get('/',                                 [OrderController::class, 'index'])->name('index');
         Route::get('/create',                           [OrderController::class, 'create'])->name('create');
         Route::post('/',                                [OrderController::class, 'store'])->name('store');
-        Route::get('/{order}/edit',                      [OrderController::class, 'edit'])->name('edit');
-        Route::put('/{order}',                           [OrderController::class, 'update'])->name('update');
-        Route::get('/show/{order}',                      [OrderController::class, 'show'])->name('show');
-        Route::delete('/{order}',                        [OrderController::class, 'destroy'])->name('destroy');
+        Route::get('/{order}/edit',                     [OrderController::class, 'edit'])->name('edit');
+        Route::put('/{order}',                          [OrderController::class, 'update'])->name('update');
+        Route::get('/show/{order}',                     [OrderController::class, 'show'])->name('show');
+        Route::delete('/{order}',                       [OrderController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('shipping')->name('shipping.')->group(function() {
