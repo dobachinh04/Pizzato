@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm Mới Người Dùng - NewsX
+    Thêm Mới Người Dùng - Pizzato
 @endsection
 
 @section('content')
@@ -92,7 +92,7 @@
                                                             {{ $role->name }}
                                                         </option>
                                                     @endforeach
-                                                 
+
                                                 </select>
                                                 @error('role_id')
                                                 <p>{{$message}}</p>
@@ -108,15 +108,15 @@
                                                     <input type="file" class="custom-file-input  @error ('image') is-invalid @enderror" name="image"
                                                         accept="image/*" value="{{ old('image') }}">
                                                     <label class="custom-file-label">Chọn Ảnh</label>
-                                                  
+
                                                 </div>
-                                               
+
                                             </div>
                                             @error('image')
                                                 <p>{{$message}}</p>
                                                 @enderror
                                         </div>
-                                   
+
                                     </div>
 
                                     <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">

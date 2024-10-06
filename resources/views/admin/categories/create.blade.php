@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm Mới Danh Mục - NewsX
+    Thêm Mới Danh Mục - Pizzato
 @endsection
 
 @section('content')

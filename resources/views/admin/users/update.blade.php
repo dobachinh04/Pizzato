@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Cập Nhật Người Dùng - NewsX
+    Cập Nhật Người Dùng - Pizzato
 @endsection
 
 @section('content')
@@ -105,7 +105,7 @@
                                                         accept="image/*" value="{{ old('image', $user->image) }}">
                                                     <label class="custom-file-label">Chọn Ảnh</label>
                                                 </div>
-                                             
+
                                             </div>
                                             @error('image')
                                             <p>{{$message}}</p>

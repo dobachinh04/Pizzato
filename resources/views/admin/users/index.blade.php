@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Người Dùng - NewsX
+    Danh Sách Người Dùng - Pizzato
 @endsection
 
 @section('content')
@@ -60,7 +60,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                             @foreach ($users  as $stt => $user)
                                             <tr>
                                                 <td>{{ $stt+1 }}</td>
@@ -91,9 +91,9 @@
 
                                                         <button type="submit" class="btn btn-danger">Xóa</button>
                                                     </form>
-                                                </td> 
+                                                </td>
                                             </tr>
-                                        @endforeach 
+                                        @endforeach
 
                                             {{-- @foreach ($users as $user)
                                                 <tr>
