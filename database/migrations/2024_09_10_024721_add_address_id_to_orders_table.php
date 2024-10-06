@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng thêm địa chỉ vào đơn hàng
         Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('address_id');
+            $table->foreignId('address_id'); // Thêm địa chỉ vào bảng order
         });
     }
 

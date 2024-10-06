@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng tạo phân quyền
         Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id(); // ID tự tăng
+            $table->string('name'); // Tên quyền
             $table->timestamps();
         });
     }

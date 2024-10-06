@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng đánh giá, bình luận sản phẩm
         Schema::create('product_reviews', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->string('image');
-            $table->string('title');
-            $table->decimal('rating', 6, 1);
-            $table->string('slug');
-            $table->text('description');
-            $table->boolean('status')->default('1');
-            $table->timestamps();
+            $table->id(); // ID tự tăng
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // ID người dùng
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade'); // ID danh mục
+            $table->string('image'); // Ảnh bình luận
+            $table->string('title'); // Tiêu đề
+            $table->decimal('rating', 6, 1); // Số sao đánh giá
+            $table->text('description'); // Mô tả
+            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
+            $table->timestamps(); // Thời gian tạo
         });
     }
 

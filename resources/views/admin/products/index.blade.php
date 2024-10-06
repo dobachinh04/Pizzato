@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Tin Tức - NewsX
+    Danh Sách Tin Tức - Pizzato
 @endsection
 
 @section('content')

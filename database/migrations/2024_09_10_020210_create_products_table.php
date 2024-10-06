@@ -11,22 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng sản phẩm
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->string('thumb_image');
-            $table->foreignId('category_id')->constrained('categories');
-            $table->integer('view');
-            $table->text('short_description');
-            $table->text('long_description');
-            $table->double('price');
-            $table->double('offer_price')->default(0);
-            $table->integer('quantity');
-            $table->string('sku')->nullable();
-            // $table->boolean('show_at_home');
-            $table->boolean('status')->default('1');
-            $table->timestamps();
+            $table->id(); // ID tự tăng
+            $table->string('name'); // Tên sản phẩm
+            $table->string('slug'); // Tên SEO
+            $table->string('thumb_image'); // Ảnh chính
+            $table->foreignId('category_id')->constrained('categories'); // ID danh mục
+            $table->integer('view'); // Lượt xem
+            $table->text('short_description'); // Mô tả ngắn
+            $table->text('long_description'); // Mô tả dài
+            $table->double('price'); // Giá sản phẩm
+            $table->double('offer_price')->default(0); // Giá được giảm giá
+            $table->integer('qty'); // Số lượng
+            $table->string('sku')->nullable(); // Mã sản phẩm
+            $table->string('show_at_home')->default('0'); // Trạng thái hiển thị ở trang chủ
+            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
+            $table->timestamps(); // Thời gian tạo
         });
     }
 

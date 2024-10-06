@@ -4,32 +4,30 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
+        // Bảng đơn hàng
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->string('invoice_id');
-            $table->foreignId('user_id')->constrained();
-            $table->text('address');
-            $table->double('discount')->default(0);
-            $table->double('delivery_charge')->default(0);
-            $table->double('subtotal');
-            $table->double('grand_total');
-            $table->integer('product_qty');
-            $table->string('payment_method')->nullable();
-            $table->string('payment_status')->default('pending');
-            $table->timestamp('payment_approve_date')->nullable();
-            $table->string('transaction_id')->nullable();
-            $table->json('coupon_info')->nullable();
-            $table->string('currency_name')->nullable();
-            $table->string('order_status')->default('pending');
+            $table->id(); // ID tự tăng
+            $table->string('invoice_id'); // ID hóa đơn
+            $table->foreignId('user_id')->constrained(); // ID người dùng
+            $table->text('address'); // Địa chỉ
+            $table->double('discount')->default(0); // Giảm giá
+            $table->double('delivery_charge')->default(0); // Phí vận chuyển
+            $table->double('grand_total'); // Tổng tiền
+            $table->integer('product_qty'); // Số lượng sản phẩm
+            $table->string('payment_method')->nullable(); // Phương thức thanh toán
+            $table->string('payment_status')->default('pending'); // Trạng thái thanh toán
+            $table->timestamp('payment_approve_date')->nullable(); // Ngày hoàn thành thanh toán
+            $table->json('coupon_info')->nullable(); // Thông tin mã khuyến mãi
+            $table->string('currency_name')->default('VND'); // Đơn vị tiền tệ
+            $table->string('order_status')->default('pending'); // Trạng thái đơn hàng
 
-            $table->timestamps();
+            $table->timestamps(); // Thời gian tạo
         });
     }
 

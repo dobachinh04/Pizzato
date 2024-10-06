@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use id;
 use App\Models\Order;
+use App\Models\Invoice;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 
@@ -15,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::get();
-        return view('admin.orders.index',compact('orders'));
+        return view('admin.orders.index', compact('orders'));
     }
 
     /**
@@ -23,7 +25,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.orders.create');
+    //     $invoice = Invoice::get();
+
+    // return view('admin.orders.create', ['invoice' => $invoice]);
+    return view('admin.orders.create');
     }
 
     /**
@@ -31,11 +36,12 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        if($request->isMethod('POST')){
+
+        if ($request->isMethod('POST')) {
             $param = $request->except('__token');
-          
+
             Order::create($param);
-            return redirect()->route('admin.order.index')->with('errors','Thêm thành công');
+            return redirect()->route('admin.order.index')->with('errors', 'Thêm thành công');
         }
     }
 
@@ -54,7 +60,9 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         return view(
-            'admin.orders.update', compact('order'));
+            'admin.orders.update',
+            compact('order')
+        );
     }
 
     /**
@@ -62,13 +70,13 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, String $id)
     {
-        if($request->isMethod('PUT')){
-            $param = $request->except('__token','__method');
+        if ($request->isMethod('PUT')) {
+            $param = $request->except('__token', '__method');
             $orders = Order::findOrFail($id);
-           
-         
+
+
             $orders->update($param);
-            return redirect()->route('admin.orders.index')->with('errors','Sửa thành công');
+            return redirect()->route('admin.orders.index')->with('errors', 'Sửa thành công');
         }
     }
 
@@ -78,9 +86,9 @@ class OrderController extends Controller
     public function destroy(String $id)
     {
         $orders = Order::findOrFail($id);
-      
-  
+
+
         $orders->delete();
-        return redirect()->route('admin.order.index')->with('errors','Xóa thành công');
+        return redirect()->route('admin.order.index')->with('errors', 'Xóa thành công');
     }
 }

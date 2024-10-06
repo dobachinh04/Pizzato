@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng danh mục sản phẩm
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->boolean('status')->default('1');
-            // $table->string('show_at_home')->default('0');
+            $table->id(); // ID tự tăng
+            $table->string('name'); // Tên danh mục
+            $table->string('slug'); // Tên SEO
+            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
+            $table->string('show_at_home')->default('0'); // Trạng thái hiển thị ở trang chủ
             $table->timestamps();
         });
     }
