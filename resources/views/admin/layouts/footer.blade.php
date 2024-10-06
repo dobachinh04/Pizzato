@@ -38,6 +38,13 @@
 
 <script src="https://kit.fontawesome.com/9cc1e5b793.js" crossorigin="anonymous"></script>
 
+<script src="/focus-2/vendor/global/global.min.js"></script>
+<script src="/focus-2/js/quixnav-init.js"></script>
+<script src="/focus-2/js/custom.min.js"></script>
+
+<!-- Datatable -->
+<script src="/focus-2/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/focus-2/js/plugins-init/datatables.init.js"></script>
 </body>
 
 </html> --}}
