@@ -14,6 +14,8 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  demo push branch ph41654
     const PATH_VIEW = 'admin.products.';
     const PATH_UPLOAD = 'products';
     public function index()
