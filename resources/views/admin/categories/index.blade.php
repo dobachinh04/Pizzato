@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách danh mục
+    Danh Sách Danh Mục - Pizzato
 @endsection
 {{-- demo branch command line --}}
 @section('content')

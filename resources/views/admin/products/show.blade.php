@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Chi Tiết Tin - NewsX
+    Chi Tiết Tin - Pizzato
 @endsection
 
 @section('content')
@@ -38,55 +38,56 @@
                     <div class="card ">
                         <div class="card-body row">
                             <div class="col-md-6">
-                                <h1>Chi Tiết Bài Viết ID: {{ $post->id }}</h1>
-                                <h3>Tiêu Đề: {{ $post->title }}</h3>
+                                <h1>Detail Product: {{ $product->id }}</h1>
+                                <h3>Tiêu Đề: {{ $product->title }}</h3>
 
-                                @if ($post->image)
-                                    <img src="{{ Storage::url($post->image) }}" style="width: 100%; max-width: 250px;"
+                                @if ($product->image)
+                                    <img src="{{ Storage::url($product->image) }}" style="width: 100%; max-width: 250px;"
                                         alt="Image">
                                 @endif
 
                                 <div class="mt-3">
-                                    <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">Quay Lại</a>
-                                    <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Sửa</a>
+                                    <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Quay Lại</a>
+                                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning">Sửa</a>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <table class="table table-bordered table-hover">
+                                <table>
+                                    <tr>
+                                        <th>Field name</th>
+                                        <th>Value</th>
+                                    </tr>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">Danh Mục</th>
-                                            <td>{{ $post->category->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Thẻ</th>
-                                            <td>
-                                                @foreach ($post->tags as $tag)
-                                                    <span class="badge badge-pill badge-warning">{{ $tag->name }}</span>
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Tác Giả</th>
-                                            <td>{{ $post->author ? $post->author->name : 'N/A' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Số Lượt Xem</th>
-                                            <td>{{ $post->view }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Nội Dung</th>
-                                            <td>{{ $post->content }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Ngày Tạo</th>
-                                            <td>{{ $post->created_at->format('d/m/Y H:i') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Ngày Cập Nhật</th>
-                                            <td>{{ $post->updated_at->format('d/m/Y H:i') }}</td>
-                                        </tr>
+                                        @foreach ($product->toArray() as $field => $value)
+                                            <tr>
+                                                <td>
+                                                    @if ($field == 'category_id')
+                                                        Category
+                                                    @else
+                                                        {{ Str::ucfirst(str_replace('_', ' ', $field)) }}
+                                                    @endif
+                                                </td>
+
+                                                <td>
+                                                    @if ($field == 'thumb_image')
+                                                        <img src="{{ Storage::url($value) }}" alt="" width="50px">
+                                                    @elseif (Str::contains($field, 'show_at_home'))
+                                                        <span class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
+                                                            {{ $value ? 'YES' : 'NO' }}
+                                                        </span>
+                                                    @elseif (Str::contains($field, 'status'))
+                                                        <span class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
+                                                            {{ $value ? 'YES' : 'NO' }}
+                                                        </span>
+                                                    @elseif ($field == 'category_id')
+                                                        {{ $product->category->name }}
+                                                    @else
+                                                        {{ $value }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

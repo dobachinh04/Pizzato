@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Chi Tiết Người Dùng - NewsX
+    Chi Tiết Người Dùng - Pizzato
 @endsection
 
 @section('content')
@@ -38,7 +38,7 @@
                     <div class="card ">
                         <div class="card-body row">
                             <div class="col-md-6">
-                                
+
                                 <h1>Chi Tiết Người Dùng ID: {{ $user->id }}</h1>
                                 <h3>Tiêu Đề: {{ $user->title }}</h3>
 

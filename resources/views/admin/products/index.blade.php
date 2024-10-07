@@ -1,28 +1,19 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Tin Tức - NewsX
+    Danh Sách Sản Phẩm - Pizzato
 @endsection
 
 @section('content')
-    <!-- Datatable -->
-    <link href="/focus-2/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-    <!-- Custom Stylesheet -->
-    <link href="/focus-2/css/style.css" rel="stylesheet">
 
     <body>
         <div class="content-body">
             <div class="container-fluid">
                 <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>Chào Mừng Trở Lại user...</h4>
-                        </div>
-                    </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Bài Viết</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Danh Sách Bài Viết</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Sản phẩm</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Danh Sách Sản Phẩm</a></li>
                         </ol>
                     </div>
                 </div>
@@ -52,7 +43,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh Sách Bài Viết</h4>
-                                <a href="{{ route('admin.posts.create') }}" class="btn btn-success">Thêm Mới</a>
+                                <a href="{{ route('admin.products.create') }}" class="btn btn-success">Thêm Mới</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -60,69 +51,58 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Tên</th>
-                                                <th>Danh Mục</th>
-                                                <th>Thẻ</th>
-                                                <th>Ảnh</th>
-                                                <th>Lượt Xem</th>
-                                                <th>Tác Giả</th>
-                                                <th>Tạo Ngày</th>
-                                                <th>Lần Cuối Cập Nhật</th>
-                                                <th>Hành Động</th>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Price</th>
+                                                <th>Offer Price</th>
+                                                <th>Quantity</th>
+                                                <th>Show At Home</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
-                                            @foreach ($data as $post)
+                                            @foreach ($data as $item)
                                                 <tr>
-                                                    <td>{{ $post->id }}</td>
-                                                    <td>{{ $post->title }}</td>
-
-                                                    <td>{{ $post->category->name }}</td>
-
+                                                    <td>{{ $item->id }}</td>
                                                     <td>
-                                                        @foreach ($post->tags as $tag)
-                                                            <span class="badge badge-pill badge-warning">{{ $tag->name }}</span>
-                                                        @endforeach
+                                                        @php
+                                                            $url = $item->thumb_image;
+                                                            if (!\Str::contains($url, 'http')) {
+                                                                $url = \Storage::url($url);
+                                                            }
+                                                        @endphp
+                                                        <img src="{{ $url }}" alt="" width="100px">
                                                     </td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->category->name }}</td>
+                                                    <td>{{ $item->price }}</td>
+                                                    <td>{{ $item->offer_price }}</td>
+                                                    <td>{{ $item->qty }}</td>
 
-                                                    <td>
-                                                        <img src="{{ Storage::url($post->image) }}"
-                                                            style="width: 100px; height: 75px; object-fit: cover;"
-                                                            alt="">
-                                                    </td>
+                                                    <td>{!! $item->show_at_home
+                                                        ? '<span class="badge bg-primary">Yes</span>'
+                                                        : '<span class="badge bg-danger">No</span>' !!}</td>
 
-                                                    <td>{{ $post->view }}</td>
-                                                    <td>{{ $post->author->name }}</td>
-                                                    <td>{{ $post->created_at->format('d/m/Y H:i') }}</td>
-                                                    <td>{{ $post->updated_at->format('d/m/Y H:i') }}</td>
+                                                    <td>{!! $item->status
+                                                        ? '<span class="badge bg-primary">Active</span>'
+                                                        : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                     <td>
-                                                        <a href="{{ route('admin.posts.show', $post) }}"
-                                                            class="btn btn-primary">Chi Tiết</a>
-                                                        <a href="{{ route('admin.posts.edit', $post) }}"
-                                                            class="btn btn-warning">Sửa</a>
-                                                        <form action="{{ route('admin.posts.destroy', $post) }}"
-                                                            method="POST" style="display:inline;"
-                                                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                        <a href="{{ route('admin.products.show', $item->id) }}">Show</a>
+                                                        <a href="{{ route('admin.products.edit', $item->id) }}">Edit</a>
+
+                                                        <form action="{{ route('admin.products.destroy', $item->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                                            <button onclick='return confirm("R u sure?")' type="submit"
+                                                                class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </td>
-                                                </tr>
                                             @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Tên</th>
-                                                <th>Danh Mục</th>
-                                                <th>Ảnh</th>
-                                                <th>Lượt Xem</th>
-                                                <th>Tạo Ngày</th>
-                                                <th>Lần Cuối Cập Nhật</th>
-                                                <th>Hành Động</th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -132,13 +112,13 @@
             </div>
         </div>
 
-        <!-- Required vendors -->
+        {{-- <!-- Required vendors -->
         <script src="/focus-2/vendor/global/global.min.js"></script>
         <script src="/focus-2/js/quixnav-init.js"></script>
         <script src="/focus-2/js/custom.min.js"></script>
 
         <!-- Datatable -->
         <script src="/focus-2/vendor/datatables/js/jquery.dataTables.min.js"></script>
-        <script src="/focus-2/js/plugins-init/datatables.init.js"></script>
+        <script src="/focus-2/js/plugins-init/datatables.init.js"></script> --}}
     </body>
 @endsection
