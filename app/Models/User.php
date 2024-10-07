@@ -15,7 +15,7 @@ class User extends Model
       'email',
       'password',
       'email_verified_at',
-     'role_id'
+      'role_id'
 
 
     ];
@@ -26,6 +26,10 @@ class User extends Model
     public function orders()
     {
         return $this->hasMany(related: Order::class);
+    }
+    public function address()
+    {
+        return $this->hasMany(related: Address::class);
     }
 }
 
