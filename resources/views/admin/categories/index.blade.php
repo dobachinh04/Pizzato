@@ -3,7 +3,7 @@
 @section('title')
     Danh Sách danh mục
 @endsection
-
+{{-- demo branch command line --}}
 @section('content')
     <!-- Datatable -->
     <link href="/focus-2/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
