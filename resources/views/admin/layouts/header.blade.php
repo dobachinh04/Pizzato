@@ -13,7 +13,7 @@
     <link href="/focus-2/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
     <link href="/focus-2/css/style.css" rel="stylesheet">
 
-
+    @yield('style-libs')
 
 </head>
 
