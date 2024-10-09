@@ -922,6 +922,25 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarBlogCategories" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarBlogCategories">
+                        <i class="fas fa-book"></i> <span data-key="t-landing">Danh Mục Blog</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarBlogCategories">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.blog-categories.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Danh Mục Blog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.blog-categories.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Danh Mục Blog</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarBlogs" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarBlogs">
                         <i class="fa-solid fa-newspaper"></i> <span data-key="t-landing">Blogs</span>
