@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Tin Tức - NewsX
+    Danh Sách Danh Mục - Pizzato
 @endsection
-
+{{-- demo branch command line --}}
 @section('content')
     <!-- Datatable -->
     <link href="/focus-2/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>Chào Mừng Trở Lại user...</h4>
+                            <h4>Chào Mừng Trở Lại Danh Mục...</h4>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -48,46 +48,48 @@
                                     <table id="example" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Tên</th>
-                                                <th>Tên SEO</th>
-                                                <th>Trạng Thái</th>
-                                                <th>Tạo Ngày</th>
-                                                <th>Lần Cuối Cập Nhật</th>
-                                                <th>Hành Động</th>
+                                                <!-- <th>ID</th> -->
+                                                <th>Name</th>
+                                                <th>Slug</th>
+                                                <th>Status</th>
+                                                <th>Show at home</th>
+                                                <!-- <th>Lần Cuối Cập Nhật</th> -->
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {{-- Ví dụ cho hiển thị Categories --}}
-                                            {{-- @foreach ($data as $category)
+                                            @foreach ($categories as $category)
                                                 <tr>
-                                                    <td>{{ $category->id }}</td>
+                                                    {{-- <td>{{ $category->id }}</td> --}}
                                                     <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
-                                                    <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>
+                                                    <td>{{ $category->slug }}</td>
+                                                    <td>{{ $category->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td>
+                                                    <td>{{ $category->show_at_home == 0 ? 'Ẩn' : 'Hiển thị' }}</td>
+                                                    {{-- <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
+                                                    <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>  --}}
                                                     <td>
-                                                        <a href="{{ route('admin.categories.edit', $category) }}"
+                                                        <a href="{{ route('admin.categories.edit', $category->id) }}"
                                                             class="btn btn-warning">Sửa</a>
                                                         <form action="{{ route('admin.categories.destroy', $category) }}"
                                                             method="POST" style="display:inline;"
                                                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                             @csrf
-
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Xóa</button>
                                                         </form>
                                                     </td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach 
                                         </tbody>
                                         <tfoot>
-                                            <tr>
+                                            <!-- <tr>
                                                 <th>ID</th>
                                                 <th>Tên</th>
                                                 <th>Tạo Ngày</th>
                                                 <th>Lần Cuối Cập Nhật</th>
                                                 <th>Hành Động</th>
-                                            </tr>
+                                            </tr> -->
                                         </tfoot>
                                     </table>
                                 </div>

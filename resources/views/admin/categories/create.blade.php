@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm Mới Danh Mục - NewsX
+    Thêm Mới Danh Mục - Pizzato
 @endsection
 
 @section('content')
@@ -56,19 +56,27 @@
 
                                     <div class="form-group">
                                         <input type="text" name="name" class="form-control input-default "
-                                            placeholder="Tên Danh Mục">
+                                            placeholder="Tên Danh Mục" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" name="name" class="form-control input-default "
-                                            placeholder="Tên SEO (VD: san-pham-1)">
+                                        <input type="text" name="slug" class="form-control input-default "
+                                            placeholder="VD: danh-muc-1" required>
                                     </div>
 
                                     <div class="form-group">
                                         <select name="status" class="form-control input-default">
-                                            <option selected disabled>Chọn Trạng Thái</option>
-                                            <option value="1">Hoạt Động</option>
-                                            <option value="0">Không Hoạt Động</option>
+                                            <option disabled>Chọn Trạng Thái</option>
+                                            <option value="1" selected>Còn hàng</option>
+                                            <option value="0">Hết hàng</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select name="show_at_home" class="form-control input-default">
+                                            <option disabled>Chọn Trạng Thái</option>
+                                            <option value="1">Hiển thị</option>
+                                            <option value="0" selected>Ẩn</option>
                                         </select>
                                     </div>
 

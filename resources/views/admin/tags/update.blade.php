@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Cập Nhật Thẻ - NewsX
+    Cập Nhật Thẻ - Pizzato
 @endsection
 
 @section('content')
