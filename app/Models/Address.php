@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Models\DeliveryArea;
+use App\Models\DeliveryArea;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

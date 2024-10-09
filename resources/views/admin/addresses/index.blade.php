@@ -41,7 +41,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Danh Sách Địa Chỉ Đơn Hàng</h4>
-                                <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Thêm Mới</a>
+                                <a href="{{ route('admin.addresses.create') }}" class="btn btn-success">Thêm Mới</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -49,38 +49,43 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>ID người dùng</th>
-                                                <th>ID delivery_area</th>
-                                                <th>Tên Đệm</th>
+                                                <th>ID Người Dùng</th>
+                                                <th>ID Khu Vực Giao Hàng</th>
+                                                <th>Họ</th>
                                                 <th>Tên</th>
                                                 <th>Email</th>
-                                                <th>Số điện thoại</th>
-                                                <th>Loại</th>
+                                                <th>Số Điện Thoại</th>
+                                                <th>Loại Địa Chỉ</th>
+                                                <th>Ngày Tạo</th>
+                                                <th>Ngày Cập Nhật</th>
+                                                <th>Thao Tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- Ví dụ cho hiển thị Categories --}}
-                                            {{-- @foreach ($data as $category)
+                                            @foreach ($addresses as $address)
                                                 <tr>
-                                                    <td>{{ $category->id }}</td>
-                                                    <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
-                                                    <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>
+                                                    <td>{{ $address->id }}</td>
+                                                    <td>{{ $address->user_id }}</td>
+                                                    <td>{{ $address->delivery_area_id }}</td>
+                                                    <td>{{ $address->first_name }}</td>
+                                                    <td>{{ $address->last_name }}</td>
+                                                    <td>{{ $address->email }}</td>
+                                                    <td>{{ $address->phone }}</td>
+                                                    <td>{{ $address->type }}</td>
+                                                    <td>{{ $address->created_at ? $address->created_at->format('d/m/Y H:i') : 'N/A' }}</td>
+                                                    <td>{{ $address->updated_at ? $address->updated_at->format('d/m/Y H:i') : 'N/A' }}</td>
                                                     <td>
-                                                        <a href="{{ route('admin.categories.edit', $category) }}"
-                                                            class="btn btn-warning">Sửa</a>
-                                                        <form action="{{ route('admin.categories.destroy', $category) }}"
-                                                            method="POST" style="display:inline;"
-                                                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                        <a href="{{ route('admin.addresses.update', $address) }}" class="btn btn-warning">Sửa</a>
+                                                        <form action="" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                             @csrf
-
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Xóa</button>
                                                         </form>
                                                     </td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>
@@ -90,7 +95,7 @@
             </div>
         </div>
 
-        <!-- Required vendors -->
+        <!-- Các thư viện cần thiết -->
         <script src="/focus-2/vendor/global/global.min.js"></script>
         <script src="/focus-2/js/quixnav-init.js"></script>
         <script src="/focus-2/js/custom.min.js"></script>

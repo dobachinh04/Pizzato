@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Address;
 use Illuminate\Http\Request;
+
+use App\Models\DeliveryArea;
+use App\Http\Controllers\Controller;
 
 class AddressController extends Controller
 {
@@ -12,7 +16,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return view('admin.addresses.index');
+        $addresses = Address::all();
+        return view('admin.addresses.index', compact('addresses'));
     }
 
     /**
@@ -20,7 +25,10 @@ class AddressController extends Controller
      */
     public function create()
     {
-        return view('admin.addresses.create');
+        $users = User::all();
+        $delivery_areas = DeliveryArea::all();
+
+        return view('admin.addresses.create',compact('users', 'delivery_areas'));
     }
 
     /**
@@ -28,7 +36,22 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|integer',
+            'delivery_area_id' => 'required|integer',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string',
+            'type' => 'required|string',
+        ]);
+
+        // Tạo một địa chỉ mới
+        Address::create($request->all());
+
+        // Redirect về trang danh sách với thông báo thành công
+        return redirect()->route('admin.addresses.index')->with('success', 'Địa chỉ đã được thêm thành công!');
     }
 
     /**
@@ -36,7 +59,7 @@ class AddressController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('admin.addresses.update', compact('address'));
     }
 
     /**
