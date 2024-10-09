@@ -52,7 +52,6 @@ Danh Sách Danh Mục Blog - Pizzato
                                             <th>Name</th>
                                             <th>Slug</th>
                                             <th>Status</th>
-                                            <th>Show at home</th>
                                             <!-- <th>Lần Cuối Cập Nhật</th> -->
                                             <th>Actions</th>
                                         </tr>
