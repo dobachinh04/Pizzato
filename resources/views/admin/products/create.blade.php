@@ -1,3 +1,11 @@
+@extends('admin.layouts.master')
+
+@section('title')
+    Thêm Mới Sản Phẩm - Pizzato
+@endsection
+
+@section('content')
+
 {{-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

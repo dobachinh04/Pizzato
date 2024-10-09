@@ -11,7 +11,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+                'name' => 'required|min:3|max:255',
+                'slug' => 'required|min:3|max:255|unique:categories',
+                // 'status' => 'required',
+                // 'show_at_home' => 'required',
         ];
     }
+    public function error(): array {
+        return [
+            'name.required' => "tên không được để trống",
+            'name.min' =>"tên phải ít nhất 3 ký tự ",
+            'name.max' =>"tên phải nhiều nhất 255 ký tự ",
+            'slug.required' => "slug không được để trống",
+            'slug.min' =>"slug phải ít nhất 3 ký tự ",
+            'slug.max' =>"slug phải nhiều nhất 255 ký tự ",
+            'slug.unique' => 'Slug đã tồn tại',
+        ];
+    }
+    public function run() {
+        $this->validate($this->rules(),$this->error()); 
+     }
 }
