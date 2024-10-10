@@ -35,12 +35,18 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label>Slug</label>
                 <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
                 @error('slug')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
+            </div> --}}
+
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" name="slug" class="form-control"
+                    value="{{ old('slug', isset($product) ? $product->slug : $slug) }}" readonly>
             </div>
 
             <div class="mt-3">
@@ -51,9 +57,16 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label>Sku</label>
                 <input type="text" name="sku" class="form-control" value="{{ old('sku') }}">
+                @error('sku')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div> --}}
+            <div class="form-group">
+                <label>Sku</label>
+                <input type="text" name="sku" class="form-control" value="{{ old('sku', $sku) }}" readonly>
                 @error('sku')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -71,13 +84,13 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label>View</label>
                 <input type="text" name="view" class="form-control" value="{{ old('view') }}">
                 @error('view')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <label>Price</label>
@@ -145,3 +158,20 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nameInput = document.querySelector('input[name="name"]');
+        const slugInput = document.querySelector('input[name="slug"]');
+
+        nameInput.addEventListener('input', function() {
+            slugInput.value = nameInput.value
+                .toLowerCase()
+                .trim()
+                .replace(/[\s]+/g, '-') // Thay thế khoảng trắng bằng dấu -
+                .replace(/[^\w\-]+/g, '') // Xóa ký tự không phải chữ, số hoặc dấu -
+                .replace(/\-\-+/g, '-') // Xóa dấu gạch nối kép
+                .replace(/^-+/, '') // Xóa dấu gạch nối đầu
+                .replace(/-+$/, ''); // Xóa dấu gạch nối cuối
+        });
+    });
+</script>
