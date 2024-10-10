@@ -66,6 +66,7 @@
                                         </select>
                                     </div>
 
+
                                     <!-- Chọn Khu Vực Giao Hàng -->
                                     <div class="form-group">
                                         <label for="delivery_area_id">Khu Vực Giao Hàng</label>

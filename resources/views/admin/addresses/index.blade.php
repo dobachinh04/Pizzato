@@ -75,8 +75,8 @@
                                                     <td>{{ $address->created_at ? $address->created_at->format('d/m/Y H:i') : 'N/A' }}</td>
                                                     <td>{{ $address->updated_at ? $address->updated_at->format('d/m/Y H:i') : 'N/A' }}</td>
                                                     <td>
-                                                        <a href="{{ route('admin.addresses.update', $address) }}" class="btn btn-warning">Sửa</a>
-                                                        <form action="" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                        <a href="{{ route('admin.addresses.edit', $address->id) }}" class="btn btn-warning">Sửa</a>
+                                                        <form action="{{ route('admin.addresses.destroy', $address->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Xóa</button>
