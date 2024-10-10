@@ -99,7 +99,7 @@
                                                 </div>
                                             </td>
                                         </tr> --}}
-                                        @foreach ($users as $stt => $user)
+                                        @foreach ($users as  $user)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -107,7 +107,7 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{ $stt + 1 }}</td>
+                                                <td>{{ $user->id }}</td>
                                                 <td>{{ $user->name }}</td>
 
                                                 <td>

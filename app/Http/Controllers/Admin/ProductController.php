@@ -8,12 +8,15 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    //  demo push branch ph41654
     const PATH_VIEW = 'admin.products.';
     const PATH_UPLOAD = 'products';
     public function index()
@@ -23,51 +26,59 @@ class ProductController extends Controller
         return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
+        $sku = $this->generateUniqueSku();
+        $slug = '';
         $categories = Category::query()->pluck('name', 'id')->all();
-        return view(self::PATH_VIEW . __FUNCTION__, compact('categories'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('categories', 'sku', 'slug'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreProductRequest $request)
     {
         $data = $request->except('thumb_image');
         if ($request->hasFile('thumb_image')) {
             $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
         }
+
+        // Tạo slug từ tên sản phẩm
+        $data['slug'] = $this->createSlug($request->name);
+
+        //Tạo sku ngẫu nhiên
+        // $data['sku'] = $this->generateUniqueSku();
+
+        // Tự động cập nhật trạng thái dựa vào qty
+        $datap['status'] = $request->qty > 0 ? 1 : 0;
+        // Đảm bảo trường 'view' có giá trị mặc định là 0
+        $data['view'] = 0;
+
         Product::query()->create($data);
         return back()->with('success', 'Product added successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Product $product)
     {
         // dd($product);
-        // Tăng giá trị của trường view
-        // $product->increment('view');
         return view(self::PATH_VIEW . __FUNCTION__, compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Product $product)
     {
+        // $sku = $this->generateUniqueSku();
+        $slug = '';
+
+        // Nếu muốn thay đổi SKU thì sinh lại mã SKU mới
+        // $data['sku'] = $this->generateUniqueSku();
+
         $categories = Category::query()->pluck('name', 'id')->all();
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'categories'));
+        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'categories', 'slug'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->except('thumb_image');
@@ -75,6 +86,13 @@ class ProductController extends Controller
             $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
         }
         $currentImage = $product->thumb_image; // lưu ảnh trước khi update
+
+        // Tạo slug từ tên sản phẩm
+        $data['slug'] = $this->createSlug($request->name);
+
+        // Tự động cập nhật trạng thái dựa vào qty
+        $data['status'] = $request->qty > 0 ? 1 : 0;
+
         $product->update($data);
 
         // Nếu có giá trị 'thumb_image' hiện tại và tệp tồn tại trong hệ thống lưu trữ
@@ -84,9 +102,7 @@ class ProductController extends Controller
         return back()->with('success', 'Product updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Product $product)
     {
         if ($product->thumb_image && Storage::exists($product->thumb_image)) {
@@ -95,5 +111,28 @@ class ProductController extends Controller
         }
         $product->delete();
         return back()->with('success', 'Product deleted successfully.');
+    }
+
+    protected function generateUniqueSku()
+    {
+        do {
+            // Tạo mã SKU ngẫu nhiên. có thể tuỳ chỉnh
+            $sku = 'SKU-' . strtoupper(uniqid()); // Tạo mã SKU dạng SKU-ABC123...
+            // $sku = strtoupper(Str::random(10)); // Tạo mã ngẫu nhiên có 10 ký tự
+
+            // SKU ? exists
+        } while (Product::where('sku', $sku)->exists());
+
+        return $sku;
+    }
+
+    protected function createSlug($name)
+    {
+        // Chuyển đổi tên thành slug
+        $slug = Str::slug($name);
+
+        // slug->exist ?  thêm số vào sau :  no
+        $count = Product::where('slug', $slug)->count();
+        return $count > 0 ? "{$slug}-{$count}" : $slug;
     }
 }
