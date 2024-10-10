@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use App\Http\Requests\StoreBlogCategoryRequest;
 use App\Http\Requests\UpdateBlogCategoryRequest;
+use Illuminate\Http\Request;
 
 class BlogCategoryController extends Controller
 {
@@ -15,7 +16,7 @@ class BlogCategoryController extends Controller
     public function index()
     {
         $categories = BlogCategory::all();
-       return view('admin.blog-categories.index', compact('categories'));
+        return view('admin.blog-categories.index', compact('categories'));
     }
 
     /**
@@ -24,14 +25,17 @@ class BlogCategoryController extends Controller
     public function create()
     {
         //
+        return view('admin.blog-categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBlogCategoryRequest $request)
+    public function store(Request $request, StoreBlogCategoryRequest $blogcategoryrequest  )
     {
-        //
+        $blogcategoryrequest->run();
+        BlogCategory::create($request->all());
+        return redirect()->route('admin.blog-categories.index')->with('success', 'Blog Category added successfully.');
     }
 
     /**
@@ -53,7 +57,7 @@ class BlogCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBlogCategoryRequest $request, BlogCategory $blogCategory)
+    public function update(Request $request, string $id, UpdateBlogCategoryRequest $blogcategoryrequest)
     {
         //
     }
@@ -65,4 +69,12 @@ class BlogCategoryController extends Controller
     {
         //
     }
+
+
+    //ví dụ lấy danh sách hoạt động truyền ra frontend
+    // public function activeCategories()
+    // {
+    //     $categories = BlogCategory::active()->get();
+    //     return view('frontend.blog-categories', compact('categories'));
+    // }
 }

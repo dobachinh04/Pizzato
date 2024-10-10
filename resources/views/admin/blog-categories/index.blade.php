@@ -62,7 +62,7 @@ Danh Sách Danh Mục Blog - Pizzato
                                                     {{-- <td>{{ $category->id }}</td> --}}
                                                     <td>{{ $category->name }}</td>
                                                     <td>{{ $category->slug }}</td>
-                                                    <td>{{ $category->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td>
+                                                    <td>{{ $category->status == 1 ? 'Bật' : 'Tắt' }}</td>
                                                     {{-- <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
                                                     <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>  --}}
                                                     <td>
