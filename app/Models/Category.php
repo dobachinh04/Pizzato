@@ -18,3 +18,4 @@ class Category extends Model
         'show_at_home',
     ];
 
+}
