@@ -939,6 +939,24 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarSliders" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarSliders">
+                        <i class="fa-solid fa-newspaper"></i> <span data-key="t-landing">Slider</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarSliders">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.sliders.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Slider</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.sliders.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Slider</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"

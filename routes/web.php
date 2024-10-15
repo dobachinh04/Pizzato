@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\ProductController;
@@ -112,6 +113,16 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::put('/{blog}',                           [BlogController::class, 'update'])->name('update');
         Route::get('/show/{blog}',                      [BlogController::class, 'show'])->name('show');
         Route::delete('/{blog}',                        [BlogController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('sliders')->name('sliders.')->group(function() {
+        Route::get('/',                                 [SliderController::class, 'index'])->name('index');
+        Route::get('/create',                           [SliderController::class, 'create'])->name('create');
+        Route::post('/',                                [SliderController::class, 'store'])->name('store');
+        Route::get('/edit/{slider}',                      [SliderController::class, 'edit'])->name('edit');
+        Route::put('/{slider}',                           [SliderController::class, 'update'])->name('update');
+        Route::get('/show/{slider}',                      [SliderController::class, 'show'])->name('show');
+        Route::delete('/{slider}',                        [SliderController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('orders')->name('orders.')->group(function() {

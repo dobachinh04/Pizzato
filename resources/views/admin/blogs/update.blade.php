@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Cập Nhật Người Dùng - Pizzato
+    Cập Nhật Blog - Pizzato
 @endsection
 
 @section('content')

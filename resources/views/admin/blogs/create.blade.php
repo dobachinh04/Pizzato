@@ -89,7 +89,7 @@
                                                 </div>
                                         </div>
                                         
-                                        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                                        <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">
                                             Quay Lại</a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>
                                         </form>
