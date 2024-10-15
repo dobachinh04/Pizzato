@@ -922,6 +922,19 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarAddresses" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarAddresses">
+                        <i class="fa fa-map-marker-alt"></i> <span data-key="t-landing">Địa chỉ đơn hàng</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarAddresses">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.addresses.index') }}" class="nav-link"
+                                    data-key="t-one-page">Địa chỉ đơn hàng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.addresses.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Địa chỉ đơn hàng</a>
                     <a class="nav-link menu-link" href="#sidebarBlogCategories" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarBlogCategories">
                         <i class="fas fa-book"></i> <span data-key="t-landing">Danh Mục Blog</span>
