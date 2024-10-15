@@ -57,18 +57,18 @@ Danh Sách Danh Mục Blog - Pizzato
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($categories as $category)
+                                        @foreach ($category_blog as $categoryblog)
                                                 <tr>
                                                     {{-- <td>{{ $category->id }}</td> --}}
-                                                    <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->slug }}</td>
-                                                    <td>{{ $category->status == 1 ? 'Bật' : 'Tắt' }}</td>
+                                                    <td>{{ $categoryblog->name }}</td>
+                                                    <td>{{ $categoryblog->slug }}</td>
+                                                    <td>{{ $categoryblog->status == 1 ? 'Bật' : 'Tắt' }}</td>
                                                     {{-- <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
                                                     <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>  --}}
                                                     <td>
-                                                        <a href="{{ route('admin.blog-categories.edit', $category->id) }}"
+                                                        <a href="{{ route('admin.blog-categories.edit', $categoryblog->id) }}"
                                                             class="btn btn-warning">Sửa</a>
-                                                        <form action="{{ route('admin.blog-categories.destroy', $category) }}"
+                                                        <form action="{{ route('admin.blog-categories.destroy', $categoryblog) }}"
                                                             method="POST" style="display:inline;"
                                                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                             @csrf

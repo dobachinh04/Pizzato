@@ -15,7 +15,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::showAtHome()->get();
         $categories = Category::all();
         return view('admin.categories.index', compact('categories'));
     }
