@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use Illuminate\Support\Facades\Storage;
+use Request;
 
 class UserController extends Controller
 {
@@ -81,10 +82,22 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateUserRequest $request, String $id)
-    {
+    { 
+        $users = User::findOrFail($id);
+        $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $users->id,
+        'role_id' => 'required|exists:roles,id',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+    ]);
+    
+
+   
+      
         if($request->isMethod('PUT')){
             $param = $request->except('__token','__method');
-            $users = User::findOrFail($id);
+            
+            $users->update($request->validated());
             if($request->hasFile('image')){
                 if($users->image && Storage::disk('public')->exists($users->image)){
                     Storage::disk('public')->delete($users->image);
@@ -94,7 +107,8 @@ class UserController extends Controller
                 $filename = $users->image;
             }
             $param['image'] = $filename;
-            $users->update($param);
+            
+            $users->update($request->all());
             return redirect()->route('admin.users.index')->with('errors','Sửa thành công');
         }
     }
