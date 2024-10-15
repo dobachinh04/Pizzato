@@ -30,6 +30,9 @@ class User extends Model
     public function address()
     {
         return $this->hasMany(related: Address::class);
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
     }
 }
 

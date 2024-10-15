@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
@@ -18,8 +26,10 @@ use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 
-// Client Views:
+// Client Views demo
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
+Route::get('/show/{product}',                                             [ProductController::class, 'show'])->name('client.show');
+
 // Route::get('/categories/{id}',                          [PostController::class, 'categories'])->name('client.category');
 // Route::get('/author/{id}',                              [PostController::class, 'author'])->name('client.author');
 // Route::get('/show/{id}',                                [PostController::class, 'show'])->name('client.show');
@@ -44,13 +54,13 @@ Route::get('/',                                             [ProductController::
 // Route::post('reset-password',                           [ResetPasswordController::class, 'reset'])->name('password.update');
 
 // Admin Auth:
-Route::prefix('admin')->name('admin.')->group(function() {
+Route::prefix('admin')->name('admin.')->group(function () {
     // Admin - Dashboard:
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
 
     // Admin - products Categories:
-    Route::prefix('categories')->name('categories.')->group(function() {
+    Route::prefix('categories')->name('categories.')->group(function () {
         Route::get('/',                                 [CategoryController::class, 'index'])->name('index');
         Route::get('/create',                           [CategoryController::class, 'create'])->name('create');
         Route::post('/',                                [CategoryController::class, 'store'])->name('store');
@@ -60,7 +70,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     });
 
     // Admin - products:
-    Route::prefix('products')->name('products.')->group(function() {
+    Route::prefix('products')->name('products.')->group(function () {
         Route::get('/',                                 [AdminProductController::class, 'index'])->name('index');
         Route::get('/create',                           [AdminProductController::class, 'create'])->name('create');
         Route::post('/',                                [AdminProductController::class, 'store'])->name('store');
@@ -94,7 +104,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     // });
 
     // Admin - Users:
-    Route::prefix('users')->name('users.')->group(function() {
+    Route::prefix('users')->name('users.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/create',                           [UserController::class, 'create'])->name('create');
         Route::post('/',                                [UserController::class, 'store'])->name('store');
@@ -105,7 +115,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     });
 
     // Admin - Blog Categories:
-    Route::prefix('blog-categories')->name('blog-categories.')->group(function() {
+    Route::prefix('blog-categories')->name('blog-categories.')->group(function () {
         Route::get('/',                                 [BlogCategoryController::class, 'index'])->name('index');
         Route::get('/create',                           [BlogCategoryController::class, 'create'])->name('create');
         Route::post('/',                                [BlogCategoryController::class, 'store'])->name('store');
@@ -117,7 +127,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
 
 
     // Admin - Blogs:
-    Route::prefix('blogs')->name('blogs.')->group(function() {
+    Route::prefix('blogs')->name('blogs.')->group(function () {
         Route::get('/',                                 [BlogController::class, 'index'])->name('index');
         Route::get('/create',                           [BlogController::class, 'create'])->name('create');
         Route::post('/',                                [BlogController::class, 'store'])->name('store');
@@ -127,7 +137,17 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::delete('/{blog}',                        [BlogController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('orders')->name('orders.')->group(function() {
+    Route::prefix('sliders')->name('sliders.')->group(function() {
+        Route::get('/',                                 [SliderController::class, 'index'])->name('index');
+        Route::get('/create',                           [SliderController::class, 'create'])->name('create');
+        Route::post('/',                                [SliderController::class, 'store'])->name('store');
+        Route::get('/edit/{slider}',                      [SliderController::class, 'edit'])->name('edit');
+        Route::put('/{slider}',                           [SliderController::class, 'update'])->name('update');
+        Route::get('/show/{slider}',                      [SliderController::class, 'show'])->name('show');
+        Route::delete('/{slider}',                        [SliderController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/',                                 [OrderController::class, 'index'])->name('index');
         Route::get('/create',                           [OrderController::class, 'create'])->name('create');
         Route::post('/',                                [OrderController::class, 'store'])->name('store');
@@ -137,7 +157,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::delete('/{order}',                       [OrderController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('shipping')->name('shipping.')->group(function() {
+    Route::prefix('shipping')->name('shipping.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/create',                           [UserController::class, 'create'])->name('create');
         Route::post('/',                                [UserController::class, 'store'])->name('store');
@@ -147,7 +167,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::delete('/{shipping}',                        [UserController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('payment')->name('payment.')->group(function() {
+    Route::prefix('payment')->name('payment.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/payment',                           [UserController::class, 'create'])->name('create');
         Route::post('/',                                [UserController::class, 'store'])->name('store');

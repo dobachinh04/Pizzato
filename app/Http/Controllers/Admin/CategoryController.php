@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index');
+        $categories = Category::showAtHome()->get();
+        $categories = Category::all();
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -28,9 +31,11 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request, StoreCategoryRequest $categoryrequest)
     {
-        //
+        $categoryrequest->run();
+        Category::create($request->all());
+        return redirect()->route('admin.categories.index')->with('success', 'Category added successfully.');
     }
 
     /**
@@ -44,24 +49,40 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id, Request $request)
     {
-        return view('admin.categories.update');
+        $categories = Category::findOrFail($id);
+        $categories->update($request->all());
+        return view('admin.categories.update', compact('categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, string $id, UpdateCategoryRequest $categoryrequest)
     {
-        //
+        $categoryrequest->run();
+        $categories = Category::findOrFail($id);
+        $categories->name = $request->input('name');
+        $categories->slug = $request->input('slug');
+        $categories->status = $request->input('status');
+        $categories->show_at_home = $request->input('show_at_home');
+        $categories->save();
+
+        return redirect()->back()->with('success', 'Category updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
-        //
+        // $count = Product::where('category_id', '=', $id)->count();
+        // if ($count !== 0) {
+        //     return back()->with('success', 'danh mục còn ' . $count . 'sản phẩm . không thể xóa');
+        // }
+        $categories = Category::findOrFail($id);
+        $categories->delete();
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully.');
     }
 }

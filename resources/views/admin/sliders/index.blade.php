@@ -45,15 +45,17 @@
                                                 </div>
                                             </th>
                                             {{-- <th data-ordering="false">SR No.</th> --}}
-                                            <th>ID</th>
-                                            <th>Họ Tên</th>
-                                            <th>Ảnh</th>
-                                            <th>Email</th>
-                                            <th>Vai Trò</th>
-                                            <th>Tạo Ngày</th>
-                                            <th>Lần Cuối Cập Nhật</th>
-                                            <th>Hành Động</th>
-                                            <th>Trạng Thái</th>
+                                            <th>id</th>
+                                            <th>image</th>
+                                            <th>offer</th>
+                                            <th>title</th>
+                                            <th>sub_title</th>
+                                            <th>short_description</th>
+                                            <th>button_link</th>
+                                            <th>status</th>
+                                            <th>created_at</th>
+                                            <th>updated_at</th>
+                                            <th>action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -99,7 +101,8 @@
                                                 </div>
                                             </td>
                                         </tr> --}}
-                                        @foreach ($users as  $user)
+                                        @foreach ($sliders as $stt => $sl)
+                                        
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -107,26 +110,27 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-
+                                                <td>{{$stt+1}}</td>
+                                              
                                                 <td>
-                                                    <img src="{{ asset('storage/' . $user->image) }}"
+                                                    <img src="{{ asset('storage/' . $sl->image) }}"
                                                         style="width: 75px; height: 75px; object-fit: cover"
                                                         alt="Ảnh Người Dùng">
                                                 </td>
-
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->role->name }}</td>
-                                                <td>{{ $user->created_at }}</td>
-                                                <td>{{ $user->updated_at }}</td>
+                                                <td>{{$sl->offer}}</td>
+                                                <td>{{$sl->title}}</td>
+                                                <td>{{$sl->sub_title}}</td>
+                                                <td>{{$sl->short_description}}</td>
+                                                <td>{{$sl->button_link}}</td>
+                                                <td>{{$sl->status}}</td>
+                                                <td>{{ $sl->created_at }}</td>
+                                                <td>{{ $sl->updated_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.users.show', $user) }}"
-                                                        class="btn btn-primary">Chi Tiết</a>
-                                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                                 
+                                                    <a href="{{ route('admin.sliders.edit', $sl) }}"
                                                         class="btn btn-warning">Sửa</a>
 
-                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
+                                                    <form action="{{ route('admin.sliders.destroy', $sl) }}" method="POST"
                                                         style="display: inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
