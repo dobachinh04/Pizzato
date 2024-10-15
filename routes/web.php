@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
@@ -7,14 +9,21 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\AddressController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\ProductController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 
 // Client Views demo
@@ -71,6 +80,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
     });
 
+    //Admin - Addresses:
+    Route::prefix('addresses')->name('addresses.')->group(function() {
+        Route::get('/',                                 [AddressController::class, 'index'])->name('index');
+        Route::get('/create',                           [AddressController::class, 'create'])->name('create');
+        Route::post('/',                                [AddressController::class, 'store'])->name('store');
+        Route::get('/{address}/edit',                   [AddressController::class, 'edit'])->name('edit');
+        Route::put('/{address}',                        [AddressController::class, 'update'])->name('update');
+        Route::delete('/{address}',                     [AddressController::class, 'destroy'])->name('destroy');
+    });
+
+
+
     // Admin - Tags:
     // Route::prefix('tags')->name('tags.')->group(function() {
     //     Route::get('/',                                 [TagController::class, 'index'])->name('index');
@@ -114,6 +135,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{blog}',                           [BlogController::class, 'update'])->name('update');
         Route::get('/show/{blog}',                      [BlogController::class, 'show'])->name('show');
         Route::delete('/{blog}',                        [BlogController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('sliders')->name('sliders.')->group(function() {
+        Route::get('/',                                 [SliderController::class, 'index'])->name('index');
+        Route::get('/create',                           [SliderController::class, 'create'])->name('create');
+        Route::post('/',                                [SliderController::class, 'store'])->name('store');
+        Route::get('/edit/{slider}',                      [SliderController::class, 'edit'])->name('edit');
+        Route::put('/{slider}',                           [SliderController::class, 'update'])->name('update');
+        Route::get('/show/{slider}',                      [SliderController::class, 'show'])->name('show');
+        Route::delete('/{slider}',                        [SliderController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('orders')->name('orders.')->group(function () {
