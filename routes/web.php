@@ -26,14 +26,13 @@ Route::get('/show/{product}',                                             [Produ
 // Route::get('/author/{id}',                              [PostController::class, 'author'])->name('client.author');
 // Route::get('/show/{id}',                                [PostController::class, 'show'])->name('client.show');
 
-// Client - Login - Register:
 // Display View:
-// Route::get('/login',                                    [AuthenticationController::class, 'displayLogin'])->name('client.login');
-// Route::get('/register',                                 [AuthenticationController::class, 'displayRegister'])->name('client.register');
+Route::get('/login', [AuthenticationController::class, 'displayLogin'])->name('client.login');
+Route::get('/register', [AuthenticationController::class, 'displayRegister'])->name('client.register');
 
 // Login & Register:
-// Route::post('/login',                                   [AuthenticationController::class, 'login']);
-// Route::post('/register',                                [AuthenticationController::class, 'register']);
+Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/register', [AuthenticationController::class, 'register']);
 
 // Logout:
 // Route::post('/logout',                                  [AuthenticationController::class, 'logout'])->name('client.logout');
