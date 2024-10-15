@@ -27,5 +27,9 @@ class User extends Model
     {
         return $this->hasMany(related: Order::class);
     }
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
 }
 

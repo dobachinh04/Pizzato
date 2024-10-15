@@ -8,7 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class BlogCategory extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'slug', 'status'];
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'status',
+      
+    ];
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    // protected $fillable = ['name', 'slug', 'status'];
 
     // public function getRouteKeyName()
     // {
@@ -17,8 +27,8 @@ class BlogCategory extends Model
 
     //tạo một scope để lấy ra các danh mục có trạng thái status là 1 (bật)
 
-    public function scopeActive($query)
-    {
-        return $query->where('status', 1);
-    }
+    // public function scopeActive($query)
+    // {
+    //         return $query->where('status', 1);
+    // }
 }
