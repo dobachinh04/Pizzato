@@ -18,6 +18,13 @@ class Category extends Model
         'show_at_home',
     ];
 
-
+<<<<<<<<< Temporary merge branch 1
+}
+=========
+    //Định nghĩa một scope để lấy ra các danh mục hiển thị ở trang chủ.
+    // public function scopeShowAtHome($query)
+    // {
+    //     return $query->where('show_at_home', 1);
+    // }
 }
 
