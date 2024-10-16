@@ -34,6 +34,12 @@ Route::get('/register', [AuthenticationController::class, 'displayRegister'])->n
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 
+// Route cho form đặt lại mật khẩu trực tiếp, không qua email
+Route::get('/forgot-password', [AuthenticationController::class, 'showForgotPasswordForm'])->name('password.request');
+
+// Route để xử lý việc đặt lại mật khẩu
+Route::post('/reset-password', [AuthenticationController::class, 'resetPassword'])->name('password.update');
+
 // Logout:
 // Route::post('/logout',                                  [AuthenticationController::class, 'logout'])->name('client.logout');
 

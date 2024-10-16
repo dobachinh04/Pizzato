@@ -29,6 +29,7 @@
         <button type="submit">Đăng Nhập</button>
     </form>
 
+    <p>Quên mật khẩu? <a href="{{ route('password.request') }}">Đặt lại mật khẩu</a></p>
     <p>Chưa có tài khoản? <a href="{{ route('client.register') }}">Đăng ký</a></p>
 </body>
 </html>
