@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDeliveryAreaRequest;
 use App\Models\DeliveryArea;
 use Illuminate\Http\Request;
 
@@ -23,21 +24,24 @@ class DeliveryAreaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.delivery_areas.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDeliveryAreaRequest $request )
     {
-        //
+        // Tạo mới khu vực giao hàng với dữ liệu đã xác thực
+        DeliveryArea::create($request->validated());
+        // Chuyển hướng về trang danh sách và hiển thị thông báo thành công
+        return redirect()->route('admin.delivery_areas.index')->with('success', 'Khu vực giao hàng đã được tạo thành công.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(DeliveryArea $blogCategory)
     {
         //
     }
