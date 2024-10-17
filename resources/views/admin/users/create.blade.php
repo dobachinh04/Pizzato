@@ -37,7 +37,7 @@
                                                 <div class="form-group">
                                                     <label for="basiInput" class="form-label">Họ và Tên</label>
                                                     <input type="text"
-                                                        class="form-control input-default @error('name') is-invalid @enderror"
+                                                        class="form-control input-default mb-3 @error('name') is-invalid @enderror"
                                                         placeholder="Nguyễn Văn A" name="name"
                                                         value="{{ old('name') }}">
                                                     @error('name')
@@ -48,8 +48,9 @@
                                                 <div class="form-group">
                                                     <label for="basiInput" class="form-label">Mật Khẩu</label>
                                                     <input type="password"
-                                                        class="form-control input-default @error('password') is-invalid @enderror"
-                                                        placeholder="" name="password" value="{{ old('password') }}">
+                                                        class="form-control input-default mb-3 @error('password') is-invalid @enderror"
+                                                        placeholder="Nhập Mật Khẩu" name="password"
+                                                        value="{{ old('password') }}">
                                                     @error('password')
                                                         <p>{{ $message }}</p>
                                                     @enderror
@@ -58,8 +59,8 @@
                                                 <div class="form-group">
                                                     <label for="basiInput" class="form-label">Nhập Lại Mật Khẩu</label>
                                                     <input type="password"
-                                                        class="form-control input-default @error('password_confirmation') is-invalid @enderror"
-                                                        name="password_confirmation"
+                                                        class="form-control input-default mb-3 @error('password_confirmation') is-invalid @enderror"
+                                                        name="password_confirmation" placeholder="Nhập Lại Mật Khẩu"
                                                         value="{{ old('password_confirmation') }}">
                                                     @error('password_confirmation')
                                                         <p>{{ $message }}</p>
@@ -71,7 +72,7 @@
                                                 <div class="form-group">
                                                     <label for="basiInput" class="form-label">Email</label>
                                                     <input type="text"
-                                                        class="form-control input-default @error('email') is-invalid @enderror"
+                                                        class="form-control input-default mb-3 @error('email') is-invalid @enderror"
                                                         placeholder="abc@gmail.com" name="email"
                                                         value="{{ old('email') }}">
                                                     @error('email')
@@ -81,7 +82,7 @@
 
                                                 <div class="form-group">
                                                     <label for="basiInput" class="form-label">Phân Quyền</label>
-                                                    <select class="form-control @error('role_id') is-invalid @enderror"
+                                                    <select class="form-control mb-3 @error('role_id') is-invalid @enderror"
                                                         name="role_id" value="{{ old('role_id') }}">
                                                         <option selected disabled>Chọn Vai Trò</option>
                                                         @foreach ($roles as $role)

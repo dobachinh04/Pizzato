@@ -53,7 +53,7 @@
                                             <th>Tạo Ngày</th>
                                             <th>Lần Cuối Cập Nhật</th>
                                             <th>Hành Động</th>
-                                            <th>Trạng Thái</th>
+                                            {{-- <th>Trạng Thái</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -135,7 +135,7 @@
                                                         <button type="submit" class="btn btn-danger">Xóa</button>
                                                     </form>
                                                 </td>
-                                                <td><span class="badge bg-danger">High</span></td>
+                                                {{-- <td><span class="badge bg-danger">High</span></td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

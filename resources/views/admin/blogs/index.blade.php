@@ -28,7 +28,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Người Dùng</h5>
+                                <h5 class="card-title mb-0">Danh Sách Blog</h5>
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
@@ -124,7 +124,7 @@
                                                 <td>{{ $blog->created_at }}</td>
                                                 <td>{{ $blog->updated_at }}</td>
                                                 <td>
-                                                 
+
                                                     <a href="{{ route('admin.blogs.edit', $blog) }}"
                                                         class="btn btn-warning">Sửa</a>
 
