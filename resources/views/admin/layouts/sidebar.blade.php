@@ -32,7 +32,7 @@
                 </ul>
             </li> --}}
 
-{{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+            {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                         class="fa-solid fa-tags"></i><span class="nav-text">Thẻ</span></a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('admin.tags.index') }}">Danh Sách Thẻ</a></li>
@@ -40,7 +40,7 @@
                 </ul>
             </li> --}}
 
-{{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+            {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                         class="fa-solid fa-cart-shopping"></i><span class="nav-text">Đơn Hàng</span></a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('admin.orders.index') }}">Danh Sách Đơn Hàng</a></li>
@@ -190,8 +190,8 @@
                                                 Mailbox </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#sidebaremailTemplates" class="nav-link"
-                                                data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                            <a href="#sidebaremailTemplates" class="nav-link" data-bs-toggle="collapse"
+                                                role="button" aria-expanded="false"
                                                 aria-controls="sidebaremailTemplates" data-key="t-email-templates">
                                                 Email Templates
                                             </a>
@@ -212,9 +212,8 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarEcommerce" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarEcommerce"
-                                    data-key="t-ecommerce">
+                                <a href="#sidebarEcommerce" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarEcommerce" data-key="t-ecommerce">
                                     Ecommerce
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarEcommerce">
@@ -232,8 +231,7 @@
                                                 data-key="t-create-product"> Create Product </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-ecommerce-orders.html" class="nav-link"
-                                                data-key="t-orders">
+                                            <a href="apps-ecommerce-orders.html" class="nav-link" data-key="t-orders">
                                                 Orders </a>
                                         </li>
                                         <li class="nav-item">
@@ -253,8 +251,7 @@
                                                 data-key="t-checkout"> Checkout </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-ecommerce-sellers.html" class="nav-link"
-                                                data-key="t-sellers">
+                                            <a href="apps-ecommerce-sellers.html" class="nav-link" data-key="t-sellers">
                                                 Sellers </a>
                                         </li>
                                         <li class="nav-item">
@@ -294,13 +291,11 @@
                                 <div class="collapse menu-dropdown" id="sidebarTasks">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="apps-tasks-kanban.html" class="nav-link"
-                                                data-key="t-kanbanboard">
+                                            <a href="apps-tasks-kanban.html" class="nav-link" data-key="t-kanbanboard">
                                                 Kanban Board </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-list-view.html" class="nav-link"
-                                                data-key="t-list-view">
+                                            <a href="apps-tasks-list-view.html" class="nav-link" data-key="t-list-view">
                                                 List View </a>
                                         </li>
                                         <li class="nav-item">
@@ -321,8 +316,7 @@
                                                 Contacts </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-crm-companies.html" class="nav-link"
-                                                data-key="t-companies">
+                                            <a href="apps-crm-companies.html" class="nav-link" data-key="t-companies">
                                                 Companies </a>
                                         </li>
                                         <li class="nav-item">
@@ -347,8 +341,7 @@
                                                 data-key="t-transactions"> Transactions </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-crypto-buy-sell.html" class="nav-link"
-                                                data-key="t-buy-sell">
+                                            <a href="apps-crypto-buy-sell.html" class="nav-link" data-key="t-buy-sell">
                                                 Buy & Sell </a>
                                         </li>
                                         <li class="nav-item">
@@ -356,8 +349,7 @@
                                                 Orders </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-crypto-wallet.html" class="nav-link"
-                                                data-key="t-my-wallet">
+                                            <a href="apps-crypto-wallet.html" class="nav-link" data-key="t-my-wallet">
                                                 My Wallet </a>
                                         </li>
                                         <li class="nav-item">
@@ -380,13 +372,11 @@
                                 <div class="collapse menu-dropdown" id="sidebarInvoices">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="apps-invoices-list.html" class="nav-link"
-                                                data-key="t-list-view">
+                                            <a href="apps-invoices-list.html" class="nav-link" data-key="t-list-view">
                                                 List View </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-invoices-details.html" class="nav-link"
-                                                data-key="t-details">
+                                            <a href="apps-invoices-details.html" class="nav-link" data-key="t-details">
                                                 Details </a>
                                         </li>
                                         <li class="nav-item">
@@ -426,12 +416,12 @@
                                                 data-key="t-marketplace"> Marketplace </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-nft-explore.html" class="nav-link"
-                                                data-key="t-explore-now"> Explore Now </a>
+                                            <a href="apps-nft-explore.html" class="nav-link" data-key="t-explore-now">
+                                                Explore Now </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-nft-auction.html" class="nav-link"
-                                                data-key="t-live-auction"> Live Auction </a>
+                                            <a href="apps-nft-auction.html" class="nav-link" data-key="t-live-auction">
+                                                Live Auction </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="apps-nft-item-details.html" class="nav-link"
@@ -450,8 +440,8 @@
                                                 Ranking </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-nft-wallet.html" class="nav-link"
-                                                data-key="t-wallet-connect"> Wallet Connect </a>
+                                            <a href="apps-nft-wallet.html" class="nav-link" data-key="t-wallet-connect">
+                                                Wallet Connect </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="apps-nft-create.html" class="nav-link" data-key="t-create-nft">
@@ -461,8 +451,8 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-file-manager.html" class="nav-link"> <span
-                                        data-key="t-file-manager">File Manager</span></a>
+                                <a href="apps-file-manager.html" class="nav-link"> <span data-key="t-file-manager">File
+                                        Manager</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-todo.html" class="nav-link"> <span data-key="t-to-do">To Do</span></a>
@@ -473,8 +463,8 @@
                                 <div class="collapse menu-dropdown" id="sidebarjobs">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="apps-job-statistics.html" class="nav-link"
-                                                data-key="t-statistics"> Statistics </a>
+                                            <a href="apps-job-statistics.html" class="nav-link" data-key="t-statistics">
+                                                Statistics </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#sidebarJoblists" class="nav-link" data-bs-toggle="collapse"
@@ -501,8 +491,8 @@
                                             </div>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#sidebarCandidatelists" class="nav-link"
-                                                data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                            <a href="#sidebarCandidatelists" class="nav-link" data-bs-toggle="collapse"
+                                                role="button" aria-expanded="false"
                                                 aria-controls="sidebarCandidatelists" data-key="t-candidate-lists">
                                                 Candidate Lists
                                             </a>
@@ -609,9 +599,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#sidebarResetPass" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarResetPass"
-                                    data-key="t-password-reset">
+                                <a href="#sidebarResetPass" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarResetPass" data-key="t-password-reset">
                                     Password Reset
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarResetPass">
@@ -629,21 +618,19 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#sidebarchangePass" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarchangePass"
+                                <a href="#sidebarchangePass" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarchangePass"
                                     data-key="t-password-create">
                                     Password Create
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarchangePass">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="auth-pass-change-basic.html" class="nav-link"
-                                                data-key="t-basic">
+                                            <a href="auth-pass-change-basic.html" class="nav-link" data-key="t-basic">
                                                 Basic </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="auth-pass-change-cover.html" class="nav-link"
-                                                data-key="t-cover">
+                                            <a href="auth-pass-change-cover.html" class="nav-link" data-key="t-cover">
                                                 Cover </a>
                                         </li>
                                     </ul>
@@ -651,9 +638,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#sidebarLockScreen" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarLockScreen"
-                                    data-key="t-lock-screen">
+                                <a href="#sidebarLockScreen" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarLockScreen" data-key="t-lock-screen">
                                     Lock Screen
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarLockScreen">
@@ -690,20 +676,18 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarSuccessMsg" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarSuccessMsg"
+                                <a href="#sidebarSuccessMsg" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarSuccessMsg"
                                     data-key="t-success-message"> Success Message
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarSuccessMsg">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="auth-success-msg-basic.html" class="nav-link"
-                                                data-key="t-basic">
+                                            <a href="auth-success-msg-basic.html" class="nav-link" data-key="t-basic">
                                                 Basic </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="auth-success-msg-cover.html" class="nav-link"
-                                                data-key="t-cover">
+                                            <a href="auth-success-msg-cover.html" class="nav-link" data-key="t-cover">
                                                 Cover </a>
                                         </li>
                                     </ul>
@@ -825,12 +809,12 @@
                                     Search Results </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-privacy-policy.html" class="nav-link"
-                                    data-key="t-privacy-policy">Privacy Policy</a>
+                                <a href="pages-privacy-policy.html" class="nav-link" data-key="t-privacy-policy">Privacy
+                                    Policy</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-term-conditions.html" class="nav-link"
-                                    data-key="t-term-conditions">Term & Conditions</a>
+                                <a href="pages-term-conditions.html" class="nav-link" data-key="t-term-conditions">Term
+                                    & Conditions</a>
                             </li>
                         </ul>
                     </div>
@@ -890,8 +874,8 @@
                     <div class="collapse menu-dropdown" id="sidebarTags">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.tags.index') }}" class="nav-link"
-                                    data-key="t-one-page">Danh Sách Thẻ</a>
+                                <a href="{{ route('admin.tags.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                    Sách Thẻ</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.tags.create') }}" class="nav-link"
@@ -909,8 +893,7 @@
                     <div class="collapse menu-dropdown" id="sidebarOrders">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.orders.index') }}" class="nav-link"
-                                    data-key="t-one-page">Danh
+                                <a href="{{ route('admin.orders.index') }}" class="nav-link" data-key="t-one-page">Danh
                                     Sách Đơn Hàng</a>
                             </li>
                             <li class="nav-item">
@@ -935,6 +918,25 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.addresses.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Địa chỉ đơn hàng</a>
+                    </div>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebardelivery_areas" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebardelivery_areas">
+                        <i class="fas fa-truck"></i> <span data-key="t-landing">Địa chỉ giao hàng</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebardelivery_areas">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.delivery_areas.index') }}" class="nav-link"
+                                    data-key="t-one-page">Địa chỉ giao hàng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.delivery_areas.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Địa chỉ giao hàng</a>
+                            </li>
+                    </div>
+
                     <a class="nav-link menu-link" href="#sidebarBlogCategories" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarBlogCategories">
                         <i class="fas fa-book"></i> <span data-key="t-landing">Danh Mục Blog</span>
@@ -961,8 +963,8 @@
                     <div class="collapse menu-dropdown" id="sidebarBlogs">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.blogs.index') }}" class="nav-link"
-                                    data-key="t-one-page">Danh Sách Blogs</a>
+                                <a href="{{ route('admin.blogs.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                    Sách Blogs</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.blogs.create') }}" class="nav-link"
@@ -979,8 +981,8 @@
                     <div class="collapse menu-dropdown" id="sidebarSliders">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.sliders.index') }}" class="nav-link"
-                                    data-key="t-one-page">Danh Sách Slider</a>
+                                <a href="{{ route('admin.sliders.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                    Sách Slider</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.sliders.create') }}" class="nav-link"
@@ -998,8 +1000,8 @@
                     <div class="collapse menu-dropdown" id="sidebarUsers">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link"
-                                    data-key="t-one-page">Danh Sách Người Dùng</a>
+                                <a href="{{ route('admin.users.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                    Sách Người Dùng</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.users.create') }}" class="nav-link"
@@ -1039,8 +1041,8 @@
                     <div class="collapse menu-dropdown" id="sidebarPayment">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.payment.index') }}" class="nav-link"
-                                    data-key="t-one-page">Danh Sách Thanh Toán</a>
+                                <a href="{{ route('admin.payment.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                    Sách Thanh Toán</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.payment.create') }}" class="nav-link"
@@ -1053,8 +1055,8 @@
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Điều Hướng</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('client.home') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarHome">
+                    <a class="nav-link menu-link" href="{{ route('client.home') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarHome">
                         <i class="fa-solid fa-door-open"></i>Quay Về Trang Chủ</span>
                     </a>
                 </li>
@@ -1119,8 +1121,7 @@
                                             data-key="t-placeholders">Placeholders</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="ui-progress.html" class="nav-link"
-                                            data-key="t-progress">Progress</a>
+                                        <a href="ui-progress.html" class="nav-link" data-key="t-progress">Progress</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="ui-notifications.html" class="nav-link"
@@ -1146,9 +1147,8 @@
                                         <a href="ui-lists.html" class="nav-link" data-key="t-lists">Lists</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="ui-links.html" class="nav-link"><span
-                                                data-key="t-links">Links</span> <span
-                                                class="badge badge-pill bg-success" data-key="t-new">New</span></a>
+                                        <a href="ui-links.html" class="nav-link"><span data-key="t-links">Links</span>
+                                            <span class="badge badge-pill bg-success" data-key="t-new">New</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="ui-general.html" class="nav-link" data-key="t-general">General</a>
@@ -1174,13 +1174,11 @@
                     <div class="collapse menu-dropdown" id="sidebarAdvanceUI">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="advance-ui-sweetalerts.html" class="nav-link"
-                                    data-key="t-sweet-alerts">Sweet
+                                <a href="advance-ui-sweetalerts.html" class="nav-link" data-key="t-sweet-alerts">Sweet
                                     Alerts</a>
                             </li>
                             <li class="nav-item">
-                                <a href="advance-ui-nestable.html" class="nav-link"
-                                    data-key="t-nestable-list">Nestable
+                                <a href="advance-ui-nestable.html" class="nav-link" data-key="t-nestable-list">Nestable
                                     List</a>
                             </li>
                             <li class="nav-item">
@@ -1254,8 +1252,7 @@
                                     Slider </a>
                             </li>
                             <li class="nav-item">
-                                <a href="forms-validation.html" class="nav-link"
-                                    data-key="t-validation">Validation</a>
+                                <a href="forms-validation.html" class="nav-link" data-key="t-validation">Validation</a>
                             </li>
                             <li class="nav-item">
                                 <a href="forms-wizard.html" class="nav-link" data-key="t-wizard">Wizard</a>
@@ -1296,8 +1293,7 @@
                                 <a href="tables-listjs.html" class="nav-link" data-key="t-list-js">List Js</a>
                             </li>
                             <li class="nav-item">
-                                <a href="tables-datatables.html" class="nav-link"
-                                    data-key="t-datatables">Datatables</a>
+                                <a href="tables-datatables.html" class="nav-link" data-key="t-datatables">Datatables</a>
                             </li>
                         </ul>
                     </div>
@@ -1311,9 +1307,8 @@
                     <div class="collapse menu-dropdown" id="sidebarCharts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#sidebarApexcharts" class="nav-link" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false" aria-controls="sidebarApexcharts"
-                                    data-key="t-apexcharts">
+                                <a href="#sidebarApexcharts" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarApexcharts" data-key="t-apexcharts">
                                     Apexcharts
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarApexcharts">
@@ -1342,21 +1337,18 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-timeline.html" class="nav-link"
-                                                data-key="t-timeline">
+                                            <a href="charts-apex-timeline.html" class="nav-link" data-key="t-timeline">
                                                 Timeline </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="charts-apex-range-area.html" class="nav-link"><span
                                                     data-key="t-range-area">Range Area</span> <span
-                                                    class="badge badge-pill bg-success"
-                                                    data-key="t-new">New</span></a>
+                                                    class="badge badge-pill bg-success" data-key="t-new">New</span></a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="charts-apex-funnel.html" class="nav-link"><span
                                                     data-key="t-funnel">Funnel</span> <span
-                                                    class="badge badge-pill bg-success"
-                                                    data-key="t-new">New</span></a>
+                                                    class="badge badge-pill bg-success" data-key="t-new">New</span></a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="charts-apex-candlestick.html" class="nav-link"
@@ -1396,8 +1388,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="charts-apex-polar.html" class="nav-link"
-                                                data-key="t-polar-area">
+                                            <a href="charts-apex-polar.html" class="nav-link" data-key="t-polar-area">
                                                 Polar Area </a>
                                         </li>
                                     </ul>
@@ -1439,9 +1430,8 @@
                                     Awesome</a>
                             </li>
                             <li class="nav-item">
-                                <a href="icons-feather.html" class="nav-link"><span
-                                        data-key="t-feather">Feather</span> <span
-                                        class="badge badge-pill bg-info">v4.29</span></a>
+                                <a href="icons-feather.html" class="nav-link"><span data-key="t-feather">Feather</span>
+                                    <span class="badge badge-pill bg-info">v4.29</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="icons-crypto.html" class="nav-link"> <span data-key="t-crypto-svg">Crypto
