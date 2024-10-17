@@ -17,4 +17,4 @@ class Category extends Model
         'status',
         'show_at_home',
     ];
-
+}
