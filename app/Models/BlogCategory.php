@@ -31,3 +31,4 @@ class BlogCategory extends Model
         // }
     }
 }
+}
