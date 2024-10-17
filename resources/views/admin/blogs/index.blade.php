@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Người Dùng - Pizzato
+    Danh Sách Blog - Pizzato
 @endsection
 
 @section('content')
@@ -46,14 +46,16 @@
                                             </th>
                                             {{-- <th data-ordering="false">SR No.</th> --}}
                                             <th>ID</th>
-                                            <th>Họ Tên</th>
-                                            <th>Ảnh</th>
-                                            <th>Email</th>
-                                            <th>Vai Trò</th>
-                                            <th>Tạo Ngày</th>
-                                            <th>Lần Cuối Cập Nhật</th>
-                                            <th>Hành Động</th>
-                                            {{-- <th>Trạng Thái</th> --}}
+                                            <th>User ID</th>
+                                            <th>Category ID</th>
+                                            <th>Image</th>
+                                            <th>Title</th>
+                                            <th>Slug</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -99,7 +101,7 @@
                                                 </div>
                                             </td>
                                         </tr> --}}
-                                        @foreach ($users as  $user)
+                                        @foreach ($blogs as $stt => $blog)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -107,26 +109,26 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-
+                                                <td>{{$stt+1}}</td>
+                                                <td>{{$blog->user_id}}</td>
+                                                <td>{{$blog->category_id}}</td>
                                                 <td>
-                                                    <img src="{{ asset('storage/' . $user->image) }}"
+                                                    <img src="{{ asset('storage/' . $blog->image) }}"
                                                         style="width: 75px; height: 75px; object-fit: cover"
                                                         alt="Ảnh Người Dùng">
                                                 </td>
-
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->role->name }}</td>
-                                                <td>{{ $user->created_at }}</td>
-                                                <td>{{ $user->updated_at }}</td>
+                                                <td>{{$blog->title}}</td>
+                                                <td>{{$blog->slug}}</td>
+                                                <td>{{$blog->description}}</td>
+                                                <td>{{$blog->status}}</td>
+                                                <td>{{ $blog->created_at }}</td>
+                                                <td>{{ $blog->updated_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.users.show', $user) }}"
-                                                        class="btn btn-primary">Chi Tiết</a>
-                                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                                 
+                                                    <a href="{{ route('admin.blogs.edit', $blog) }}"
                                                         class="btn btn-warning">Sửa</a>
 
-                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
+                                                    <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST"
                                                         style="display: inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
@@ -135,7 +137,7 @@
                                                         <button type="submit" class="btn btn-danger">Xóa</button>
                                                     </form>
                                                 </td>
-                                                {{-- <td><span class="badge bg-danger">High</span></td> --}}
+                                                <td><span class="badge bg-danger">High</span></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -23,7 +23,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
                 'name' => 'required|min:3|max:255',
-                'slug' => 'required|min:3|max:255|unique:categories',
+                'slug' => 'required|min:3|max:255',
                 // 'status' => 'required',
                 // 'show_at_home' => 'required',
         ];
@@ -36,7 +36,6 @@ class UpdateCategoryRequest extends FormRequest
             'slug.required' => "slug không được để trống",
             'slug.min' =>"slug phải ít nhất 3 ký tự ",
             'slug.max' =>"slug phải nhiều nhất 255 ký tự ",
-            'slug.unique' => 'Slug đã tồn tại',
         ];
     }
     public function run() {

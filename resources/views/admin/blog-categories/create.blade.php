@@ -1,10 +1,11 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Cập Nhật Danh Mục - Pizzato
+Thêm Mới Danh Mục Blog - Pizzato
 @endsection
 
 @section('content')
+
 @if (Session::has('success'))
 <div class="alert alert-success solid alert-dismissible fade show">
     <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
@@ -32,53 +33,41 @@
                 <div class="col-xl-12 col-xxl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Cập nhật Danh Mục</h4>
+                            <h4 class="card-title">Thêm Mới Danh Mục Blog</h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
-                                <form action="{{ route('admin.categories.update', $categories->id) }}" method="POST"
+                                <form action="{{ route('admin.blog-categories.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-
-                                    @method('PUT')
-
+                                
                                     <div class="form-group">
                                         <label>Name</label>
                                         <input type="text" name="name" class="form-control input-default "
-                                            placeholder="Tên Danh Mục" value="{{$categories->name}}" required>
+                                            placeholder="Tên Danh Mục" required>
                                             <br>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Slug</label>
+                                        <label>slug</label>
                                         <input type="text" name="slug" class="form-control input-default "
-                                            placeholder="VD: danh-muc-1" value="{{$categories->slug}}" required>
+                                            placeholder="VD: danh-muc-1" required>
                                             <br>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Status</label>
-                                        <select name="status" class="form-control input-default" value="{{$categories->status}}">
+                                        <label>status</label>
+                                        <select name="status" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
-                                            <option value="1" >Còn hàng</option>
-                                            <option value="0">hết hàng</option>
+                                            <option value="1" selected>Bật</option>
+                                            <option value="0">Tắt</option>
                                         </select>
                                         <br>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label>Show_at_home</label>
-                                        <select name="show_at_home" class="form-control input-default" value="{{$categories->show_at_home}}">
-                                            <option disabled>Chọn Trạng Thái</option>
-                                            <option value="1">Hiển thị</option>
-                                            <option value="0">Ẩn</option>
-                                        </select>
-                                        <br>
-                                    </div>
-
-                                    <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">
+                                    <br>
+                                    <a href="{{ route('admin.blog-categories.index') }}" class="btn btn-secondary">
                                         Quay Lại</a>
-                                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                                    <button type="submit" class="btn btn-success">Thêm Mới</button>
                                 </form>
                             </div>
                         </div>
