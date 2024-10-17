@@ -35,14 +35,11 @@
             <input type="password" name="password_confirmation" id="password_confirmation" >
         </div>
         <div>
-          <label for="role_id">Vai trò:</label>
-          <select name="role_id" id="role_id" required>
-              <option value="">Chọn vai trò</option>
-              @foreach ($roles as $role)
-                  <option value="{{ $role->id }}">{{ $role->name }}</option> <!-- Giả sử bạn có thuộc tính name trong model Role -->
-              @endforeach
-          </select>
-      </div>
+            <label for="role_id">Vai trò:</label>
+            <input type="hidden" name="role_id" id="role_id" value="1"> <!-- Giả sử ID của vai trò "User" là 1 -->
+            <span>User</span> <!-- Hiển thị vai trò "User" -->
+        </div>
+        
         <button type="submit">Đăng Ký</button>
     </form>
 
