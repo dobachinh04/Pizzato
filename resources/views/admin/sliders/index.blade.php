@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Người Dùng - Pizzato
+    Danh Sách Slider - Pizzato
 @endsection
 
 @section('content')
@@ -28,8 +28,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Người Dùng</h5>
-                                <a href="{{ route('admin.users.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Slider</h5>
+                                <a href="{{ route('admin.sliders.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">
@@ -102,7 +102,7 @@
                                             </td>
                                         </tr> --}}
                                         @foreach ($sliders as $stt => $sl)
-                                        
+
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -111,11 +111,11 @@
                                                     </div>
                                                 </th>
                                                 <td>{{$stt+1}}</td>
-                                              
+
                                                 <td>
                                                     <img src="{{ asset('storage/' . $sl->image) }}"
                                                         style="width: 75px; height: 75px; object-fit: cover"
-                                                        alt="Ảnh Người Dùng">
+                                                        alt="Ảnh Slider">
                                                 </td>
                                                 <td>{{$sl->offer}}</td>
                                                 <td>{{$sl->title}}</td>
@@ -126,7 +126,7 @@
                                                 <td>{{ $sl->created_at }}</td>
                                                 <td>{{ $sl->updated_at }}</td>
                                                 <td>
-                                                 
+
                                                     <a href="{{ route('admin.sliders.edit', $sl) }}"
                                                         class="btn btn-warning">Sửa</a>
 

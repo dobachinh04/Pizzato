@@ -10,12 +10,12 @@ class User extends Model
     use HasFactory;
 
     protected $fillable = [
-      'name',
-      'image',
-      'email',
-      'password',
-      'email_verified_at',
-      'role_id'
+        'name',
+        'image',
+        'email',
+        'password',
+        'email_verified_at',
+        'role_id'
 
 
     ];
@@ -30,6 +30,7 @@ class User extends Model
     public function address()
     {
         return $this->hasMany(related: Address::class);
+    }
     public function blogs()
     {
         return $this->hasMany(Blog::class);
