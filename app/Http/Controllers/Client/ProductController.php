@@ -15,10 +15,13 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::where('show_at_home', 1)
-            ->where('status', 1) // Chỉ hiển thị các sản phẩm còn hàng (Active)
+            ->where('status', 1)
             ->get();
 
-        return view('client.home', compact('products'));
+        return response()->json([
+            'products' => $products,
+            'message' => 'success'
+        ], 200);
     }
 
     /**
@@ -42,9 +45,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //     // dd($product);
-        //     // Tăng lượt xem lên 1
         $product->increment('view');
+
         return view('client.show', compact('product'));
     }
 

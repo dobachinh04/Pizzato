@@ -13,13 +13,13 @@ return new class extends Migration
     {
         // Bảng địa chỉ giao hàng
         Schema::create('delivery_areas', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->string('area_name'); // Tên khu vực
-            $table->string('min_delivery_time'); // Thời gian giao hàng tối thiểu
-            $table->string('max_delivery_time'); // Thời gian giao hàng tối đa
-            $table->double('delivery_fee'); // Phí giao hàng
-            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+            $table->string('area_name');
+            $table->string('min_delivery_time');
+            $table->string('max_delivery_time');
+            $table->double('delivery_fee');
+            $table->boolean('status')->default('1');
+            $table->timestamps();
         });
     }
 

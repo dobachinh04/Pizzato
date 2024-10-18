@@ -36,14 +36,14 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.dashboard') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarHome">
-                        <i class="fa-solid fa-cube"></i>Bảng Điều Khiển</span>
+                        <i class="fa-solid fa-cube"></i> <span data-key="t-dashboards">Bảng Điều Khiển</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.chart') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-line"></i>Thống Kê Doanh Thu</span>
+                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Thống Kê Doanh Thu</span>
                     </a>
                 </li>
 
@@ -245,7 +245,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('client.home') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarHome">
-                        <i class="fa-solid fa-door-open"></i>Quay Về Trang Chủ</span>
+                        <i class="fa-solid fa-door-open"></i> <span data-key="t-dashboards">Quay Về Trang Chủ</span>
                     </a>
                 </li>
             </ul>

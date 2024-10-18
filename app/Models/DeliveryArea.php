@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class DeliveryArea extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'area_name',
         'min_delivery_time',
@@ -16,6 +17,7 @@ class DeliveryArea extends Model
         'delivery_fee',
         'status',
     ];
+
     public function addresses()
     {
         return $this->hasMany(Address::class);

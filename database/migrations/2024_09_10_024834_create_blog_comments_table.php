@@ -13,12 +13,14 @@ return new class extends Migration
     {
         // Bảng bình luận blog
         Schema::create('blog_comments', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade'); // ID blog
-            $table->foreignId('user_id'); // ID người dùng
-            $table->text('comment'); // Bình luận
-            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+
+            $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade');
+            $table->foreignId('user_id');
+
+            $table->text('comment');
+            $table->boolean('status')->default('1');
+            $table->timestamps();
         });
     }
 

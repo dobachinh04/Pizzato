@@ -120,37 +120,38 @@
                                                 </div>
 
                                                 <div class="form-group mb-3">
-                                                    <input type="file" class="custom-file-input @error ('image') is-invalid @enderror" name="image"
-                                                    accept="image/*" value="{{ old('image', $user->image) }}">
-                                                <label class="custom-file-label">Chọn Ảnh</label>
-                                          
-                                         
-                                        </div>
-                                        @error('image')
-                                        <p>{{$message}}</p>
-                                        @enderror
-                                        @if ($user->image)
-                                          
-                                            <img class="mb-3" src="{{ asset('storage/' . $user->image) }}"
-                                                style="width: 100px;" alt="Ảnh Cũ">
-                                        @endif
+                                                    <input type="file"
+                                                        class="custom-file-input @error('image') is-invalid @enderror"
+                                                        name="image" accept="image/*"
+                                                        value="{{ old('image', $user->image) }}">
+                                                    <label class="custom-file-label">Chọn Ảnh</label>
+
+
                                                 </div>
                                                 @error('image')
                                                     <p>{{ $message }}</p>
                                                 @enderror
+                                                @if ($user->image)
+                                                    <img class="mb-3" src="{{ asset('storage/' . $user->image) }}"
+                                                        style="width: 100px;" alt="Ảnh Cũ">
+                                                @endif
                                             </div>
+                                            @error('image')
+                                                <p>{{ $message }}</p>
+                                            @enderror
                                         </div>
-
-                                        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                                            Quay Lại</a>
-                                        <button type="submit" class="btn btn-warning">Cập Nhật</button>
-                                    </form>
                                 </div>
+
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                                    Quay Lại</a>
+                                <button type="submit" class="btn btn-warning">Cập Nhật</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

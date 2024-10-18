@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'image',
         'email',
         'password',
         'email_verified_at',
-       'role_id'
+        'role_id'
     ];
+
     public function orders()
     {
         return $this->hasMany(related: Order::class);

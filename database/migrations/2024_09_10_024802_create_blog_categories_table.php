@@ -13,11 +13,11 @@ return new class extends Migration
     {
         // Bảng danh mục blog
         Schema::create('blog_categories', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->string('name'); // Tên danh mục blog
-            $table->string('slug'); // Tên SEO
-            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->boolean('status')->default('1');
+            $table->timestamps();
         });
     }
 

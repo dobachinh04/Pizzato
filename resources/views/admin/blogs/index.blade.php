@@ -109,18 +109,18 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{$stt+1}}</td>
-                                                <td>{{$blog->user_id}}</td>
-                                                <td>{{$blog->category_id}}</td>
+                                                <td>{{ $stt + 1 }}</td>
+                                                <td>{{ $blog->user_id }}</td>
+                                                <td>{{ $blog->category_id }}</td>
                                                 <td>
                                                     <img src="{{ asset('storage/' . $blog->image) }}"
                                                         style="width: 75px; height: 75px; object-fit: cover"
                                                         alt="Ảnh Người Dùng">
                                                 </td>
-                                                <td>{{$blog->title}}</td>
-                                                <td>{{$blog->slug}}</td>
-                                                <td>{{$blog->description}}</td>
-                                                <td>{{$blog->status}}</td>
+                                                <td>{{ $blog->title }}</td>
+                                                <td>{{ $blog->slug }}</td>
+                                                <td>{{ $blog->description }}</td>
+                                                <td>{{ $blog->status }}</td>
                                                 <td>{{ $blog->created_at }}</td>
                                                 <td>{{ $blog->updated_at }}</td>
                                                 <td>
@@ -165,5 +165,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="/velzon/assets/js/pages/datatables.init.js"></script>
-    </body>
 @endsection

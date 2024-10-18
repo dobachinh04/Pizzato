@@ -13,10 +13,12 @@ return new class extends Migration
     {
         // Bảng Galleries - ảnh phụ sản phẩm
         Schema::create('product_galleries', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->foreignId('product_id')->constrained('products'); // ID sản phẩm
-            $table->string('image'); // Ảnh galleries (Ảnh phụ)
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+
+            $table->foreignId('product_id')->constrained('products');
+
+            $table->string('image');
+            $table->timestamps();
         });
     }
 

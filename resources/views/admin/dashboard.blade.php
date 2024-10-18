@@ -1024,18 +1024,18 @@
                                                     <div class="d-inline-flex gap-2 border border-dashed p-2 mb-2">
                                                         <a href="apps-ecommerce-product-details.html"
                                                             class="bg-light rounded p-1">
-                                                            <img src="/velzon/assets/images/products/img-8.png" alt=""
-                                                                class="img-fluid d-block" />
+                                                            <img src="/velzon/assets/images/products/img-8.png"
+                                                                alt="" class="img-fluid d-block" />
                                                         </a>
                                                         <a href="apps-ecommerce-product-details.html"
                                                             class="bg-light rounded p-1">
-                                                            <img src="/velzon/assets/images/products/img-2.png" alt=""
-                                                                class="img-fluid d-block" />
+                                                            <img src="/velzon/assets/images/products/img-2.png"
+                                                                alt="" class="img-fluid d-block" />
                                                         </a>
                                                         <a href="apps-ecommerce-product-details.html"
                                                             class="bg-light rounded p-1">
-                                                            <img src="/velzon/assets/images/products/img-10.png" alt=""
-                                                                class="img-fluid d-block" />
+                                                            <img src="/velzon/assets/images/products/img-10.png"
+                                                                alt="" class="img-fluid d-block" />
                                                         </a>
                                                     </div>
                                                     <p class="mb-0 text-muted"><small>9:47 PM Yesterday</small></p>

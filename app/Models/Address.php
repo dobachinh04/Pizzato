@@ -19,10 +19,12 @@ class Address extends Model
         'address',
         'type'
       ];
+
       public function users()
       {
           return $this->belongsTo(User::class);
       }
+
       public function delivery_area()
       {
           return $this->belongsTo(DeliveryArea::class);

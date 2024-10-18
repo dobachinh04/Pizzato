@@ -99,7 +99,7 @@
                                                 </div>
                                             </td>
                                         </tr> --}}
-                                        @foreach ($users as  $user)
+                                        @foreach ($users as $user)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBlogCategoryRequest extends FormRequest
+class StoreAddressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,20 +22,20 @@ class UpdateBlogCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:3|max:255',
-            'slug' => 'required|min:3|max:255|unique:blog_categories',
+            'user_id' => 'required|integer',
+            'delivery_area_id' => 'required|integer',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string',
+            'type' => 'required|string',
         ];
     }
     public function error(): array
     {
         return [
-            'name.required' => "tên không được để trống",
-            'name.min' => "tên phải ít nhất 3 ký tự ",
-            'name.max' => "tên phải nhiều nhất 255 ký tự ",
-            'slug.required' => "slug không được để trống",
-            'slug.min' => "slug phải ít nhất 3 ký tự ",
-            'slug.max' => "slug phải nhiều nhất 255 ký tự ",
-            'slug.unique' => 'Slug đã tồn tại',
+            //
         ];
     }
     public function run()
