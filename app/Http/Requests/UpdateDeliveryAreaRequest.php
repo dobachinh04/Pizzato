@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDeliveryAreaRequest extends FormRequest
+class UpdateDeliveryAreaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,7 +38,7 @@ class StoreDeliveryAreaRequest extends FormRequest
     public function messages()
     {
         return [
-            'area_name.required' => 'Tên khu vực là bắt buộc.',
+           'area_name.required' => 'Tên khu vực là bắt buộc.',
             'area_name.requirred' => 'Tên khu vực là bắt buộc.',
             'area_name.max' => 'Tên khu vực có độ dài tối đa là 255 ký tự',
             'min_delivery_time.required' => 'Thời gian giao hàng tối thiểu là bắt buộc.',

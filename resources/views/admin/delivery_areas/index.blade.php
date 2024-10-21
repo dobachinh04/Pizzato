@@ -66,7 +66,7 @@ Danh Sách Địa Chỉ Giao Hàng - Pizzato
                                             <td>{{ $area->min_delivery_time }}</td>
                                             <td>{{ $area->max_delivery_time }}</td>
                                             <td>{{ $area->delivery_fee }}</td>
-                                            <td>{{ $area->status ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $area->status == 1 ? 'Active' : 'Inactive'}}</td>
                                             <td>
                                                 <a href="{{ route('admin.delivery_areas.edit', $area->id) }}"
                                                     class="btn btn-warning">Sửa</a>
