@@ -1,3 +1,4 @@
+@ -1,32 +0,0 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained(); // ID người dùng
             $table->foreignId('product_id'); //ID các sản phẩm
             $table->foreignId('coupons_id')->nullable(); //ID mã giảm giá
+            $table->integer('quantity')->default(1);
             $table->double('grand_total'); // Tổng tiền
             $table->timestamps(); // Thời gian tạo
         });
