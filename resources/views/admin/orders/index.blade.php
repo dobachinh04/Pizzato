@@ -44,23 +44,15 @@
                                                         value="option">
                                                 </div>
                                             </th>
-                                            <th>ID</th>
-                                            <th>Invoice ID</th>
-                                            <th>User ID</th>
-                                            <th>Address</th>
-                                            <th>Discount</th>
-                                            <th>Delivery Charge</th>
-                                            <th>Subtotal</th>
-                                            <th>Grand Total</th>
-                                            <th>Product Quantity</th>
-                                            <th>Payment Method</th>
-                                            <th>Payment Status</th>
-                                            <th>Payment Approve Date</th>
-                                            <th>Transaction ID</th>
-                                            <th>Coupon Info</th>
-                                            <th>Currency Name</th>
-                                            <th>Order Status</th>
-                                            <th>Address ID</th>
+                                            <th>ID Hóa Đơn</th>
+                                            <th>Khách Hàng</th>
+                                            <th>Địa Chỉ</th>
+                                            <th>Phí Vận Chuyển</th>
+                                            <th>Tổng Tiền</th>
+                                            <th>Trạng Thái Thanh Toán</th>
+                                            {{-- sửa ngày thanh toán thành ngày đặt --}}
+                                            <th>Ngày Đặt Hàng (Nhớ sửa)</th>
+                                            <th>Trạng Thái Giao Hàng</th>
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
@@ -73,28 +65,19 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{ $item + 1 }}</td>
                                                 <td>{{ $order->invoice_id }}</td>
                                                 <td>{{ $order->user_id }}</td>
-                                                <td>{{ $order->address }}</td>
-                                                <td>{{ $order->discount }}</td>
+                                                <td>{{ $order->address_id }}</td>
                                                 <td>{{ $order->delivery_charge }}</td>
-                                                <td>{{ $order->subtotal }}</td>
                                                 <td>{{ $order->grand_total }}</td>
-                                                <td>{{ $order->product_qty }}</td>
-                                                <td>{{ $order->payment_method }}</td>
                                                 <td>{{ $order->payment_status }}</td>
                                                 <td>{{ $order->payment_approve_date }}</td>
-                                                <td>{{ $order->transaction_id }}</td>
-                                                <td>{{ $order->coupon_info }}</td>
-                                                <td>{{ $order->currency_name }}</td>
                                                 <td>{{ $order->order_status }}</td>
-                                                <td>{{ $order->address_id }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.orders.show', $order) }}"
-                                                        class="btn btn-primary">Chi Tiết</a>
+                                                        class="btn btn-info">Chi Tiết</a>
                                                     <a href="{{ route('admin.orders.edit', $order) }}"
-                                                        class="btn btn-warning">Sửa</a>
+                                                        class="btn btn-warning">Cập Nhật</a>
 
                                                     <form action="{{ route('admin.orders.destroy', $order) }}"
                                                         method="POST" style="display: inline;"
@@ -102,7 +85,7 @@
                                                         @csrf
                                                         @method('DELETE')
 
-                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                        <button type="submit" class="btn btn-danger">Hủy Đơn</button>
                                                     </form>
                                                 </td>
                                             </tr>

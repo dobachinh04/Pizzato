@@ -249,7 +249,7 @@
                         <!-- App Search-->
                         <form class="app-search d-none d-md-block">
                             <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
+                                <input type="text" class="form-control" placeholder="Tìm Kiếm..." autocomplete="off"
                                     id="search-options" value="">
                                 <span class="mdi mdi-magnify search-widget-icon"></span>
                                 <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none"
@@ -354,7 +354,7 @@
                                 <form class="p-3">
                                     <div class="form-group m-0">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search ..."
+                                            <input type="text" class="form-control" placeholder="Tìm Kiếm..."
                                                 aria-label="Recipient's username">
                                             <button class="btn btn-primary" type="submit"><i
                                                     class="mdi mdi-magnify"></i></button>
@@ -364,7 +364,7 @@
                             </div>
                         </div>
 
-                        <div class="dropdown ms-1 topbar-head-dropdown header-item">
+                        {{-- <div class="dropdown ms-1 topbar-head-dropdown header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img id="header-lang-img" src="/velzon/assets/images/flags/us.svg"
@@ -436,9 +436,9 @@
                                     <span class="align-middle">Arabic</span>
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                        {{-- <div class="dropdown topbar-head-dropdown ms-1 header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bx-category-alt fs-22'></i>
@@ -501,9 +501,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                        {{-- <div class="dropdown topbar-head-dropdown ms-1 header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                                 id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                 aria-haspopup="true" aria-expanded="false">
@@ -681,7 +681,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="ms-1 header-item d-none d-sm-flex">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
@@ -1043,7 +1043,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <h6 class="dropdown-header">Welcome Anna!</h6>
+                                <h6 class="dropdown-header">Xin Chào Anna!</h6>
                                 <a class="dropdown-item" href="pages-profile.html"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>

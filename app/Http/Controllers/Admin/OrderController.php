@@ -96,4 +96,10 @@ class OrderController extends Controller
             ->route('admin.order.index')
             ->with('errors', 'Xóa thành công');
     }
+
+    public function deleted()
+    {
+        $orders = Order::get();
+        return view('admin.orders.index', compact('orders'));
+    }
 }
