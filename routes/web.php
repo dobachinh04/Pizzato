@@ -178,6 +178,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{payment}',                      [UserController::class, 'show'])->name('show');
         Route::delete('/{payment}',                        [UserController::class, 'destroy'])->name('destroy');
     });
-    
+
 });
 Route::resource('carts', CartController::class);

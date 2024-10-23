@@ -6,7 +6,7 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
- 
+
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -48,6 +48,6 @@
                     @endforeach
                 </tbody>
             </table>
-      
+
     </div>
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
-use App\Models\Carts;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -18,8 +17,8 @@ class CartController extends Controller
         $carts = Cart::with(['user', 'product', 'coupon'])
         ->where('user_id', auth()->id())
         ->get();
-        
-       
+
+
         return view('admin.carts.cart', compact('carts'));
     }
 
@@ -36,7 +35,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-     
+
     }
 
     /**
@@ -66,7 +65,7 @@ class CartController extends Controller
 
         $cart = Cart::findOrFail($id);
         $cart->quantity = $request->quantity;
-        $cart->grand_total = $cart->product->price * $cart->quantity; 
+        $cart->grand_total = $cart->product->price * $cart->quantity;
         $cart->save();
 
         return redirect()->route('admin.carts.cart')->with('success', 'Giỏ hàng đã được cập nhật.');
