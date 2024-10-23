@@ -13,15 +13,17 @@ return new class extends Migration
     {
         // Bảng blog
         Schema::create('blogs', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // ID người dùng
-            $table->foreignId('category_id')->constrained('blog_categories')->onDelete('cascade'); // ID danh mục
-            $table->string('image'); // Ảnh chính
-            $table->string('title'); // Tiêu đề
-            $table->string('slug'); // Tên SEO
-            $table->text('description'); // Mô tả
-            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('blog_categories')->onDelete('cascade');
+
+            $table->string('image');
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description');
+            $table->boolean('status')->default('1');
+            $table->timestamps();
         });
     }
 

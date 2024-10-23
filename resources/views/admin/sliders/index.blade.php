@@ -102,7 +102,6 @@
                                             </td>
                                         </tr> --}}
                                         @foreach ($sliders as $stt => $sl)
-
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -110,19 +109,19 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{$stt+1}}</td>
+                                                <td>{{ $stt + 1 }}</td>
 
                                                 <td>
                                                     <img src="{{ asset('storage/' . $sl->image) }}"
                                                         style="width: 75px; height: 75px; object-fit: cover"
                                                         alt="Ảnh Slider">
                                                 </td>
-                                                <td>{{$sl->offer}}</td>
-                                                <td>{{$sl->title}}</td>
-                                                <td>{{$sl->sub_title}}</td>
-                                                <td>{{$sl->short_description}}</td>
-                                                <td>{{$sl->button_link}}</td>
-                                                <td>{{$sl->status}}</td>
+                                                <td>{{ $sl->offer }}</td>
+                                                <td>{{ $sl->title }}</td>
+                                                <td>{{ $sl->sub_title }}</td>
+                                                <td>{{ $sl->short_description }}</td>
+                                                <td>{{ $sl->button_link }}</td>
+                                                <td>{{ $sl->status }}</td>
                                                 <td>{{ $sl->created_at }}</td>
                                                 <td>{{ $sl->updated_at }}</td>
                                                 <td>

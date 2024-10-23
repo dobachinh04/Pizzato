@@ -16,6 +16,7 @@ class BlogCategoryController extends Controller
     public function index()
     {
         $category_blog = BlogCategory::all();
+
         return view('admin.blog-categories.index', compact('category_blog'));
     }
 
@@ -24,18 +25,20 @@ class BlogCategoryController extends Controller
      */
     public function create()
     {
-        //
         return view('admin.blog-categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, StoreBlogCategoryRequest $blogcategoryrequest  )
+    public function store(Request $request, StoreBlogCategoryRequest $blogcategoryrequest)
     {
         $blogcategoryrequest->run();
         BlogCategory::create($request->all());
-        return redirect()->route('admin.blog-categories.index')->with('success', 'Blog Category added successfully.');
+
+        return redirect()
+            ->route('admin.blog-categories.index')
+            ->with('success', 'Blog Category added successfully.');
     }
 
     /**
@@ -53,6 +56,7 @@ class BlogCategoryController extends Controller
     {
         $category_blog = BlogCategory::findOrFail($id);
         $category_blog->update($request->all());
+
         return view('admin.blog-categories.update', compact('category_blog'));
     }
 
@@ -68,7 +72,9 @@ class BlogCategoryController extends Controller
         $category_blog->status = $request->input('status');
         $category_blog->save();
 
-        return redirect()->back()->with('success', 'Category Blog updated successfully');
+        return redirect()
+            ->back()
+            ->with('success', 'Category Blog updated successfully');
     }
 
     /**
@@ -78,14 +84,9 @@ class BlogCategoryController extends Controller
     {
         $category_blog = BlogCategory::findOrFail($id);
         $category_blog->delete();
-        return redirect()->route('admin.blog-categories.index')->with('success', 'Category Blog deleted successfully.');
+
+        return redirect()
+            ->route('admin.blog-categories.index')
+            ->with('success', 'Category Blog deleted successfully.');
     }
-
-
-    //ví dụ lấy danh sách hoạt động truyền ra frontend
-    // public function activeCategories()
-    // {
-    //     $categories = BlogCategory::active()->get();
-    //     return view('frontend.blog-categories', compact('categories'));
-    // }
 }

@@ -74,7 +74,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     //Admin - Addresses:
-    Route::prefix('addresses')->name('addresses.')->group(function() {
+    Route::prefix('addresses')->name('addresses.')->group(function () {
         Route::get('/',                                 [AddressController::class, 'index'])->name('index');
         Route::get('/create',                           [AddressController::class, 'create'])->name('create');
         Route::post('/',                                [AddressController::class, 'store'])->name('store');
@@ -141,7 +141,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{blog}',                        [BlogController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('sliders')->name('sliders.')->group(function() {
+    Route::prefix('sliders')->name('sliders.')->group(function () {
         Route::get('/',                                 [SliderController::class, 'index'])->name('index');
         Route::get('/create',                           [SliderController::class, 'create'])->name('create');
         Route::post('/',                                [SliderController::class, 'store'])->name('store');

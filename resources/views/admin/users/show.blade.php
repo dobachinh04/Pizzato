@@ -43,14 +43,13 @@
                                 <h3>Tiêu Đề: {{ $user->title }}</h3>
 
                                 @if ($user->image)
-                                    <img src="{{ asset('storage/' . $user->image) }}"
-                                        style="width: 100%; max-width: 250px;" alt="Image">
+                                    <img src="{{ asset('storage/' . $user->image) }}" style="width: 100%; max-width: 250px;"
+                                        alt="Image">
                                 @endif
 
                                 <div class="mt-3">
                                     <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Quay Lại</a>
-                                    <a href="{{ route('admin.users.edit',$user) }}"
-                                        class="btn btn-warning">Sửa</a>
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning">Sửa</a>
                                 </div>
                             </div>
 

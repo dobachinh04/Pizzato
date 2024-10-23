@@ -13,9 +13,9 @@ return new class extends Migration
     {
         // Bảng cổng thanh toán
         Schema::create('payment_gateway_settings', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->string('name'); // Tên cổng
-            $table->string('gateway_url'); // URL API của cổng thanh toán
+            $table->id();
+            $table->string('name');
+            $table->string('gateway_url');
         });
     }
 

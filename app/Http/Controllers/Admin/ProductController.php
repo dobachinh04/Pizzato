@@ -16,14 +16,13 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
 
-    //  demo push branch ph41654
     const PATH_VIEW = 'admin.products.';
     const PATH_UPLOAD = 'products';
     public function index()
     {
         $data = Product::query()->with('category')->latest('id')->get();
-        // dd($data);
-        return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
+
+        return view("admin.products.index", compact('data'));
     }
 
 
@@ -32,7 +31,8 @@ class ProductController extends Controller
         $sku = $this->generateUniqueSku();
         $slug = '';
         $categories = Category::query()->pluck('name', 'id')->all();
-        return view(self::PATH_VIEW . __FUNCTION__, compact('categories', 'sku', 'slug'));
+
+        return view("admin.products.create", compact('categories', 'sku', 'slug'));
     }
 
 
@@ -43,49 +43,47 @@ class ProductController extends Controller
             $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
         }
 
-        // Tạo slug từ tên sản phẩm
         $data['slug'] = $this->createSlug($request->name);
-
-        //Tạo sku ngẫu nhiên
-        // $data['sku'] = $this->generateUniqueSku();
 
         // Tự động cập nhật trạng thái dựa vào qty
         $datap['status'] = $request->qty > 0 ? 1 : 0;
+
         // Đảm bảo trường 'view' có giá trị mặc định là 0
         $data['view'] = 0;
 
         Product::query()->create($data);
-        return back()->with('success', 'Product added successfully.');
+        return back()
+            ->with('success', 'Product added successfully.');
     }
 
 
     public function show(Product $product)
     {
-        // dd($product);
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product'));
+        return view("admin.products.show", compact('product'));
     }
 
 
     public function edit(Product $product)
     {
-        // $sku = $this->generateUniqueSku();
         $slug = '';
 
         // Nếu muốn thay đổi SKU thì sinh lại mã SKU mới
         // $data['sku'] = $this->generateUniqueSku();
 
         $categories = Category::query()->pluck('name', 'id')->all();
-        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'categories', 'slug'));
+        return view("admin.products.edit", compact('product', 'categories', 'slug'));
     }
 
 
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->except('thumb_image');
+
         if ($request->hasFile('thumb_image')) {
             $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
         }
-        $currentImage = $product->thumb_image; // lưu ảnh trước khi update
+
+        $currentImage = $product->thumb_image;
 
         // Tạo slug từ tên sản phẩm
         $data['slug'] = $this->createSlug($request->name);
@@ -99,7 +97,9 @@ class ProductController extends Controller
         if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
             Storage::delete($currentImage);
         }
-        return back()->with('success', 'Product updated successfully.');
+
+        return back()
+            ->with('success', 'Product updated successfully.');
     }
 
 
@@ -109,19 +109,19 @@ class ProductController extends Controller
             // Xóa file thumb_image từ storage
             Storage::delete($product->thumb_image);
         }
+
         $product->delete();
-        return back()->with('success', 'Product deleted successfully.');
+
+        return back()
+            ->with('success', 'Product deleted successfully.');
     }
 
     protected function generateUniqueSku()
     {
         do {
-            // Tạo mã SKU ngẫu nhiên. có thể tuỳ chỉnh
-            $sku = 'SKU-' . strtoupper(uniqid()); // Tạo mã SKU dạng SKU-ABC123...
-            // $sku = strtoupper(Str::random(10)); // Tạo mã ngẫu nhiên có 10 ký tự
-
-            // SKU ? exists
-        } while (Product::where('sku', $sku)->exists());
+            $sku = 'SKU-' . strtoupper(uniqid());
+        }
+        while (Product::where('sku', $sku)->exists());
 
         return $sku;
     }

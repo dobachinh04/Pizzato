@@ -25,10 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-    //     $invoice = Invoice::get();
-
-    // return view('admin.orders.create', ['invoice' => $invoice]);
-    return view('admin.orders.create');
+        return view('admin.orders.create');
     }
 
     /**
@@ -41,7 +38,10 @@ class OrderController extends Controller
             $param = $request->except('__token');
 
             Order::create($param);
-            return redirect()->route('admin.order.index')->with('errors', 'Thêm thành công');
+
+            return redirect()
+                ->route('admin.order.index')
+                ->with('errors', 'Thêm thành công');
         }
     }
 
@@ -59,6 +59,7 @@ class OrderController extends Controller
     public function edit(String $id)
     {
         $order = Order::findOrFail($id);
+
         return view(
             'admin.orders.update',
             compact('order')
@@ -74,9 +75,11 @@ class OrderController extends Controller
             $param = $request->except('__token', '__method');
             $orders = Order::findOrFail($id);
 
-
             $orders->update($param);
-            return redirect()->route('admin.orders.index')->with('errors', 'Sửa thành công');
+
+            return redirect()
+                ->route('admin.orders.index')
+                ->with('errors', 'Sửa thành công');
         }
     }
 
@@ -87,8 +90,10 @@ class OrderController extends Controller
     {
         $orders = Order::findOrFail($id);
 
-
         $orders->delete();
-        return redirect()->route('admin.order.index')->with('errors', 'Xóa thành công');
+
+        return redirect()
+            ->route('admin.order.index')
+            ->with('errors', 'Xóa thành công');
     }
 }

@@ -13,16 +13,16 @@ return new class extends Migration
     {
         // Bảng mã giảm giá
         Schema::create('coupons', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->string('name'); // Tên mã giảm giá
-            $table->string('code'); // Code để nhập giảm giá
-            $table->integer('qty'); // Số lượng
-            $table->integer('min_purchase_amount')->default(0); //
-            $table->timestamps(); // Thời gian tạo
-            $table->date('expire_date'); // Thời gian hết hạn
-            $table->enum('discount_type', ['percent', 'amount']); // Loại giảm % hay trừ thẳng tiền
-            $table->double('discount'); // Số % hoặc tiền muốn giảm giá
-            $table->boolean('status')->default('1'); // Trạng thái bật/tắt
+            $table->id();
+            $table->string('name');
+            $table->string('code');
+            $table->integer('qty');
+            $table->integer('min_purchase_amount')->default(0);
+            $table->timestamps();
+            $table->date('expire_date');
+            $table->enum('discount_type', ['percent', 'amount']);
+            $table->double('discount');
+            $table->boolean('status')->default('1');
         });
     }
 

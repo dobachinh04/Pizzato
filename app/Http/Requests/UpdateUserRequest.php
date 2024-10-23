@@ -20,11 +20,15 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
- 
-     public function rules(): array
-     {
-         return [
-             //tt
-         ];
-     }
+
+    public function rules(): array
+    {
+        $users = User::find($this->id);
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $users->id,
+            'role_id' => 'required|exists:roles,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+        ];
+    }
 }

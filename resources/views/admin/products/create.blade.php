@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -37,7 +36,8 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                                    <input type="text" name="name" class="form-control"
+                                                        value="{{ old('name') }}">
                                                     @error('name')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -46,12 +46,14 @@
                                                 <div class="form-group">
                                                     <label>Slug</label>
                                                     <input type="text" name="slug" class="form-control"
-                                                        value="{{ old('slug', isset($product) ? $product->slug : $slug) }}" readonly>
+                                                        value="{{ old('slug', isset($product) ? $product->slug : $slug) }}"
+                                                        readonly>
                                                 </div>
 
                                                 <div class="mt-3">
                                                     <label for="thumb_image" class="form-label">Image</label>
-                                                    <input type="file" class="form-control" id="thumb_image" name="thumb_image">
+                                                    <input type="file" class="form-control" id="thumb_image"
+                                                        name="thumb_image">
                                                     @error('thumb_image')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -59,7 +61,8 @@
 
                                                 <div class="form-group">
                                                     <label>Sku</label>
-                                                    <input type="text" name="sku" class="form-control" value="{{ old('sku', $sku) }}" readonly>
+                                                    <input type="text" name="sku" class="form-control"
+                                                        value="{{ old('sku', $sku) }}" readonly>
                                                     @error('sku')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -67,7 +70,8 @@
 
                                                 <div class="form-group">
                                                     <label for="category_id" class="form-label">Catalogue</label>
-                                                    <select type="text" class="form-select" id="category_id" name="category_id">
+                                                    <select type="text" class="form-select" id="category_id"
+                                                        name="category_id">
                                                         @foreach ($categories as $id => $name)
                                                             <option value="{{ $id }}">{{ $name }}</option>
                                                         @endforeach
@@ -92,7 +96,8 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>Price</label>
-                                                    <input type="text" name="price" class="form-control" value="{{ old('price') }}">
+                                                    <input type="text" name="price" class="form-control"
+                                                        value="{{ old('price') }}">
                                                     @error('price')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -100,7 +105,8 @@
 
                                                 <div class="form-group">
                                                     <label>Offer Price</label>
-                                                    <input type="text" name="offer_price" class="form-control" value="{{ old('offer_price') }}">
+                                                    <input type="text" name="offer_price" class="form-control"
+                                                        value="{{ old('offer_price') }}">
                                                     @error('offer_price')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -108,7 +114,8 @@
 
                                                 <div class="form-group">
                                                     <label>Quantity</label>
-                                                    <input type="text" name="qty" class="form-control" value="{{ old('qty') }}">
+                                                    <input type="text" name="qty" class="form-control"
+                                                        value="{{ old('qty') }}">
                                                     @error('qty')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -154,7 +161,7 @@
                                             </div>
                                         </div>
 
-                                        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                                        <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">
                                             Quay Lại</a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>
                                     </form>
