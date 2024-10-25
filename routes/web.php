@@ -1,27 +1,36 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Controllers\Admin\AuthenticationController;
-use App\Http\Controllers\Admin\BlogCategoryController;
-use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\AddressController;
-use App\Http\Controllers\Admin\DeliveryAreaController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\ProductController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+
+use App\Http\Controllers\Admin\DeliveryAreaController;
+
 use App\Http\Controllers\Auth\ResetPasswordController;
+
+
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+
+
+
 
 
 // Client Views demo
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
-Route::get('/show/{product}',                                             [ProductController::class, 'show'])->name('client.show');
+Route::get('/show/{product}',                               [ProductController::class, 'show'])->name('client.show');
 
 // Route::get('/categories/{id}',                          [PostController::class, 'categories'])->name('client.category');
 // Route::get('/author/{id}',                              [PostController::class, 'author'])->name('client.author');
@@ -186,4 +195,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{payment}',                      [UserController::class, 'show'])->name('show');
         Route::delete('/{payment}',                        [UserController::class, 'destroy'])->name('destroy');
     });
+
 });
+Route::resource('carts', CartController::class);
