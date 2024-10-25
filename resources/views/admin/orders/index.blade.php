@@ -71,13 +71,13 @@
                                                 <td>{{ $order->delivery_charge }}</td>
                                                 <td>{{ $order->grand_total }}</td>
                                                 <td>{{ $order->payment_status }}</td>
-                                                <td>{{ $order->payment_approve_date }}</td>
+                                                <td>{{ $order->created_at }}</td>
                                                 <td>{{ $order->order_status }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.orders.show', $order) }}"
                                                         class="btn btn-info">Chi Tiết</a>
                                                     <a href="{{ route('admin.orders.edit', $order) }}"
-                                                        class="btn btn-warning">Cập Nhật</a>
+                                                        class="btn btn-warning">Sửa</a>
 
                                                     <form action="{{ route('admin.orders.destroy', $order) }}"
                                                         method="POST" style="display: inline;"

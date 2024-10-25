@@ -29,135 +29,148 @@
                 <!-- row -->
 
                 <div class="row">
+
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Thêm Mới Đơn Hàng</h4>
                             </div>
-                            <div class="card-body">
-                                <div class="basic-form">
-                                    <form action="{{ route('admin.orders.store') }}" method="POST">
-                                        @csrf
+                            <form action="{{ route('admin.orders.create') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="card-body">
+                                    <div class="basic-form">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h3>Thông Tin Đơn Hàng</h3>
+                                                <div class="form-group mb-3">
+                                                    <label>Khách Hàng</label>
+                                                    <input type="text" name="user_id" class="form-control"
+                                                        value="{{ old('user_id') }}">
+                                                    @error('user_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
 
-                                        {{-- <select name="invoice_id" class="form-select">
-                                            @foreach ($invoices as $invoice)
-                                                <option value="{{ $invoice->id }}">{{ $invoice->id }} - {{ $invoice->user->name }}</option>
-                                            @endforeach
-                                        </select>
+                                                <div class="form-group mb-3">
+                                                    <label>Địa Chỉ</label>
+                                                    <input type="text" name="address" class="form-control"
+                                                        value="{{ old('address') }}">
+                                                    @error('address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
 
-                                        <div class="mb-3">
-                                            <label for="user_id" class="form-label">User ID</label>
-                                            <input type="text" class="form-control" id="user_id" name="user_id"
-                                                value="{{ $invoice->user->id }}">
-                                        </div> --}}
-                                        <div class="form-group">
-                                            <label for="invoice_id" class="form-label">Invoice ID</label>
-                                            <input type="text" class="form-control input-default" id="invoice_id" name="invoice_id"
-                                                required>
+                                                <div class="form-group mb-3">
+                                                    <label>Tổng Tiền</label>
+                                                    <input type="text" name="grand_total" class="form-control"
+                                                        value="{{ old('grand_total') }}">
+                                                    @error('grand_total')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Mã Giảm Giá</label>
+                                                    <input type="text" name="coupon_info" class="form-control"
+                                                        value="{{ old('coupon_info') }}">
+                                                    @error('coupon_info')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Số Tiền Được Giảm Giá</label>
+                                                    <input type="text" name="discount" class="form-control"
+                                                        value="{{ old('discount') }}">
+                                                    @error('discount')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Phương Thức Vận Chuyển</label>
+                                                    <input type="text" name="delivery_charge" class="form-control"
+                                                        value="{{ old('delivery_charge') }}">
+                                                    @error('delivery_charge')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <h3>Thông Tin Thanh Toán</h3>
+                                                <div class="form-group mb-3">
+                                                    <label>Phương Thức Thanh Toán</label>
+                                                    <input type="text" name="payment_method" class="form-control"
+                                                        value="{{ old('payment_method') }}">
+                                                    @error('payment_method')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Đơn Vị Tiền Tệ</label>
+                                                    <input type="text" name="currency_name" class="form-control"
+                                                        value="{{ old('currency_name') }}">
+                                                    @error('currency_name')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Trạng Thái Thanh Toán</label>
+                                                    <input type="text" name="payment_status" class="form-control"
+                                                        value="{{ old('payment_status') }}">
+                                                    @error('payment_status')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Trạng Thái Đơn Hàng</label>
+                                                    <input type="text" name="order_status" class="form-control"
+                                                        value="{{ old('order_status') }}">
+                                                    @error('order_status')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Đặt Ngày</label>
+                                                    <input type="text" name="created_at" class="form-control"
+                                                        value="{{ old('created_at') }}">
+                                                    @error('created_at')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Ngày Thanh Toán</label>
+                                                    <input type="text" name="payment_approve_date" class="form-control"
+                                                        value="{{ old('payment_approve_date') }}">
+                                                    @error('payment_approve_date')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="user_id" class="form-label">User ID</label>
-                                            <input type="text" class="form-control input-default" id="user_id" name="user_id"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="address" class="form-label">Địa chỉ</label>
-                                            <textarea class="form-control input-default" id="address" name="address"></textarea>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="discount" class="form-label">Giảm giá</label>
-                                            <input type="number" step="0.01" class="form-control input-default" id="discount"
-                                                name="discount" value="0.00">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="delivery_charge" class="form-label">Phí giao hàng</label>
-                                            <input type="number" step="0.01" class="form-control input-default" id="delivery_charge"
-                                                name="delivery_charge" value="0.00">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="subtotal" class="form-label">Tổng cộng</label>
-                                            <input type="number" step="0.01" class="form-control input-default" id="subtotal"
-                                                name="subtotal">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="grand_total" class="form-label">Tổng tiền</label>
-                                            <input type="number" step="0.01" class="form-control input-default" id="grand_total"
-                                                name="grand_total">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="product_qty" class="form-label">Số lượng sản phẩm</label>
-                                            <input type="number" class="form-control input-default" id="product_qty" name="product_qty">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="payment_method" class="form-label">Phương thức thanh toán</label>
-                                            <select class="form-control input-default" id="payment_method" name="payment_method">
-                                                <option value="credit_card">Thẻ tín dụng</option>
-                                                <option value="paypal">Chuyển khoản</option>
-                                                <option value="bank_transfer">Thanh toán sau khi nhận hàng</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="payment_status" class="form-label">Trạng thái thành toán</label>
-                                            <select class="form-control input-default" id="payment_status" name="payment_status">
-                                                <option value="pending">Đang chờ xử lý</option>
-                                                <option value="completed">Thành công</option>
-                                                <option value="failed">Không thành công</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="payment_approve_date" class="form-label">Ngày phê duyệt thanh
-                                                toán</label>
-                                            <input type="date" class="form-control input-default" id="payment_approve_date"
-                                                name="payment_approve_date">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="transaction_id" class="form-label">Transaction ID</label>
-                                            <input type="text" class="form-control input-default" id="transaction_id"
-                                                name="transaction_id">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="coupon_info" class="form-label">Thông tin phiếu giảm giá</label>
-                                            <input type="text" class="form-control input-default" id="coupon_info"
-                                                name="coupon_info">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="currency_name" class="form-label">Loại tiền tệ</label>
-                                            <input type="text" class="form-control input-default" id="currency_name"
-                                                name="currency_name">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="order_status" class="form-label">Trạng thái đơn hàng</label>
-                                            <select class="form-control input-default" id="order_status" name="order_status">
-                                                <option value="pending">Chưa giải quyết</option>
-                                                <option value="shipped">Đang vận chuyển</option>
-                                                <option value="delivered">Đang giao hàng</option>
-                                                <option value="canceled">Hủy đơn hàng</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="address_id" class="form-label">Address ID</label>
-                                            <input type="text" class="form-control input-default" id="address_id"
-                                                name="address_id">
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="card-body">
+                                    <div class="basic-form">
+                                        <div class="row">
+                                            <h3>Thông Tin Sản Phẩm</h3>
+                                        </div>
+
+                                        <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary">
+                                            Quay Lại</a>
+                                        <button type="submit" class="btn btn-success">Thêm Mới</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
