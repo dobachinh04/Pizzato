@@ -197,4 +197,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
 });
-Route::resource('carts', CartController::class);
+Route::resource('cart', CartController::class);

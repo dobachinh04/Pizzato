@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Cart extends Model
 {
     use HasFactory;
-    protected $table = 'cart';
+    // protected $table = 'cart';
     protected $fillable = [
         'user_id',
         'product_id',
