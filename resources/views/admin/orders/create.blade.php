@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
     @if (Session::has('success'))
         <div class="alert alert-success solid alert-dismissible fade show">
             <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
@@ -13,41 +20,62 @@
             <strong>Success!</strong> {{ Session::get('success') }}.
         </div>
     @endif
-    <div class="main-content">
-        <div class="page-content">
-            <div class="container-fluid">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+    <form action="{{ route('admin.orders.create') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="main-content">
+            <div class="page-content mb-0 pb-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12 col-xxl-12">
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-title">Thêm Mới Đơn Hàng</h4>
 
-                <!-- row -->
-
-                <div class="row">
-
-                    <div class="col-xl-12 col-xxl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Thêm Mới Đơn Hàng</h4>
+                                    <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary">
+                                        Quay Lại</a>
+                                    <button type="submit" class="btn btn-success">Thêm
+                                        Mới</button>
+                                </div>
                             </div>
-                            <form action="{{ route('admin.orders.create') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="page-content my-0 py-0">
+                <div class="container-fluid">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <!-- row -->
+
+                    <div class="row">
+                        <div class="col-xl-12 col-xxl-12">
+                            <div class="card">
                                 <div class="card-body">
                                     <div class="basic-form">
                                         <div class="row">
                                             <div class="col-6">
                                                 <h3>Thông Tin Đơn Hàng</h3>
-                                                <div class="form-group mb-3">
-                                                    <label>Khách Hàng</label>
-                                                    <input type="text" name="user_id" class="form-control"
-                                                        value="{{ old('user_id') }}">
+
+                                                <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Khách Hàng</label>
+                                                    <select class="form-control mb-3 @error('user_id') is-invalid @enderror"
+                                                        name="user_id" value="{{ old('user_id') }}">
+                                                        <option selected disabled>Nhấn để chọn</option>
+
+                                                    </select>
                                                     @error('user_id')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
 
@@ -56,15 +84,6 @@
                                                     <input type="text" name="address" class="form-control"
                                                         value="{{ old('address') }}">
                                                     @error('address')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group mb-3">
-                                                    <label>Tổng Tiền</label>
-                                                    <input type="text" name="grand_total" class="form-control"
-                                                        value="{{ old('grand_total') }}">
-                                                    @error('grand_total')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -87,11 +106,24 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="form-group mb-3">
-                                                    <label>Phương Thức Vận Chuyển</label>
-                                                    <input type="text" name="delivery_charge" class="form-control"
-                                                        value="{{ old('delivery_charge') }}">
+                                                <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Phương Thức Vận Chuyển</label>
+                                                    <select
+                                                        class="form-control mb-3 @error('delivery_charge') is-invalid @enderror"
+                                                        name="delivery_charge" value="{{ old('delivery_charge') }}">
+                                                        <option selected disabled>Nhấn để chọn</option>
+
+                                                    </select>
                                                     @error('delivery_charge')
+                                                        <p>{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <label>Đặt Ngày</label>
+                                                    <input type="date" name="created_at" class="form-control"
+                                                        value="{{ old('created_at') }}">
+                                                    @error('created_at')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -99,82 +131,177 @@
 
                                             <div class="col-6">
                                                 <h3>Thông Tin Thanh Toán</h3>
-                                                <div class="form-group mb-3">
-                                                    <label>Phương Thức Thanh Toán</label>
-                                                    <input type="text" name="payment_method" class="form-control"
-                                                        value="{{ old('payment_method') }}">
+
+                                                <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Phương Thức Thanh Toán</label>
+                                                    <select
+                                                        class="form-control mb-3 @error('payment_method') is-invalid @enderror"
+                                                        name="payment_method" value="{{ old('payment_method') }}">
+                                                        <option selected disabled>Nhấn để chọn</option>
+
+                                                    </select>
                                                     @error('payment_method')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
 
-                                                <div class="form-group mb-3">
-                                                    <label>Đơn Vị Tiền Tệ</label>
-                                                    <input type="text" name="currency_name" class="form-control"
-                                                        value="{{ old('currency_name') }}">
+                                                <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Đơn Vị Tiền Tệ</label>
+                                                    <select disabled
+                                                        class="form-control mb-3 @error('currency_name') is-invalid @enderror"
+                                                        name="currency_name" value="{{ old('currency_name') }}">
+                                                        <option selected disabled value="VND">VND</option>
+                                                    </select>
                                                     @error('currency_name')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
 
-                                                <div class="form-group mb-3">
-                                                    <label>Trạng Thái Thanh Toán</label>
-                                                    <input type="text" name="payment_status" class="form-control"
-                                                        value="{{ old('payment_status') }}">
+                                                <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Trạng Thái Thanh Toán</label>
+                                                    <select
+                                                        class="form-control mb-3 @error('payment_status') is-invalid @enderror"
+                                                        name="payment_status" value="{{ old('payment_status') }}">
+                                                        <option selected disabled>Nhấn để chọn</option>
+
+                                                    </select>
                                                     @error('payment_status')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
 
-                                                <div class="form-group mb-3">
-                                                    <label>Trạng Thái Đơn Hàng</label>
-                                                    <input type="text" name="order_status" class="form-control"
-                                                        value="{{ old('order_status') }}">
+                                                <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Trạng Thái Giao Hàng</label>
+                                                    <select
+                                                        class="form-control mb-3 @error('order_status') is-invalid @enderror"
+                                                        name="order_status" value="{{ old('order_status') }}">
+                                                        <option selected disabled>Nhấn để chọn</option>
+
+                                                    </select>
                                                     @error('order_status')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group mb-3">
-                                                    <label>Đặt Ngày</label>
-                                                    <input type="text" name="created_at" class="form-control"
-                                                        value="{{ old('created_at') }}">
-                                                    @error('created_at')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
 
                                                 <div class="form-group mb-3">
                                                     <label>Ngày Thanh Toán</label>
-                                                    <input type="text" name="payment_approve_date" class="form-control"
-                                                        value="{{ old('payment_approve_date') }}">
+                                                    <input type="date" name="payment_approve_date"
+                                                        class="form-control" value="{{ old('payment_approve_date') }}">
                                                     @error('payment_approve_date')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                             </div>
+
+                                            <h5 class="my-1">Tổng Tiền Gốc: </h5>
+                                            <h5 class="my-1">Số Tiền Được Giảm: </h5>
+                                            <h2 class="my-2">Tổng tiền: </h2>
                                         </div>
-
-
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="main-content">
+            <div class="page-content my-0 py-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12 col-xxl-12">
+                            <div class="card">
                                 <div class="card-body">
                                     <div class="basic-form">
                                         <div class="row">
                                             <h3>Thông Tin Sản Phẩm</h3>
                                         </div>
 
-                                        <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary">
-                                            Quay Lại</a>
-                                        <button type="submit" class="btn btn-success">Thêm Mới</button>
+                                        <table id="example"
+                                            class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                            style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" style="width: 10px;">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input fs-15" type="checkbox"
+                                                                id="checkAll" value="option">
+                                                        </div>
+                                                    </th>
+                                                    {{-- <th data-ordering="false">SR No.</th> --}}
+                                                    <th>ID</th>
+                                                    <th>Image</th>
+                                                    <th>Name</th>
+                                                    <th>Category</th>
+                                                    <th>Price</th>
+                                                    <th>Offer Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Show At Home</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data as $item)
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input fs-15" type="checkbox"
+                                                                    name="checkAll" value="option1">
+                                                            </div>
+                                                        </th>
+                                                        <td>{{ $item->id }}</td>
+                                                        <td>
+                                                            @php
+                                                                $url = $item->thumb_image;
+                                                                if (!\Str::contains($url, 'http')) {
+                                                                    $url = \Storage::url($url);
+                                                                }
+                                                            @endphp
+                                                            <img src="{{ $url }}" alt=""
+                                                                width="100px">
+                                                        </td>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->category->name }}</td>
+                                                        <td>{{ $item->price }}</td>
+                                                        <td>{{ $item->offer_price }}</td>
+                                                        <td>{{ $item->qty }}</td>
+
+                                                        <td>{!! $item->show_at_home
+                                                            ? '<span class="badge bg-primary">Yes</span>'
+                                                            : '<span class="badge bg-danger">No</span>' !!}</td>
+
+                                                        <td>{!! $item->status
+                                                            ? '<span class="badge bg-primary">Active</span>'
+                                                            : '<span class="badge bg-danger">Inactive</span>' !!}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!--datatable js-->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="/velzon/assets/js/pages/datatables.init.js"></script>
 @endsection
