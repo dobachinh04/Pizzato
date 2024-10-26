@@ -14,19 +14,14 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'image',
         'status',
         'show_at_home',
     ];
-<<<<<<< Updated upstream
-}
-=======
-    public function scopeShowAtHome($query)
-    {
-        return $query->where('show_at_home', 1);
-    }
 
-
-}
     //Định nghĩa một scope để lấy ra các danh mục hiển thị ở trang chủ.
->>>>>>> Stashed changes
-
+    // public function scopeShowAtHome($query)
+    // {
+    //     return $query->where('show_at_home', 1);
+    // }
+}
