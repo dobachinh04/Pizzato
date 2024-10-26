@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
@@ -25,7 +26,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.orders.create');
+        $data = Product::query()->with('category')->latest('id')->get();
+
+        return view('admin.orders.create', compact('data'));
     }
 
     /**
@@ -95,5 +98,11 @@ class OrderController extends Controller
         return redirect()
             ->route('admin.order.index')
             ->with('errors', 'Xóa thành công');
+    }
+
+    public function deleted()
+    {
+        $orders = Order::get();
+        return view('admin.orders.index', compact('orders'));
     }
 }

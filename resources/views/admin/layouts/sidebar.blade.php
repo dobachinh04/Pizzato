@@ -137,6 +137,10 @@
                                 <a href="{{ route('admin.orders.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Đơn Hàng</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.orders.deleted') }}" class="nav-link"
+                                    data-key="t-nft-landing">Đơn Hàng Bị Hủy</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -202,18 +206,18 @@
                         Thức</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarShipping" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarShipping">
+                    <a class="nav-link menu-link" href="#sidebarDeliveryArea" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarDeliveryArea">
                         <i class="fa-solid fa-truck-fast"></i> <span data-key="t-landing">Vận Chuyển</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarShipping">
+                    <div class="collapse menu-dropdown" id="sidebarDeliveryArea">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.shipping.index') }}" class="nav-link"
+                                <a href="{{ route('admin.delivery_areas.index') }}" class="nav-link"
                                     data-key="t-one-page">Danh Sách Vận Chuyển</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.shipping.create') }}" class="nav-link"
+                                <a href="{{ route('admin.delivery_areas.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Vận Chuyển</a>
                             </li>
                         </ul>

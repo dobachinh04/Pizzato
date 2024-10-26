@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -12,6 +15,53 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $faker = Faker::create();
+
+        $users = [];
+
+        // Tạo 3 user cho mỗi role
+        for ($i = 0; $i < 5; $i++) {
+            // User cho admin
+            $users[] = [
+                'name' => $faker->name,
+                'image' => $faker->imageUrl(640, 480, 'people'),
+                'email' => $faker->unique()->safeEmail,
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'), // Mật khẩu giả
+                'role_id' => 2, // ID cho admin
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            // User cho regular user
+            $users[] = [
+                'name' => $faker->name,
+                'image' => $faker->imageUrl(640, 480, 'people'),
+                'email' => $faker->unique()->safeEmail,
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'), // Mật khẩu giả
+                'role_id' => 1, // ID cho user
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            // User cho employee
+            $users[] = [
+                'name' => $faker->name,
+                'image' => $faker->imageUrl(640, 480, 'people'),
+                'email' => $faker->unique()->safeEmail,
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'), // Mật khẩu giả
+                'role_id' => 3, // ID cho employee
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Chèn tất cả người dùng vào cơ sở dữ liệu
+        User::insert($users);
     }
 }

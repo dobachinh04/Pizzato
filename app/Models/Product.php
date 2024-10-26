@@ -40,11 +40,14 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-    function productImages(): HasMany
+    public function carts()
     {
-        return $this->hasMany(ProductGallery::class);
+        return $this->hasMany(Cart::class);
     }
+    // function productImages(): HasMany
+    // {
+    //     return $this->hasMany(ProductGallery::class);
+    // }
 
     function productSizes(): HasMany
     {

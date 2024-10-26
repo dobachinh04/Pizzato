@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -13,6 +13,46 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory()->count(10)->create();
+        $categories = [
+            [
+                'name' => 'Pizza',
+                'slug' => Str::slug('pizza'),
+                'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
+                'status' => 1,
+                'show_at_home' => 1
+            ],
+            [
+                'name' => 'Nước uống',
+                'slug' => Str::slug('drink'),
+                'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
+                'status' => 1,
+                'show_at_home' => 1
+            ],
+            [
+                'name' => 'Món khai vị',
+                'slug' => Str::slug('appetizer'),
+                'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
+                'status' => 1,
+                'show_at_home' => 1
+            ],
+            [
+                'name' => 'Món tráng miệng',
+                'slug' => Str::slug('dessert'),
+                'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
+                'status' => 1,
+                'show_at_home' => 1
+            ],
+            [
+                'name' => 'Combo',
+                'slug' => Str::slug('Combo'),
+                'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
+                'status' => 1,
+                'show_at_home' => 1
+            ],
+        ];
+
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
     }
 }
