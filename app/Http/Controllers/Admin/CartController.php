@@ -14,49 +14,35 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::with(['user', 'product', 'coupon'])
-        ->where('user_id', auth()->id())
-        ->get();
+        $carts = Cart::get();
+        // dd($carts);
+    return view('admin.carts.giohang', compact('carts'));
+}
 
 
-        return view('admin.carts.cart', compact('carts'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
 
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -68,7 +54,7 @@ class CartController extends Controller
         $cart->grand_total = $cart->product->price * $cart->quantity;
         $cart->save();
 
-        return redirect()->route('admin.carts.cart')->with('success', 'Giỏ hàng đã được cập nhật.');
+        return redirect()->route('admin.carts.giohang')->with('success', 'Giỏ hàng đã được cập nhật.');
     }
 
     /**
@@ -76,6 +62,18 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cart = Cart::findOrFail($id);
+
+
+    $cart->delete();
+
+    return redirect()->route('admin.carts.giohang')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
     }
+    public function destroyAll()
+{
+    $userId = auth()->id();
+    Cart::where('user_id', $userId)->delete();
+
+    return redirect()->route('admin.carts.giohang')->with('success', 'Đã xóa tất cả sản phẩm trong giỏ hàng.');
+}
 }

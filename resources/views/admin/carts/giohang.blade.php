@@ -6,8 +6,9 @@
     @endif
 
     <!-- Nút xóa tất cả sản phẩm -->
-    <form action="{{ route('carts.destroyAll') }}" method="POST" style="display:inline;">
+    <form action="{{ route('carts.destroyAll') }}" method="POST" style="margin-bottom: 20px;">
         @csrf
+        @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tất cả sản phẩm không?')">Xóa Tất Cả</button>
     </form>
 
@@ -42,10 +43,10 @@
                     </td>
                     <td>{{ number_format($cart->grand_total, 0) }} VNĐ</td>
                     <td>
-                        <form action="{{ route('carts.destroy', $cart->id) }}" method="POST">
+                        <form action="{{ route('carts.destroy', $cart->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</button>
                         </form>
                     </td>
                 </tr>

@@ -195,6 +195,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{payment}',                      [UserController::class, 'show'])->name('show');
         Route::delete('/{payment}',                        [UserController::class, 'destroy'])->name('destroy');
     });
-
+Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/',                                 [UserController::class, 'index'])->name('index');
+        Route::get('/payment',                           [UserController::class, 'create'])->name('create');
+        Route::post('/',                                [UserController::class, 'store'])->name('store');
+        Route::get('/{payment}/edit',                      [UserController::class, 'edit'])->name('edit');
+        Route::put('/{payment}',                           [UserController::class, 'update'])->name('update');
+        Route::get('/show/{payment}',                      [UserController::class, 'show'])->name('show');
+        Route::delete('/{payment}',                        [UserController::class, 'destroy'])->name('destroy');
+    });
 });
-Route::resource('carts', CartController::class);
+Route::resource('cart', CartController::class);
+Route::get('/admin/carts', [CartController::class, 'index'])->name('admin.carts.giohang');
+
+Route::put('/carts/{id}', [CartController::class, 'update'])->name('carts.update');
+Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
+Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
+
