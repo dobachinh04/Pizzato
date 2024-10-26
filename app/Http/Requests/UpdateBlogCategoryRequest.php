@@ -23,7 +23,7 @@ class UpdateBlogCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'slug' => 'required|min:3|max:255|unique:blog_categories',
+            'slug' => 'required|min:3|max:255',
         ];
     }
     public function error(): array
@@ -35,7 +35,6 @@ class UpdateBlogCategoryRequest extends FormRequest
             'slug.required' => "slug không được để trống",
             'slug.min' => "slug phải ít nhất 3 ký tự ",
             'slug.max' => "slug phải nhiều nhất 255 ký tự ",
-            'slug.unique' => 'Slug đã tồn tại',
         ];
     }
     public function run()

@@ -56,6 +56,12 @@
                                     <tbody>
                                         @foreach ($category_blog as $categoryblog)
                                             <tr>
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox"
+                                                            name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
                                                 {{-- <td>{{ $category->id }}</td> --}}
                                                 <td>{{ $categoryblog->name }}</td>
                                                 <td>{{ $categoryblog->slug }}</td>
