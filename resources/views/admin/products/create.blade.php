@@ -186,8 +186,9 @@
                     .replace(/[^\w\-]+/g, '') // Xóa ký tự không phải chữ, số hoặc dấu -
                     .replace(/\-\-+/g, '-') // Xóa dấu gạch nối kép
                     .replace(/^-+/, '') // Xóa dấu gạch nối đầu
-                    .replace(/-+$/, ''); // Xóa dấu gạch nối cuối
+                    .replace(/-+$/, ''); // Xóa dấu gạch nối
             });
         });
     </script>
 @endsection
+
