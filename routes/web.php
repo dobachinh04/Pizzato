@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\CartController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SliderController;
@@ -21,7 +21,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CheckoutController;
 

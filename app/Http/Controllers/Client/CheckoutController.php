@@ -25,9 +25,9 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         // Kiểm tra người dùng đã đăng nhập hay chưa
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Bạn cần đăng nhập để thanh toán.'], 401);
-        }
+        // if (!Auth::check()) {
+        //     return response()->json(['error' => 'Bạn cần đăng nhập để thanh toán.'], 401);
+        // }
 
         // Validate dữ liệu từ request
         $request->validate([
