@@ -20,7 +20,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -39,15 +38,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     // Admin - products:
-    Route::prefix('products')->name('products.')->group(function () {
-        Route::get('/',                                 [AdminProductController::class, 'index'])->name('index');
-        Route::get('/create',                           [AdminProductController::class, 'create'])->name('create');
-        Route::post('/',                                [AdminProductController::class, 'store'])->name('store');
-        Route::get('/{product}/edit',                   [AdminProductController::class, 'edit'])->name('edit');
-        Route::put('/{product}',                        [AdminProductController::class, 'update'])->name('update');
-        Route::get('/show/{product}',                   [AdminProductController::class, 'show'])->name('show');
-        Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
-    });
+    // Route::prefix('products')->name('products.')->group(function () {
+    //     Route::get('/',                                 [AdminProductController::class, 'index'])->name('index');
+    //     Route::get('/create',                           [AdminProductController::class, 'create'])->name('create');
+    //     Route::post('/',                                [AdminProductController::class, 'store'])->name('store');
+    //     Route::get('/{product}/edit',                   [AdminProductController::class, 'edit'])->name('edit');
+    //     Route::put('/{product}',                        [AdminProductController::class, 'update'])->name('update');
+    //     Route::get('/show/{product}',                   [AdminProductController::class, 'show'])->name('show');
+    //     Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
+    // });
+
+    Route::resource('products', AdminProductController::class);
 
     //Admin - Addresses:
     Route::prefix('addresses')->name('addresses.')->group(function () {
@@ -69,8 +70,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{deliveryArea}',              [DeliveryAreaController::class, 'show'])->name('show');
         Route::delete('/{deliveryArea}',                [DeliveryAreaController::class, 'destroy'])->name('destroy');
     });
-
-
 
     // Admin - Tags:
     // Route::prefix('tags')->name('tags.')->group(function() {
