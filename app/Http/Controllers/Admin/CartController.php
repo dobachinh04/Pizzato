@@ -16,8 +16,8 @@ class CartController extends Controller
     {
         $carts = Cart::get();
         // dd($carts);
-    return view('admin.carts.giohang', compact('carts'));
-}
+        return view('admin.carts.giohang', compact('carts'));
+    }
 
 
     public function create()
@@ -64,16 +64,15 @@ class CartController extends Controller
     {
         $cart = Cart::findOrFail($id);
 
+        $cart->delete();
 
-    $cart->delete();
-
-    return redirect()->route('admin.carts.giohang')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
+        return redirect()->route('admin.carts.giohang')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
     }
     public function destroyAll()
-{
-    $userId = auth()->id();
-    Cart::where('user_id', $userId)->delete();
+    {
+        $userId = auth()->id();
+        Cart::where('user_id', $userId)->delete();
 
-    return redirect()->route('admin.carts.giohang')->with('success', 'Đã xóa tất cả sản phẩm trong giỏ hàng.');
-}
+        return redirect()->route('admin.carts.giohang')->with('success', 'Đã xóa tất cả sản phẩm trong giỏ hàng.');
+    }
 }
