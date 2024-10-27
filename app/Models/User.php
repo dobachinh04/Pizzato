@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,14 +34,19 @@ class User extends Authenticatable
     public function address()
     {
         return $this->hasMany(related: Address::class);
+    }
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 
-}
-public function blogs()
-{
-    return $this->hasMany(Blog::class);
-}
-public function cart()
-{
-    return $this->hasMany(Cart::class);
-}
+    //Thêm phương thức để lấy địa chỉ của người dùng:
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

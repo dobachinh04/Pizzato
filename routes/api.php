@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Client\CheckoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('products', [\App\Http\Controllers\Client\ProductController::class, 'index']);
+// IndexController
+Route::get('/menu', [IndexController::class, 'getMenuPizza']);
+Route::get('/hot-product', [IndexController::class, 'getHotProduct']);
+
+
+// Payment
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');

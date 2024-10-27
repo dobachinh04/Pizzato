@@ -23,10 +23,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-
-
-
-
+use App\Http\Controllers\Admin\CheckoutController;
 
 // Client Views demo
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
@@ -67,3 +64,8 @@ Route::get('/admin/carts', [CartController::class, 'index'])->name('admin.carts.
 Route::put('/carts/{id}', [CartController::class, 'update'])->name('carts.update');
 Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
 Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
+
+
+// Route::get('/checkout/index',    [CheckoutController::class, 'index'])->name('checkout.index');
+// Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+// Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
