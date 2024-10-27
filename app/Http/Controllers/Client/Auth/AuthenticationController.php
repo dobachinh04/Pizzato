@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Client\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
@@ -47,10 +47,10 @@ class AuthenticationController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-    
+
         // Mặc định vai trò là User (ID là 1)
-        $userRoleId = 2; // Thay đổi ID nếu cần
-    
+        $userRoleId = 1; // Thay đổi ID nếu cần
+
         // Tạo người dùng với vai trò mặc định là User
         User::create([
             'name' => $request->name,
@@ -58,10 +58,10 @@ class AuthenticationController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => $userRoleId,
         ]);
-    
+
         return redirect()->route('client.login')->with('status', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
-    
+
 
 
     public function showForgotPasswordForm()
