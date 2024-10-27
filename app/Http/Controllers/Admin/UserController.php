@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;   
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use Illuminate\Support\Facades\Storage;
+use Request;
 
 class UserController extends Controller
 {
@@ -16,8 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-     
-    $users = User::get();
+        $users = User::get();
+
         return view('admin.users.index',compact('users'));
     }
 
@@ -28,7 +29,12 @@ class UserController extends Controller
     {
         $roles = Role::get();
 
-        return view('admin.users.create', ['roles' => $roles]);
+        return view(
+            'admin.users.create',
+            [
+                'roles' => $roles
+            ]
+        );
     }
 
     /**
@@ -36,18 +42,21 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-      
-
         if($request->isMethod('POST')){
             $param = $request->except('__token');
+
             if($request->hasFile('image')){
                 $filename = $request->file('image')->store('uploads/user', 'public');
             }else{
                 $filename = null;
             }
             $param['image'] = $filename;
+
             User::create($param);
-            return redirect()->route('admin.users.index')->with('errors','Thêm thành công');
+
+            return redirect()
+                ->route('admin.users.index')
+                ->with('errors','Thêm thành công');
         }
     }
 
@@ -56,7 +65,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        
         return view('admin.users.show',compact('user'));
     }
 
@@ -67,12 +75,12 @@ class UserController extends Controller
     {
         $user = User::with('role')->findOrFail($id);
         $roles = Role::get();
+
         return view(
             'admin.users.update',
             [
                 'user' => $user,
                 'roles' => $roles
-
             ]
         );
     }
@@ -82,9 +90,12 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, String $id)
     {
+        $users = User::findOrFail($id);
+
         if($request->isMethod('PUT')){
             $param = $request->except('__token','__method');
-            $users = User::findOrFail($id);
+            $users->update($request->validated());
+
             if($request->hasFile('image')){
                 if($users->image && Storage::disk('public')->exists($users->image)){
                     Storage::disk('public')->delete($users->image);
@@ -94,8 +105,12 @@ class UserController extends Controller
                 $filename = $users->image;
             }
             $param['image'] = $filename;
-            $users->update($param);
-            return redirect()->route('admin.users.index')->with('errors','Sửa thành công');
+
+            $users->update($request->all());
+
+            return redirect()
+                ->route('admin.users.index')
+                ->with('errors','Sửa thành công');
         }
     }
 
@@ -105,11 +120,15 @@ class UserController extends Controller
     public function destroy(String $id)
     {
         $users = User::findOrFail($id);
-      
+
         if($users->image && Storage::disk('public')->exists($users->image)){
             Storage::disk('public')->delete($users->image);
         }
+
         $users->delete();
-        return redirect()->route('admin.users.index')->with('errors','Xóa thành công');
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('errors','Xóa thành công');
     }
 }

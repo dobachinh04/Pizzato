@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'slug',
@@ -30,33 +31,31 @@ class Product extends Model
         'status',
     ];
 
-    // Quan hệ các bảng
+    protected $casts = [
+        'status' => 'boolean',
+        'show_at_home' => 'boolean',
+    ];
 
     function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
-
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
     // function productImages(): HasMany
     // {
     //     return $this->hasMany(ProductGallery::class);
     // }
 
-    // function productSizes(): HasMany
-    // {
-    //     return $this->hasMany(ProductSize::class);
-    // }
+    function productSizes(): HasMany
+    {
+        return $this->hasMany(ProductSize::class);
+    }
 
-    // function productOptions(): HasMany
-    // {
-    //     return $this->hasMany(ProductOption::class);
-    // }
-
-    protected $casts = [
-        'status' => 'boolean',
-        'show_at_home' => 'boolean',
-
-        //lay input dau vao -> auto convert true/fasle-> 1/0-> save vao db
-        // lay ra ->auto convert 0/1->false/true
-    ];
+    function productOptions(): HasMany
+    {
+        return $this->hasMany(ProductOption::class);
+    }
 }

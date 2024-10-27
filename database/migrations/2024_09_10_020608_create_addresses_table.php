@@ -13,15 +13,17 @@ return new class extends Migration
     {
         // Bảng địa chỉ của người dùng
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // ID người dùng
-            $table->foreignId('delivery_area_id')->constrained('delivery_areas'); // Khu vực giao hàng
-            $table->string('first_name'); // Họ
-            $table->string('last_name')->nullable(); // Tên
-            $table->string('email'); // Email
-            $table->string('phone'); // SĐT
-            $table->text('address'); // Địa chỉ chi tiết
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('delivery_area_id')->constrained('delivery_areas');
+
+            $table->string('first_name');
+            $table->string('last_name')->nullable();
+            $table->string('email');
+            $table->string('phone');
+            $table->text('address');
+            $table->timestamps();
         });
     }
 

@@ -56,7 +56,26 @@
                                                         <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
+                                                {{-- <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Mật Khẩu</label>
+                                                    <input type="password"
+                                                        class="form-control input-default @error('password') is-invalid @enderror"
+                                                        placeholder="" name="password" value="{{ old('password', $user->password) }}">
+                                                    @error('password')
+                                                        <p>{{ $message }}</p>
+                                                    @enderror
+                                                </div> --}}
 
+                                                {{-- <div class="form-group">
+                                                    <label for="basiInput" class="form-label">Nhập Lại Mật Khẩu</label>
+                                                    <input type="password"
+                                                        class="form-control input-default @error('password_confirmation') is-invalid @enderror"
+                                                        name="password_confirmation"
+                                                        value="{{ old('password_confirmation', $user->password_confirmation) }}">
+                                                    @error('password_confirmation')
+                                                        <p>{{ $message }}</p>
+                                                    @enderror
+                                                </div> --}}
                                                 {{-- <div class="form-group">
                                                     <label for="basiInput" class="form-label">Mật Khẩu</label>
                                                     <input type="password"
@@ -101,27 +120,38 @@
                                                 </div>
 
                                                 <div class="form-group mb-3">
-                                                    <label for="formFile" class="form-label">Ảnh Đại Diện</label>
-                                                    <input class="form-control @error('image') is-invalid @enderror"
-                                                        type="file" id="formFile" name="image" accept="image/*"
-                                                        value="{{ old('image') }}">
+                                                    <input type="file"
+                                                        class="custom-file-input @error('image') is-invalid @enderror"
+                                                        name="image" accept="image/*"
+                                                        value="{{ old('image', $user->image) }}">
+                                                    <label class="custom-file-label">Chọn Ảnh</label>
+
+
                                                 </div>
                                                 @error('image')
                                                     <p>{{ $message }}</p>
                                                 @enderror
+                                                @if ($user->image)
+                                                    <img class="mb-3" src="{{ asset('storage/' . $user->image) }}"
+                                                        style="width: 100px;" alt="Ảnh Cũ">
+                                                @endif
                                             </div>
+                                            @error('image')
+                                                <p>{{ $message }}</p>
+                                            @enderror
                                         </div>
-
-                                        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                                            Quay Lại</a>
-                                        <button type="submit" class="btn btn-warning">Cập Nhật</button>
-                                    </form>
                                 </div>
+
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                                    Quay Lại</a>
+                                <button type="submit" class="btn btn-warning">Cập Nhật</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

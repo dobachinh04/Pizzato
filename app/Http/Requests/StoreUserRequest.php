@@ -27,7 +27,6 @@ class StoreUserRequest extends FormRequest
             'password' => 'required|string|min:6|confirmed', // Mật Khẩu: bắt buộc, tối thiểu 6 ký tự, xác nhận mật khẩu
             'password_confirmation' => 'required|string|min:6|', // Mật Khẩu: bắt buộc, tối thiểu 6 ký tự, xác nhận mật khẩu
             'role_id' => 'required|exists:roles,id', // Vai trò: bắt buộc và phải tồn tại trong bảng roles
-
             'image' => 'required|nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ảnh: không bắt buộc, định dạng ảnh, tối đa 2MB
         ];
     }

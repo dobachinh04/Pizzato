@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // Bảng thêm địa chỉ vào đơn hàng
         Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('address_id'); // Thêm địa chỉ vào bảng order
+            $table->foreignId('address_id');
         });
     }
 

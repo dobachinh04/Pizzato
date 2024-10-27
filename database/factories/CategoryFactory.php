@@ -19,8 +19,8 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->word(),
             'slug' => fake()->slug(),
-            'status' => fake()->boolean(), // 0 hoặc 1
-            'show_at_home' => fake()->boolean(), // 0 hoặc 1
+            'status' => fake()->boolean(),
+            'show_at_home' => fake()->boolean(),
         ];
     }
 }

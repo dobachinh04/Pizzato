@@ -13,11 +13,11 @@ return new class extends Migration
     {
         // Bảng sản phẩm ăn kèm (Nước...)
         Schema::create('product_options', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->foreignId('product_id')->constrained('products'); // ID sản phẩm
-            $table->string('name'); // Tên món ăn kèm
-            $table->double('price'); // Giá
-            $table->timestamps(); // Thời gian tạo
+            $table->id();
+            $table->foreignId('product_id')->constrained('products');
+            $table->string('name');
+            $table->double('price');
+            $table->timestamps();
         });
     }
 

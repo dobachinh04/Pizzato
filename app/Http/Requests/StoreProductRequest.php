@@ -23,17 +23,17 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug', //unique:products,slug: truong duy nhất trong bảng products, cột slug
+            'slug' => 'required|string|max:255|unique:products,slug',
             'thumb_image' => 'nullable|url',
-            'category_id' => 'required|exists:categories,id',   // giá trị của category_id có tồn tại trong bảng categories ?
+            'category_id' => 'required|exists:categories,id',
             'view' => 'nullable|integer|min:0',
             'short_description' => 'nullable|string|max:500',
             'long_description' => 'nullable|string',
-            'price' => 'required|numeric|min:0', // numeric: Trường phải là số (bao gồm cả số nguyên và số thực)
-            'offer_price' => 'nullable|numeric|min:0|lt:price', //lt:price:offer_price phải nhỏ hơn price
+            'price' => 'required|numeric|min:0',
+            'offer_price' => 'nullable|numeric|min:0|lt:price',
             'qty' => 'required|integer|min:0',
             'sku' => 'required|string|max:255|unique:products,sku',
-            'show_at_home' => 'required|boolean',   // 1 or 0
+            'show_at_home' => 'required|boolean',
             'status' => 'required|boolean',
         ];
     }

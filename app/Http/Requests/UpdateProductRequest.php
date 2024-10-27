@@ -21,8 +21,6 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        // slug va sku co the ko thay doi
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug,' . $this->product->id, //unique:products,slug:truong duy nhất trong bảng products, cột slug

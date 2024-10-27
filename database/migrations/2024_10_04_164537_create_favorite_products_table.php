@@ -13,10 +13,12 @@ return new class extends Migration
     {
         // Bảng sản phẩm yêu thích
         Schema::create('favorite_products', function (Blueprint $table) {
-            $table->id(); // ID tự tăng
-            $table->foreignId('user_id')->constrained(); // ID người dùng
-            $table->foreignId('product_id'); //ID các sản phẩm
-            $table->timestamps(); // Thời gian thêm
+            $table->id();
+
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('product_id');
+
+            $table->timestamps();
         });
     }
 
