@@ -25,21 +25,30 @@ class AuthenticationController extends Controller
 
     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('/admin/dashboard'); // Chuyển hướng đến trang dashboard
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        // Lấy người dùng hiện tại
+        $user = Auth::user();
+
+        // Kiểm tra vai trò và chuyển hướng tương ứng
+        if ($user->role_id === 1) {
+            // Vai trò là User
+            return redirect()->intended('/user/dashboard'); // Chuyển đến trang  User
+        } elseif ($user->role_id === 2) {
+            // Vai trò là Admin (hoặc các vai trò khác)
+            return redirect()->intended('/admin/dashboard'); // Chuyển đến trang  Admin
         }
-
-        return back()->withErrors([
-            'email' => 'Thông tin đăng nhập không đúng.',
-        ]);
     }
+
+ 
+}
+
     public function register(Request $request)
     {
         $request->validate([
