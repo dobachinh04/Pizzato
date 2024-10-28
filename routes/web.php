@@ -59,7 +59,7 @@ Route::post('/reset-password', [AuthenticationController::class, 'resetPassword'
 
 
 
-Route::get('/admin/carts', [CartController::class, 'index'])->name('admin.carts.giohang');
+Route::get('/client/carts', [CartController::class, 'index'])->name('client.carts.giohang');
 Route::put('/carts/{id}', [CartController::class, 'update'])->name('carts.update');
 Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
 Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
