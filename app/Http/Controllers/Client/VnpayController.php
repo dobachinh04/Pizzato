@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class VnpayController extends Controller
 {
-    public function VnpayPayment(Request $request)
+    public function createPayment(Request $request)
     {
         $vnp_TmnCode = config('services.vnpay.vnp_TmnCode');
         $vnp_HashSecret = config('services.vnpay.vnp_HashSecret');

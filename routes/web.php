@@ -24,7 +24,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CheckoutController;
-use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\VnpayController;
 
 // Client Views demo
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
@@ -71,5 +71,6 @@ Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name
 // Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 // Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-Route::get('payment', [PaymentController::class, 'VnpayPayment'])->name('payment.create');
-Route::get('payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+// VNPay routes
+Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
+Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
