@@ -11,39 +11,34 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-
+    // Trả về danh sách sản phẩm trong giỏ hàng của người dùng
     public function index()
     {
-
-        $carts = Cart::with('product')->get();
-        return view('checkout.index', compact('carts'));
-        // // Lấy thông tin sản phẩm từ cart của người dùng
-        // $cartItems = Cart::where('user_id', Auth::id())->get();
-
-        // // Nếu chưa đăng nhập, người dùng sẽ không thấy thông tin cá nhân
-        // $user = Auth::user();
-
-        // return view('checkout.index', compact('cartItems', 'user'));\
-
+        $carts = Cart::with('product')->where('user_id', Auth::id())->get();
+        return response()->json([
+            'success' => true,
+            'data' => $carts
+        ]);
     }
 
+    // Xác nhận và lưu đơn hàng
     public function store(Request $request)
     {
-        // Kiểm tra xem người dùng đã đăng nhập chưa
+        // Kiểm tra người dùng đã đăng nhập hay chưa
         // if (!Auth::check()) {
-        //     return redirect()->route('client.login')->with('error', 'Bạn cần đăng nhập để thanh toán.');
+        //     return response()->json(['error' => 'Bạn cần đăng nhập để thanh toán.'], 401);
         // }
 
-        // Validate dữ liệu từ form
+        // Validate dữ liệu từ request
         $request->validate([
             'address_id' => 'required|exists:addresses,id',
             'payment_method' => 'required|string',
         ]);
 
-        // Tính toán tổng tiền và số lượng sản phẩm
+        // Lấy giỏ hàng của người dùng và tính tổng tiền, số lượng sản phẩm
         $carts = Cart::where('user_id', Auth::id())->get();
-        $grandTotal = $carts->sum('grand_total'); // Tổng tiền
-        $productQty = $carts->sum('quantity'); // Tổng số lượng sản phẩm
+        $grandTotal = $carts->sum('grand_total');
+        $productQty = $carts->sum('quantity');
 
         // Tạo đơn hàng
         $order = Order::create([
@@ -56,20 +51,23 @@ class CheckoutController extends Controller
             'order_status' => 'pending',
         ]);
 
-        // Lưu chi tiết đơn hàng
+        // Lưu các sản phẩm trong chi tiết đơn hàng
         foreach ($carts as $cart) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $cart->product_id,
-                'unit_price' => $cart->grand_total / $cart->quantity, // Giá đơn vị
+                'unit_price' => $cart->grand_total / $cart->quantity,
                 'qty' => $cart->quantity,
             ]);
         }
 
-        // Xóa sản phẩm trong giỏ hàng sau khi đặt hàng
+        // Xóa giỏ hàng sau khi hoàn tất thanh toán
         Cart::where('user_id', Auth::id())->delete();
 
-        return redirect()->route('checkout.index')->with('success', 'Thanh toán thành công!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Thanh toán thành công!',
+            'order_id' => $order->id,
+        ]);
     }
-
 }

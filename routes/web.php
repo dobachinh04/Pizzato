@@ -25,6 +25,7 @@ use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CheckoutController;
 use App\Http\Controllers\Client\VnpayController;
+use App\Http\Controllers\Client\MomoController;
 
 // Client Views demo
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
@@ -67,10 +68,14 @@ Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.de
 Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
 
 
-// Route::get('/checkout/index',    [CheckoutController::class, 'index'])->name('checkout.index');
 // Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 // Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-// VNPay routes
-Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
-Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
+// VNPay Payment
+Route::get('payment/vnpay',             [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
+Route::get('payment/vnpay/callback',    [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
+
+// Momo Payment
+Route::get('payment/momo',             [MomoController::class, 'createPayment'])->name('payment.momo.create');
+Route::get('payment/momo/callback',    [MomoController::class, 'callback'])->name('payment.momo.callback');
+

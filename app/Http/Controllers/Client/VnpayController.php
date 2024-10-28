@@ -13,6 +13,7 @@ class VnpayController extends Controller
         $vnp_HashSecret = config('services.vnpay.vnp_HashSecret');
         $vnp_Url = config('services.vnpay.vnp_Url');
         $vnp_Returnurl = config('services.vnpay.vnp_ReturnUrl');
+
         $vnp_TxnRef = time(); // Mã đơn hàng, tạo ngẫu nhiên hoặc lấy từ hệ thống
         $vnp_OrderInfo = "Thanh toan don hang"; // Thông tin đơn hàng
         $vnp_Amount = $request->amount * 100; // Số tiền thanh toán
