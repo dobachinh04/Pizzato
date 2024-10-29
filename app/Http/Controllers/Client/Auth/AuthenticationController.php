@@ -5,24 +5,24 @@ namespace App\Http\Controllers\Client\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use App\Models\User; // Nếu bạn sử dụng model User
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
+
 class AuthenticationController extends Controller
 {
     public function displayLogin()
     {
-        return view('auth.login'); // Tạo view cho đăng nhập
+        return view('auth.login');
     }
 
     public function displayRegister()
     {
-        $roles = Role::all(); // Lấy tất cả vai trò từ bảng roles
-        return view('auth.register', compact('roles')); // Truyền biến $roles vào view
-
+        $roles = Role::all();
+        return view('auth.register', compact('roles'));
     }
 
     public function login(Request $request)
@@ -33,13 +33,24 @@ class AuthenticationController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('/admin/dashboard'); // Chuyển hướng đến trang dashboard
+            $user = Auth::user();
+
+            // Chuyển hướng dựa trên vai trò
+            switch ($user->role_id) {
+                case 1: // User
+                    return redirect()->intended('/user');
+                case 2: // Admin
+                    return redirect()->intended('/admin/dashboard');
+                case 3: // Employee
+                    return redirect()->intended('/employee');
+                default:
+                    return redirect()->route('client.login')->withErrors(['email' => 'Vai trò không hợp lệ.']);
+            }
         }
 
-        return back()->withErrors([
-            'email' => 'Thông tin đăng nhập không đúng.',
-        ]);
+        return back()->withErrors(['email' => 'Thông tin đăng nhập không chính xác.']);
     }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -47,50 +58,44 @@ class AuthenticationController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-
+    
         // Mặc định vai trò là User (ID là 1)
-        $userRoleId = 1; // Thay đổi ID nếu cần
-
-        // Tạo người dùng với vai trò mặc định là User
+        $userRoleId = 1;
+    
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => $userRoleId,
+            'role_id' => $userRoleId, // Gán vai trò mặc định là User
         ]);
-
+    
         return redirect()->route('client.login')->with('status', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
-
-
+    
 
     public function showForgotPasswordForm()
     {
-        return view('auth.forgot-password'); // View cho trang đặt lại mật khẩu
+        return view('auth.forgot-password');
     }
 
     public function resetPassword(Request $request)
     {
-        // Validate thông tin người dùng nhập
         $request->validate([
-            'email' => 'required|email|exists:users,email', // Kiểm tra email có tồn tại trong hệ thống
-            'password' => 'required|string|min:8|confirmed', // Kiểm tra mật khẩu hợp lệ và khớp với mật khẩu xác nhận
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Tìm người dùng theo email
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            // Đặt lại mật khẩu cho người dùng
             $user->update([
                 'password' => Hash::make($request->password),
-                'remember_token' => Str::random(60), // Cập nhật token mới để đảm bảo bảo mật
+                'remember_token' => Str::random(60),
             ]);
 
             return redirect()->route('client.login')->with('status', 'Mật khẩu của bạn đã được đặt lại thành công. Vui lòng đăng nhập.');
         }
 
-        // Trường hợp không tìm thấy người dùng
         return back()->withErrors(['email' => 'Không tìm thấy người dùng với email này.']);
     }
 }
