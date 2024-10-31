@@ -30,7 +30,7 @@ class CartController extends Controller
         $cart->grand_total = $cart->product->price * $cart->quantity;
         $cart->save();
 
-        return redirect()->route('admin.carts.giohang')->with('success', 'Giỏ hàng đã được cập nhật.');
+        return redirect()->route('client.carts.giohang')->with('success', 'Giỏ hàng đã được cập nhật.');
     }
 
     /**

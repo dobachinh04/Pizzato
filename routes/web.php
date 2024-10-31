@@ -24,6 +24,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CheckoutController;
+use App\Http\Controllers\Client\VnpayController;
 
 // Client Views demo
 Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
@@ -58,9 +59,8 @@ Route::post('/reset-password', [AuthenticationController::class, 'resetPassword'
 // Route::post('reset-password',                           [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
-Route::resource('cart', CartController::class);
-Route::get('/admin/carts', [CartController::class, 'index'])->name('admin.carts.giohang');
 
+Route::get('/client/carts', [CartController::class, 'index'])->name('client.carts.giohang');
 Route::put('/carts/{id}', [CartController::class, 'update'])->name('carts.update');
 Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
 Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
@@ -69,3 +69,7 @@ Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name
 // Route::get('/checkout/index',    [CheckoutController::class, 'index'])->name('checkout.index');
 // Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 // Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+// VNPay routes
+Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
+Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
