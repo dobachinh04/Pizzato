@@ -68,6 +68,7 @@ class CartController extends Controller
 
         return redirect()->route('admin.carts.giohang')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
     }
+
     public function destroyAll()
     {
         $userId = auth()->id();
