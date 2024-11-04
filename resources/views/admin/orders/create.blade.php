@@ -20,7 +20,7 @@
             <strong>Success!</strong> {{ Session::get('success') }}.
         </div>
     @endif
-    <form action="{{ route('admin.orders.create') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.orders.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="main-content">
@@ -171,7 +171,8 @@
                                                                             name="payment_method"
                                                                             value="{{ old('payment_method') }}">
                                                                             <option selected disabled>Nhấn để chọn</option>
-
+                                                                            <option>COD (Thanh Toán Khi Nhận Hàng)</option>
+                                                                            <option>VNPay</option>
                                                                         </select>
                                                                         @error('payment_method')
                                                                             <p>{{ $message }}</p>
@@ -201,7 +202,8 @@
                                                                             name="payment_status"
                                                                             value="{{ old('payment_status') }}">
                                                                             <option selected disabled>Nhấn để chọn</option>
-
+                                                                            <option>Đang Chờ</option>
+                                                                            <option>Đã Thanh Toán</option>
                                                                         </select>
                                                                         @error('payment_status')
                                                                             <p>{{ $message }}</p>
@@ -216,7 +218,10 @@
                                                                             name="order_status"
                                                                             value="{{ old('order_status') }}">
                                                                             <option selected disabled>Nhấn để chọn</option>
-
+                                                                            <option>Chờ Xác Nhận</option>
+                                                                            <option>Đang Giao Hàng</option>
+                                                                            <option>Giao Hàng Thành Công</option>
+                                                                            <option>Đơn Hàng Đã Bị Hủy</option>
                                                                         </select>
                                                                         @error('order_status')
                                                                             <p>{{ $message }}</p>
@@ -274,18 +279,17 @@
                                                                         <th scope="col" style="width: 10px;">
                                                                             <div class="form-check">
                                                                                 <input class="form-check-input fs-15"
-                                                                                    type="checkbox" id="checkAll"
-                                                                                    value="option">
+                                                                                    type="checkbox" id="checkAll">
                                                                             </div>
                                                                         </th>
-                                                                        {{-- <th data-ordering="false">SR No.</th> --}}
                                                                         <th>ID</th>
                                                                         <th>Image</th>
                                                                         <th>Name</th>
                                                                         <th>Category</th>
                                                                         <th>Price</th>
                                                                         <th>Offer Price</th>
-                                                                        <th>Quantity</th>
+                                                                        <th>Quantity in Stock</th>
+                                                                        <th>Quantity</th> <!-- Cột nhập số lượng cần mua -->
                                                                         <th>Show At Home</th>
                                                                         <th>Status</th>
                                                                     </tr>
@@ -295,9 +299,10 @@
                                                                         <tr>
                                                                             <th scope="row">
                                                                                 <div class="form-check">
-                                                                                    <input class="form-check-input fs-15"
-                                                                                        type="checkbox" name="checkAll"
-                                                                                        value="option1">
+                                                                                    <input
+                                                                                        class="form-check-input fs-15 product-checkbox"
+                                                                                        type="checkbox" name="products[]"
+                                                                                        value="{{ $item->id }}">
                                                                                 </div>
                                                                             </th>
                                                                             <td>{{ $item->id }}</td>
@@ -316,11 +321,19 @@
                                                                             <td>{{ $item->price }}</td>
                                                                             <td>{{ $item->offer_price }}</td>
                                                                             <td>{{ $item->qty }}</td>
-
+                                                                            <td>
+                                                                                <input type="number"
+                                                                                    class="form-control product-quantity"
+                                                                                    name="quantities[{{ $item->id }}]"
+                                                                                    min="1"
+                                                                                    max="{{ $item->qty }}"
+                                                                                    value="1"
+                                                                                    data-stock="{{ $item->qty }}"
+                                                                                    disabled>
+                                                                            </td>
                                                                             <td>{!! $item->show_at_home
                                                                                 ? '<span class="badge bg-primary">Yes</span>'
                                                                                 : '<span class="badge bg-danger">No</span>' !!}</td>
-
                                                                             <td>{!! $item->status
                                                                                 ? '<span class="badge bg-primary">Active</span>'
                                                                                 : '<span class="badge bg-danger">Inactive</span>' !!}</td>
@@ -330,9 +343,12 @@
                                                             </table>
 
                                                             <hr>
-                                                            <h5 class="my-1">Tổng Tiền Gốc: </h5>
-                                                            <h5 class="my-1">Số Tiền Được Giảm: </h5>
-                                                            <h2 class="m-0">Tổng tiền: </h2>
+                                                            <h5 class="my-1">Tổng Tiền Gốc: <span
+                                                                    id="total-original-price">0</span> VND</h5>
+                                                            <h5 class="my-1">Số Tiền Được Giảm: <span
+                                                                    id="total-discount-price">0</span> VND</h5>
+                                                            <h2 class="m-0">Tổng tiền: <span id="total-price">0</span>
+                                                                VND</h2>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -347,6 +363,66 @@
             </div>
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkAll = document.getElementById('checkAll');
+            const productCheckboxes = document.querySelectorAll('.product-checkbox');
+            const productQuantities = document.querySelectorAll('.product-quantity');
+
+            checkAll.addEventListener('change', function() {
+                productCheckboxes.forEach((checkbox, index) => {
+                    checkbox.checked = this.checked;
+                    productQuantities[index].disabled = !this.checked;
+                    calculateTotal();
+                });
+            });
+
+            productCheckboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function() {
+                    productQuantities[index].disabled = !this.checked;
+                    calculateTotal();
+                });
+            });
+
+            productQuantities.forEach(input => {
+                input.addEventListener('input', function() {
+                    const maxQty = parseInt(this.dataset.stock, 10);
+                    if (this.value > maxQty) {
+                        this.value = maxQty;
+                        alert(`Số lượng không được vượt quá ${maxQty}`);
+                    }
+                    if (this.value < 1) {
+                        this.value = 1;
+                        alert("Số lượng không thể là số âm hoặc bằng 0");
+                    }
+                    calculateTotal();
+                });
+            });
+
+            function calculateTotal() {
+                let totalOriginalPrice = 0;
+                let totalDiscountPrice = 0;
+
+                productCheckboxes.forEach((checkbox, index) => {
+                    if (checkbox.checked) {
+                        const quantity = parseInt(productQuantities[index].value, 10);
+                        const price = parseInt(productQuantities[index].closest('tr').children[5].innerText,
+                            10);
+                        const offerPrice = parseInt(productQuantities[index].closest('tr').children[6]
+                            .innerText, 10);
+
+                        totalOriginalPrice += price * quantity;
+                        totalDiscountPrice += offerPrice * quantity;
+                    }
+                });
+
+                document.getElementById('total-original-price').innerText = totalOriginalPrice;
+                document.getElementById('total-discount-price').innerText = totalOriginalPrice - totalDiscountPrice;
+                document.getElementById('total-price').innerText = totalDiscountPrice;
+            }
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
