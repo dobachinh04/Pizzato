@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="card-title mb-0">Danh Sách Blog</h5>
-                                <a href="{{ route('admin.users.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <a href="{{ route('admin.blogs.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">

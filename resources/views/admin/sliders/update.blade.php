@@ -44,37 +44,37 @@
                                                 @endif
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-3">
                                                 <label for="offer">Offer</label>
                                                 <input type="text" name="offer" id="offer" class="form-control"
                                                     value="{{ old('offer', $slider->offer) }}">
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-3">
                                                 <label for="title">Title</label>
                                                 <input type="text" name="title" id="title" class="form-control"
                                                     value="{{ old('title', $slider->title) }}">
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-3">
                                                 <label for="sub_title">Sub Title</label>
                                                 <input type="text" name="sub_title" id="sub_title" class="form-control"
                                                     value="{{ old('sub_title', $slider->sub_title) }}">
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-3">
                                                 <label for="short_description">Short Description</label>
                                                 <textarea name="short_description" id="short_description" class="form-control">{{ old('short_description', $slider->short_description) }}</textarea>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-3">
                                                 <label for="button_link">Button Link</label>
                                                 <input type="text" name="button_link" id="button_link"
                                                     class="form-control"
                                                     value="{{ old('button_link', $slider->button_link) }}">
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-3">
                                                 <label for="status">Status</label>
                                                 <select name="status" class="form-control">
                                                     <option value="">Chọn trạng thái</option>
