@@ -63,7 +63,6 @@
                                             </select>
                                             <br>
                                         </div>
-                                        <br>
                                         <a href="{{ route('admin.blog-categories.index') }}" class="btn btn-secondary">
                                             Quay Lại</a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>

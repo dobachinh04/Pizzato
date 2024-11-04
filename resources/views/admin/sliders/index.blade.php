@@ -138,7 +138,6 @@
                                                         <button type="submit" class="btn btn-danger">Xóa</button>
                                                     </form>
                                                 </td>
-                                                <td><span class="badge bg-danger">High</span></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
