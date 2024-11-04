@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\Auth\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\MenuController;
@@ -21,6 +22,9 @@ use App\Http\Controllers\Client\CheckoutController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+// LoginController
+Route::post('/register-pizzato', [AuthenticationController::class, 'register']);
 
 // IndexController
 Route::get('/menu', [IndexController::class, 'getMenuPizza']);

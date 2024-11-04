@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Requests\HandleAuth;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminAuthenticate
@@ -16,16 +18,17 @@ class AdminAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-       // Kiểm tra xem người dùng đã đăng nhập chưa
-       if (!Auth::check()) {
-        return redirect()->route('client.login')->withErrors(['email' => 'Bạn cần đăng nhập để truy cập trang này.']);
-    }
-// Kiểm tra vai trò của người dùng
-    $user = Auth::user();
-    
-    if ($user->role_id !== 2 && $user->role_id !== 3) { 
-        return redirect()->route('client.login')->withErrors(['email' => 'Bạn không có quyền truy cập trang này.']);
-    }
+        $validators = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        if($validators->fails()){
+            return response()->json([
+                'errors' => ($validators->errors())
+            ], 400);
+        }
+        
         return $next($request);
     }
 }
