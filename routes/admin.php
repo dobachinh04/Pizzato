@@ -166,3 +166,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{payment}',                        [UserController::class, 'destroy'])->name('destroy');
     });
 });
+
+
+
+
+
+

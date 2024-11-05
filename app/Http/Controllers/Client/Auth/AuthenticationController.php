@@ -27,6 +27,7 @@ class AuthenticationController extends Controller
 
     public function login(Request $request)
     {
+        
         $credentials = $request->only('user', 'password');
 
     }
@@ -82,3 +83,18 @@ class AuthenticationController extends Controller
         return back()->withErrors(['email' => 'Không tìm thấy người dùng với email này.']);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
