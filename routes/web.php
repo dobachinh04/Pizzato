@@ -41,8 +41,8 @@ Route::get('/show/{product}',                               [ProductController::
 // Route::get('/register', [AuthenticationController::class, 'displayRegister'])->name('client.register');
 
 // Login & Register:
-Route::post('/login', [AuthenticationController::class, 'login']);
-Route::post('/register', [AuthenticationController::class, 'register']);
+// Route::post('/login', [AuthenticationController::class, 'login']);
+// Route::post('/register', [AuthenticationController::class, 'register']);
 
 
 
@@ -79,7 +79,7 @@ Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name
 Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
 Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
-// Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index');
+Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index');
 
 
 
