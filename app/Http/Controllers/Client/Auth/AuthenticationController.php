@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthenticationController extends Controller
 {
-    // Code mới
+    // Code mới nhé
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
