@@ -2,80 +2,59 @@
 
 namespace App\Http\Controllers\Client\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Role;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class AuthenticationController extends Controller
 {
-    public function displayLogin()
-    {
-        return view('auth.login');
-    }
-
-    public function displayRegister()
-    {
-        $roles = Role::all();
-        return view('auth.register', compact('roles'));
-    }
-
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
-            // Chuyển hướng dựa trên vai trò
-            switch ($user->role_id) {
-                case 1: // User
-                    return redirect()->intended('/user');
-                case 2: // Admin
-                    return redirect()->intended('/admin/dashboard');
-                case 3: // Employee
-                    return redirect()->intended('/employee');
-                default:
-                    return redirect()->route('client.login')->withErrors(['email' => 'Vai trò không hợp lệ.']);
-            }
+            return response()->json([
+                'message' => 'Đăng nhập thành công',
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Tài khoản hoặc mật khẩu không hợp lệ!'
+            ], 401);
         }
-
-        return back()->withErrors(['email' => 'Thông tin đăng nhập không chính xác.']);
     }
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-    
-        // Mặc định vai trò là User (ID là 1)
-        $userRoleId = 1;
-    
-        User::create([
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'required|string|min:6|confirmed', // Đảm bảo mật khẩu được xác nhận
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'message' => 'Validation Error',
+        //         'errors' => $validator->errors(),
+        //     ], 422);
+        // }
+
+        $role = 1;
+
+        // Nếu xác thực thành công, bạn có thể tiếp tục với logic để tạo người dùng mới
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => $userRoleId, // Gán vai trò mặc định là User
+            'password' => bcrypt($request->password),
+            'role_id' => $role,
         ]);
-    
-        return redirect()->route('client.login')->with('status', 'Đăng ký thành công! Vui lòng đăng nhập.');
-    }
-    
 
-    public function showForgotPasswordForm()
-    {
-        return view('auth.forgot-password');
+        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
     }
 
     public function resetPassword(Request $request)

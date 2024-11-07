@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\MenuController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\DetailController;
 use App\Http\Controllers\Client\CheckoutController;
+use App\Http\Controllers\Client\Auth\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,10 @@ use App\Http\Controllers\Client\CheckoutController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+// AuthController
+Route::post('/register', [AuthenticationController::class, 'register']);
+Route::post('/login', [AuthenticationController::class, 'login']);
 
 // IndexController
 Route::get('/menu', [IndexController::class, 'getMenuPizza']);
