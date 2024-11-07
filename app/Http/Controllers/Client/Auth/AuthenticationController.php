@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthenticationController extends Controller
 {
+    // Code mới
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
