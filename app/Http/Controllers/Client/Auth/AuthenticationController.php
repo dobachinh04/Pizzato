@@ -45,17 +45,20 @@ class AuthenticationController extends Controller
         //     ], 422);
         // }
 
+        // Mặc định vai trò là User (ID là 1)
         $role = 1;
 
-        // Nếu xác thực thành công, bạn có thể tiếp tục với logic để tạo người dùng mới
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role_id' => $role,
         ]);
 
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        return response()->json([
+            'success' => true,
+            'message' => 'Đăng kí thành công',
+        ]);
     }
 
     public function resetPassword(Request $request)
@@ -79,3 +82,18 @@ class AuthenticationController extends Controller
         return back()->withErrors(['email' => 'Không tìm thấy người dùng với email này.']);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

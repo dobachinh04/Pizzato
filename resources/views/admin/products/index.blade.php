@@ -90,15 +90,18 @@
                                                     ? '<span class="badge bg-primary">Active</span>'
                                                     : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.products.show', $item->id) }}">Show</a>
-                                                    <a href="{{ route('admin.products.edit', $item->id) }}">Edit</a>
+                                                    <a class="btn btn-info"
+                                                        href="{{ route('admin.products.show', $item->id) }}">Chi Tiết</a>
+
+                                                    <a class="btn btn-warning"
+                                                        href="{{ route('admin.products.edit', $item->id) }}">Sửa</a>
 
                                                     <form action="{{ route('admin.products.destroy', $item->id) }}"
-                                                        method="POST">
+                                                        method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick='return confirm("R u sure?")' type="submit"
-                                                            class="btn btn-danger">Delete</button>
+                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")' type="submit"
+                                                            class="btn btn-danger">Xóa</button>
                                                     </form>
                                                 </td>
                                             </tr>
