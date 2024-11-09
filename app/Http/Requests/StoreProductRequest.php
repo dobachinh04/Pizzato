@@ -24,7 +24,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug',
-            'thumb_image' => 'nullable|url',
+            'thumb_image' => 'nullable',
             'category_id' => 'required|exists:categories,id',
             'view' => 'nullable|integer|min:0',
             'short_description' => 'nullable|string|max:500',
@@ -51,7 +51,7 @@ class StoreProductRequest extends FormRequest
             'slug.unique' => 'Slug đã tồn tại, vui lòng chọn slug khác.',
 
             // 'thumb_image.required' => 'Ảnh đại diện là bắt buộc.',
-            'thumb_image.url' => 'Ảnh đại diện phải là một URL hợp lệ.',
+            // 'thumb_image.url' => 'Ảnh đại diện phải là một URL hợp lệ.',
 
             'category_id.required' => 'Danh mục là bắt buộc.',
             'category_id.exists' => 'Danh mục không tồn tại.',
