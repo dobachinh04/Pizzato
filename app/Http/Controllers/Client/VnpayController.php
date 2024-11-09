@@ -15,8 +15,9 @@ class VnpayController extends Controller
         $vnp_Returnurl = config('services.vnpay.vnp_ReturnUrl');
 
         $vnp_TxnRef = time(); // Mã đơn hàng, tạo ngẫu nhiên hoặc lấy từ hệ thống
-        $vnp_OrderInfo = "Thanh toan don hang"; // Thông tin đơn hàng
-        $vnp_Amount = $request->amount * 100; // Số tiền thanh toán
+        $vnp_Amount = $request->grand_total; // Convert to VND (assuming grand total is in VND)
+        $vnp_TxnRef = $request->invoice_id; // Using invoice ID or unique order ID
+        $vnp_OrderInfo = "Thanh toán cho đơn hàng #" . $vnp_TxnRef;
         $vnp_Locale = 'vn'; // Ngôn ngữ, 'vn' cho tiếng Việt
         $vnp_IpAddr = $request->ip();
 

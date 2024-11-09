@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Bảng thêm địa chỉ vào đơn hàng
-        Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('address_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone')->nullable();
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone')->nullable();
         });
     }
 };

@@ -46,7 +46,7 @@ class ProductController extends Controller
         $data['slug'] = $this->createSlug($request->name);
 
         // Tự động cập nhật trạng thái dựa vào qty
-        $datap['status'] = $request->qty > 0 ? 1 : 0;
+        $data['status'] = $request->qty > 0 ? 1 : 0;
 
         // Đảm bảo trường 'view' có giá trị mặc định là 0
         $data['view'] = 0;

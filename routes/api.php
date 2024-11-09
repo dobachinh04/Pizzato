@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\Client\CheckoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\MenuController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\DetailController;
+use App\Http\Controllers\Client\CheckoutController;
+use App\Http\Controllers\Client\Auth\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +23,20 @@ use App\Http\Controllers\Client\IndexController;
 //     return $request->user();
 // });
 
+// AuthController
+Route::post('/register', [AuthenticationController::class, 'register']);
+Route::post('/login', [AuthenticationController::class, 'login']);
+
 // IndexController
 Route::get('/menu', [IndexController::class, 'getMenuPizza']);
 Route::get('/hot-product', [IndexController::class, 'getHotProduct']);
 
+// MenuController
+Route::get('/menus', [MenuController::class, 'getMenuPizza']);
+
+// DetailController
+Route::get('/detail/{id}', [DetailController::class, 'getDetailPizza']);
+Route::get('/similar-pizza/{id}', [DetailController::class, 'getSimilarPizzas']);
 
 // Payment
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');

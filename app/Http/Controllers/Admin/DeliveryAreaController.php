@@ -15,7 +15,6 @@ class DeliveryAreaController extends Controller
      */
     public function index()
     {
-        //
         $areas = DeliveryArea::all();
         return view('admin.delivery_areas.index', compact('areas'));
     }
@@ -33,15 +32,15 @@ class DeliveryAreaController extends Controller
      */
     public function store(StoreDeliveryAreaRequest $request)
     {
-         // Nếu không có giá trị cho status, mặc định là 1
-         $validatedData = $request->validated();
-         $validatedData['status'] = $validatedData['status'] ?? 1;
- 
-         // Tạo mới khu vực giao hàng với dữ liệu đã xác thực
-         DeliveryArea::create($validatedData); // Sử dụng $validatedData ở đây
- 
-         // Chuyển hướng về trang danh sách và hiển thị thông báo thành công
-         return redirect()->route('admin.delivery_areas.index')->with('success', 'Khu vực giao hàng đã được tạo thành công.');
+        // Nếu không có giá trị cho status, mặc định là 1
+        $validatedData = $request->validated();
+        $validatedData['status'] = $validatedData['status'] ?? 1;
+
+        // Tạo mới khu vực giao hàng với dữ liệu đã xác thực
+        DeliveryArea::create($validatedData); // Sử dụng $validatedData ở đây
+
+        // Chuyển hướng về trang danh sách và hiển thị thông báo thành công
+        return redirect()->route('admin.delivery_areas.index')->with('success', 'Khu vực giao hàng đã được tạo thành công.');
     }
 
     /**
@@ -68,15 +67,15 @@ class DeliveryAreaController extends Controller
      */
     public function update(UpdateDeliveryAreaRequest $request, $id)
     {
-         // Tìm khu vực giao hàng theo ID
-         $area = DeliveryArea::findOrFail($id);
-        
-         // Cập nhật khu vực giao hàng với dữ liệu đã xác thực
-         $validatedData = $request->validated();
-         $area->update($validatedData); // Cập nhật với dữ liệu đã xác thực
- 
-         // Chuyển hướng về trang danh sách và hiển thị thông báo thành công
-         return redirect()->route('admin.delivery_areas.index')->with('success', 'Khu vực giao hàng đã được cập nhật thành công.');
+        // Tìm khu vực giao hàng theo ID
+        $area = DeliveryArea::findOrFail($id);
+
+        // Cập nhật khu vực giao hàng với dữ liệu đã xác thực
+        $validatedData = $request->validated();
+        $area->update($validatedData); // Cập nhật với dữ liệu đã xác thực
+
+        // Chuyển hướng về trang danh sách và hiển thị thông báo thành công
+        return redirect()->route('admin.delivery_areas.index')->with('success', 'Khu vực giao hàng đã được cập nhật thành công.');
     }
 
     /**

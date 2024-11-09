@@ -1,95 +1,76 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Chi Tiết Tin - Pizzato
+    Chi Tiết Sản Phẩm - Pizzato
 @endsection
 
 @section('content')
-    <div class="content-body">
-        <div class="container-fluid">
-            <div class="row page-titles mx-0">
-                <div class="col-sm-6 p-md-0">
-                    <div class="welcome-text">
-                        <h4>Hi, welcome back!</h4>
-                        <span class="ml-1">Element</span>
-                    </div>
-                </div>
-                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Tin Tức</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Chi Tiết Tin Tức</a></li>
-                    </ol>
-                </div>
-            </div>
 
-            {{-- @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif --}}
 
-            <!-- row -->
-            <div class="row">
-                <div class="col-xl-12 col-xxl-12">
-                    <div class="card ">
-                        <div class="card-body row">
-                            <div class="col-md-6">
-                                <h1>Detail Product: {{ $product->id }}</h1>
-                                <h3>Tiêu Đề: {{ $product->title }}</h3>
 
-                                @if ($product->image)
-                                    <img src="{{ Storage::url($product->image) }}" style="width: 100%; max-width: 250px;"
-                                        alt="Image">
-                                @endif
-
-                                <div class="mt-3">
-                                    <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Quay Lại</a>
-                                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning">Sửa</a>
+                                <div class="d-flex justify-content-center">
+                                    <a href="{{ route('admin.products.index') }}" class="btn btn-secondary me-1">Quay
+                                        Lại</a>
+                                    <a href="{{ route('admin.products.edit', $product) }}"
+                                        class="btn btn-warning me-1">Sửa</a>
+                                    <a href="{{ route('admin.products.create') }}" class="btn btn-success">Thêm
+                                        Mới</a>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <table>
-                                    <tr>
-                                        <th>Field name</th>
-                                        <th>Value</th>
-                                    </tr>
-                                    <tbody>
-                                        @foreach ($product->toArray() as $field => $value)
-                                            <tr>
-                                                <td>
-                                                    @if ($field == 'category_id')
-                                                        Category
-                                                    @else
-                                                        {{ Str::ucfirst(str_replace('_', ' ', $field)) }}
-                                                    @endif
-                                                </td>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 text-center">
+                                        <h4>Hình Ảnh Sản Phẩm</h4>
+                                        @if ($product->image)
+                                            <img src="{{ Storage::url($product->image) }}" class="img-fluid rounded"
+                                                style="width: 100%; max-width: 250px;" alt="Image">
+                                        @else
+                                            <p class="text-muted">Không có hình ảnh</p>
+                                        @endif
+                                    </div>
 
-                                                <td>
-                                                    @if ($field == 'thumb_image')
-                                                        <img src="{{ Storage::url($value) }}" alt="" width="50px">
-                                                    @elseif (Str::contains($field, 'show_at_home'))
-                                                        <span class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
-                                                            {{ $value ? 'YES' : 'NO' }}
-                                                        </span>
-                                                    @elseif (Str::contains($field, 'status'))
-                                                        <span class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
-                                                            {{ $value ? 'YES' : 'NO' }}
-                                                        </span>
-                                                    @elseif ($field == 'category_id')
-                                                        {{ $product->category->name }}
-                                                    @else
-                                                        {{ $value }}
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                    <div class="col-md-8">
+                                        <h4>Thông Tin Chi Tiết</h4>
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <td>{{ $product->id }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Tiêu Đề</th>
+                                                    <td>{{ $product->title }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Danh Mục</th>
+                                                    <td>{{ $product->category->name ?? 'Không có danh mục' }}</td>
+                                                </tr>
+                                                @foreach ($product->toArray() as $field => $value)
+                                                    <tr>
+                                                        <th>{{ Str::ucfirst(str_replace('_', ' ', $field)) }}</th>
+                                                        <td>
+                                                            @if (is_array($value))
+                                                                {{ implode(', ', $value) }}
+                                                            @elseif ($field == 'thumb_image')
+                                                                <img src="{{ Storage::url($value) }}" alt=""
+                                                                    width="50px">
+                                                            @elseif (Str::contains($field, 'show_at_home') || Str::contains($field, 'status'))
+                                                                <span
+                                                                    class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
+                                                                    {{ $value ? 'YES' : 'NO' }}
+                                                                </span>
+                                                            @else
+                                                                {{ $value }}
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
