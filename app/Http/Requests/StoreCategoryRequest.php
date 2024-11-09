@@ -28,7 +28,7 @@ class StoreCategoryRequest extends FormRequest
             // 'show_at_home' => 'required',
         ];
     }
-    public function error(): array
+    public function messages(): array
     {
         return [
             'name.required' => "tên không được để trống",
@@ -42,6 +42,6 @@ class StoreCategoryRequest extends FormRequest
     }
     public function run()
     {
-        $this->validate($this->rules(), $this->error());
+        $this->validate($this->rules(), $this->messages());
     }
 }
