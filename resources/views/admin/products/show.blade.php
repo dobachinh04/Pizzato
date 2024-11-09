@@ -5,14 +5,8 @@
 @endsection
 
 @section('content')
-    <div class="main-content">
-        <div class="page-content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Chi Tiết Sản Phẩm: {{ $product->title }}</h5>
+
+
 
                                 <div class="d-flex justify-content-center">
                                     <a href="{{ route('admin.products.index') }}" class="btn btn-secondary me-1">Quay

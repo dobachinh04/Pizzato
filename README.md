@@ -23,9 +23,8 @@ Url thanh toán môi trường TEST (vnp_Url): https://sandbox.vnpayment.vn/paym
 Thông tin truy cập Merchant Admin để quản lý giao dịch:
 Địa chỉ: https://sandbox.vnpayment.vn/merchantv2/
 
-Tên đăng nhập: oniiisan2k4@gmail.com
+Tên đăng nhập: onii...
 
-Mật khẩu: (Là mật khẩu nhập tại giao diện đăng ký Merchant môi trường TEST)
 
 Kiểm tra (test case) – IPN URL:
 Kịch bản test (SIT): https://sandbox.vnpayment.vn/vnpaygw-sit-testing/user/login
