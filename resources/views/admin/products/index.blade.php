@@ -46,15 +46,15 @@
                                             </th>
                                             {{-- <th data-ordering="false">SR No.</th> --}}
                                             <th>ID</th>
-                                            <th>Image</th>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Price</th>
-                                            <th>Offer Price</th>
-                                            <th>Quantity</th>
-                                            <th>Show At Home</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Danh mục</th>
+                                            <th>Giá</th>
+                                            <th>Giá khuyến mãi </th>
+                                            <th>Số lượng</th>
+                                            <th>Hiển thị </th>
+                                            <th>Trạng thái</th>
+                                            <th>Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
