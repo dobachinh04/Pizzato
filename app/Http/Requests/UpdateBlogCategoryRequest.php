@@ -26,7 +26,7 @@ class UpdateBlogCategoryRequest extends FormRequest
             'slug' => 'required|min:3|max:255',
         ];
     }
-    public function error(): array
+    public function messages(): array
     {
         return [
             'name.required' => "tên không được để trống",
@@ -39,6 +39,6 @@ class UpdateBlogCategoryRequest extends FormRequest
     }
     public function run()
     {
-        $this->validate($this->rules(), $this->error());
+        $this->validate($this->rules(), $this->messages());
     }
 }
