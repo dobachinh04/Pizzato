@@ -2,24 +2,37 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class VnpayController extends Controller
 {
     public function createPayment(Request $request)
     {
-        $vnp_TmnCode = config('services.vnpay.vnp_TmnCode');
-        $vnp_HashSecret = config('services.vnpay.vnp_HashSecret');
-        $vnp_Url = config('services.vnpay.vnp_Url');
-        $vnp_Returnurl = config('services.vnpay.vnp_ReturnUrl');
-        $vnp_TxnRef = time(); // Mã đơn hàng, tạo ngẫu nhiên hoặc lấy từ hệ thống
-        $vnp_Amount = $request->grand_total; // Convert to VND (assuming grand total is in VND)
-        $vnp_TxnRef = $request->invoice_id; // Using invoice ID or unique order ID
-        $vnp_OrderInfo = "Thanh toán cho đơn hàng #" . $vnp_TxnRef;
-        $vnp_Locale = 'vn'; // Ngôn ngữ, 'vn' cho tiếng Việt
-        $vnp_IpAddr = $request->ip();
+        // Lấy các cấu hình từ file config
+        $vnp_TmnCode = Config::get('services.vnpay.vnp_TmnCode');
+        $vnp_HashSecret = Config::get('services.vnpay.vnp_HashSecret');
+        $vnp_Url = Config::get('services.vnpay.vnp_Url');
+        $vnp_Returnurl = Config::get('services.vnpay.vnp_ReturnUrl');
+        // $timer = config('services.vnpay.timer');
 
+        // Sử dụng invoice_id làm vnp_TxnRef, đây là mã đơn hàng của bạn
+        $vnp_TxnRef = random_int(100000, 999999); // Mã đơn hàng duy nhất
+        $vnp_Amount = $request->grand_total * 100; // Tổng tiền chuyển thành VND (1 VND = 100 đồng)
+        $vnp_OrderInfo = "Thanh toán cho đơn hàng #" . $vnp_TxnRef;
+        $vnp_Locale = 'vn'; // Ngôn ngữ: 'vn' cho tiếng Việt
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+        $timeCreated = now(); // Hoặc lấy thời gian từ đơn hàng nếu có
+        $timeLimit = 30; // 30 giây đếm ngược
+        if (now()->diffInSeconds($timeCreated) > $timeLimit) {
+            return response()->json([
+                'message' => 'Quá thời gian thanh toán. Vui lòng thử lại.'
+            ], 400);
+        }
+
+        // Tạo mảng dữ liệu cho yêu cầu thanh toán
         $inputData = [
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -35,8 +48,9 @@ class VnpayController extends Controller
             "vnp_TxnRef" => $vnp_TxnRef,
         ];
 
-        // Tạo URL thanh toán với checksum
+        // Sắp xếp các tham số theo thứ tự từ điển
         ksort($inputData);
+
         $query = "";
         $i = 0;
         $hashdata = "";
@@ -50,14 +64,22 @@ class VnpayController extends Controller
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
 
-        $vnp_Url = $vnp_Url . "?" . $query;
+        // Tạo URL thanh toán
+        $vnp_Url = $vnp_Url . "?" . rtrim($query, '&');
+
+        // Tạo checksum (hash) và thêm vào URL
         if (isset($vnp_HashSecret)) {
             $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
-            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            $vnp_Url .= '&vnp_SecureHash=' . $vnpSecureHash;
         }
 
-        return redirect($vnp_Url);
+        // Trả về URL thanh toán
+        return response()->json([
+            'success' => true,
+            'vnp_Url' => $vnp_Url,
+        ]);
     }
+
 
     public function callback(Request $request)
     {

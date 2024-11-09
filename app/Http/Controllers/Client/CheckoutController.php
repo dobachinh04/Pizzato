@@ -66,8 +66,7 @@ class CheckoutController extends Controller
         // Cart::where('user_id', Auth::id())->delete();
         if ($request->payment_method === 'vnpay') {
             // Nếu người dùng chọn VNPAY, thực hiện thanh toán qua VNPAY
-            // return (new VnpayController)->createPayment($request);
-            dd('Vnpay');
+            return (new VnpayController)->createPayment($request);
         }
 
         return response()->json([
