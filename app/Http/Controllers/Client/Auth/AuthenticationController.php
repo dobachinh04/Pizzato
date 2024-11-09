@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -19,9 +20,11 @@ class AuthenticationController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            $address = Address::where('user_id', $user->id)->first();
             return response()->json([
                 'message' => 'Đăng nhập thành công',
-                'user' => $user
+                'user' => $user,
+                'address' => $address
             ], 200);
         } else {
             return response()->json([
