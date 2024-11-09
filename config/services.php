@@ -38,4 +38,12 @@ return [
         'vnp_ReturnUrl' => env('VNPAY_RETURN_URL', 'http://localhost:3000'),  // URL người dùng quay lại sau khi thanh toán,
         'timer' => env('VNPAY_TIMER', 30000),
     ],
+    'momo' => [
+        'partner_code' => env('MOMO_PARTNER_CODE',  'MOMOBKUN20180529'),
+        'access_key' => env('MOMO_ACCESS_KEY', 'klm05TvNBzhg7h7j'),
+        'secret_key' => env('MOMO_SECRET_KEY', 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa'),
+        'endpoint' => env('MOMO_ENDPOINT', 'https://test-payment.momo.vn/gw_payment/transactionProcessor'),
+        'return_url' => env('MOMO_RETURN_URL', 'http://pizzato.test/payment/momo/callback'),
+        'notify_url' => env('MOMO_NOTIFY_URL', 'http://pizzato.test/payment/momo/callback'),
+    ],
 ];

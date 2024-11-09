@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -16,7 +16,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- row -->
 
@@ -28,7 +28,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form action="{{ route('admin.users.store') }}" method="POST"
+                                    <form action="{{ route('admin.products.store') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
 

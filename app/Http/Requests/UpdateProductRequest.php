@@ -24,7 +24,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug,' . $this->product->id, //unique:products,slug:truong duy nhất trong bảng products, cột slug
-            'thumb_image' => 'nullable|url',
+            'thumb_image' => 'nullable',
             'category_id' => 'required|exists:categories,id', //// giá trị của category_id có tồn tại trong bảng categories ?
             'view' => 'nullable|integer|min:0',
             'short_description' => 'nullable|string|max:500',
@@ -50,7 +50,7 @@ class UpdateProductRequest extends FormRequest
             'slug.max' => 'Slug không được vượt quá 255 ký tự.',
             'slug.unique' => 'Slug đã tồn tại, vui lòng chọn slug khác.',
 
-            'thumb_image.url' => 'Ảnh đại diện phải là một URL hợp lệ.',
+            // 'thumb_image.url' => 'Ảnh đại diện phải là một URL hợp lệ.',
 
             'category_id.required' => 'Danh mục là bắt buộc.',
             'category_id.exists' => 'Danh mục không tồn tại.',

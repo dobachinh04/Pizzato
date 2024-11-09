@@ -53,14 +53,18 @@
         <input type="hidden" name="carts" value="{{ json_encode($carts) }}">
         <input type="hidden" name="grand_total" value="{{ $carts->sum('grand_total') }}">
 
-        <div>
+        {{-- <div>
             <label for="payment_method">Phương Thức Thanh Toán:</label>
             <select name="payment_method" required>
                 <option value="COD">Thanh Toán Khi Nhận Hàng</option>
                 <<option value="online">Thanh Toán Trực Tuyến</option>
             </select>
-        </div>
+        </div> --}}
 
-        <button type="submit">Thanh Toán</button>
+        <label for="">Hình thức thanh toán</label>
+        <button type="submit" name="cod">Thanh Toán</button>
+        <button type="submit" name="vnpay">Thanh Toán Vnpay</button>
+        <button type="submit" name="payUrl">Thanh Toán Momo</button>
+
     </form>
 </div>
