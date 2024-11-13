@@ -176,7 +176,7 @@ Route::prefix('admin/auth')->name('admin.')->group(function () {
 // });
 // });
 
-Route::middleware('auth.role:admin')->group(function(){
+Route::middleware('auth.role')->group(function(){
     Route::prefix('admin')->name('admin.')->group(function(){
         // Admin - Dashboard:
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
