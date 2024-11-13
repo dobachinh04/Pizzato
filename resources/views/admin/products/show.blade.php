@@ -29,8 +29,18 @@
                                     <div class="col-md-4 text-center">
                                         <h4>Hình Ảnh Sản Phẩm</h4>
                                         @if ($product->thumb_image)
-                                            <img src="{{ Storage::url($product->thumb_image) }}" class="img-fluid rounded"
+
+
+                                            @php
+                                            $url = $product->thumb_image;
+                                                // Kiểm tra nếu URL không chứa 'http' thì sử dụng Storage::url
+                                                if (!\Str::contains($url, 'http')) {
+                                                    $url = \Storage::url($url);
+                                                }
+                                            @endphp
+                                            <img src="{{ $url }}" class="img-fluid rounded"
                                                 style="width: 100%; max-width: 250px;" alt="Image">
+
                                         @else
                                             <p class="text-muted">Không có hình ảnh</p>
                                         @endif
@@ -71,8 +81,17 @@
                                                             @if (is_array($value))
                                                                 {{ implode(', ', $value) }}
                                                             @elseif ($field == 'thumb_image')
-                                                                <img src="{{ Storage::url($value) }}"
-                                                                    alt="Hình ảnh sản phẩm" width="50px">
+                                                                {{-- <img src="{{ Storage::url($value) }}"
+                                                                    alt="Hình ảnh sản phẩm" width="50px"> --}}
+
+                                                                @php
+                                                                    // Kiểm tra nếu URL không chứa 'http' thì sử dụng Storage::url
+                                                                    if (!\Str::contains($value, 'http')) {
+                                                                        $value = \Storage::url($value);
+                                                                    }
+                                                                @endphp
+                                                                <img src="{{ $value }}" alt="Hình ảnh sản phẩm"
+                                                                    width="50px">
                                                             @elseif (Str::contains($field, 'show_at_home') || Str::contains($field, 'status'))
                                                                 <span
                                                                     class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
