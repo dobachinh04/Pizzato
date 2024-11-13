@@ -12,17 +12,17 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $products = Product::where('show_at_home', 1)
-    //         ->where('status', 1)
-    //         ->get();
+     public function index()
+    {
+        $products = Product::where('show_at_home', 1)
+            ->where('status', 1)
+            ->get();
 
-    //     return response()->json([
-    //         'products' => $products,
-    //         'message' => 'success'
-    //     ], 200);
-    // }
+        return response()->json([
+            'products' => $products,
+            'message' => 'success'
+        ], 200);
+    }
 
     /**
      * Show the form for creating a new resource.
