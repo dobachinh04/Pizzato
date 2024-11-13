@@ -34,18 +34,6 @@ class CheckoutController extends Controller
         //     return redirect()->route('client.login')->with('error', 'Bạn cần đăng nhập để thanh toán.');
         // }
 
-
-        // Validate dữ liệu từ form
-        $request->validate([
-            'address_id' => 'required|exists:addresses,id',
-            'payment_method' => 'required|string',
-        ]);
-
-        // Tính toán tổng tiền và số lượng sản phẩm
-        $carts = Cart::where('user_id', Auth::id())->get();
-        $grandTotal = $carts->sum('grand_total'); // Tổng tiền
-        $productQty = $carts->sum('quantity'); // Tổng số lượng sản phẩm
-
         // Validate dữ liệu từ request
         // $request->validate([
         //     'address_id' => 'required|exists:addresses,id',
@@ -69,22 +57,6 @@ class CheckoutController extends Controller
             'order_status' => 'pending',
         ]);
 
-
-        // Lưu chi tiết đơn hàng
-        foreach ($carts as $cart) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $cart->product_id,
-                'unit_price' => $cart->grand_total / $cart->quantity, // Giá đơn vị
-                'qty' => $cart->quantity,
-            ]);
-        }
-
-        // Xóa sản phẩm trong giỏ hàng sau khi đặt hàng
-        Cart::where('user_id', Auth::id())->delete();
-
-        return redirect()->route('checkout.index')->with('success', 'Thanh toán thành công!');
-
         // Lưu các sản phẩm trong chi tiết đơn hàng
         foreach ($request->cartItems as $item) {
             OrderItem::create([
@@ -98,10 +70,10 @@ class CheckoutController extends Controller
 
         // Xóa giỏ hàng sau khi hoàn tất thanh toán
         // Cart::where('user_id', Auth::id())->delete();
+
         if ($request->payment_method === 'vnpay') {
             // Nếu người dùng chọn VNPAY, thực hiện thanh toán qua VNPAY
-            // return (new VnpayController)->createPayment($request);
-            dd('Vnpay');
+            return (new VnpayController)->createPayment($request);
         }
 
         return response()->json([

@@ -28,27 +28,35 @@ class AuthenticationController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'error' => 'Tài khoản hoặc mật khẩu không hợp lệ!'
+                'message' => 'Tài khoản hoặc mật khẩu không hợp lệ!'
             ], 401);
         }
     }
 
     public function register(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:6|confirmed', // Đảm bảo mật khẩu được xác nhận
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ],
+        [
+            'name.required' => 'Vui lòng nhập tên tài khoản!',
+            'email.required' => 'Vui lòng nhập email!',
+            'email.email' => 'Email không hợp lệ!',
+            'email.unique' => 'Email nây đã tồn tại!',
+            'password.required' => 'Vui lòng nhập mật khẩu!',
+            'password.min' => 'Mật khẻu tối thiểu 6 ký tự!',
+            'password.confirmed' => 'Mật khẩu xác nhận không khóp!',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'message' => 'Validation Error',
-        //         'errors' => $validator->errors(),
-        //     ], 422);
-        // }
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Đã xảy ra lỗi khi đăng ký. Vui lòng xem lại!',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
 
-        // Mặc định vai trò là User (ID là 1)
         $role = 1;
 
         User::create([

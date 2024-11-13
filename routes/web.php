@@ -24,9 +24,6 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 
 use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-
-use App\Http\Controllers\Admin\CheckoutController;
-use App\Http\Controllers\Client\VnpayController;
 use App\Http\Controllers\Client\MomoController;
 
 // Client Views demo
