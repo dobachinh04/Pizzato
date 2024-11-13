@@ -29,6 +29,7 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 
 // IndexController
 Route::get('/menu', [IndexController::class, 'getMenuPizza']);
+Route::get('/categories', [IndexController::class, 'getCategories']);
 Route::get('/hot-product', [IndexController::class, 'getHotProduct']);
 
 // MenuController
