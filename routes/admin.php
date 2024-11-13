@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['empty'])->prefix('admin')->name('admin.')->group(function () {
     // Admin - Dashboard:
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
