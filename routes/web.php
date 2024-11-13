@@ -9,10 +9,9 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ChatController;
 use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Client\VnpayController;
+
 use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CheckoutController;
 
 use App\Http\Controllers\Client\ProductController;
 
@@ -26,10 +25,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Client\MomoController;
-
+use App\Http\Controllers\Client\VnpayController;
 // Client Views demo
-Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
-Route::get('/show/{product}',                               [ProductController::class, 'show'])->name('client.show');
+// Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
+// Route::get('/show/{product}',                               [ProductController::class, 'show'])->name('client.show');
 
 // Route::get('/categories/{id}',                          [PostController::class, 'categories'])->name('client.category');
 // Route::get('/author/{id}',                              [PostController::class, 'author'])->name('client.author');
