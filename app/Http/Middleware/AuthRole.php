@@ -22,8 +22,9 @@ class AuthRole
         }
 
 
+
         if ($role && Auth::user()->role->name !== $role) {
-        // // dd(Auth::user(), Auth::user()->role);
+            // // dd(Auth::user(), Auth::user()->role);
 
             return redirect()->route('403Page')->with('error', 'Bạn không có quyền truy cập trang này');
         }
