@@ -12,9 +12,10 @@ class Role extends Model
     protected $fillable = [
         'name'
     ];
-
     public function users()
     {
         return $this->hasMany(User::class);
     }
+    // Kiểm tra xem người dùng có phải là admin không
+
 }
