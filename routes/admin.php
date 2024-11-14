@@ -30,6 +30,8 @@ Route::prefix('admin/auth')->name('admin.')->group(function () {
     Route::get('lock-screen', [LoginController::class, 'showFormPassword'])->name('lockscreen');
 });
 
+// Route::get('403-page', [LoginController::class, '403Page'])->name('403Page');
+Route::view('403-page', 'admin.auth.403')->name('403Page');
 
 // Route::prefix('admin')->name('admin.')->group(function(){
 //     // Admin - Dashboard:
@@ -176,7 +178,7 @@ Route::prefix('admin/auth')->name('admin.')->group(function () {
 // });
 // });
 
-Route::middleware('auth.role')->group(function(){
+Route::middleware('auth.role:admin')->group(function(){
     Route::prefix('admin')->name('admin.')->group(function(){
         // Admin - Dashboard:
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');

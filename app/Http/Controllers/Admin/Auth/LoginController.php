@@ -55,4 +55,5 @@ class LoginController extends Controller
 
         return redirect()->route('admin.login')->with('success', 'Dang xuat thanh cong');
     }
+
 }

@@ -21,12 +21,12 @@ class AuthRole
             return redirect()->route('admin.login')->with('error', 'Bạn cần đăng nhập trước');
         }
 
-        // Kiểm tra nếu có vai trò yêu cầu và người dùng không có vai trò đó
-        if ($role && Auth::user()->role !== $role) {
-            // Chuyển hướng hoặc trả về thông báo lỗi tùy thuộc vào yêu cầu của bạn
-            return redirect()->with('error', 'Bạn không có quyền truy cập trang này'); // hoặc trả về 403 nếu không có quyền
-        }
 
+        if ($role && Auth::user()->role->name !== $role) {
+        // // dd(Auth::user(), Auth::user()->role);
+
+            return redirect()->route('403Page')->with('error', 'Bạn không có quyền truy cập trang này');
+        }
         return $next($request);
     }
 }

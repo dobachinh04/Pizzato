@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            // $table->integer('role')->default(1); // 1: Người dùng mặc định
             $table->timestamps();
         });
     }
