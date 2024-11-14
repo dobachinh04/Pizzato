@@ -11,19 +11,22 @@ class LoginController extends Controller
 {
     public function showFormLogin()
     {
-        if (Auth::id() > 0) {
-            return redirect()->route('admin.dashboard');
+        // Kiểm tra nếu người dùng đã đăng nhập
+        if (Auth::check()) {
+            // Nếu đã đăng nhập, chuyển hướng về trang dashboard hoặc trang chủ
+            return redirect()->route('admin.dashboard')->with('message', 'Bạn đã đăng nhập');
         }
-        return view('admin.auth.login');
-    }
-    public function showFormPassword()
+        // session()->forget('success');
 
-    {
-        // if (Auth::id() > 0) {
-        //     return redirect()->route('admin.dashboard');
-        // }
-        return view('admin.auth.locksreen');
+        // Thêm header để tránh cache
+        // return view('admin.auth.login');
+        return response()
+            ->view('admin.auth.login')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
+
     public function login(LoginRequest $request)
     {
         // echo 1; die();
@@ -37,6 +40,15 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+
+            // Kiểm tra quyền truy cập
+            if (Auth::user()->role->name !== 'admin') {
+                Auth::logout(); // Đăng xuất người dùng
+                // ko quyền
+                return redirect()->route('403Page')->with('error', 'Bạn không có quyền truy cập trang này');
+                }
+                // có quyền
             return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công');
         }
         return back()->with('error', 'Email hoặc mật khẩu không chính xác');
@@ -56,4 +68,12 @@ class LoginController extends Controller
         return redirect()->route('admin.login')->with('success', 'Dang xuat thanh cong');
     }
 
+    public function showFormPassword()
+
+    {
+        // if (Auth::id() > 0) {
+        //     return redirect()->route('admin.dashboard');
+        // }
+        return view('admin.auth.locksreen');
+    }
 }

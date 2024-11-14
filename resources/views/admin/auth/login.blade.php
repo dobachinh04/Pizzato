@@ -56,7 +56,7 @@
                                     <img src="/velzon/assets/images/logo-light.png" alt="" height="20">
                                 </a>
                             </div>
-                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                            <p class="mt-3 fs-15 fw-medium"></p>
                         </div>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
 
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
-                                    <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Velzon.</p>
+                                    <h5 class="text-primary">Chào mừng trở lại</h5>
+                                    <p class="text-muted">Đăng nhập để tiếp tục đến trang quản trị.</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form action="{{ route('admin.login') }}" method="POST">
@@ -153,7 +153,16 @@
         <!-- end Footer -->
     </div>
     <!-- end auth-page-wrapper -->
-
+    <script>
+        <script>
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
+        };
+    }
+</script>
+    </script>
     <!-- JAVASCRIPT -->
     <script src="/velzon/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/velzon/assets/libs/simplebar/simplebar.min.js"></script>
