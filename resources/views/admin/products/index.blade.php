@@ -44,7 +44,7 @@
                                                         value="option">
                                                 </div>
                                             </th>
-                                            {{-- <th data-ordering="false">SR No.</th> --}}
+                                           
                                             <th>ID</th>
                                             <th>Hình ảnh</th>
                                             <th>Tên sản phẩm</th>
