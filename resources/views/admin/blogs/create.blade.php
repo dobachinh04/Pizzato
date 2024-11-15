@@ -34,7 +34,7 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="user_id">User</label>
+                                                    <label for="user_id">Người dùng</label>
                                                     <select name="user_id" id="user_id">
                                                         <option value="">Chọn người dùng</option>
                                                         @foreach ($users as $user)
@@ -56,7 +56,7 @@
                                             </div>
 
                                             <div class="form-group mb-3">
-                                                <label for="formFile" class="form-label">Image</label>
+                                                <label for="formFile" class="form-label">Hình ảnh</label>
                                                 <input class="form-control @error('image') is-invalid @enderror"
                                                     type="file" id="formFile" name="image" accept="image/*"
                                                     value="{{ old('image') }}">
@@ -68,7 +68,7 @@
 
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="title">Title</label>
+                                                <label for="title">Tiêu đề</label>
                                                 <input type="text" name="title" id="title">
                                             </div>
 
@@ -78,15 +78,15 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="description">Description</label>
+                                                <label for="description">Mô tả</label>
                                                 <textarea name="description" id="description"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label for="status">Status</label>
+                                                <label for="status">Trạng thái</label>
                                                 <select name="status" id="status">
                                                     <option value="">Chọn trạng thái</option>
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
+                                                    <option value="1">Hoạt động</option>
+                                                    <option value="0">Không hoạt động</option>
                                                 </select>
                                             </div>
                                         </div>
