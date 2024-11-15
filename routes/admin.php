@@ -45,6 +45,8 @@ Route::middleware('auth.role:admin')->group(function(){
         // Admin - Dashboard:
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
+    Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
+
 
     // Admin - products Categories:
     Route::prefix('categories')->name('categories.')->group(function () {

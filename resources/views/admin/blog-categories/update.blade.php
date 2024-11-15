@@ -43,7 +43,7 @@ Cập Nhật Danh Mục Blog - Pizzato
                                     @method('PUT')
 
                                     <div class="form-group">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" name="name" class="form-control input-default "
                                             placeholder="Tên Danh Mục" value="{{ $category_blog->name }}">
                                         @error('name')
@@ -63,7 +63,7 @@ Cập Nhật Danh Mục Blog - Pizzato
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Status</label>
+                                        <label>Trạng Thái</label>
                                         <select name="status" class="form-control input-default"
                                             value="{{ $category_blog->status }}">
                                             <option disabled>Chọn Trạng Thái</option>

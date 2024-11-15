@@ -41,7 +41,7 @@ Thêm Mới Danh Mục Blog - Pizzato
                                     @csrf
 
                                     <div class="form-group">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" name="name" class="form-control input-default "
                                             placeholder="Tên Danh Mục">
                                         @error('name')
@@ -51,7 +51,7 @@ Thêm Mới Danh Mục Blog - Pizzato
                                     </div>
 
                                     <div class="form-group">
-                                        <label>slug</label>
+                                        <label>Slug</label>
                                         <input type="text" name="slug" class="form-control input-default "
                                             placeholder="VD: danh-muc-1">
                                         @error('slug')
@@ -61,7 +61,7 @@ Thêm Mới Danh Mục Blog - Pizzato
                                     </div>
 
                                     <div class="form-group">
-                                        <label>status</label>
+                                        <label>Trạng Thái</label>
                                         <select name="status" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
                                             <option value="1" selected>Bật</option>
