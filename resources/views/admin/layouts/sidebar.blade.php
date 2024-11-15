@@ -271,7 +271,7 @@
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Điều Hướng</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('client.home') }}" role="button"
+                    <a class="nav-link menu-link" href="{{ route('admin.dashboard') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarHome">
                         <i class="fa-solid fa-door-open"></i> <span data-key="t-dashboards">Quay Về Trang Chủ</span>
                     </a>

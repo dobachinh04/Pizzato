@@ -15,15 +15,34 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 
 use App\Http\Controllers\Admin\DeliveryAreaController;
-
+use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Middleware\CheckFormLogin;
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    // Admin - Dashboard:
+// Login admin
+Route::prefix('admin/auth')->name('admin.')->group(function () {
+    Route::get('login', [LoginController::class, 'showFormLogin'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('lock-screen', [LoginController::class, 'showFormPassword'])->name('lockscreen');
+});
+
+Route::view('403-page', 'admin.auth.403')->name('403Page');
+
+// Route::middleware(['auth.role:admin', 'no-cache'])->group(function(){
+//     Route::prefix('admin')->name('admin.')->group(function(){
+//         // Admin - Dashboard:
+//     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
+//     });
+// });
+
+Route::middleware('auth.role:admin')->group(function(){
+    Route::prefix('admin')->name('admin.')->group(function(){
+        // Admin - Dashboard:
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
     Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
@@ -167,10 +186,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{payment}',                      [UserController::class, 'show'])->name('show');
         Route::delete('/{payment}',                        [UserController::class, 'destroy'])->name('destroy');
     });
+    });
 });
-
-
-
-
-
-

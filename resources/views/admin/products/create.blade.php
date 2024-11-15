@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -16,7 +16,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- row -->
 
@@ -28,7 +28,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form action="{{ route('admin.users.store') }}" method="POST"
+                                    <form action="{{ route('admin.products.store') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
 
@@ -36,8 +36,8 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" name="name" class="form-control"
-                                                        value="{{ old('name') }}">
+                                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                                        value="{{ old('name') }}" placeholder="Tên sản phẩm">
                                                     @error('name')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -51,7 +51,7 @@
                                                 </div>
 
                                                 <div class="mt-3">
-                                                    <label for="thumb_image" class="form-label">Image</label>
+                                                    <label for="thumb_image" class="form-label">Hình ảnh</label>
                                                     <input type="file" class="form-control" id="thumb_image"
                                                         name="thumb_image">
                                                     @error('thumb_image')
@@ -69,7 +69,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="category_id" class="form-label">Catalogue</label>
+                                                    <label for="category_id" class="form-label">Danh mục</label>
                                                     <select type="text" class="form-select" id="category_id"
                                                         name="category_id">
                                                         @foreach ($categories as $id => $name)
@@ -95,27 +95,27 @@
 
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label>Price</label>
-                                                    <input type="text" name="price" class="form-control"
-                                                        value="{{ old('price') }}">
+                                                    <label>Giá</label>
+                                                    <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"
+                                                        value="{{ old('price') }}" placeholder="Nhập giá">
                                                     @error('price')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Offer Price</label>
-                                                    <input type="text" name="offer_price" class="form-control"
-                                                        value="{{ old('offer_price') }}">
+                                                    <label>Giá khuyến mãi</label>
+                                                    <input type="text" name="offer_price" class="form-control @error('offer_price') is-invalid @enderror"
+                                                        value="{{ old('offer_price') }}" placeholder="Nhập giá khuyến mãi">
                                                     @error('offer_price')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Quantity</label>
-                                                    <input type="text" name="qty" class="form-control"
-                                                        value="{{ old('qty') }}">
+                                                    <label>Số lượng</label>
+                                                    <input type="text" name="qty" class="form-control @error('qty') is-invalid @enderror"
+                                                        value="{{ old('qty') }}" placeholder="Nhập số lượng">
                                                     @error('qty')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -133,7 +133,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Status</label>
+                                                    <label>Trạng thái</label>
                                                     <select name="status" class="form-control" id="">
                                                         <option value="1">Active</option>
                                                         <option value="0">Inactive</option>
@@ -144,7 +144,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Short Description</label>
+                                                    <label>Mô tả ngắn</label>
                                                     <textarea name="short_description" class="form-control" id="">{{ old('short_description') }}</textarea>
                                                     @error('short_description')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -152,7 +152,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Long Description</label>
+                                                    <label>Mô tả dài</label>
                                                     <textarea name="long_description" class="form-control summernote" id="">{{ old('long_description') }}</textarea>
                                                     @error('long_description')
                                                         <span class="text-danger">{{ $message }}</span>

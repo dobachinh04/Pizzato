@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Bảng tạo phân quyền
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            // $table->integer('role')->default(1); // 1: Người dùng mặc định
-            $table->timestamps();
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('image')->nullable();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::table('categories', function (Blueprint $table) {
+            //
+        });
     }
 };

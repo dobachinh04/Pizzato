@@ -18,6 +18,11 @@ class DetailController extends Controller
         ]);
     }
 
+    public function rating(Request $request)
+    {
+        // Hàm đánh giá sản phẩm
+    }
+
     public function getSimilarPizzas(string $id)
     {
         $pizza = Product::findOrFail($id);

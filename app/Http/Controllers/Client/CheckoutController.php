@@ -11,22 +11,27 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    // Trả về danh sách sản phẩm trong giỏ hàng của người dùng
+
     public function index()
     {
-        $carts = Cart::with('product')->where('user_id', Auth::id())->get();
-        return response()->json([
-            'success' => true,
-            'data' => $carts
-        ]);
+
+        $carts = Cart::with('product')->get();
+        return view('checkout.index', compact('carts'));
+        // // Lấy thông tin sản phẩm từ cart của người dùng
+        // $cartItems = Cart::where('user_id', Auth::id())->get();
+
+        // // Nếu chưa đăng nhập, người dùng sẽ không thấy thông tin cá nhân
+        // $user = Auth::user();
+
+        // return view('checkout.index', compact('cartItems', 'user'));\
+
     }
 
-    // Xác nhận và lưu đơn hàng
     public function store(Request $request)
     {
-        // Kiểm tra người dùng đã đăng nhập hay chưa
+        // Kiểm tra xem người dùng đã đăng nhập chưa
         // if (!Auth::check()) {
-        //     return response()->json(['error' => 'Bạn cần đăng nhập để thanh toán.'], 401);
+        //     return redirect()->route('client.login')->with('error', 'Bạn cần đăng nhập để thanh toán.');
         // }
 
         // Validate dữ liệu từ request
@@ -39,6 +44,7 @@ class CheckoutController extends Controller
         // $carts = Cart::where('user_id', Auth::id())->get();
         // $grandTotal = $carts->sum('grand_total');
         // $productQty = $carts->sum('quantity');
+
 
         // Tạo đơn hàng
         $order = Order::create([
@@ -64,15 +70,17 @@ class CheckoutController extends Controller
 
         // Xóa giỏ hàng sau khi hoàn tất thanh toán
         // Cart::where('user_id', Auth::id())->delete();
+
         if ($request->payment_method === 'vnpay') {
             // Nếu người dùng chọn VNPAY, thực hiện thanh toán qua VNPAY
-            // return (new VnpayController)->createPayment($request);
-            dd('Vnpay');
+            return (new VnpayController)->createPayment($request);
         }
 
         return response()->json([
             'success' => true,
             'message' => 'Thanh toán thành công!',
         ]);
+
     }
+
 }
