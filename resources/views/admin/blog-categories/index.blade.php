@@ -46,11 +46,11 @@
                                                 </div>
                                             </th>
                                             <!-- <th>ID</th> -->
-                                            <th>Name</th>
+                                            <th>Tên</th>
                                             <th>Slug</th>
-                                            <th>Status</th>
+                                            <th>Trạng Thái</th>
                                             <!-- <th>Lần Cuối Cập Nhật</th> -->
-                                            <th>Actions</th>
+                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
