@@ -62,12 +62,11 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                {{-- <td>{{ $category->id }}</td> --}}
+
                                                 <td>{{ $categoryblog->name }}</td>
                                                 <td>{{ $categoryblog->slug }}</td>
                                                 <td>{{ $categoryblog->status == 1 ? 'Bật' : 'Tắt' }}</td>
-                                                {{-- <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
-                                                    <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>  --}}
+
                                                 <td>
                                                     <a href="{{ route('admin.blog-categories.edit', $categoryblog->id) }}"
                                                         class="btn btn-warning">Sửa</a>

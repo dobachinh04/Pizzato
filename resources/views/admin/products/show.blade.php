@@ -81,11 +81,10 @@
                                                             @if (is_array($value))
                                                                 {{ implode(', ', $value) }}
                                                             @elseif ($field == 'thumb_image')
-                                                                {{-- <img src="{{ Storage::url($value) }}"
-                                                                    alt="Hình ảnh sản phẩm" width="50px"> --}}
+                                                              
 
                                                                 @php
-                                                                    // Kiểm tra nếu URL không chứa 'http' thì sử dụng Storage::url
+                                                                    
                                                                     if (!\Str::contains($value, 'http')) {
                                                                         $value = \Storage::url($value);
                                                                     }

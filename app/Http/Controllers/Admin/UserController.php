@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $users = User::get();
 
-        return view('admin.users.index',compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -42,12 +42,12 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $param = $request->except('__token');
 
-            if($request->hasFile('image')){
+            if ($request->hasFile('image')) {
                 $filename = $request->file('image')->store('uploads/user', 'public');
-            }else{
+            } else {
                 $filename = null;
             }
             $param['image'] = $filename;
@@ -56,7 +56,7 @@ class UserController extends Controller
 
             return redirect()
                 ->route('admin.users.index')
-                ->with('errors','Thêm thành công');
+                ->with('errors', 'Thêm thành công');
         }
     }
 
@@ -65,13 +65,13 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('admin.users.show',compact('user'));
+        return view('admin.users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $user = User::with('role')->findOrFail($id);
         $roles = Role::get();
@@ -88,20 +88,20 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, String $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
         $users = User::findOrFail($id);
 
-        if($request->isMethod('PUT')){
-            $param = $request->except('__token','__method');
+        if ($request->isMethod('PUT')) {
+            $param = $request->except('__token', '__method');
             $users->update($request->validated());
 
-            if($request->hasFile('image')){
-                if($users->image && Storage::disk('public')->exists($users->image)){
+            if ($request->hasFile('image')) {
+                if ($users->image && Storage::disk('public')->exists($users->image)) {
                     Storage::disk('public')->delete($users->image);
                 }
                 $filename = $request->file('image')->store('uploads/user', 'public');
-            }else{
+            } else {
                 $filename = $users->image;
             }
             $param['image'] = $filename;
@@ -110,18 +110,18 @@ class UserController extends Controller
 
             return redirect()
                 ->route('admin.users.index')
-                ->with('errors','Sửa thành công');
+                ->with('errors', 'Sửa thành công');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $id)
+    public function destroy(string $id)
     {
         $users = User::findOrFail($id);
 
-        if($users->image && Storage::disk('public')->exists($users->image)){
+        if ($users->image && Storage::disk('public')->exists($users->image)) {
             Storage::disk('public')->delete($users->image);
         }
 
@@ -129,6 +129,6 @@ class UserController extends Controller
 
         return redirect()
             ->route('admin.users.index')
-            ->with('errors','Xóa thành công');
+            ->with('errors', 'Xóa thành công');
     }
 }
