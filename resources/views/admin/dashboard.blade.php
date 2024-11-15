@@ -135,23 +135,26 @@ Bảng Điều Khiển Admin - Pizzato
                                         <div class="d-flex align-items-center">
                                             <div class="flex-grow-1 overflow-hidden">
                                                 <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                                    Customers</p>
+                                                    Lượt xem</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-success fs-14 mb-0">
-                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +29.08 %
-                                                </h5>
-                                            </div>
+                                            
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                                        class="counter-value" data-target="183.35">0</span>M </h4>
-                                                <a href="" class="text-decoration-underline">See details</a>
+                                                        class="counter-value" data-target="{{ $totalViews }}"></span> </h4>
+                                                <a href="{{ route('admin.products.index') }}" class="text-decoration-underline">See details</a>
                                             </div>
+
+                                            <style>
+                                                .view-icon {
+                                                    color: #d53939; /* Màu đỏ */
+                                                    font-size: 24px; /* Kích thước icon */
+                                                }
+                                            </style>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                    <i class="bx bx-user-circle text-warning"></i>
+                                                     <i class="fa-solid fa-eye view-icon"></i><!-- Icon mắt (lượt xem) -->
                                                 </span>
                                             </div>
                                         </div>
@@ -165,24 +168,26 @@ Bảng Điều Khiển Admin - Pizzato
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
                                             <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> My
-                                                    Balance</p>
+                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Doanh Thu</p>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <h5 class="text-muted fs-14 mb-0">
-                                                    +0.00 %
-                                                </h5>
-                                            </div>
+                                            
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span
-                                                        class="counter-value" data-target="165.89">0</span>k </h4>
-                                                <a href="" class="text-decoration-underline">Withdraw money</a>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
+                                                        class="counter-value" data-target="{{$revenue}}"></span> VNĐ </h4>
+                                                <a href="" class="text-decoration-underline">See Revenue Details</a>
                                             </div>
+
+                                            <style>
+                                                .revenue-icon {
+                                                    color: #28a745; /* Màu xanh lá cây */
+                                                    font-size: 24px; /* Kích thước icon */
+                                                }
+                                            </style>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                                    <i class="bx bx-wallet text-primary"></i>
+                                                    <i class="fa-solid fa-coins revenue-icon"></i>
                                                 </span>
                                             </div>
                                         </div>
