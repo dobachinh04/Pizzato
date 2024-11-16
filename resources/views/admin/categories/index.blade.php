@@ -45,12 +45,12 @@
                                                 </div>
                                             </th>
                                             <!-- <th>ID</th> -->
-                                            <th>Name</th>
+                                            <th>Tên</th>
                                             <th>Slug</th>
-                                            <th>Status</th>
-                                            <th>Show at home</th>
+                                            <th>Trạng Thái Hàng</th>
+                                            <th>Trạng Thái Hiển Thị</th>
                                             <!-- <th>Lần Cuối Cập Nhật</th> -->
-                                            <th>Actions</th>
+                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
