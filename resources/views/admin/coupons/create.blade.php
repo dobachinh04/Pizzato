@@ -37,7 +37,7 @@
                                                                class="form-control @error('code') is-invalid @enderror"
                                                                value="{{ old('code') }}"
                                                                placeholder="Nhập mã giảm giá">
-                                                        <button type="button" id="generate-code" class="btn btn-secondary">Random</button>
+                                                        <button type="button" id="generate-code" class="btn btn-secondary">Ngẫu nhiên</button>
                                                     </div>
                                                     @error('code')
                                                         <span class="text-danger">{{ $message }}</span>
