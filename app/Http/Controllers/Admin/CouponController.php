@@ -39,7 +39,12 @@ class CouponController extends Controller
         $data = $request->all();
 
         // Tự động cập nhật trạng thái dựa vào qty
-        $data['status'] = $request->qty > 0 ? 1 : 0;
+        // $data['status'] = $request->qty > 0 ? 1 : 0;
+        if ($request->qty == 0) {
+            $data['status'] = 0; // Không kích hoạt
+        } else {
+            $data['status'] = $request->status;
+        }
 
         // Tạo mã code unique cho mỗi coupon
         $data['code'] = $this->generateUniqueCode();
@@ -60,6 +65,7 @@ class CouponController extends Controller
     public function edit(Coupon $coupon)
     {
         $discountTypes = ['percent' => 'Percent', 'amount' => 'Amount'];
+        // $data['code'] = $this->generateUniqueCode();
 
         return view("admin.coupons.edit", compact('coupon', 'discountTypes'));
     }
@@ -70,7 +76,18 @@ class CouponController extends Controller
         $data = $request->all();
 
         // Tự động cập nhật trạng thái dựa vào qty
-        $data['status'] = $request->qty > 0 ? 1 : 0;
+        // $data['status'] = $request->qty > 0 ? 1 : 0;
+        if ($request->qty == 0) {
+            $data['status'] = 0; // Không kích hoạt
+        } else {
+            $data['status'] = $request->status;
+        }
+
+
+    // Kiểm tra nếu mã giảm giá đã thay đổi, nếu có thì cập nhật mã mới
+    if ($request->has('code') && $request->code !== $coupon->code) {
+        $data['code'] = $request->code; // Lấy mã mới từ request
+    }
 
         $coupon->update($data);
 

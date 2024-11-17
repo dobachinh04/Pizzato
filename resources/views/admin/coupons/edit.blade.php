@@ -42,8 +42,16 @@
 
                                             <div class="form-group">
                                                 <label>Mã giảm giá</label>
-                                                <input type="text" name="code" class="form-control"
-                                                    value="{{ old('code', $coupon->code) }}">
+
+                                                <div class="input-group">
+                                                    <input type="text" id="coupon-code" name="code"
+                                                           class="form-control @error('code') is-invalid @enderror"
+                                                           value="{{ old('code', $coupon->code) }}"
+                                                           placeholder="Nhập mã giảm giá">
+                                                    <button type="button" id="generate-code" class="btn btn-secondary">Ngẫu nhiên</button>
+                                                </div>
+
+
                                                 @error('code')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -128,4 +136,41 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const generateCodeButton = document.getElementById('generate-code');
+        const couponCodeInput = document.getElementById('coupon-code');
+
+        // Lưu giá trị mã gốc để so sánh
+        const originalCode = couponCodeInput.value;
+
+        generateCodeButton.addEventListener('click', function () {
+            // Random mã giảm giá (10 ký tự, chữ và số)
+            const randomCode = Array.from({ length: 10 }, () => {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+
+            // Gán mã vào ô input
+            couponCodeInput.value = randomCode;
+        });
+
+        // Thêm vào form để gửi mã giảm giá khi có sự thay đổi
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function () {
+            // Kiểm tra xem mã có thay đổi không, nếu có thì sẽ gửi mã mới
+            if (couponCodeInput.value !== originalCode) {
+                // Gửi mã mới
+                couponCodeInput.name = 'code';  // Đảm bảo trường code được gửi
+            } else {
+                // Giữ nguyên mã cũ
+                couponCodeInput.name = 'code';  // Đảm bảo trường code được gửi
+            }
+        });
+    });
+</script>
 @endsection
