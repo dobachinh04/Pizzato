@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -34,7 +36,24 @@ class CategoryController extends Controller
     public function store(Request $request, StoreCategoryRequest $categoryrequest)
     {
         $categoryrequest->run();
-        Category::create($request->all());
+
+        // Tạo mới danh mục
+        $categories = new Category();
+        $categories->name = $request->name;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // Lấy tên mở rộng .jpg, .png...
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/categories/', $filename);
+            $categories->image = $filename;
+        }
+
+        $categories->slug = $request->slug;
+        $categories->status = $request->status;
+        $categories->show_at_home = $request->show_at_home;
+
+        $categories->save();
 
         return redirect()
             ->route('admin.categories.index')
@@ -66,15 +85,26 @@ class CategoryController extends Controller
     public function update(Request $request, string $id, UpdateCategoryRequest $categoryrequest)
     {
         $categoryrequest->run();
+        $categories = Category::find($id);
+        $categories->name = $request->name;
 
-        $categories = Category::findOrFail($id);
-        $categories->name = $request->input('name');
-        $categories->slug = $request->input('slug');
-        $categories->status = $request->input('status');
-        $categories->show_at_home = $request->input('show_at_home');
+        if ($request->hasFile('image')) {
+            $oldImage = 'uploads/categories/' . $categories->image;
+            if (Storage::exists($oldImage)) {
+                Storage::delete($oldImage);
+            }
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // Lấy tên mở rộng .jpg, .png...
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/categories/', $filename);
+            $categories->image = $filename;
+        }
+
+        $categories->slug = $request->slug;
+        $categories->status = $request->status;
+        $categories->show_at_home = $request->show_at_home;
 
         $categories->save();
-
         return redirect()
             ->back()
             ->with('success', 'Category updated successfully');
@@ -85,9 +115,12 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        // if ($count !== 0) {
-        //     return back()->with('success', 'danh mục còn ' . $count . 'sản phẩm . không thể xóa');
-        // }
+        $count = Product::where('category_id', '=', $id)->count();
+
+        if ($count !== 0) {
+            return back()->with('success', '<span style="color: red;">Danh mục còn ' . $count . ' Sản phẩm không thể xóa!</span>');
+        }
+
         $categories = Category::findOrFail($id);
         $categories->delete();
 

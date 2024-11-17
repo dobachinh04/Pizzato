@@ -89,10 +89,7 @@
                                                             @if (is_array($value))
                                                                 {{ implode(', ', $value) }}
                                                             @elseif ($field == 'thumb_image')
-
-
                                                                 @php
-
                                                                     if (!\Str::contains($value, 'http')) {
                                                                         $value = \Storage::url($value);
                                                                     }

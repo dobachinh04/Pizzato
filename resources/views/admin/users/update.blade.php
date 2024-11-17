@@ -56,46 +56,7 @@
                                                         <p>{{ $message }}</p>
                                                     @enderror
                                                 </div>
-                                                {{-- <div class="form-group">
-                                                    <label for="basiInput" class="form-label">Mật Khẩu</label>
-                                                    <input type="password"
-                                                        class="form-control input-default @error('password') is-invalid @enderror"
-                                                        placeholder="" name="password" value="{{ old('password', $user->password) }}">
-                                                    @error('password')
-                                                        <p>{{ $message }}</p>
-                                                    @enderror
-                                                </div> --}}
-
-                                                {{-- <div class="form-group">
-                                                    <label for="basiInput" class="form-label">Nhập Lại Mật Khẩu</label>
-                                                    <input type="password"
-                                                        class="form-control input-default @error('password_confirmation') is-invalid @enderror"
-                                                        name="password_confirmation"
-                                                        value="{{ old('password_confirmation', $user->password_confirmation) }}">
-                                                    @error('password_confirmation')
-                                                        <p>{{ $message }}</p>
-                                                    @enderror
-                                                </div> --}}
-                                                {{-- <div class="form-group">
-                                                    <label for="basiInput" class="form-label">Mật Khẩu</label>
-                                                    <input type="password"
-                                                        class="form-control input-default @error('password') is-invalid @enderror"
-                                                        placeholder="" name="password" value="{{ old('password') }}">
-                                                    @error('password')
-                                                        <p>{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="basiInput" class="form-label">Nhập Lại Mật Khẩu</label>
-                                                    <input type="password"
-                                                        class="form-control input-default @error('password_confirmation') is-invalid @enderror"
-                                                        name="password_confirmation"
-                                                        value="{{ old('password_confirmation') }}">
-                                                    @error('password_confirmation')
-                                                        <p>{{ $message }}</p>
-                                                    @enderror
-                                                </div> --}}
+                                       
                                             </div>
 
                                             <div class="col-6">
@@ -105,9 +66,7 @@
                                                         name="role_id" value="{{ old('role_id') }}">
                                                         <option selected disabled>Chọn Vai Trò</option>
                                                         @foreach ($roles as $role)
-                                                            {{-- <option value="{{ $role->id }}">{{ $role->name }}</option> --}}
-
-                                                            {{-- Option vẫn giữ nguyên khi sửa --}}
+                                                         
                                                             <option value="{{ $role->id }}"
                                                                 {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
                                                                 {{ $role->name }}

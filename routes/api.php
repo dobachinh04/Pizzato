@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\BlogController;
 use App\Http\Controllers\Client\MenuController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\DetailController;
@@ -29,6 +30,7 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 
 // IndexController
 Route::get('/menu', [IndexController::class, 'getMenuPizza']);
+Route::get('/categories', [IndexController::class, 'getCategories']);
 Route::get('/hot-product', [IndexController::class, 'getHotProduct']);
 
 // MenuController
@@ -37,6 +39,13 @@ Route::get('/menus', [MenuController::class, 'getMenuPizza']);
 // DetailController
 Route::get('/detail/{id}', [DetailController::class, 'getDetailPizza']);
 Route::get('/similar-pizza/{id}', [DetailController::class, 'getSimilarPizzas']);
+
+// BlogController
+// http://127.0.0.1:8000/api/blogs
+Route::get('/blogs', [BlogController::class, 'getBlog']);
+
+// http://127.0.0.1:8000/api/blog/1
+Route::get('/blog/{id}', [BlogController::class, 'getBlogDetail']);
 
 // Payment
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');

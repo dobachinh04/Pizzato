@@ -43,7 +43,14 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.chart') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Thống Kê Doanh Thu</span>
+                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Doanh Thu Theo Tháng</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarHome">
+                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
                     </a>
                 </li>
 
