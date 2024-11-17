@@ -42,7 +42,7 @@ Doanh Thu - Pizzato
     };
 
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: chartData,
     });
 </script>
