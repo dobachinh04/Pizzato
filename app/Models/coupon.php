@@ -11,13 +11,13 @@ class coupon extends Model
     protected  $fillable = [
         'name',
         'code',
-        'qty	',
+        'qty',
         'min_purchase_amount',
         'expire_date',
         'discount_type',
         'discount',
         'status',
-        
+
     ];
     public function carts()
     {

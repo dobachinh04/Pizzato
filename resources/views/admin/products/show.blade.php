@@ -3,8 +3,16 @@
 @section('title')
     Chi Tiết Sản Phẩm - Pizzato
 @endsection
+@section('style')
+<style>
 
+    .mr-5{
+        margin-right: 10px;
+    }
+</style>
+@endsection
 @section('content')
+
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -12,7 +20,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Chi Tiết Sản Phẩm: {{ $product->title }}</h5>
+                                <h5 class="card-title mb-0 mr-5">Chi Tiết Sản Phẩm: {{ $product->name }}</h5>
 
                                 <div class="d-flex justify-content-center">
                                     <a href="{{ route('admin.products.index') }}" class="btn btn-secondary me-1">Quay
@@ -81,10 +89,7 @@
                                                             @if (is_array($value))
                                                                 {{ implode(', ', $value) }}
                                                             @elseif ($field == 'thumb_image')
-                                                              
-
                                                                 @php
-                                                                    
                                                                     if (!\Str::contains($value, 'http')) {
                                                                         $value = \Storage::url($value);
                                                                     }

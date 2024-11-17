@@ -16,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->integer('qty');
+            // $table->integer('qty');
+            $table->integer('qty')->default(0);
             $table->integer('min_purchase_amount')->default(0);
             $table->timestamps();
             $table->date('expire_date');

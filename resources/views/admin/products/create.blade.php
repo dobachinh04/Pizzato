@@ -25,7 +25,7 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label>Name</label>
+                                                    <label>Tên sản phẩm</label>
                                                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                                                         value="{{ old('name') }}" placeholder="Tên sản phẩm">
                                                     @error('name')
@@ -125,8 +125,8 @@
                                                 <div class="form-group">
                                                     <label>Trạng thái</label>
                                                     <select name="status" class="form-control" id="">
-                                                        <option value="1">Active</option>
-                                                        <option value="0">Inactive</option>
+                                                        <option value="1">Còn hàng</option>
+                                                        <option value="0">Hết hàng</option>
                                                     </select>
                                                     @error('status')
                                                         <span class="text-danger">{{ $message }}</span>
