@@ -44,7 +44,7 @@ Doanh Thu - Pizzato
     };
 
     new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: chartData,
     });
 </script>

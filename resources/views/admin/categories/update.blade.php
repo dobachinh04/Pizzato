@@ -63,6 +63,19 @@ Cập Nhật Danh Mục - Pizzato
                                     </div>
 
                                     <div class="form-group">
+                                        <label>Hình Ảnh</label>
+                                        <input type="file" name="image" class="form-control input-default " id="image"
+                                            value="{{ old('image') ?? $categories->image}}">
+                                        <img src="{{ asset('uploads/categories/'.$categories->image) }}" width="70px"
+                                            height="70px" alt="image">
+                                        @error('image')
+                                        <p style="color: red">{{ $message }}</p>
+                                        @enderror
+                                        <br>
+                                    </div>
+
+
+                                    <div class="form-group">
                                         <label>Trạng Thái Hàng</label>
                                         <select name="status" class="form-control input-default">
                                             {{-- $categories->status và $categories->show_at_home để lấy giá
@@ -81,8 +94,10 @@ Cập Nhật Danh Mục - Pizzato
                                     <div class="form-group">
                                         <label>Trạng Thái Hiển Thị</label>
                                         <select name="show_at_home" class="form-control input-default">
-                                            <option value="" disabled {{ is_null($categories->show_at_home) ? 'selected'  : '' }}>Chọn Trạng Thái</option>
-                                            <option value="1" {{ $categories->show_at_home == 1 ? 'selected' : '' }}>Hiển thị</option>
+                                            <option value="" disabled {{ is_null($categories->show_at_home) ? 'selected'
+                                                : '' }}>Chọn Trạng Thái</option>
+                                            <option value="1" {{ $categories->show_at_home == 1 ? 'selected' : ''
+                                                }}>Hiển thị</option>
                                             <option value="0" {{ $categories->show_at_home == 0 ? 'selected' : '' }}>Ẩn
                                             </option>
                                         </select>

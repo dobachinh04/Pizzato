@@ -61,6 +61,16 @@ Thêm Mới Danh Mục
                                     </div>
 
                                     <div class="form-group">
+                                        <label>Hình Ảnh</label>
+                                        <input type="file" name="image" class="form-control input-default " id="image"
+                                            value="{{ old('image') }}">
+                                        @error('image')
+                                        <p style="color: red">{{ $message }}</p>
+                                        @enderror
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label>Trạng Thái Hàng</label>
                                         <select name="status" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
