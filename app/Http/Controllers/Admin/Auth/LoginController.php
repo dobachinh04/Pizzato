@@ -30,18 +30,16 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         // echo 1; die();
+
         // Lấy thông tin đăng nhập từ request
         $credentials = [
             'email' => $request->input('email'),
             'password' => $request->input('password'),
         ];
-
         // dd($credentials);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-
             // Kiểm tra quyền truy cập
             if (Auth::user()->role->name !== 'admin') {
                 Auth::logout(); // Đăng xuất người dùng

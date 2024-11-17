@@ -24,6 +24,7 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:255',
             'slug' => 'required|min:3|max:255|unique:categories',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
             // 'status' => 'required',
             // 'show_at_home' => 'required',
         ];
@@ -38,6 +39,9 @@ class StoreCategoryRequest extends FormRequest
             'slug.min' => "slug phải ít nhất 3 ký tự ",
             'slug.max' => "slug phải nhiều nhất 255 ký tự ",
             'slug.unique' => 'Slug đã tồn tại',
+            'image.required' => "Hình ảnh không được để trống.",
+            'image.image' => "Tệp phải là một hình ảnh.",
+            'image.mimes' => "Hình ảnh phải có định dạng jpg, jpeg hoặc png.",
         ];
     }
     public function run()

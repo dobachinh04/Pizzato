@@ -1,61 +1,4 @@
-{{-- <div class="footer">
-    <div class="copyright">
-        <p>Developed by <a href="https://github.com/dobachinh04/Pizzato" target="_blank">Pizzato Developers</a> - 2024</p>
-        <p>Online Pizza Ordering Website - Graduation Project</p>
-    </div>
-</div>
 
-<!-- Required vendors -->
-<script src="/focus-2/vendor/global/global.min.js"></script>
-<script src="/focus-2/js/quixnav-init.js"></script>
-<script src="/focus-2/js/custom.min.js"></script>
-
-
-<!-- Vectormap -->
-<script src="/focus-2/vendor/raphael/raphael.min.js"></script>
-<script src="/focus-2/vendor/morris/morris.min.js"></script>
-
-
-<script src="/focus-2/vendor/circle-progress/circle-progress.min.js"></script>
-<script src="/focus-2/vendor/chart.js/Chart.bundle.min.js"></script>
-
-<script src="/focus-2/vendor/gaugeJS/dist/gauge.min.js"></script>
-
-<!--  flot-chart js -->
-<script src="/focus-2/vendor/flot/jquery.flot.js"></script>
-<script src="/focus-2/vendor/flot/jquery.flot.resize.js"></script>
-
-<!-- Owl Carousel -->
-<script src="/focus-2/vendor/owl-carousel/js/owl.carousel.min.js"></script>
-
-<!-- Counter Up -->
-<script src="/focus-2/vendor/jqvmap/js/jquery.vmap.min.js"></script>
-<script src="/focus-2/vendor/jqvmap/js/jquery.vmap.usa.js"></script>
-<script src="/focus-2/vendor/jquery.counterup/jquery.counterup.min.js"></script>
-
-
-<script src="/focus-2/js/dashboard/dashboard-1.js"></script>
-
-<script src="https://kit.fontawesome.com/9cc1e5b793.js" crossorigin="anonymous"></script>
-
-<script src="/focus-2/vendor/global/global.min.js"></script>
-<script src="/focus-2/js/quixnav-init.js"></script>
-<script src="/focus-2/js/custom.min.js"></script>
-
-<!-- Datatable -->
-<script src="/focus-2/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="/focus-2/js/plugins-init/datatables.init.js"></script>
-
-<!-- JAVASCRIPT -->
-<script src="{{ asset('theme/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('theme/admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
-<script src="{{ asset('theme/admin/assets/libs/node-waves/waves.min.js') }}"></script>
-<script src="{{ asset('theme/admin/assets/libs/feather-icons/feather.min.js') }}"></script>
-<script src="{{ asset('theme/admin/assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
-<script src="{{ asset('theme/admin/assets/js/plugins.js') }}"></script>
-</body>
-
-</html> --}}
 
 <!--start back-to-top-->
 <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
@@ -893,6 +836,7 @@
 
 <script src="https://kit.fontawesome.com/9cc1e5b793.js" crossorigin="anonymous"></script>
 
+@yield('scripts')
 </body>
 
 </html>

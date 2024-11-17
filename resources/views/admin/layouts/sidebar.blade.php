@@ -43,7 +43,14 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.chart') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Thống Kê Doanh Thu</span>
+                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Doanh Thu Theo Tháng</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarHome">
+                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
                     </a>
                 </li>
 
@@ -98,6 +105,25 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.products.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Size</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarCoupons" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarCoupons">
+                        <i class="fa-solid fa-pizza-slice"></i> <span data-key="t-landing">Phiếu giảm giá</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarCoupons">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.coupons.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh Sách Phiếu Giảm Giá</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.coupons.create') }}" class="nav-link"
+                                    data-key="t-nft-landing">Thêm Phiếu giảm giá</a>
                             </li>
                         </ul>
                     </div>
@@ -201,6 +227,14 @@
                         </ul>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('admin.chat.index')}}">
+                        <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin nhắn</span>
+                    </a>
+
+                </li>
+
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Phương
                         Thức</span></li>

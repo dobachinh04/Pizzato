@@ -53,7 +53,7 @@ class ProductController extends Controller
 
         Product::query()->create($data);
         return back()
-            ->with('success', 'Product added successfully.');
+            ->with('success', 'Thêm sản phẩm thành công!');
     }
 
 
@@ -99,7 +99,7 @@ class ProductController extends Controller
         }
 
         return back()
-            ->with('success', 'Product updated successfully.');
+            ->with('success', 'Cập nhật sản phẩm thành công');
     }
 
 
@@ -113,7 +113,7 @@ class ProductController extends Controller
         $product->delete();
 
         return back()
-            ->with('success', 'Product deleted successfully.');
+            ->with('success', 'Xoá sản phẩm thành công!');
     }
 
     protected function generateUniqueSku()
