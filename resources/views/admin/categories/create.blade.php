@@ -41,7 +41,7 @@ Thêm Mới Danh Mục
                                     @csrf
 
                                     <div class="form-group">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" name="name" class="form-control input-default "
                                             placeholder="Tên Danh Mục" value="{{ old('name') }}">
                                         @error('name')
@@ -61,7 +61,17 @@ Thêm Mới Danh Mục
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Status</label>
+                                        <label>Hình Ảnh</label>
+                                        <input type="file" name="image" class="form-control input-default " id="image"
+                                            value="{{ old('image') }}">
+                                        @error('image')
+                                        <p style="color: red">{{ $message }}</p>
+                                        @enderror
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Trạng Thái Hàng</label>
                                         <select name="status" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
                                             <option value="1" selected>Còn hàng</option>
@@ -71,7 +81,7 @@ Thêm Mới Danh Mục
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Show_at_home</label>
+                                        <label>Trạng Thái Hiển Thị</label>
                                         <select name="show_at_home" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
                                             <option value="1">Hiển thị</option>

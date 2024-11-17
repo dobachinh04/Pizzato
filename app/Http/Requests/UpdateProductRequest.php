@@ -50,7 +50,6 @@ class UpdateProductRequest extends FormRequest
             'slug.max' => 'Slug không được vượt quá 255 ký tự.',
             'slug.unique' => 'Slug đã tồn tại, vui lòng chọn slug khác.',
 
-            // 'thumb_image.url' => 'Ảnh đại diện phải là một URL hợp lệ.',
 
             'category_id.required' => 'Danh mục là bắt buộc.',
             'category_id.exists' => 'Danh mục không tồn tại.',

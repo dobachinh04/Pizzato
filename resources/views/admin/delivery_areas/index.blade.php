@@ -44,12 +44,12 @@
                                                         value="option">
                                                 </div>
                                             </th>
-                                            <th>Area Name</th>
-                                            <th>Min Delivery Time</th>
-                                            <th>Max Delivery Time</th>
-                                            <th>Delivery Fee</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
+                                            <th>Tên Khu Vực</th>
+                                            <th>Thời gian giao hàng tối thiểu</th>
+                                            <th>Thời gian giao hàng tối đa</th>
+                                            <th>Phí giao hàng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>

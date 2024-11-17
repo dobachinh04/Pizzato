@@ -29,6 +29,18 @@ class IndexController extends Controller
         ], 200);
     }
 
+    public function getCategories()
+    {
+        $categories = DB::table('categories')
+            ->limit(6)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'categories' => $categories
+        ], 200);
+    }
+
     public function getMenuPizza()
     {
         $categories = DB::table('categories')
