@@ -35,11 +35,13 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-8">
                         <div class="text-center">
-                            <img src="/velzon/assets/images/error400-cover.png" alt="error img" class="img-fluid">
+                            <img src="/velzon/assets/images/error403-circle.png" alt="error img" class="img-fluid ">
                             <div class="mt-3">
-                                <h3 class="text-uppercase">Sorry, Page not Found 😭</h3>
-                                <p class="text-muted mb-4">The page you are looking for not available!</p>
-                                <a href="{{route('admin.login')}}" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to home</a>
+                                <h3 class="text-uppercase"> Bạn không có quyền truy cập vào trang này 😭</h3>
+                                {{-- <p class="text-muted mb-4">The page you are looking for not available!</p> --}}
+                                <p class="text-muted mb-4">Lêu lêu cái đồ không có quyền 😛😛</p>
+                                <p class="text-muted mb-4">Bạn tức không? chuyển khoản 100k cho admin để được cấp tài khoản vipro max vv nhé <a class="fw-semibold text-primary text-decoration-underline" href="https://www.facebook.com/profile.php?id=100040455924045">Liên hệ</a></p>
+                                <a href="{{route('admin.login')}}" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Quay trở lại</a>
                             </div>
                         </div>
                     </div><!-- end col -->

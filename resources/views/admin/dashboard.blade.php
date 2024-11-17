@@ -23,8 +23,10 @@
                                 <div class="col-12">
                                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                         <div class="flex-grow-1">
-                                            <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
-                                            <p class="text-muted mb-0">Here's what's happening with your store today.</p>
+                                            {{-- <h4 class="fs-16 mb-1">Xin chào, {{ Auth::user()->name }}</h4> --}}
+                                            {{-- <p class="text-muted mb-0">Here's what's happening with your store today.</p> --}}
+                                            <p class="text-muted mb-0">Đây là những gì đang xảy ra với cửa hàng của bạn ngày hôm nay.</p>
+
                                         </div>
                                         <div class="mt-3 mt-lg-0">
                                             <form action="javascript:void(0);">
@@ -44,9 +46,9 @@
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-auto">
-                                                        <button type="button" class="btn btn-soft-success"><i
-                                                                class="ri-add-circle-line align-middle me-1"></i> Add
-                                                            Product</button>
+                                                        <a href="{{route('admin.products.create')}}" class="button btn btn-soft-success"> <i
+                                                            class="ri-add-circle-line align-middle me-1"></i> Thêm sản phẩm</a>
+
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-auto">

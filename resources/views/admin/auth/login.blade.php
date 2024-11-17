@@ -77,7 +77,7 @@
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
-                                                placeholder="Enter Email" value="{{ old('email') }}">
+                                                placeholder="Nhập email" value="{{ old('email') }}">
 
                                             @error('email')
                                                 <span class="text-danger error-message"> * {{ $message }}</span>
@@ -89,10 +89,10 @@
                                             {{-- <div class="float-end">
                                                 <a href="auth-pass-reset-basic.html" class="text-muted">Forgot password?</a>
                                             </div> --}}
-                                            <label class="form-label" for="password-input">Password</label>
+                                            <label class="form-label" for="password-input">Mật khẩu</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" class="form-control pe-5 password-input @error('password') is-invalid @enderror"
-                                                    placeholder="Enter password" id="password-input" name="password">
+                                                    placeholder="Nhập mật khẩu" id="password-input" name="password">
                                                 <button
                                                     class="ml-10 btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i
@@ -106,12 +106,11 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value=""
                                                 id="auth-remember-check">
-                                            <label class="form-check-label" for="auth-remember-check">Remember
-                                                me</label>
+                                            <label class="form-check-label" for="auth-remember-check">Ghi nhớ</label>
                                         </div>
 
                                         <div class="mt-4">
-                                            <button class="btn btn-success w-100" type="submit">Sign In</button>
+                                            <button class="btn btn-success w-100" type="submit">Đăng nhập</button>
                                         </div>
                                     </form>
                                 </div>
@@ -121,8 +120,8 @@
                         <!-- end card -->
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Don't have an account ? <a href="auth-signup-basic.html"
-                                    class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
+                            <p class="mb-0">Không có tài khoản? chuyển khoản 100k admin để được cấp tài khoản<a href="https://www.facebook.com/profile.php?id=100040455924045"
+                                    class="fw-semibold text-primary text-decoration-underline"> Liên hệ </a> </p>
                         </div>
 
                     </div>
@@ -143,7 +142,7 @@
                                 <script>
                                     document.write(new Date().getFullYear())
                                 </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i>
-                                by Themesbrand
+                                by Linh Chu
                             </p>
                         </div>
                     </div>

@@ -17,7 +17,7 @@ class coupon extends Model
         'discount_type',
         'discount',
         'status',
-        
+
     ];
     public function carts()
     {
