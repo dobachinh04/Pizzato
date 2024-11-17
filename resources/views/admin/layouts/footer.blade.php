@@ -893,6 +893,7 @@
 
 <script src="https://kit.fontawesome.com/9cc1e5b793.js" crossorigin="anonymous"></script>
 
+@yield('scripts')
 </body>
 
 </html>

@@ -12,14 +12,14 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
-    @if (Session::has('success'))
+    {{-- @if (Session::has('success'))
         <div class="alert alert-success solid alert-dismissible fade show">
             <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
                         class="mdi mdi-close"></i></span>
             </button>
             <strong>Hoàn Tất!</strong> {{ Session::get('success') }}.
         </div>
-    @endif
+    @endif --}}
 
     <div class="main-content">
         <div class="page-content">
@@ -44,8 +44,8 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
-                                            <th>Tên Phiếu giảm</th>
-                                            <th>Mã Phiếu</th>
+                                            <th>Tên Mã</th>
+                                            <th>Mã Giảm</th>
                                             <th>Số Lượng</th>
                                             <th>Giá Mua Tối Thiểu</th>
                                             <th>Loại Giảm Giá</th>

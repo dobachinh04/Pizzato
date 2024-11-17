@@ -27,6 +27,7 @@ class CouponController extends Controller
     public function create()
     {
         $code = $this->generateUniqueCode();
+
         $discountTypes = ['percent' => 'Percent', 'amount' => 'Amount'];
 
         return view("admin.coupons.create", compact('code', 'discountTypes'));
@@ -51,6 +52,7 @@ class CouponController extends Controller
 
     public function show(Coupon $coupon)
     {
+
         return view("admin.coupons.show", compact('coupon'));
     }
 
@@ -88,10 +90,11 @@ class CouponController extends Controller
     protected function generateUniqueCode()
     {
         do {
-            $code = 'COUPON-' . strtoupper(Str::random(8));
+            $code = strtoupper(Str::random(10));
         }
         while (Coupon::where('code', $code)->exists());
 
         return $code;
     }
+
 }
