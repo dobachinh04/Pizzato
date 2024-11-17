@@ -43,7 +43,7 @@ Cập Nhật Danh Mục - Pizzato
                                     @method('PUT')
 
                                     <div class="form-group">
-                                        <label>Name</label>
+                                        <label>Tên</label>
                                         <input type="text" name="name" class="form-control input-default "
                                             placeholder="Tên Danh Mục" value="{{ $categories->name }}">
                                         @error('name')
@@ -63,7 +63,7 @@ Cập Nhật Danh Mục - Pizzato
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Trạng Thái</label>
+                                        <label>Trạng Thái Hàng</label>
                                         <select name="status" class="form-control input-default">
                                             {{-- $categories->status và $categories->show_at_home để lấy giá
                                             trị hiện tại từ database.
@@ -79,7 +79,7 @@ Cập Nhật Danh Mục - Pizzato
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Hiển thị ở trang chủ</label>
+                                        <label>Trạng Thái Hiển Thị</label>
                                         <select name="show_at_home" class="form-control input-default">
                                             <option value="" disabled {{ is_null($categories->show_at_home) ? 'selected'  : '' }}>Chọn Trạng Thái</option>
                                             <option value="1" {{ $categories->show_at_home == 1 ? 'selected' : '' }}>Hiển thị</option>

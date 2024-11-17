@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -85,9 +86,12 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        // if ($count !== 0) {
-        //     return back()->with('success', 'danh mục còn ' . $count . 'sản phẩm . không thể xóa');
-        // }
+        $count = Product::where('category_id','=', $id)->count();
+       
+        if ($count !== 0) {
+           return back()->with('success', '<span style="color: red;">Danh mục còn ' . $count. ' Sản phẩm không thể xóa!</span>');
+        }
+        
         $categories = Category::findOrFail($id);
         $categories->delete();
 

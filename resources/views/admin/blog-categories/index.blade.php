@@ -45,12 +45,12 @@
                                                         value="option">
                                                 </div>
                                             </th>
-
-                                            <th>Name</th>
+                                            <!-- <th>ID</th> -->
+                                            <th>Tên</th>
                                             <th>Slug</th>
-                                            <th>Status</th>
-
-                                            <th>Hành động</th>
+                                            <th>Trạng Thái</th>
+                                            <!-- <th>Lần Cuối Cập Nhật</th> -->
+                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
