@@ -50,7 +50,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
+                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
                     </a>
                 </li>
 
@@ -113,7 +113,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCoupons" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCoupons">
-                        <i class="fa-solid fa-pizza-slice"></i> <span data-key="t-landing">Phiếu giảm giá</span>
+                        <i class="fa-solid fa-ticket"></i> <span data-key="t-landing">Phiếu giảm giá</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarCoupons">
                         <ul class="nav nav-sm flex-column">
@@ -261,7 +261,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebardelivery_areas" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebardelivery_areas">
-                        <i class="fas fa-truck"></i> <span data-key="t-landing">Địa chỉ giao hàng</span>
+                        <i class="fa-solid fa-map-location"></i> <span data-key="t-landing">Địa chỉ giao hàng</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebardelivery_areas">
                         <ul class="nav nav-sm flex-column">
