@@ -11,7 +11,7 @@ class MenuController extends Controller
 {
     public function getMenuPizza(Request $request)
     {
-        $page = $request->input('page', 1);
+        $page = $request->input('currentPage', 1);
         $pageSize = $request->input('pageSize', 9);
         $categoryId = $request->input('categoryId', null);
         $search = $request->input('search', null);
@@ -26,16 +26,17 @@ class MenuController extends Controller
         }
 
         if($search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where('products.name', 'like', '%' . $search . '%');
         }
 
-        // $totalPizza = $menus->count();
+        $totalPizza = $query->count();
         $menus = $query->skip(($page - 1) * $pageSize)->take($pageSize)->get();
 
 
         return response()->json([
             'success' => true,
             'menus' => $menus,
+            'totalPizza' => $totalPizza
         ], 200);
     }
 

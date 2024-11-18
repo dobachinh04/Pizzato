@@ -57,7 +57,7 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('admin.categories.index')
-            ->with('success', 'Category added successfully.');
+            ->with('success', 'Thêm mới thành công');
     }
 
     /**
@@ -107,7 +107,7 @@ class CategoryController extends Controller
         $categories->save();
         return redirect()
             ->back()
-            ->with('success', 'Category updated successfully');
+            ->with('success', 'Cập nhật thành công');
     }
 
     /**
@@ -126,6 +126,6 @@ class CategoryController extends Controller
 
         return redirect()
             ->route('admin.categories.index')
-            ->with('success', 'Category deleted successfully.');
+            ->with('success', 'Xóa thành công');
     }
 }

@@ -73,25 +73,8 @@ Cập Nhật Danh Mục - Pizzato
                                         @enderror
                                         <br>
                                     </div>
-
-
-                                    <div class="form-group">
-                                        <label>Trạng Thái Hàng</label>
-                                        <select name="status" class="form-control input-default">
-                                            {{-- $categories->status và $categories->show_at_home để lấy giá
-                                            trị hiện tại từ database.
-                                            - is_null() để xác định giá trị mặc định cho trường. --}}
-                                            <option value="" disabled {{ is_null($categories->status) ? 'selected' : ''
-                                                }}>Chọn Trạng Thái</option>
-                                            <option value="1" {{ $categories->status == 1 ? 'selected' : '' }}>Còn hàng
-                                            </option>
-                                            <option value="0" {{ $categories->status == 0 ? 'selected' : '' }}>Hết hàng
-                                            </option>
-                                        </select>
-                                        <br>
-                                    </div>
-
-                                    <div class="form-group">
+                                    
+                                    {{-- <div class="form-group">
                                         <label>Trạng Thái Hiển Thị</label>
                                         <select name="show_at_home" class="form-control input-default">
                                             <option value="" disabled {{ is_null($categories->show_at_home) ? 'selected'
@@ -102,7 +85,7 @@ Cập Nhật Danh Mục - Pizzato
                                             </option>
                                         </select>
                                         <br>
-                                    </div>
+                                    </div> --}}
 
                                     <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">
                                         Quay Lại</a>

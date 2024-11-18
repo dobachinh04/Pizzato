@@ -21,11 +21,7 @@ class AuthRole
             return redirect()->route('admin.login')->with('error', 'Bạn cần đăng nhập trước');
         }
 
-
-
         if ($role && Auth::user()->role->name !== $role) {
-            // // dd(Auth::user(), Auth::user()->role);
-
             return redirect()->route('403Page')->with('error', 'Bạn không có quyền truy cập trang này');
         }
         return $next($request);
