@@ -49,7 +49,6 @@ Route::get('/blogs', [BlogController::class, 'getBlog']);
 Route::get('/blog/{id}', [BlogController::class, 'getBlogDetail']);
 
 // Payment
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
 // Coupons

@@ -44,10 +44,11 @@ class Product extends Model
     {
         return $this->hasMany(Cart::class);
     }
-    // function productImages(): HasMany
-    // {
-    //     return $this->hasMany(ProductGallery::class);
-    // }
+
+    function productGalleries(): HasMany
+    {
+        return $this->hasMany(ProductGallery::class);
+    }
 
     function productSizes(): HasMany
     {
