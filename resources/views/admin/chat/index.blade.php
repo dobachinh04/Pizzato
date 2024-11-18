@@ -1,27 +1,25 @@
 @extends('admin.layouts.master')
 
 @section('content')
-<section class="section">
-    <div class="section-header">
-        <h1>Chat Box</h1>
-        <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="#">Components</a></div>
-            <div class="breadcrumb-item">Chat Box</div>
-        </div>
-    </div>
-
-    <div class="section-body">
-
-
-        <div class="row align-items-center justify-content-center">
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card" style="height: 70vh">
-                    <div class="card-header">
-                        <h4>Who's Online?</h4>
-                    </div>
-                    <div class="card-body">
-                        {{-- <ul class="list-unstyled list-unstyled-border">
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="section-header">
+                                <h1>Chat Box</h1>
+                                {{-- <div class="section-header-breadcrumb">
+                                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                                    <div class="breadcrumb-item"><a href="#">Components</a></div>
+                                    <div class="breadcrumb-item">Chat Box</div>
+                                </div> --}}
+                            </div>
+                            <div class="card-header">
+                                <h4>Who's Online?</h4>
+                            </div>
+                            <div class="card-body">
+                                {{-- <ul class="list-unstyled list-unstyled-border">
                             @foreach ($senders as $sender)
                             @php
                                 $chatUser = \App\Models\User::find($sender->sender_id);
@@ -42,35 +40,38 @@
                             </li>
                             @endforeach
                         </ul> --}}
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-12 col-sm-6 col-lg-9">
+                        <div class="card chat-box" id="mychatbox" data-inbox="" style="height: 70vh">
+                            <div class="card-header">
+                                <h4 id="chat_header"></h4>
+                            </div>
+                            <div class="card-body chat-content">
+
+                            </div>
+
+                            <div class="card-footer chat-form">
+                                <form id="chat-form">
+                                    @csrf
+                                    <input type="text" class="form-control fp_send_message" placeholder="Type a message"
+                                        name="message">
+                                    <input type="hidden" name="receiver_id" id="receiver_id" value="">
+                                    <input type="hidden" name="msg_temp_id" class="msg_temp_id" value="">
+
+
+                                    <button class="btn btn-primary">
+                                        <i class="far fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-lg-9">
-                <div class="card chat-box" id="mychatbox" data-inbox="" style="height: 70vh">
-                    <div class="card-header">
-                        <h4 id="chat_header"></h4>
-                    </div>
-                    <div class="card-body chat-content">
-
-                    </div>
-
-                    <div class="card-footer chat-form">
-                        <form id="chat-form">
-                            @csrf
-                            <input type="text" class="form-control fp_send_message" placeholder="Type a message" name="message">
-                            <input type="hidden" name="receiver_id" id="receiver_id" value="">
-                            <input  type="hidden"  name="msg_temp_id" class="msg_temp_id" value="">
-
-
-                            <button class="btn btn-primary">
-                                <i class="far fa-paper-plane"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-</section>
+    </section>
 @endsection
