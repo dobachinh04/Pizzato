@@ -48,8 +48,8 @@
                                             <th>Tên</th>
                                             <th>Slug</th>
                                             <th>Hình Ảnh</th>
-                                            <th>Trạng Thái Hàng</th>
-                                            <th>Trạng Thái Hiển Thị</th>
+                                            {{-- <th>Trạng Thái Hàng</th> --}}
+                                            {{-- <th>Trạng Thái Hiển Thị</th> --}}
                                             <!-- <th>Lần Cuối Cập Nhật</th> -->
                                             <th>Hành Động</th>
                                         </tr>
@@ -69,8 +69,8 @@
                                                 <td> 
                                                     <img src="{{ asset('uploads/categories/'.$category->image) }}" width="70px" height="70px" alt="image">
                                                 </td>
-                                                <td>{{ $category->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td>
-                                                <td>{{ $category->show_at_home == 0 ? 'Ẩn' : 'Hiển thị' }}</td>
+                                                {{-- <td>{{ $category->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td> --}}
+                                                {{-- <td>{{ $category->show_at_home == 0 ? 'Ẩn' : 'Hiển thị' }}</td> --}}
                                                 {{-- <td>{{ $category->created_at->format('d/m/Y H:i') }}</td>
                                                     <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>  --}}
                                                 <td>
