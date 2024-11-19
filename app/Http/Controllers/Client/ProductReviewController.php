@@ -17,6 +17,7 @@ class ProductReviewController extends Controller
         // Tạo đánh giá mới
         $review = ProductReview::create([
             // 'user_id' => Auth::id(),  // Lấy ID người dùng hiện tại
+            'user_id' => 1,
             'product_id' => $request->product_id,
             'rating' => $request->rating,
             'review' => $request->review,
@@ -43,8 +44,12 @@ class ProductReviewController extends Controller
 
         // Kiểm tra xem đánh giá có tồn tại và thuộc về người dùng hiện tại hay không
         $review = ProductReview::where('id', $id)
-            ->where('user_id', Auth::id())
+        ->where('user_id', 1)
+
+        //     ->where('user_id', Auth::id())
             ->firstOrFail();
+
+
 
         // Cập nhật đánh giá
         $review->update([
@@ -52,19 +57,21 @@ class ProductReviewController extends Controller
             'review' => $request->review,
         ]);
 
-        return response()->json(['message' => 'Đánh giá đã được cập nhật thành công!', 'data' => $review], 200);
+        return response()->json(['message' => 'Sửa đánh giá thành công!', 'data' => $review], 200);
     }
 
     // xóa đánh giá của người dùng
-    public function deleteReview($id)
-    {
-        // Kiểm tra xem đánh giá có tồn tại và thuộc về người dùng hiện tại hay không
-        $review = ProductReview::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+    // public function deleteReview($id)
+    // {
+    //     // Kiểm tra xem đánh giá có tồn tại và thuộc về người dùng hiện tại hay không
+    //     // $review = ProductReview::where('id', $id)
+    //     //     ->where('user_id', Auth::id())
+    //     //     ->firstOrFail();
+    //     $review = ProductReview::findOrFail($id);
 
-        $review->delete();
 
-        return response()->json(['message' => 'Đánh giá đã được xóa thành công!'], 200);
-    }
+    //     $review->delete();
+
+    //     return response()->json(['message' => 'Đánh giá đã được xóa thành công!'], 200);
+    // }
 }

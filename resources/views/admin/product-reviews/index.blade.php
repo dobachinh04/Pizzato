@@ -60,6 +60,7 @@
                                             <th>ID</th>
                                             <th>Tên Người Dùng</th>
                                             <th>Tên Sản Phẩm</th>
+                                            <th>Ảnh Sản Phẩm</th>
                                             <th>Điểm Đánh Giá</th>
                                             {{-- <th>Nội Dung Đánh Giá</th> --}}
                                             {{-- <th>Trạng Thái</th> --}}
@@ -80,6 +81,15 @@
                                                 <td>{{ $item->id }}</td> <!-- Hiển thị tên người dùng -->
                                                 <td>{{ $item->user->name }}</td> <!-- Hiển thị tên người dùng -->
                                                 <td>{{ $item->product->name }}</td> <!-- Hiển thị tên sản phẩm -->
+                                                <td>
+                                                    @php
+                                                        $url = $item->product->thumb_image;
+                                                        if (!\Str::contains($url, 'http')) {
+                                                            $url = \Storage::url($url);
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $url }}" alt="" width="100px">
+                                                </td>
                                                 <td>
                                                     <div class="star-rating">
                                                         @php
