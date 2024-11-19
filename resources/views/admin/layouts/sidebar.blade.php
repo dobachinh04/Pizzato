@@ -106,6 +106,10 @@
                                 <a href="{{ route('admin.products.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Size</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.product-reviews.index') }}" class="nav-link"
+                                    data-key="t-nft-landing">Đánh giá sản phẩm</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

@@ -44,7 +44,7 @@
                                                         value="option">
                                                 </div>
                                             </th>
-                                           
+
                                             <th>ID</th>
                                             <th>Hình ảnh</th>
                                             <th>Tên sản phẩm</th>
@@ -57,6 +57,7 @@
                                             <th>Hành động</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         @foreach ($data as $item)
                                             <tr>

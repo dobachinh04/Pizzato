@@ -15,14 +15,13 @@ return new class extends Migration
         Schema::create('product_reviews', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
 
-            $table->string('image');
-            $table->string('title');
             $table->decimal('rating', 6, 1);
-            $table->text('description');
-            $table->boolean('status')->default('1');
+            $table->text('review');
+            // $table->boolean('status')->default(1); // 1: Approved, 0: Pending
+            // $table->timestamp('approved_at')->nullable(); // Thời gian được duyệt
             $table->timestamps();
         });
     }

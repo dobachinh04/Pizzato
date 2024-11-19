@@ -9,6 +9,7 @@ use App\Http\Controllers\Client\DetailController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Client\CouponController as ClientCouponController;
+use App\Http\Controllers\Client\ProductReviewController as ClienProductReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ use App\Http\Controllers\Client\CouponController as ClientCouponController;
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
-// });
+// });v
 
 // AuthController
 Route::post('/register', [AuthenticationController::class, 'register']);
@@ -56,3 +57,19 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::get('/coupons', [ClientCouponController::class, 'getListCoupon']); // Lấy danh sách mã giảm giá khả dụng
 // http://127.0.0.1:8000/api/show/code (code coupon not id)
 Route::get('/show/{code}', [ClientCouponController::class, 'getCouponDetail']); // Kiểm tra thông tin một mã giảm giá
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::prefix('product/reviews')->name('product.reviews.')->group(function(){
+//         Route::get('', [ClientCouponController::class, 'getListCoupon']); // Lấy danh sách mã giảm giá khả dụng
+//         Route::post('product/reviews', [ClienProductReviewController::class, 'sendRating'])->name('product-reviews.index');
+//         Route::put('/{id}', [ClienProductReviewController::class, 'update'])->name('product-reviews.update');
+//         Route::delete('/{id}', [ClienProductReviewController::class, 'destroy'])->name('product-reviews.destroy');
+//     });
+// });
+
+
+    Route::post('/reviews', [ClienProductReviewController::class, 'createReview']);
+    Route::get('/products/{productId}/reviews', [ClienProductReviewController::class, 'getReviews']);
+
+    Route::put('/reviews/{id}', [ClienProductReviewController::class, 'updateReview']);
+    Route::delete('/reviews/{id}', [ClienProductReviewController::class, 'deleteReview']);
+
