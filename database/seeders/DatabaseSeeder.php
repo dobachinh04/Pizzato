@@ -15,14 +15,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        // $this->call([
-        //     CategorySeeder::class,
-        //     ProductSeeder::class,
-        //     RoleSeeder::class,
-        //     UserSeeder::class,
-        //     CartSeeder::class,
-        //         CouponSeeder::class,
-        // ]);
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
+            CartSeeder::class,
+            CouponSeeder::class,
+            ProductReviewSeeder::class,
+        ]);
 
         DB::table('users')->insert([
             [

@@ -10,7 +10,6 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 
@@ -23,6 +22,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
+use App\Http\Controllers\Admin\ProductReviewController as AdminProductReviewController;
+
 
 use App\Http\Middleware\CheckFormLogin;
 
@@ -224,5 +225,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // });
 
-    /** chat Routes */
+     /** Product Reviews Routes */
+     Route::prefix('product-reviews')->name('product-reviews.')->group(function(){
+         Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
+         Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
+         Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
+
+     });
+
 });
