@@ -13,13 +13,13 @@ Doanh Thu - Pizzato
                 <div class="col">
 
                     <div class="container">
-                        <h1>Thống Kê Nguồn Doanh Thu</h1>
+                        <h3>Thống Kê Nguồn Doanh Thu</h3>
                         <form method="GET" action="{{ route('admin.source') }}">
                             <input type="month" name="date_range" value="{{ request('date_range') }}">
                             <button type="submit">Lọc</button>
                         </form>
                         <canvas id="sourceChart"></canvas>
-                    </div>                  
+                    </div>
 
                 </div>
             </div>
@@ -36,16 +36,50 @@ Doanh Thu - Pizzato
             label: 'Doanh thu theo danh mục',
             data: @json($sourceStats->pluck('total_revenue')),
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)', 
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(153, 102, 255)',
+                'rgb(255, 159, 64)',
+                'rgb(201, 203, 207)'
             ],
         }]
     };
 
     new Chart(ctx, {
-        type: 'doughnut',
-        data: chartData,
-    });
+    type: 'doughnut',
+    data: chartData,
+    options: {
+       
+        plugins: {
+            title: {
+                display: true,
+                position: 'left',
+                text: 'Biểu đồ',
+                font: {
+                    size: 15
+                }
+            },
+            legend: {
+                position: 'right',
+                align: 'center',
+                labels: {
+                    font: {
+                        size: 15
+                    }
+                }
+            }
+        },
+        layout: {
+            padding: {
+                top: 30,
+                right: 200,
+                bottom: 600,
+                left: 200
+            }
+        },
+    }
+});
 </script>
 @endsection
