@@ -87,8 +87,8 @@ Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index')
 // Route::get('/redis-test', function () {
 //   return Redis::ping();
 // });
-Route::post('message', function (Request $request) {
-  broadcast(new MessageSent(auth()->user(), $request->input('message')));
+// Route::post('message', function (Request $request) {
+//   broadcast(new MessageSent(auth()->user(), $request->input('message')));
 
-  return $request->input('message');
-});
+//   return $request->input('message');
+// });
