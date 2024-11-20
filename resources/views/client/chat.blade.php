@@ -8,9 +8,13 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  
   <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.js"></script>
+ 
+  <script src="//cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.iife.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.10.0/echo.iife.min.js"></script>
+  {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 </head>
 
 <body>
@@ -73,36 +77,47 @@
   </div>
 
   <script>
+  //  axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').content;
+
     new Vue({
       el: "#app",
       data() {
         return {
-          id: {{ auth()->id() }},
+          id: {{ auth()->id()  ?? 'null' }},
           message: "",
           users: [],
           messages: [],
-        }
+        };
       },
       methods: {
         sendMessage() {
+          if (this.message.trim() === "") return; // Không gửi tin nhắn rỗng
           axios.post('/message', { message: this.message })
-          this.message = ""
-        }
+            .then(() => {
+              this.messages.push({
+                user: { id: this.id, name: "You" },
+                message: this.message,
+              });
+              this.message = ""; // Xóa input
+            })
+            .catch((error) => console.error("Error sending message:", error));
+        },
       },
       mounted() {
         const echo = new Echo({
-          broadcaster: "socket.io"
-        })
+          broadcaster: "socket.io",
+          host: window.location.hostname + ":6001", // Đảm bảo trỏ đúng vào server Socket.io
+        });
 
         echo.join('chat')
-        .here((users) => {
-          this.users = users
-        })
-        .listen('MessageSent', (event) => {
-          this.messages.push(event);
-        });
+          .here((users) => {
+            this.users = users;
+          })
+          .listen('MessageSent', (event) => {
+            this.messages.push(event);
+          });
       },
-    })
+    });
   </script>
 </body>
 
