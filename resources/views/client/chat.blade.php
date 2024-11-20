@@ -83,7 +83,7 @@
       el: "#app",
       data() {
         return {
-          id: {{ auth()->id()  ?? 'null' }},
+          id: {{ auth()->id()   }},
           message: "",
           users: [],
           messages: [],
