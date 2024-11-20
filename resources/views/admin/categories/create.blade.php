@@ -70,7 +70,7 @@ Thêm Mới Danh Mục
                                         <br>
                                     </div>
 
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label>Trạng Thái Hàng</label>
                                         <select name="status" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
@@ -78,9 +78,9 @@ Thêm Mới Danh Mục
                                             <option value="0">Hết hàng</option>
                                         </select>
                                         <br>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label>Trạng Thái Hiển Thị</label>
                                         <select name="show_at_home" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
@@ -88,7 +88,7 @@ Thêm Mới Danh Mục
                                             <option value="0" selected>Ẩn</option>
                                         </select>
                                         <br>
-                                    </div>
+                                    </div> --}}
 
                                     <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">
                                         Quay Lại</a>

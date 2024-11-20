@@ -95,7 +95,7 @@
                                                     </option>
                                                     <option value="amount"
                                                         {{ old('discount_type', $coupon->discount_type) == 'amount' ? 'selected' : '' }}>
-                                                        Số tiền
+                                                        Số tiền(VNĐ)
                                                     </option>
                                                 </select>
                                                 @error('discount_type')

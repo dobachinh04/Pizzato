@@ -67,8 +67,8 @@
                                                 <div class="form-group">
                                                     <label>Loại giảm giá</label>
                                                     <select name="discount_type" class="form-control @error('discount_type') is-invalid @enderror">
-                                                        <option value="percent" {{ old('discount_type') == 'percent' ? 'selected' : '' }}>Giảm theo phần trăm</option>
-                                                        <option value="amount" {{ old('discount_type') == 'amount' ? 'selected' : '' }}>Giảm theo số tiền</option>
+                                                        <option value="percent" {{ old('discount_type') == 'percent' ? 'selected' : '' }}>Phần trăm</option>
+                                                        <option value="amount" {{ old('discount_type') == 'amount' ? 'selected' : '' }}>Số tiền (VNĐ)</option>
                                                     </select>
                                                     @error('discount_type')
                                                         <span class="text-danger">{{ $message }}</span>

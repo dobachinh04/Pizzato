@@ -7,57 +7,77 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-
-    public function index()
-    {
-
-        $carts = Cart::with('product')->get();
-        return view('checkout.index', compact('carts'));
-        // // Lấy thông tin sản phẩm từ cart của người dùng
-        // $cartItems = Cart::where('user_id', Auth::id())->get();
-
-        // // Nếu chưa đăng nhập, người dùng sẽ không thấy thông tin cá nhân
-        // $user = Auth::user();
-
-        // return view('checkout.index', compact('cartItems', 'user'));\
-
-    }
-
     public function store(Request $request)
     {
-        // Kiểm tra xem người dùng đã đăng nhập chưa
-        // if (!Auth::check()) {
-        //     return redirect()->route('client.login')->with('error', 'Bạn cần đăng nhập để thanh toán.');
-        // }
+        $invoiceId = 'INV-' . $request->user_id . '-' . time();
+        // $orderData = [
+        //     'invoice_id' => $invoiceId,
+        //     'user_id' => $request->user_id,
+        //     'address' => $request->address,
+        //     'grand_total' => $request->grand_total,
+        //     'product_qty' => $request->product_qty,
+        //     'address_id' => $request->address_id,
+        //     'cartItems' => $request->cartItems,
+        // ];
 
-        // Validate dữ liệu từ request
-        // $request->validate([
-        //     'address_id' => 'required|exists:addresses,id',
-        //     'payment_method' => 'required|string',
-        // ]);
+        // session()->put("orderData:$invoiceId", $orderData);
 
-        // Lấy giỏ hàng của người dùng và tính tổng tiền, số lượng sản phẩm
-        // $carts = Cart::where('user_id', Auth::id())->get();
-        // $grandTotal = $carts->sum('grand_total');
-        // $productQty = $carts->sum('quantity');
+        if ($request->payment_method === 'vnpay') {
+            // Gọi hàm tạo thanh toán VNPAY
+            $paymentMethod = (new VnpayController)->createPayment($request, $invoiceId);
 
+            if ($paymentMethod->getData()->success) {
+                // Lưu đơn hàng tạm thời với trạng thái pending
+                $order = Order::create([
+                    'invoice_id' => $invoiceId,
+                    'user_id' => $request->user_id,
+                    'address' => $request->address,
+                    'grand_total' => $request->grand_total,
+                    'product_qty' => $request->product_qty,
+                    'address_id' => $request->address_id,
+                    'order_status' => 'pending',
+                    'payment_status' => 'paid',
+                ]);
 
-        // Tạo đơn hàng
+                // Lưu các sản phẩm vào chi tiết đơn hàng
+                foreach ($request->cartItems as $item) {
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item['id'],
+                        'unit_price' => $item['price'],
+                        'qty' => $item['quantity'],
+                        'size' => $item['size'],
+                    ]);
+                }
+
+                // Lấy URL thanh toán từ VNPAY và trả về
+                $vnpUrl = $paymentMethod->getData()->vnp_Url;
+
+                return response()->json([
+                    'success' => true,
+                    'vnp_Url' => $vnpUrl,
+                ]);
+            }
+
+            return response()->json([
+                'error' => 'Không thể tạo yêu cầu thanh toán VNPAY',
+            ], 400);
+        }
+
         $order = Order::create([
-            'invoice_id' => uniqid(),
+            'invoice_id' => $invoiceId,
             'user_id' => $request->user_id,
             'address' => $request->address,
             'grand_total' => $request->grand_total,
             'product_qty' => $request->product_qty,
             'address_id' => $request->address_id,
             'order_status' => 'pending',
+            'payment_status' => 'paid',
         ]);
 
-        // Lưu các sản phẩm trong chi tiết đơn hàng
         foreach ($request->cartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -68,19 +88,9 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Xóa giỏ hàng sau khi hoàn tất thanh toán
-        // Cart::where('user_id', Auth::id())->delete();
-
-        if ($request->payment_method === 'vnpay') {
-            // Nếu người dùng chọn VNPAY, thực hiện thanh toán qua VNPAY
-            return (new VnpayController)->createPayment($request);
-        }
-
         return response()->json([
             'success' => true,
-            'message' => 'Thanh toán thành công!',
+            'message' => 'Đơn hàng đã được tạo thành công!',
         ]);
-
     }
-
 }
