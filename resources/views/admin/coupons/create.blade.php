@@ -85,14 +85,25 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Ngày hết hạn</label>
-                                                    <input type="date" name="expire_date" class="form-control @error('expire_date') is-invalid @enderror"
-                                                        value="{{ old('expire_date') }}">
-                                                    @error('expire_date')
+                                                    <label for="expire_time">Giờ hết hạn</label>
+                                                    <input type="time" id="expire_time" name="expire_time"
+                                                           class="form-control @error('expire_time') is-invalid @enderror"
+                                                           value="{{ old('expire_time', now()->format('H:i')) }}">
+                                                    @error('expire_time')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
 
+
+                                                <div class="form-group">
+                                                    <label for="expire_date">Ngày hết hạn</label>
+                                                    <input type="date" id="expire_date" name="expire_date"
+                                                           class="form-control @error('expire_date') is-invalid @enderror"
+                                                           value="{{ old('expire_date', now()->format('Y-m-d')) }}">
+                                                    @error('expire_date')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <div class="form-group">
                                                     <label>Trạng thái</label>
                                                     <select name="status" class="form-control">
@@ -136,6 +147,7 @@
             couponCodeInput.value = randomCode;
         });
     });
+
 </script>
 
 @endsection
