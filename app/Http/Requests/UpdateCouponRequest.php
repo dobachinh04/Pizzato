@@ -26,7 +26,7 @@ class UpdateCouponRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     // Ghép ngày và giờ để kiểm tra
                     $expireDateTime = \Carbon\Carbon::createFromFormat(
-                        'd-m-Y H:i',
+                        'Y-m-d H:i',
                         request()->expire_date . ' ' . $value
                     );
 
