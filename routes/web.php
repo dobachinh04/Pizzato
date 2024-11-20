@@ -84,12 +84,4 @@ Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('pa
 Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
 Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index');
-// Route::get('/redis-test', function () {
-//   return Redis::ping();
-// });
-// Route::post('message', function (Request $request) {
-//   broadcast(new MessageSent(auth()->user(), $request->input('message')));
-
-//   return $request->input('message');
-// });
 
