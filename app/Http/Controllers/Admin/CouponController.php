@@ -40,6 +40,10 @@ class CouponController extends Controller
 
         // Tự động cập nhật trạng thái dựa vào qty
         // $data['status'] = $request->qty > 0 ? 1 : 0;
+
+        // Ghép ngày và giờ để tạo giá trị expire_date hoàn chỉnh
+        $data['expire_date'] = $request->expire_date . ' ' . $request->expire_time;
+
         if ($request->qty == 0) {
             $data['status'] = 0; // Không kích hoạt
         } else {
@@ -77,6 +81,13 @@ class CouponController extends Controller
 
         // Tự động cập nhật trạng thái dựa vào qty
         // $data['status'] = $request->qty > 0 ? 1 : 0;
+
+        // Ghép ngày và giờ thành datetime
+        $data['expire_date'] = \Carbon\Carbon::createFromFormat(
+            'Y-m-d H:i',
+            $request->expire_date . ' ' . $request->expire_time
+        );
+
         if ($request->qty == 0) {
             $data['status'] = 0; // Không kích hoạt
         } else {
@@ -84,10 +95,10 @@ class CouponController extends Controller
         }
 
 
-    // Kiểm tra nếu mã giảm giá đã thay đổi, nếu có thì cập nhật mã mới
-    if ($request->has('code') && $request->code !== $coupon->code) {
-        $data['code'] = $request->code; // Lấy mã mới từ request
-    }
+        // Kiểm tra nếu mã giảm giá đã thay đổi, nếu có thì cập nhật mã mới
+        if ($request->has('code') && $request->code !== $coupon->code) {
+            $data['code'] = $request->code; // Lấy mã mới từ request
+        }
 
         $coupon->update($data);
 
@@ -108,10 +119,8 @@ class CouponController extends Controller
     {
         do {
             $code = strtoupper(Str::random(10));
-        }
-        while (Coupon::where('code', $code)->exists());
+        } while (Coupon::where('code', $code)->exists());
 
         return $code;
     }
-
 }
