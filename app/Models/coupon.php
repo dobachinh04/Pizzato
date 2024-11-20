@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class coupon extends Model
+class Coupon extends Model
 {
     use HasFactory;
     protected  $fillable = [
@@ -22,5 +22,14 @@ class coupon extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+    public function getExpireDateDateAttribute()
+    {
+        return \Carbon\Carbon::parse($this->expire_date)->format('d/m/Y');
+    }
+
+    public function getExpireDateTimeAttribute()
+    {
+        return \Carbon\Carbon::parse($this->expire_date)->format('H:i');
     }
 }

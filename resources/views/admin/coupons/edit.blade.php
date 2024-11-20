@@ -78,14 +78,21 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label>Giờ hết hạn</label>
+                                                <input type="time" name="expire_time" class="form-control"
+                                                    value="{{ old('expire_time', \Carbon\Carbon::parse($coupon->expire_date)->format('H:i')) }}">
+                                                @error('expire_time')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Ngày hết hạn</label>
                                                 <input type="date" name="expire_date" class="form-control"
-                                                    value="{{ old('expire_date', $coupon->expire_date) }}">
+                                                    value="{{ old('expire_date', \Carbon\Carbon::parse($coupon->expire_date)->format('Y-m-d')) }}">
                                                 @error('expire_date')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-
                                             <div class="form-group">
                                                 <label>Loại giảm giá</label>
                                                 <select name="discount_type" class="form-control">
@@ -95,7 +102,7 @@
                                                     </option>
                                                     <option value="amount"
                                                         {{ old('discount_type', $coupon->discount_type) == 'amount' ? 'selected' : '' }}>
-                                                        Số tiền
+                                                        Số tiền(VNĐ)
                                                     </option>
                                                 </select>
                                                 @error('discount_type')

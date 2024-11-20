@@ -45,7 +45,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Combo',
                 'slug' => Str::slug('Combo'),
-                // 'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
+                'image' => 'https://t3.ftcdn.net/jpg/07/70/75/16/360_F_770751689_FZdxDkfXHjeKTK4C49yapEIkiuafVJEY.jpg',
                 'status' => 1,
                 'show_at_home' => 1
             ],

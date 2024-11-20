@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             CartSeeder::class,
-                CouponSeeder::class,
+            CouponSeeder::class,
+            ProductReviewSeeder::class,
         ]);
 
         DB::table('users')->insert([

@@ -106,6 +106,10 @@
                                 <a href="{{ route('admin.products.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Size</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.product-reviews.index') }}" class="nav-link"
+                                    data-key="t-nft-landing">Đánh giá sản phẩm</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -113,7 +117,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCoupons" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCoupons">
-                        <i class="fa-solid fa-ticket"></i> <span data-key="t-landing">Phiếu giảm giá</span>
+                        <i class="fas fa-tags"></i><span data-key="t-landing">Phiếu giảm giá</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarCoupons">
                         <ul class="nav nav-sm flex-column">
