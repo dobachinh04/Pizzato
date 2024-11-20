@@ -56,7 +56,7 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 // http://127.0.0.1:8000/api/coupons
 Route::get('/coupons', [ClientCouponController::class, 'getListCoupon']); // Lấy danh sách mã giảm giá khả dụng
 // http://127.0.0.1:8000/api/show/code (code coupon not id)
-Route::get('/show/{code}', [ClientCouponController::class, 'getCouponDetail']); // Kiểm tra thông tin một mã giảm giá
+Route::get('/coupon/{code}', [ClientCouponController::class, 'getCouponDetail']); // Kiểm tra thông tin một mã giảm giá
 
 // Route::middleware('auth:sanctum')->group(function () {
 //     Route::prefix('product/reviews')->name('product.reviews.')->group(function(){
