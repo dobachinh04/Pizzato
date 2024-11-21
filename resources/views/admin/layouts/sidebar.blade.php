@@ -106,10 +106,10 @@
                                 <a href="{{ route('admin.products.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Size</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('admin.product-reviews.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Đánh giá sản phẩm</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
@@ -117,7 +117,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCoupons" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCoupons">
-                        <i class="fas fa-tags"></i><span data-key="t-landing">Phiếu giảm giá</span>
+                        <i class="fas fa-tags"></i><span data-key="t-landing">Phiếu Giảm Giá</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarCoupons">
                         <ul class="nav nav-sm flex-column">
@@ -127,7 +127,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.coupons.create') }}" class="nav-link"
-                                    data-key="t-nft-landing">Thêm Phiếu giảm giá</a>
+                                    data-key="t-nft-landing">Thêm Phiếu Giảm Giá</a>
                             </li>
                         </ul>
                     </div>
@@ -234,7 +234,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('admin.chat.index')}}">
-                        <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin nhắn</span>
+                        <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin Nhắn</span>
                     </a>
 
                 </li>
@@ -271,7 +271,7 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('admin.delivery_areas.index') }}" class="nav-link"
-                                    data-key="t-one-page">Địa chỉ giao hàng</a>
+                                    data-key="t-one-page">Địa Chỉ Giao Hàng</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.delivery_areas.create') }}" class="nav-link"
