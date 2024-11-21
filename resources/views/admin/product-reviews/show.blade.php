@@ -99,7 +99,7 @@
                                                 <td>{{ $productReview->review }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Ngày Tạo</th>
+                                                <th>Ngày đánh giá</th>
                                                 <td>{{ $productReview->created_at }}</td>
                                             </tr>
                                             <tr>

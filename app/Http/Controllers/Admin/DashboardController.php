@@ -25,15 +25,18 @@ class DashboardController extends Controller
     // Phương thức thống kê doanh thu theo tháng
     public function chart(Request $request)
     {
-        //lấy date_rangetham số từ yêu cầu. Nếu tham số không có, mặc định là tháng hiện tại
-        $dateRange = $request->input('date_range', now()->format('Y-m')); // Lấy khoảng thời gian từ request
-        //lấy tổng doanh thu cho mỗi tháng trong phạm vi ngày đã chỉ định (hoặc tháng hiện tại nếu không cung cấp phạm vi ngày). 
-        //Các kết quả được nhóm theo tháng và sắp xếp theo thứ tự thời gian.
-        $revenueStats = Order::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'), DB::raw('SUM(grand_total) as total_revenue'))
-            ->where('created_at', 'like', "$dateRange%")
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+        // Thống kê doanh thu theo tháng 
+        $revenueStats = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $totalRevenue = Order::whereMonth('created_at', $i)
+                ->whereYear('created_at', date('Y'))
+                ->sum('grand_total');
+
+            $revenueStats[] = [
+                'month' => $i,
+                'total_revenue' => $totalRevenue,
+            ];
+        }
 
         return view('admin.chart', compact('revenueStats'));
     }
