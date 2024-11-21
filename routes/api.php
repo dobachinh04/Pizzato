@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\BlogController;
 use App\Http\Controllers\Client\MenuController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\VnpayController;
 use App\Http\Controllers\Client\DetailController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
-use App\Http\Controllers\Client\CouponController as ClientCouponController;
+use App\Http\Controllers\Client\CouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,10 +50,11 @@ Route::get('/blogs', [BlogController::class, 'getBlog']);
 Route::get('/blog/{id}', [BlogController::class, 'getBlogDetail']);
 
 // Payment
-Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::post('/checkout', [CheckoutController::class, 'store']);
+Route::get('/payment-status', [VnpayController::class, 'callback']);
 
 // Coupons
 // http://127.0.0.1:8000/api/coupons
-Route::get('/coupons', [ClientCouponController::class, 'getListCoupon']); // Lấy danh sách mã giảm giá khả dụng
+Route::get('/coupons', [CouponController::class, 'getListCoupon']);
 // http://127.0.0.1:8000/api/show/code (code coupon not id)
-Route::get('/show/{code}', [ClientCouponController::class, 'getCouponDetail']); // Kiểm tra thông tin một mã giảm giá
+Route::get('/show/{code}', [CouponController::class, 'getCouponDetail']);
