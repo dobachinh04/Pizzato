@@ -1,11 +1,12 @@
 <?php
 
+use App\Events\MessageSent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ChatController;
 use App\Http\Controllers\Admin\SliderController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Client\MomoController;
 use App\Http\Controllers\Client\VnpayController;
+use Illuminate\Support\Facades\Redis;
 // Client Views demo
 // Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
 // Route::get('/show/{product}',                               [ProductController::class, 'show'])->name('client.show');
@@ -82,3 +84,16 @@ Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('pa
 Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
 Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index');
+// Route::get('/redis-test', function () {
+//   return Redis::ping();
+// });
+// Route::post('message', function (Request $request) {
+//   broadcast(new MessageSent(auth()->user(), $request->input('message')));
+
+//   return $request->input('message');
+// });
+
+// Oder
+Route::get('/client/order_history/{userId}', [OrderController::class, 'index'])
+    ->name('client.order_history.index');
+

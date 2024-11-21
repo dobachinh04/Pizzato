@@ -45,6 +45,7 @@
                                                 'discount_type' => 'Loại giảm giá',
                                                 'discount' => 'Giá trị giảm',
                                                 'expire_date' => 'Ngày hết hạn',
+
                                                 'status' => 'Trạng thái',
                                                 'created_at' => 'Ngày tạo',
                                                 'updated_at' => 'Ngày cập nhật',
@@ -72,8 +73,17 @@
                                                                 </span>
                                                             @elseif (is_numeric($value) && $field == 'min_purchase_amount')
                                                                 {{ number_format($value) }} VND
-                                                            @elseif ($field == 'created_at' || $field == 'updated_at' || $field == 'expire_date')
+                                                                @elseif ($field == 'created_at' || $field == 'updated_at')
                                                                 {{ \Carbon\Carbon::parse($value)->format('d/m/Y') }}
+                                                            @elseif ($field == 'expire_date')
+                                                                @php
+                                                                    // Tách ngày và giờ
+                                                                    $expireDate = \Carbon\Carbon::parse($value);
+                                                                    $expireTimeFormatted = $expireDate->format('H:i');
+                                                                    $expireDateFormatted = $expireDate->format('d/m/Y');
+                                                                @endphp
+                                                                <strong>{{ $expireTimeFormatted }}</strong><br>
+                                                                <span>{{ $expireDateFormatted }} </span>
                                                             @else
                                                                 {{ $value }}
                                                             @endif

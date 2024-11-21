@@ -18,7 +18,23 @@ class StoreCouponRequest extends FormRequest
             'code' => 'required|string|max:20|unique:coupons,code',
             'qty' => 'required|integer|min:0',
             'min_purchase_amount' => 'required|numeric|min:0',
-            'expire_date' => 'required|date|after:today',
+            // 'expire_date' => 'required|date|after:today',
+            'expire_date' => 'required|date|after_or_equal:today', // Ngày không được trước hôm nay
+            'expire_time' => [
+                'required',
+                'date_format:H:i', // Định dạng HH:mm
+                function ($attribute, $value, $fail) {
+                    // Ghép ngày và giờ để kiểm tra
+                    $expireDateTime = \Carbon\Carbon::createFromFormat(
+                        'Y-m-d H:i',
+                        request()->expire_date . ' ' . $value
+                    );
+
+                    if ($expireDateTime->isPast()) {
+                        $fail('Thời gian hết hạn phải sau thời gian hiện tại.');
+                    }
+                }
+            ],
             'discount_type' => 'required|in:percent,amount',
             'discount' => 'required|numeric|min:0',
         ];
@@ -50,9 +66,15 @@ class StoreCouponRequest extends FormRequest
             'discount.numeric' => 'Giá trị giảm phải là một số.',
             'discount.min' => 'Giá trị giảm không được nhỏ hơn :min.',
 
+            // 'expire_date.required' => 'Vui lòng nhập ngày hết hạn.',
+            // 'expire_date.date' => 'Ngày hết hạn phải là một ngày hợp lệ.',
+            // 'expire_date.after' => 'Ngày hết hạn phải sau ngày hiện tại.',
+
             'expire_date.required' => 'Vui lòng nhập ngày hết hạn.',
             'expire_date.date' => 'Ngày hết hạn phải là một ngày hợp lệ.',
-            'expire_date.after' => 'Ngày hết hạn phải sau ngày hiện tại.',
+            'expire_date.after_or_equal' => 'Giờ không được trước hôm nay.',
+            'expire_time.required' => 'Vui lòng nhập giờ hết hạn.',
+            'expire_time.date_format' => 'Giờ hết hạn phải có định dạng HH:mm.',
 
             'status.required' => 'Vui lòng chọn trạng thái.',
             'status.boolean' => 'Trạng thái phải là "Kích hoạt" hoặc "Không kích hoạt".',

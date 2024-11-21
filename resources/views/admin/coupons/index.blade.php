@@ -40,7 +40,8 @@
                                         <tr>
                                             <th scope="col" style="width: 10px;">
                                                 <div class="form-check">
-                                                    <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
+                                                    <input class="form-check-input fs-15" type="checkbox" id="checkAll"
+                                                        value="option">
                                                 </div>
                                             </th>
                                             <th>ID</th>
@@ -50,6 +51,7 @@
                                             <th>Giá Mua Tối Thiểu</th>
                                             <th>Loại Giảm Giá</th>
                                             <th>Giảm Giá</th>
+                                            <th>Giờ Hết Hạn</th>
                                             <th>Ngày Hết Hạn</th>
                                             <th>Trạng Thái</th>
                                             <th>Hành động</th>
@@ -60,7 +62,8 @@
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
-                                                        <input class="form-check-input fs-15" type="checkbox" name="checkAll" value="option1">
+                                                        <input class="form-check-input fs-15" type="checkbox"
+                                                            name="checkAll" value="option1">
                                                     </div>
                                                 </th>
                                                 <td>{{ $item->id }}</td>
@@ -69,18 +72,27 @@
                                                 <td>{{ $item->qty }}</td>
                                                 <td>{{ number_format($item->min_purchase_amount) }} VND</td>
                                                 <td>{{ ucfirst($item->discount_type) }}</td>
-                                                <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount) . ' VND' }}</td>
-                                                <td>{{ $item->expire_date }}</td>
+                                                <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount) . ' VND' }}
+                                                </td>
+                                                {{-- <td>{{ $item->expire_date }}</td> --}}
+                                                <!-- Giờ hết hạn -->
+                                                <td>{{ \Carbon\Carbon::parse($item->expire_date)->format('H:i') }}</td>
+                                                <!-- Ngày hết hạn -->
+                                                <td>{{ \Carbon\Carbon::parse($item->expire_date)->format('d-m-Y') }}</td>
                                                 <td>{!! $item->status
                                                     ? '<span class="badge bg-primary">Active</span>'
                                                     : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
-                                                    <a class="btn btn-info" href="{{ route('admin.coupons.show', $item->id) }}">Chi Tiết</a>
-                                                    <a class="btn btn-warning" href="{{ route('admin.coupons.edit', $item->id) }}">Sửa</a>
-                                                    <form action="{{ route('admin.coupons.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                                    <a class="btn btn-info"
+                                                        href="{{ route('admin.coupons.show', $item->id) }}">Chi Tiết</a>
+                                                    <a class="btn btn-warning"
+                                                        href="{{ route('admin.coupons.edit', $item->id) }}">Sửa</a>
+                                                    <form action="{{ route('admin.coupons.destroy', $item->id) }}"
+                                                        method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")' type="submit" class="btn btn-danger">Xóa</button>
+                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
+                                                            type="submit" class="btn btn-danger">Xóa</button>
                                                     </form>
                                                 </td>
                                             </tr>
