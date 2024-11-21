@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\MessageSent;
+use App\Http\Controllers\Client\RefundController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
@@ -97,3 +98,6 @@ Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index')
 Route::get('/client/order_history/{userId}', [OrderController::class, 'index'])
     ->name('client.order_history.index');
 
+// refund
+Route::get('refunds/create', [RefundController::class, 'create'])->name('refunds.create');
+Route::post('refunds/store', [RefundController::class, 'store'])->name('refunds.store');

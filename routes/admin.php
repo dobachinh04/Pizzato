@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RefundController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
@@ -210,6 +211,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{category}',                       [CategoryController::class, 'update'])->name('update');
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
     });
+
+     // Admin - refund
+     Route::prefix('refunds')->name('refunds.')->group(function () {
+        Route::get('/',                   [RefundController::class, 'index'])->name('index'); // Danh sách yêu cầu hoàn tiền
+        Route::get('/create',             [RefundController::class, 'create'])->name('create'); // Form tạo (nếu cần, dành cho admin tạo yêu cầu thay user)
+        Route::post('/',                  [RefundController::class, 'store'])->name('store'); // Lưu yêu cầu hoàn tiền (nếu admin có quyền tạo mới)
+        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit'); // Form chỉnh sửa trạng thái hoặc ghi chú
+        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update'); // Cập nhật yêu cầu
+        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy'); // Xóa yêu cầu hoàn tiền
+    });
+    
 
     // Admin - products:
     // Route::prefix('products')->name('products.')->group(function () {
