@@ -13,7 +13,7 @@ return new class extends Migration {
         // Bảng đơn hàng
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_id');
+            $table->string('invoice_id')->unique();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('address_id');
 

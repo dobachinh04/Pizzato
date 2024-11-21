@@ -6,7 +6,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ChatController;
 use App\Http\Controllers\Admin\SliderController;
@@ -87,8 +87,13 @@ Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index')
 // Route::get('/redis-test', function () {
 //   return Redis::ping();
 // });
-Route::post('message', function (Request $request) {
-  broadcast(new MessageSent(auth()->user(), $request->input('message')));
+// Route::post('message', function (Request $request) {
+//   broadcast(new MessageSent(auth()->user(), $request->input('message')));
 
-  return $request->input('message');
-});
+//   return $request->input('message');
+// });
+
+// Oder
+Route::get('/client/order_history/{userId}', [OrderController::class, 'index'])
+    ->name('client.order_history.index');
+
