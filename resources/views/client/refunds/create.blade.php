@@ -82,15 +82,12 @@ input[readonly], textarea[readonly] {
 
       <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" value="email@example.com" readonly>
+          <input type="email" id="email" name="email" value="email@example.com" >
       </div>
 
       <div class="form-group">
           <label for="invoice_id">Mã hóa đơn</label>
-          <select id="invoice_id" name="invoice_id" required>
-              <option value="INV123">INV123</option>
-              <option value="INV124">INV124</option>
-          </select>
+      <input type="text" readonly>
       </div>
 
       <div class="form-group">
