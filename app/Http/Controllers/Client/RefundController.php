@@ -12,7 +12,7 @@ class RefundController extends Controller
     public function create()
     {
         // Lấy danh sách đơn hàng đã hủy của khách hàng
-        $orders = Order::where('user_id', auth()->id())->where('status', 'Canceled')->get();
+        $orders = Order::where('user_id', auth()->id())->where('order_status', 'Canceled')->get();
         return view('client.refunds.create', compact('orders'));
     }
 
@@ -24,7 +24,8 @@ class RefundController extends Controller
             'bank_number' => 'required|string',
             'bank_type' => 'required|string',
         ]);
-
+    
+        // Lưu yêu cầu hoàn tiền vào bảng refund_requests
         RefundRequest::create([
             'name' => auth()->user()->name,
             'email' => auth()->user()->email,
@@ -34,7 +35,9 @@ class RefundController extends Controller
             'bank_number' => $validated['bank_number'],
             'bank_type' => $validated['bank_type'],
         ]);
-
-        return redirect()->route('client.refunds.index')->with('success', 'Yêu cầu hoàn tiền của bạn đã được gửi.');
+    
+        // Sau khi gửi yêu cầu, chuyển hướng đến trang quản lý hoàn tiền của admin
+        return redirect()->route('admin.refunds.index')->with('success', 'Yêu cầu hoàn tiền đã được gửi.');
     }
+    
 }

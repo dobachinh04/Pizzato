@@ -100,4 +100,4 @@ Route::get('/client/order_history/{userId}', [OrderController::class, 'index'])
 
 // refund
 Route::get('refunds/create', [RefundController::class, 'create'])->name('refunds.create');
-Route::post('refunds/store', [RefundController::class, 'store'])->name('refunds.store');
+Route::post('/refunds', [RefundController::class, 'store'])->name('refunds.store');

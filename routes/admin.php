@@ -214,12 +214,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
      // Admin - refund
      Route::prefix('refunds')->name('refunds.')->group(function () {
-        Route::get('/',                   [RefundController::class, 'index'])->name('index'); // Danh sách yêu cầu hoàn tiền
-        Route::get('/create',             [RefundController::class, 'create'])->name('create'); // Form tạo (nếu cần, dành cho admin tạo yêu cầu thay user)
-        Route::post('/',                  [RefundController::class, 'store'])->name('store'); // Lưu yêu cầu hoàn tiền (nếu admin có quyền tạo mới)
-        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit'); // Form chỉnh sửa trạng thái hoặc ghi chú
-        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update'); // Cập nhật yêu cầu
-        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy'); // Xóa yêu cầu hoàn tiền
+        Route::get('/',                   [RefundController::class, 'index'])->name('index'); 
+        Route::get('/create',             [RefundController::class, 'create'])->name('create'); 
+        Route::post('/',                  [RefundController::class, 'store'])->name('store'); 
+        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
+        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update'); 
+        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy'); 
     });
     
 
