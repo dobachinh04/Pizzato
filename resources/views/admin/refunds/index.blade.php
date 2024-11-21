@@ -1,28 +1,28 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Refund Requests - Pizzato
+    Yêu Cầu Hoàn Tiền - Pizzato
 @endsection
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="mb-4">Refund Requests</h1>
+        <h1 class="mb-4">Yêu Cầu Hoàn Tiền</h1>
 
         <!-- Bảng hiển thị danh sách yêu cầu -->
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Invoice ID</th>
-                    <th>Customer Name</th>
+                    <th>Mã Hóa Đơn</th>
+                    <th>Tên Khách Hàng</th>
                     <th>Email</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>Số Tiền</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Duyệt qua danh sách refund_requests -->
+                <!-- Duyệt qua danh sách yêu cầu hoàn tiền -->
                 @foreach ($refunds as $refund)
                     <tr>
                         <td>{{ $refund->id }}</td>
@@ -36,14 +36,14 @@
                             </span>
                         </td>
                         <td>
-                            <!-- Edit Button -->
-                            <a href="{{ route('admin.refunds.edit', $refund->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <!-- Nút Chỉnh Sửa -->
+                            <a href="{{ route('admin.refunds.edit', $refund->id) }}" class="btn btn-primary btn-sm">Chỉnh Sửa</a>
 
-                            <!-- Delete Button -->
-                            <form action="{{ route('admin.refunds.destroy', $refund->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this refund request?');">
+                            <!-- Nút Xóa -->
+                            <form action="{{ route('admin.refunds.destroy', $refund->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa yêu cầu hoàn tiền này?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                             </form>
                         </td>
                     </tr>
@@ -51,7 +51,7 @@
             </tbody>
         </table>
 
-        <!-- Pagination -->
+        <!-- Phân Trang -->
         <div class="d-flex justify-content-center">
             {{ $refunds->links() }}
         </div>
