@@ -20,10 +20,12 @@ class DashboardController extends Controller
         $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm 
 
         // Lấy 5 đơn hàng mới nhất
-        $recentOrders = Order::select('invoice_id', 'user_id', 'grand_total', 'payment_status', 'order_status', 'created_at')
-        ->orderBy('created_at', 'desc')
-        ->take(5)
-        ->get();
+        // Lấy 5 đơn hàng mới nhất kèm theo địa chỉ
+        $recentOrders = Order::with('addresses')
+            ->select('invoice_id', 'address_id', 'grand_total', 'payment_status', 'order_status', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
 
         return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews', 'recentOrders'));
     }
@@ -51,7 +53,7 @@ class DashboardController extends Controller
     public function source(Request $request)
     {
         $dateRange = $request->input('date_range', now()->format('Y-m'));
-        $sourceStats = Order::with('items.product.category')//tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
+        $sourceStats = Order::with('items.product.category') //tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
             //lấy tên danh mục và tổng doanh thu (được tính bằng tổng số lượng nhân với đơn giá) cho từng danh mục.
             ->select(DB::raw('categories.name as category_name, SUM(order_items.qty * order_items.unit_price) as total_revenue'))
             //nối ordersbảng với order_items bảng trên id

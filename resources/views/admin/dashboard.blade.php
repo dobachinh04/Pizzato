@@ -208,7 +208,7 @@ Bảng Điều Khiển Admin - Pizzato
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                         class="counter-value" data-target="{{$revenue}}"></span> VNĐ
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">See Revenue Details</a>
+                                                <a href="{{ route('admin.chart') }}" class="text-decoration-underline">See Revenue Details</a>
                                             </div>
 
                                             <style>
@@ -842,7 +842,8 @@ Bảng Điều Khiển Admin - Pizzato
                                         <h4 class="card-title mb-0 flex-grow-1">Đơn Hàng Mới Nhất</h4>
                                         <div class="flex-shrink-0">
                                             <button type="button" class="btn btn-soft-info btn-sm">
-                                                <i class="ri-file-list-3-line align-middle"></i> Generate Report
+                                                <i class="ri-file-list-3-line align-middle"><a href="{{ route('admin.orders.index') }}"
+                                                    class="text-decoration-underline">View All Orders</a></i>
                                             </button>
                                         </div>
                                     </div><!-- end card header -->
@@ -854,11 +855,11 @@ Bảng Điều Khiển Admin - Pizzato
                                                 <thead class="text-muted table-light">
                                                     <tr>
                                                         <th scope="col">Mã Hóa Đơn</th>
-                                                        <th scope="col">Người Dùng</th>
+                                                        <th scope="col">Khách Hàng</th>
                                                         <th scope="col">Tổng Tiền</th>
                                                         <th scope="col">Thanh Toán</th>
-                                                        <th scope="col">Giao Hàng</th>
-                                                        <th scope="col">Ngày Tạo</th>
+                                                        <th scope="col">Trạng Thái</th>
+                                                        <th scope="col">Ngày Đặt</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -867,7 +868,8 @@ Bảng Điều Khiển Admin - Pizzato
                                                     <tr>
                                                         <td>
                                                             <a href="apps-ecommerce-order-details.html"
-                                                                class="fw-medium link-primary">{{ $order->invoice_id }}</a>
+                                                                class="fw-medium link-primary">{{ $order->invoice_id
+                                                                }}</a>
                                                         </td>
 
                                                         <td>
@@ -876,7 +878,7 @@ Bảng Điều Khiển Admin - Pizzato
                                                                     <img src="/velzon/assets/images/users/image.png"
                                                                         alt="" class="avatar-xs rounded-circle" />
                                                                 </div>
-                                                                <div class="flex-grow-1">{{ $order->user_id }}</div>
+                                                                <div class="flex-grow-1">{{ $order->addresses ? $order->addresses->first_name . ' ' . $order->addresses->last_name : 'N/A' }}</div>
                                                             </div>
                                                         </td>
 
