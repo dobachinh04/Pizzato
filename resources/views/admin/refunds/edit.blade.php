@@ -14,23 +14,23 @@
             @method('PUT')
 
             <!-- Thông tin cơ bản -->
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="invoice_id" class="form-label">Mã Hóa Đơn</label>
                 <input type="text" id="invoice_id" class="form-control" value="{{ $refund->invoice_id }}" disabled>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="customer_name" class="form-label">Tên Khách Hàng</label>
                 <input type="text" id="customer_name" class="form-control" value="{{ $refund->name }}" disabled>
             </div>
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="refund_amount" class="form-label">Số Tiền Hoàn</label>
                 <input type="text" id="refund_amount" class="form-control" value="${{ number_format($refund->refund_amount, 2) }}" disabled>
             </div>
 
             <!-- Trạng thái -->
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="status" class="form-label">Trạng Thái</label>
-                <select id="status" name="status" class="form-select">
+                <select  name="status" class="form-control">
                     <option value="Pending" {{ $refund->status == 'Pending' ? 'selected' : '' }}>Đang chờ xử lý</option>
                     <option value="Approved" {{ $refund->status == 'Approved' ? 'selected' : '' }}>Đã được phê duyệt</option>
                     <option value="Rejected" {{ $refund->status == 'Rejected' ? 'selected' : '' }}>Bị từ chối</option>
@@ -38,7 +38,7 @@
             </div>
 
             <!-- Ghi chú admin -->
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="admin_note" class="form-label">Ghi Chú Admin</label>
                 <textarea id="admin_note" name="admin_note" rows="4" class="form-control">{{ $refund->admin_note }}</textarea>
             </div>
