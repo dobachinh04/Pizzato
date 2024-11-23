@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ProductReviewController extends Controller
 {
@@ -15,10 +16,6 @@ class ProductReviewController extends Controller
         return view('admin.product-reviews.index', compact('data')); // Nếu trả về view
         // return response()->json($reviews); // Nếu cần trả JSON
     }
-
-
-
-
 
     // public function show($id)
     // {
@@ -50,7 +47,7 @@ class ProductReviewController extends Controller
     //     $review->delete();
     //     return redirect()->route('product-reviews.index')->with('success', 'Đánh giá đã được xoá bỏ');
     // }
-    public function destroy( $id)
+    public function destroy($id)
     {
         $productReview = ProductReview::findOrFail($id);
 
@@ -59,4 +56,7 @@ class ProductReviewController extends Controller
         return redirect()->route('admin.product-reviews.index')
             ->with('success', 'Xoá đánh giá thành công!');
     }
+
+
+
 }
