@@ -58,27 +58,5 @@ class ProductReviewController extends Controller
     }
 
 
-    public function reviewsSummary()
-    {
-        // Tổng số đánh giá
-        $totalReviews = ProductReview::count();
-
-        // Điểm trung bình
-        $averageRating = ProductReview::average('rating') ?? 0; // Đặt giá trị mặc định là 0 nếu không có đánh giá nào.
-
-        // Số lượng đánh giá theo sao
-        $ratingsCount = ProductReview::select('rating', DB::raw('count(*) as count'))
-            ->groupBy('rating')
-            ->orderBy('rating', 'desc')
-            ->get();
-
-        // Tính phần trăm từng mức sao
-        $ratingsPercent = $ratingsCount->map(function ($item) use ($totalReviews) {
-            $item->percent = $totalReviews > 0 ? ($item->count / $totalReviews) * 100 : 0;
-            return $item;
-        });
-
-        return view('admin.users.dashboard', compact('totalReviews', 'averageRating', 'ratingsPercent'));
-    }
 
 }

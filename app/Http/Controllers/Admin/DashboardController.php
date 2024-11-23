@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\ProductReview;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -17,15 +18,51 @@ class DashboardController extends Controller
         $productCount = Product::count(); // Đếm số sản phẩm
         $orderCount = Order::count(); // Đếm số đơn hàng
         $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
-        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm 
+        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
 
-        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews'));
+        $totalReviews = ProductReview::count();
+
+        // Lấy số lượng đánh giá theo từng mức sao (1 đến 5 sao)
+        $ratingsCount = ProductReview::select(DB::raw('rating, COUNT(*) as count'))
+            ->groupBy('rating')
+            ->get()
+            ->keyBy('rating');
+
+
+            $totalReviews = ProductReview::count();
+
+            // Lấy số lượng đánh giá theo từng mức sao (1 đến 5 sao)
+            $ratingsCount = ProductReview::select(DB::raw('rating, COUNT(*) as count'))
+                ->groupBy('rating')
+                ->get()
+                ->keyBy('rating'); // Tạo một mảng với key là rating (1-5)
+
+            // Tính tỷ lệ phần trăm cho từng mức sao
+            $ratingPercentages = [];
+            foreach ([5, 4, 3, 2, 1] as $rating) {
+                $count = $ratingsCount->get($rating)->count ?? 0;
+                $percentage = $totalReviews ? ($count / $totalReviews) * 100 : 0;
+                $ratingPercentages[$rating] = [
+                    'count' => $count,
+                    'percentage' => $percentage,
+                ];
+            }
+
+            // Tính điểm trung bình của tất cả các đánh giá
+            $averageRating = ProductReview::avg('rating');
+
+            return view('admin.dashboard', compact(
+                'productCount', 'orderCount', 'revenue', 'totalViews',
+                'totalReviews', 'ratingPercentages', 'averageRating'
+            ));
+
+
     }
 
     // Phương thức thống kê doanh thu theo tháng
     public function chart(Request $request)
     {
-        // Thống kê doanh thu theo tháng 
+        // Thống kê doanh thu theo tháng
         $revenueStats = [];
         for ($i = 1; $i <= 12; $i++) {
             $totalRevenue = Order::whereMonth('created_at', $i)
