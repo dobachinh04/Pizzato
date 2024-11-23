@@ -22,9 +22,9 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\ProductReviewController as AdminProductReviewController;
-
-
+use App\Http\Controllers\AdminNotificationController;
 use App\Http\Middleware\CheckFormLogin;
 
 // Login admin
@@ -232,5 +232,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
          Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
 
      });
+
+     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
 
 });

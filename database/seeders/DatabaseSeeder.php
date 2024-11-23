@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CartSeeder::class,
             CouponSeeder::class,
             ProductReviewSeeder::class,
+            OrderSeeder::class,
         ]);
 
         DB::table('users')->insert([
