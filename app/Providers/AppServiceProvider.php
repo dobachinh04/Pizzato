@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // định dạng hiển thị ngày mặc định
     // Carbon::setToStringFormat('d-m-Y H:i');
-    Paginator::useBootstrap();
+
     }
 }

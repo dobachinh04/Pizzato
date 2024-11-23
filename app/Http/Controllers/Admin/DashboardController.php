@@ -39,7 +39,7 @@ class DashboardController extends Controller
         // Lấy danh sách sản phẩm có quantity dưới 10
         $lowStockProducts = Product::where('qty', '<', 10)
             ->select('id', 'name', 'thumb_image', 'qty')
-            ->paginate(5); // Số lượng sản phẩm trên mỗi trang
+            ->get();
 
         return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews', 'pendingOrders', 'lowStockProducts'));
     }
@@ -50,8 +50,9 @@ class DashboardController extends Controller
         // Thống kê doanh thu theo tháng 
         $revenueStats = [];
         for ($i = 1; $i <= 12; $i++) {
+            //lọc các bản ghi trong bảng orders dựa trên tháng. Nó sẽ chỉ lấy các đơn hàng có created_at thuộc tháng $i
             $totalRevenue = Order::whereMonth('created_at', $i)
-                ->whereYear('created_at', date('Y'))
+                ->whereYear('created_at', date('Y'))//lọc các bản ghi theo năm. date('Y') sẽ trả về năm hiện tại
                 ->sum('grand_total');
 
             $revenueStats[] = [
