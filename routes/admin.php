@@ -242,6 +242,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
          Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
          Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
          Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
+       
 
      });
 
