@@ -112,7 +112,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group mt-3">
+                                                                        {{-- <div class="form-group mt-3">
                                                                             <label for="images" class="form-label">Ảnh
                                                                                 Phụ</label>
                                                                             <input type="file" class="form-control"
@@ -121,7 +121,7 @@
                                                                                 <span
                                                                                     class="text-danger">{{ $message }}</span>
                                                                             @enderror
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
 
                                                                     <div class="col-6">
@@ -160,8 +160,8 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Show at Home</label>
-                                                                            <select name="show_at_home"
-                                                                                class="form-control" id="">
+                                                                            <select name="show_at_home" class="form-control"
+                                                                                id="">
                                                                                 <option value="1">Yes</option>
                                                                                 <option selected value="0">No</option>
                                                                             </select>
@@ -203,12 +203,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
                                                                 <hr>
+
                                                                 <div class="row">
                                                                     <h3>Biến Thể Sản Phẩm</h3>
 
                                                                     <!-- Size Bánh -->
-                                                                    <div class="col-12">
+                                                                    {{-- <div class="col-12">
                                                                         <div class="form-group mt-3">
                                                                             <div class="form-check form-switch form-switch-lg"
                                                                                 dir="ltr">
@@ -260,10 +262,75 @@
                                                                         <button type="button" id="addSizeFields"
                                                                             class="btn btn-info mt-3"
                                                                             style="display: none;">Thêm Giá Trị</button>
+                                                                    </div> --}}
+
+                                                                    <div class="col-4">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleSize">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleSize">Size Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group toggle-target"
+                                                                            id="inputSizeFields" style="display: none;">
+                                                                            <select class="form-select mt-3" multiple aria-label="multiple select example">
+                                                                                <option selected>Open this select menu (multiple select option)</option>
+                                                                                <option value="1">One</option>
+                                                                                <option value="2">Two</option>
+                                                                                <option value="3">Three</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
 
+                                                                    <div class="col-4">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleEdge">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleEdge">Viền Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group toggle-target"
+                                                                            id="inputEdgeFields" style="display: none;">
+                                                                            <select class="form-select mt-3" multiple aria-label="multiple select example">
+                                                                                <option selected>Open this select menu (multiple select option)</option>
+                                                                                <option value="1">One</option>
+                                                                                <option value="2">Two</option>
+                                                                                <option value="3">Three</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
 
-                                                                    <div class="col-12">
+                                                                    <div class="col-4">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleBase">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleBase">Đế Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group mt-3 toggle-target"
+                                                                            id="inputBaseFields" style="display: none;">
+                                                                            <select class="form-select mt-3" multiple aria-label="multiple select example">
+                                                                                <option selected>Open this select menu (multiple select option)</option>
+                                                                                <option value="1">One</option>
+                                                                                <option value="2">Two</option>
+                                                                                <option value="3">Three</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {{-- <div class="col-12">
                                                                         <div class="form-group mt-3">
                                                                             <div class="form-check form-switch form-switch-lg"
                                                                                 dir="ltr">
@@ -277,7 +344,7 @@
                                                                         <div class="form-group toggle-target"
                                                                             id="inputEdgeFields" style="display: none;">
                                                                             <div class="row mt-3">
-                                                                                <div class="col-6">
+                                                                                <div class="col-4">
                                                                                     <label>Tên Viền Bánh</label>
                                                                                     <input type="text" name="edge_name"
                                                                                         class="form-control"
@@ -286,9 +353,59 @@
                                                                                         <span
                                                                                             class="text-danger">{{ $message }}</span>
                                                                                     @enderror
+
+                                                                                    <label class="mt-3">Tên Viền Bánh</label>
+                                                                                    <input type="text" name="edge_name"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('edge_name') }}">
+                                                                                    @error('edge_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+
+                                                                                    <label class="mt-3">Tên Viền Bánh</label>
+                                                                                    <input type="text" name="edge_name"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('edge_name') }}">
+                                                                                    @error('edge_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
                                                                                 </div>
-                                                                                <div class="col-6">
+                                                                                <div class="col-4">
                                                                                     <label>Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="edge_price"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('edge_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('edge_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+
+                                                                                    <label class="mt-3">Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="edge_price"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('edge_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('edge_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+
+                                                                                    <label class="mt-3">Giá Tiền</label>
                                                                                     <div class="input-group">
                                                                                         <span
                                                                                             class="input-group-text">VNĐ</span>
@@ -306,9 +423,9 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> --}}
 
-                                                                    <div class="col-12">
+                                                                    {{-- <div class="col-12">
                                                                         <div class="form-group mt-3">
                                                                             <div class="form-check form-switch form-switch-lg"
                                                                                 dir="ltr">
@@ -351,60 +468,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-
-                                                                    <script>
-                                                                        document.addEventListener('DOMContentLoaded', function() {
-                                                                            const toggles = document.querySelectorAll('.toggle-input');
-                                                                            const addSizeFieldsButton = document.getElementById('addSizeFields');
-                                                                            const sizeFieldsContainer = document.getElementById('sizeFieldsContainer');
-
-                                                                            toggles.forEach(function(toggle) {
-                                                                                toggle.addEventListener('change', function() {
-                                                                                    const targetFieldsId = this.id.replace('toggle', 'input') + 'Fields';
-                                                                                    const targetFields = document.getElementById(targetFieldsId);
-                                                                                    const priceFieldId = targetFieldsId.replace('Fields', 'Price');
-                                                                                    const priceField = document.getElementById(priceFieldId);
-
-                                                                                    // Khi kích hoạt checkbox
-                                                                                    if (this.checked) {
-                                                                                        sizeFieldsContainer.style.display = 'block';
-                                                                                        addSizeFieldsButton.style.display = 'inline-block'; // Hiển thị nút thêm
-                                                                                    } else {
-                                                                                        sizeFieldsContainer.style.display = 'none';
-                                                                                        addSizeFieldsButton.style.display = 'none'; // Ẩn nút thêm
-                                                                                    }
-                                                                                });
-                                                                            });
-
-                                                                            // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
-                                                                            addSizeFieldsButton.addEventListener('click', function() {
-                                                                                const newSizeFieldHTML = `
-                                                                                    <div class="col-6">
-                                                                                        <div class="form-group toggle-target">
-                                                                                            <label class="mt-3">Tên Size Bánh</label>
-                                                                                            <input type="text" name="size_name[]" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="form-group toggle-target">
-                                                                                            <label class="mt-3">Giá Tiền</label>
-                                                                                            <div class="input-group">
-                                                                                                <span class="input-group-text">VNĐ</span>
-                                                                                                <input type="text" name="size_price[]" class="form-control" value="">
-                                                                                                <span class="input-group-text">.000</span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                `;
-
-                                                                                const newRow = document.createElement('div');
-                                                                                newRow.classList.add('row');
-                                                                                newRow.innerHTML = newSizeFieldHTML;
-                                                                                sizeFieldsContainer.appendChild(newRow);
-                                                                            });
-                                                                        });
-                                                                    </script>
+                                                                    </div> --}}
 
                                                                     <div class="mt-3">
                                                                         <a href="{{ route('admin.products.index') }}"
@@ -552,6 +616,74 @@
     </script> --}}
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy danh sách tất cả các nút switch
+            const toggleInputs = document.querySelectorAll('.toggle-input');
+
+            toggleInputs.forEach(toggleInput => {
+                toggleInput.addEventListener('change', function() {
+                    // Tìm div target tương ứng với id
+                    const targetId = this.id.replace('toggle', 'input') + 'Fields';
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        // Hiển thị hoặc ẩn div
+                        targetElement.style.display = this.checked ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggles = document.querySelectorAll('.toggle-input');
+            const addSizeFieldsButton = document.getElementById('addSizeFields');
+            const sizeFieldsContainer = document.getElementById('sizeFieldsContainer');
+
+            toggles.forEach(function(toggle) {
+                toggle.addEventListener('change', function() {
+                    const targetFieldsId = this.id.replace('toggle', 'input') + 'Fields';
+                    const targetFields = document.getElementById(targetFieldsId);
+                    const priceFieldId = targetFieldsId.replace('Fields', 'Price');
+                    const priceField = document.getElementById(priceFieldId);
+
+                    // Khi kích hoạt checkbox
+                    if (this.checked) {
+                        sizeFieldsContainer.style.display = 'block';
+                        addSizeFieldsButton.style.display = 'inline-block'; // Hiển thị nút thêm
+                    } else {
+                        sizeFieldsContainer.style.display = 'none';
+                        addSizeFieldsButton.style.display = 'none'; // Ẩn nút thêm
+                    }
+                });
+            });
+
+            // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
+            addSizeFieldsButton.addEventListener('click', function() {
+                const newSizeFieldHTML = `
+                    <div class="col-6">
+                        <div class="form-group toggle-target">
+                            <label class="mt-3">Tên Size Bánh</label>
+                            <input type="text" name="size_name[]" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group toggle-target">
+                            <label class="mt-3">Giá Tiền</label>
+                            <div class="input-group">
+                                <span class="input-group-text">VNĐ</span>
+                                <input type="text" name="size_price[]" class="form-control" value="">
+                                <span class="input-group-text">.000</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                const newRow = document.createElement('div');
+                newRow.classList.add('row');
+                newRow.innerHTML = newSizeFieldHTML;
+                sizeFieldsContainer.appendChild(newRow);
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.querySelector('input[name="name"]');
             const slugInput = document.querySelector('input[name="slug"]');

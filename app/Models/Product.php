@@ -50,9 +50,9 @@ class Product extends Model
         return $this->hasMany(ProductGallery::class);
     }
 
-    function productSizes(): HasMany
+    function productSizes()
     {
-        return $this->hasMany(ProductSize::class);
+        return $this->belongsToMany(ProductSize::class);
     }
 
     function productOptions(): HasMany
