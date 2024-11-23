@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -17,15 +18,37 @@ class DashboardController extends Controller
         $productCount = Product::count(); // Đếm số sản phẩm
         $orderCount = Order::count(); // Đếm số đơn hàng
         $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
-        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm 
+        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
 
-        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews'));
+        // Lấy ra đơn hàng mới nhất chưa xử lý ( trạng thái pending )
+
+        $pendingOrders = Order::with('addresses')
+            ->select(
+                'orders.invoice_id', //Lấy cột invoice_id từ bảng orders.
+                'addresses.first_name',
+                'addresses.last_name',
+                'orders.grand_total',
+                'orders.payment_status',
+                'orders.order_status',
+                'orders.created_at'
+            )
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id') // join 2 bảng address và order
+            ->where('orders.order_status', 'pending')
+            ->orderByDesc('orders.created_at') //Sắp xếp kết quả theo thứ tự giảm dần của cột created_at trong bảng orders.
+            ->get();
+
+        // Lấy danh sách sản phẩm có quantity dưới 10
+        $lowStockProducts = Product::where('qty', '<', 10)
+            ->select('id', 'name', 'thumb_image', 'qty')
+            ->paginate(5); // Số lượng sản phẩm trên mỗi trang
+
+        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews', 'pendingOrders', 'lowStockProducts'));
     }
 
     // Phương thức thống kê doanh thu theo tháng
     public function chart(Request $request)
     {
-        // Thống kê doanh thu theo tháng 
+        // Thống kê doanh thu theo tháng
         $revenueStats = [];
         for ($i = 1; $i <= 12; $i++) {
             $totalRevenue = Order::whereMonth('created_at', $i)
@@ -45,7 +68,7 @@ class DashboardController extends Controller
     public function source(Request $request)
     {
         $dateRange = $request->input('date_range', now()->format('Y-m'));
-        $sourceStats = Order::with('items.product.category')//tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
+        $sourceStats = Order::with('items.product.category') //tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
             //lấy tên danh mục và tổng doanh thu (được tính bằng tổng số lượng nhân với đơn giá) cho từng danh mục.
             ->select(DB::raw('categories.name as category_name, SUM(order_items.qty * order_items.unit_price) as total_revenue'))
             //nối ordersbảng với order_items bảng trên id
@@ -54,10 +77,21 @@ class DashboardController extends Controller
             //lọc các bản ghi có created_atcột trong ordersbảng bắt đầu bằng giá trị $dateRange
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->where('orders.created_at', 'like', "$dateRange%")
-            //nhóm các kết quả theo tên danh mục.
             ->groupBy('categories.name')
             ->get();
 
         return view('admin.source', compact('sourceStats'));
     }
+
+    // public function getPendingOrderNotification()
+    // {
+    //     // Lấy thông báo "chưa đọc" chỉ dành cho admin
+    //     // $unreadAlerts = Auth::user()->unreadNotifications()
+    //     $unreadAlerts = Auth::user()->unreadNotifications()
+    //         ->where('type', 'App\Notifications\OrderPendingNotification')
+    //         ->get();
+
+    //     // Truyền thông báo vào view
+    //     return view('admin.dashboard', compact('unreadAlerts'));
+    // }
 }

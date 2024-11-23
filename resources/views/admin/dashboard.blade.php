@@ -208,7 +208,8 @@ Bảng Điều Khiển Admin - Pizzato
                                                 <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
                                                         class="counter-value" data-target="{{$revenue}}"></span> VNĐ
                                                 </h4>
-                                                <a href="" class="text-decoration-underline">See Revenue Details</a>
+                                                <a href="{{ route('admin.chart') }}"
+                                                    class="text-decoration-underline">See Revenue Details</a>
                                             </div>
 
                                             <style>
@@ -809,29 +810,82 @@ Bảng Điều Khiển Admin - Pizzato
 
                         <div class="row">
                             <div class="col-xl-4">
-                                <div class="card card-height-100">
+                                <div class="card">
                                     <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">Store Visits by Source</h4>
-                                        <div class="flex-shrink-0">
-                                            <div class="dropdown card-header-dropdown">
-                                                <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    <span class="text-muted">Report<i
-                                                            class="mdi mdi-chevron-down ms-1"></i></span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Download Report</a>
-                                                    <a class="dropdown-item" href="#">Export</a>
-                                                    <a class="dropdown-item" href="#">Import</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <h3 class="card-title mb-0 flex-grow-1">Sản Phẩm Sắp Hết Hàng</h3>
                                     </div><!-- end card header -->
 
                                     <div class="card-body">
-                                        <div id="store-visits-source"
-                                            data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
-                                            class="apex-charts" dir="ltr"></div>
+                                        <div class="table-responsive table-card ">
+                                            <table
+                                                class="table table-hover table-centered align-middle table-nowrap mb-0">
+                                                <thead class="text-muted table-light">
+                                                    <tr>
+                                                        <th>Tên sản phẩm</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Số lượng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach($lowStockProducts as $product)
+                                                    <tr>
+
+                                                        <td>
+                                                            <a href="{{ route('admin.products.show', $product->id) }}"
+                                                                class="badge bg-danger-subtle text-danger"
+                                                                style="font-size: 0.7rem; text-decoration: none;">
+                                                                {{ $product->name }}
+                                                            </a>
+                                                        </td>
+
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0 me-2">
+                                                                    <a
+                                                                        href="{{ route('admin.products.show', $product->id) }}">
+                                                                        <img src="{{ asset($product->thumb_image) }}"
+                                                                            alt="{{ $product->name }}"
+                                                                            class="avatar-xs rounded-circle"
+                                                                            style="width: 40px; height: auto;">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="apps-ecommerce-order-details.html"
+                                                                class="fw-medium link-primary"
+                                                                style="font-size: 0.85rem;">{{ $product->qty }}</a>
+                                                        </td>
+
+                                                    </tr><!-- end tr -->
+                                                    @endforeach
+                                                </tbody><!-- end tbody -->
+                                            </table><!-- end table -->
+                                        </div>
+
+                                        <!--phân trang -->
+                                        <div
+                                            class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
+                                            <div class="col-sm">
+                                                <div class="text-muted">
+                                                    Showing <span class="fw-semibold">{{ $lowStockProducts->count()
+                                                        }}</span> of <span class="fw-semibold">{{
+                                                        $lowStockProducts->total() }}</span> Results
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-auto  mt-3 mt-sm-0">
+                                                <ul
+                                                    class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+                                                    <li class="page-item disabled">
+                                                        {{ $lowStockProducts->links() }}
+                                                        <!-- Hiển thị các liên kết phân trang -->
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- end phan trang -->
+
                                     </div>
                                 </div> <!-- .card-->
                             </div> <!-- .col-->
@@ -839,10 +893,12 @@ Bảng Điều Khiển Admin - Pizzato
                             <div class="col-xl-8">
                                 <div class="card">
                                     <div class="card-header align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
+                                        <h4 class="card-title mb-0 flex-grow-1">Đơn Hàng Mới Nhất</h4>
                                         <div class="flex-shrink-0">
                                             <button type="button" class="btn btn-soft-info btn-sm">
-                                                <i class="ri-file-list-3-line align-middle"></i> Generate Report
+                                                <i class="ri-file-list-3-line align-middle"><a
+                                                        href="{{ route('admin.orders.index') }}"
+                                                        class="text-decoration-underline">View All Orders</a></i>
                                             </button>
                                         </div>
                                     </div><!-- end card header -->
@@ -853,161 +909,59 @@ Bảng Điều Khiển Admin - Pizzato
                                                 class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                                 <thead class="text-muted table-light">
                                                     <tr>
-                                                        <th scope="col">Order ID</th>
-                                                        <th scope="col">Customer</th>
-                                                        <th scope="col">Product</th>
-                                                        <th scope="col">Amount</th>
-                                                        <th scope="col">Vendor</th>
-                                                        <th scope="col">Status</th>
-                                                        <th scope="col">Rating</th>
+                                                        <th scope="col">Mã Hóa Đơn</th>
+                                                        <th scope="col">Khách Hàng</th>
+                                                        <th scope="col">Tổng Tiền</th>
+                                                        <th scope="col">Thanh Toán</th>
+                                                        <th scope="col">Trạng Thái</th>
+                                                        <th scope="col">Ngày Đặt</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+
+                                                    @foreach($pendingOrders as $order)
                                                     <tr>
                                                         <td>
                                                             <a href="apps-ecommerce-order-details.html"
-                                                                class="fw-medium link-primary">#VZ2112</a>
+                                                                class="fw-medium link-primary">{{ $order->invoice_id
+                                                                }}</a>
                                                         </td>
+
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 <div class="flex-shrink-0 me-2">
-                                                                    <img src="/velzon/assets/images/users/avatar-1.jpg"
+                                                                    <img src="/velzon/assets/images/users/image.png"
                                                                         alt="" class="avatar-xs rounded-circle" />
                                                                 </div>
-                                                                <div class="flex-grow-1">Alex Smith</div>
+                                                                <div class="flex-grow-1">{{ $order->first_name }} {{
+                                                                    $order->last_name }}</div>
                                                             </div>
                                                         </td>
-                                                        <td>Clothes</td>
+
                                                         <td>
-                                                            <span class="text-success">$109.00</span>
+                                                            <span class="text-success">{{
+                                                                number_format($order->grand_total) }} VND</span>
                                                         </td>
-                                                        <td>Zoetic Fashion</td>
+
                                                         <td>
-                                                            <span
-                                                                class="badge bg-success-subtle text-success">Paid</span>
+                                                            <span class="badge bg-success-subtle text-success">{{
+                                                                $order->payment_status
+                                                                }}</span>
                                                         </td>
+
                                                         <td>
-                                                            <h5 class="fs-14 fw-medium mb-0">5.0<span
-                                                                    class="text-muted fs-11 ms-1">(61 votes)</span>
-                                                            </h5>
+                                                            <span class="badge bg-warning-subtle text-warning">{{
+                                                                $order->order_status
+                                                                }}</span>
                                                         </td>
-                                                    </tr><!-- end tr -->
-                                                    <tr>
+
                                                         <td>
                                                             <a href="apps-ecommerce-order-details.html"
-                                                                class="fw-medium link-primary">#VZ2111</a>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="flex-shrink-0 me-2">
-                                                                    <img src="/velzon/assets/images/users/avatar-2.jpg"
-                                                                        alt="" class="avatar-xs rounded-circle" />
-                                                                </div>
-                                                                <div class="flex-grow-1">Jansh Brown</div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Kitchen Storage</td>
-                                                        <td>
-                                                            <span class="text-success">$149.00</span>
-                                                        </td>
-                                                        <td>Micro Design</td>
-                                                        <td>
-                                                            <span
-                                                                class="badge bg-warning-subtle text-warning">Pending</span>
-                                                        </td>
-                                                        <td>
-                                                            <h5 class="fs-14 fw-medium mb-0">4.5<span
-                                                                    class="text-muted fs-11 ms-1">(61 votes)</span>
-                                                            </h5>
+                                                                class="fw-medium link-primary">{{
+                                                                $order->created_at->format('d/m/Y') }}</a>
                                                         </td>
                                                     </tr><!-- end tr -->
-                                                    <tr>
-                                                        <td>
-                                                            <a href="apps-ecommerce-order-details.html"
-                                                                class="fw-medium link-primary">#VZ2109</a>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="flex-shrink-0 me-2">
-                                                                    <img src="/velzon/assets/images/users/avatar-3.jpg"
-                                                                        alt="" class="avatar-xs rounded-circle" />
-                                                                </div>
-                                                                <div class="flex-grow-1">Ayaan Bowen</div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Bike Accessories</td>
-                                                        <td>
-                                                            <span class="text-success">$215.00</span>
-                                                        </td>
-                                                        <td>Nesta Technologies</td>
-                                                        <td>
-                                                            <span
-                                                                class="badge bg-success-subtle text-success">Paid</span>
-                                                        </td>
-                                                        <td>
-                                                            <h5 class="fs-14 fw-medium mb-0">4.9<span
-                                                                    class="text-muted fs-11 ms-1">(89 votes)</span>
-                                                            </h5>
-                                                        </td>
-                                                    </tr><!-- end tr -->
-                                                    <tr>
-                                                        <td>
-                                                            <a href="apps-ecommerce-order-details.html"
-                                                                class="fw-medium link-primary">#VZ2108</a>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="flex-shrink-0 me-2">
-                                                                    <img src="/velzon/assets/images/users/avatar-4.jpg"
-                                                                        alt="" class="avatar-xs rounded-circle" />
-                                                                </div>
-                                                                <div class="flex-grow-1">Prezy Mark</div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Furniture</td>
-                                                        <td>
-                                                            <span class="text-success">$199.00</span>
-                                                        </td>
-                                                        <td>Syntyce Solutions</td>
-                                                        <td>
-                                                            <span
-                                                                class="badge bg-danger-subtle text-danger">Unpaid</span>
-                                                        </td>
-                                                        <td>
-                                                            <h5 class="fs-14 fw-medium mb-0">4.3<span
-                                                                    class="text-muted fs-11 ms-1">(47 votes)</span>
-                                                            </h5>
-                                                        </td>
-                                                    </tr><!-- end tr -->
-                                                    <tr>
-                                                        <td>
-                                                            <a href="apps-ecommerce-order-details.html"
-                                                                class="fw-medium link-primary">#VZ2107</a>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="flex-shrink-0 me-2">
-                                                                    <img src="/velzon/assets/images/users/avatar-6.jpg"
-                                                                        alt="" class="avatar-xs rounded-circle" />
-                                                                </div>
-                                                                <div class="flex-grow-1">Vihan Hudda</div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Bags and Wallets</td>
-                                                        <td>
-                                                            <span class="text-success">$330.00</span>
-                                                        </td>
-                                                        <td>iTest Factory</td>
-                                                        <td>
-                                                            <span
-                                                                class="badge bg-success-subtle text-success">Paid</span>
-                                                        </td>
-                                                        <td>
-                                                            <h5 class="fs-14 fw-medium mb-0">4.7<span
-                                                                    class="text-muted fs-11 ms-1">(161 votes)</span>
-                                                            </h5>
-                                                        </td>
-                                                    </tr><!-- end tr -->
+                                                    @endforeach
                                                 </tbody><!-- end tbody -->
                                             </table><!-- end table -->
                                         </div>

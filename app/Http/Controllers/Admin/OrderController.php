@@ -105,4 +105,6 @@ class OrderController extends Controller
         $orders = Order::get();
         return view('admin.orders.index', compact('orders'));
     }
+
+
 }

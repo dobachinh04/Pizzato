@@ -1,9 +1,9 @@
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Lịch sử đơn hàng người dùng</h1>
+    <h1 class="text-center mb-4">Lịch sử đơn hàng của bạn</h1>
 
     @if($orders->isEmpty())
         <div class="alert alert-warning text-center">
-            Không có đơn hàng nào cho người dùng này.
+            Bạn chưa có đơn hàng nào.
         </div>
     @else
         <div class="table-responsive">
@@ -24,13 +24,13 @@
                     @foreach($orders as $order)
                     <tr>
                         <td>{{ $order->user_id }}</td>
-                        {{-- <td>
-                            @if($order->users)
-                                {{ $order->users->name }}
+                        <td>
+                            @if($order->user)
+                                {{ $order->user->name }}
                             @else
                                 Không xác định
                             @endif
-                        </td> --}}
+                        </td>
                         <td>{{ $order->invoice_id }}</td>
                         <td>{{ number_format($order->subtotal, 0, ',', '.') }} VND</td>
                         <td>{{ number_format($order->grand_total, 0, ',', '.') }} VND</td>
@@ -47,6 +47,11 @@
                             @endif
                         </td>
                         <td>{{ $order->payment_approve_date }}</td>
+                        <td>
+                            <a href="{{ route('client.order_history.show', $order->id) }}" class="btn btn-info btn-sm">
+                                Xem chi tiết
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
