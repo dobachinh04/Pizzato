@@ -20,7 +20,15 @@ class DashboardController extends Controller
         $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
         $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
 
-        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews'));
+        // Lấy 5 đơn hàng mới nhất
+        // Lấy 5 đơn hàng mới nhất kèm theo địa chỉ
+        $recentOrders = Order::with('addresses')
+            ->select('invoice_id', 'address_id', 'grand_total', 'payment_status', 'order_status', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews', 'recentOrders'));
     }
 
     // Phương thức thống kê doanh thu theo tháng
