@@ -1492,6 +1492,67 @@ Bảng Điều Khiển Admin - Pizzato
                                         </div><!-- end row -->
                                     </div>
                                 </div>
+                                {{-- <div class="p-3">
+                                    <h6 class="text-muted mb-3 text-uppercase fw-semibold">Customer Reviews</h6>
+
+                                    <!-- Tổng quan đánh giá -->
+                                    <div class="bg-light px-3 py-2 rounded-2 mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1">
+                                                <div class="fs-16 align-middle text-warning">
+                                                    @for($i = 1; $i <= 5; $i++)
+                                                        @if($i <= floor($averageRating))
+                                                            <i class="ri-star-fill"></i>
+                                                        @elseif($i - $averageRating < 1)
+                                                            <i class="ri-star-half-fill"></i>
+                                                        @else
+                                                            <i class="ri-star-line"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <h6 class="mb-0">{{ number_format($averageRating, 1) }} out of 5</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <div class="text-muted">Total <span class="fw-medium">{{ number_format($totalReviews) }}</span> reviews</div>
+                                    </div>
+
+                                    <!-- Phân bổ sao -->
+                                    <div class="mt-3">
+                                        @foreach($ratingsPercent as $rating)
+                                            <div class="row align-items-center g-2">
+                                                <div class="col-auto">
+                                                    <div class="p-1">
+                                                        <h6 class="mb-0">{{ $rating->rating }} star</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="p-1">
+                                                        <div class="progress animated-progress progress-sm">
+                                                            <div class="progress-bar {{ $rating->rating >= 4 ? 'bg-success' : ($rating->rating == 3 ? 'bg-warning' : 'bg-danger') }}"
+                                                                 role="progressbar"
+                                                                 style="width: {{ $rating->percent }}%"
+                                                                 aria-valuenow="{{ $rating->percent }}"
+                                                                 aria-valuemin="0"
+                                                                 aria-valuemax="100">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="p-1">
+                                                        <h6 class="mb-0 text-muted">{{ $rating->count }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div> --}}
+
 
                                 <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
                                     <div class="card-body">
