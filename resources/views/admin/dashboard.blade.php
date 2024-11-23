@@ -5,7 +5,15 @@
 @endsection
 
 @section('content')
-    <div class="vertical-overlay"></div>
+
+
+<!--datatable css-->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+<!--datatable responsive css-->
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+<div class="vertical-overlay"></div>
 
     <!-- ============================================================== -->
     <!-- Start right Content here -->
@@ -201,7 +209,14 @@
                                                         Thu
                                                     </p>
                                                 </div>
-
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-4">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
+                                                        class="counter-value" data-target="{{$revenue}}"></span> VNĐ
+                                                </h4>
+                                                <a href="{{ route('admin.chart') }}"
+                                                    class="text-decoration-underline">See Revenue Details</a>
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
@@ -811,7 +826,7 @@
                                 </div> <!-- .col-->
                             </div> <!-- end row-->
 
-                            <div class="row">
+                           /* <div class="row">
                                 <div class="col-xl-4">
                                     <div class="card card-height-100">
                                         <div class="card-header align-items-center d-flex">
@@ -836,11 +851,74 @@
                                         <div class="card-body">
                                             <div id="store-visits-source"
                                                 data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
-                                                class="apex-charts" dir="ltr"></div>
+                                                class="apex-charts" dir="ltr"></div> */
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <div class="card">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h3 class="card-title mb-0 flex-grow-1">Sản Phẩm Sắp Hết Hàng</h3>
+                                    </div><!-- end card header -->
+
+                                    <div class="card-body">
+                                        <table id="lowStockTable"
+                                            class="table table-hover table-centered align-middle table-nowrap mb-0">
+                                            <thead class="text-muted table-light">
+                                                <tr>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Ảnh</th>
+                                                    <th>Số lượng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($lowStockProducts as $product)
+                                                <tr>
+                                                    <td>
+                                                        <a href="{{ route('admin.products.show', $product->id) }}"
+                                                            class="badge bg-danger-subtle text-danger"
+                                                            style="font-size: 0.7rem; text-decoration: none;">
+                                                            {{ $product->name }}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <a
+                                                                    href="{{ route('admin.products.show', $product->id) }}">
+                                                                    <img src="{{ asset($product->thumb_image) }}"
+                                                                        alt="{{ $product->name }}"
+                                                                        class="avatar-xs rounded-circle">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                            class="fw-medium link-primary"
+                                                            style="font-size: 0.85rem;">{{ $product->qty }}</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> <!-- .card-->
+                            </div> <!-- .col-->
+
+                            <div class="col-xl-8">
+                                <div class="card">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">Đơn Hàng Mới Nhất</h4>
+                                        <div class="flex-shrink-0">
+                                            <button type="button" class="btn btn-soft-info btn-sm">
+                                                <i class="ri-file-list-3-line align-middle"><a
+                                                        href="{{ route('admin.orders.index') }}"
+                                                        class="text-decoration-underline">View All Orders</a></i>
+                                            </button>
                                         </div>
                                     </div> <!-- .card-->
                                 </div> <!-- .col-->
 
+/*
                                 <div class="col-xl-8">
                                     <div class="card">
                                         <div class="card-header align-items-center d-flex">
@@ -1025,6 +1103,67 @@
                                     </div> <!-- .card-->
                                 </div> <!-- .col-->
                             </div> <!-- end row-->
+                            */
+                                    <div class="card-body">
+                                        <table id="example"
+                                            class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                            <thead class="text-muted table-light">
+                                                <tr>
+                                                    <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Khách Hàng</th>
+                                                    <th scope="col">Tổng Tiền</th>
+                                                    <th scope="col">Thanh Toán</th>
+                                                    <th scope="col">Trạng Thái</th>
+                                                    <th scope="col">Ngày Đặt</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($pendingOrders as $order)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                            class="fw-medium link-primary">{{ $order->invoice_id }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="/velzon/assets/images/users/image.png" alt=""
+                                                                    class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <div class="flex-grow-1">{{ $order->first_name }} {{
+                                                                $order->last_name }}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-success">{{ number_format($order->grand_total)
+                                                            }} VND</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="badge bg-success-subtle text-success">{{
+                                                            $order->payment_status }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-warning-subtle text-warning">
+                                                            @if($order->order_status === 'pending')
+                                                                Đang chờ
+                                                            @else
+                                                                {{ $order->order_status }}
+                                                            @endif
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                            class="fw-medium link-primary">{{
+                                                            $order->created_at->format('d/m/Y') }}</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table><!-- end table -->
+                                    </div>
+                                </div> <!-- .card-->
+                            </div> <!-- .col-->
+                        </div> <!-- end row-->
 
                         </div> <!-- end .h-100-->
 
@@ -1464,7 +1603,37 @@
         </footer>
     </div>
     <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    </div>
-    <!-- END layout-wrapper -->
+<!--datatable js-->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script src="/velzon/assets/js/pages/datatables.init.js"></script>
+<style>
+    .dataTables_filter input {
+        width: 50px;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+
+        $('#lowStockTable').DataTable({});
+        // Thu ngắn ô tìm kiếm
+        $('#lowStockTable_filter input').css('width', '50px');
+    
+        $('#example').DataTable({});
+    });
+    
+</script>
 @endsection

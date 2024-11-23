@@ -64,6 +64,22 @@ class UserSeeder extends Seeder
         // // Chèn tất cả người dùng vào cơ sở dữ liệu
         // User::insert($users);
         User::factory()->count(10)->create();
-
+        // $users = [
+        //     [
+        //         'name' => 'Do Ba Chinh',
+        //         'email' => 'Chinh@gmail.com',
+        //         'password' => Hash::make('password'),
+        //         'role_id' => 2,
+        //     ],
+        //     [
+        //         'name' => 'Do Ba Chinh',
+        //         'email' => 'Dung@gmail.com',
+        //         'password' => Hash::make('password'),
+        //         'role_id' => 2,
+        //     ]
+        // ];
+        // foreach ($users as $user) {
+        //     User::create($user);
+        // }
     }
 }
