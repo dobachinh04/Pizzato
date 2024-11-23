@@ -20,15 +20,29 @@ class DashboardController extends Controller
         $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
         $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
 
-        // Lấy 5 đơn hàng mới nhất
-        // Lấy 5 đơn hàng mới nhất kèm theo địa chỉ
-        $recentOrders = Order::with('addresses')
-            ->select('invoice_id', 'address_id', 'grand_total', 'payment_status', 'order_status', 'created_at')
-            ->orderBy('created_at', 'desc')
-            ->take(5)
+        // Lấy ra đơn hàng mới nhất chưa xử lý ( trạng thái pending )
+
+        $pendingOrders = Order::with('addresses')
+            ->select(
+                'orders.invoice_id', //Lấy cột invoice_id từ bảng orders.
+                'addresses.first_name',
+                'addresses.last_name',
+                'orders.grand_total',
+                'orders.payment_status',
+                'orders.order_status',
+                'orders.created_at'
+            )
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id') // join 2 bảng address và order
+            ->where('orders.order_status', 'pending')
+            ->orderByDesc('orders.created_at') //Sắp xếp kết quả theo thứ tự giảm dần của cột created_at trong bảng orders.
             ->get();
 
-        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews', 'recentOrders'));
+        // Lấy danh sách sản phẩm có quantity dưới 10
+        $lowStockProducts = Product::where('qty', '<', 10)
+            ->select('id', 'name', 'thumb_image', 'qty')
+            ->paginate(5); // Số lượng sản phẩm trên mỗi trang
+
+        return view('admin.dashboard', compact('productCount', 'orderCount', 'revenue', 'totalViews', 'pendingOrders', 'lowStockProducts'));
     }
 
     // Phương thức thống kê doanh thu theo tháng

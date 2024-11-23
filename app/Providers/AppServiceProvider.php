@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // định dạng hiển thị ngày mặc định
     // Carbon::setToStringFormat('d-m-Y H:i');
-
+    Paginator::useBootstrap();
     }
 }
