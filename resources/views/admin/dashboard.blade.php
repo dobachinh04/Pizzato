@@ -838,32 +838,6 @@
                                     </div> <!-- .col-->
                                 </div> <!-- end row-->
 
-                                {{-- <div class="row">
-                                <div class="col-xl-4">
-                                    <div class="card card-height-100">
-                                        <div class="card-header align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Store Visits by Source</h4>
-                                            <div class="flex-shrink-0">
-                                                <div class="dropdown card-header-dropdown">
-                                                    <a class="text-reset dropdown-btn" href="#"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <span class="text-muted">Report<i
-                                                                class="mdi mdi-chevron-down ms-1"></i></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="#">Download Report</a>
-                                                        <a class="dropdown-item" href="#">Export</a>
-                                                        <a class="dropdown-item" href="#">Import</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card header -->
-
-                                        <div class="card-body">
-                                            <div id="store-visits-source"
-                                                data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
-                                                class="apex-charts" dir="ltr"></div>  --}}
                                 <div class="row">
                                     <div class="col-xl-4">
                                         <div class="card">
@@ -930,192 +904,8 @@
                                             </div> <!-- .card-->
                                         </div> <!-- .col-->
 
-                                        {{-- <div class="col-xl-8">
-                                    <div class="card">
-                                        <div class="card-header align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
-                                            <div class="flex-shrink-0">
-                                                <button type="button" class="btn btn-soft-info btn-sm">
-                                                    <i class="ri-file-list-3-line align-middle"></i> Generate Report
-                                                </button>
-                                            </div>
-                                        </div><!-- end card header -->
-
                                         <div class="card-body">
-                                            <div class="table-responsive table-card">
-                                                <table
-                                                    class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                                                    <thead class="text-muted table-light">
-                                                        <tr>
-                                                            <th scope="col">Order ID</th>
-                                                            <th scope="col">Customer</th>
-                                                            <th scope="col">Product</th>
-                                                            <th scope="col">Amount</th>
-                                                            <th scope="col">Vendor</th>
-                                                            <th scope="col">Status</th>
-                                                            <th scope="col">Rating</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="apps-ecommerce-order-details.html"
-                                                                    class="fw-medium link-primary">#VZ2112</a>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0 me-2">
-                                                                        <img src="/velzon/assets/images/users/avatar-1.jpg"
-                                                                            alt=""
-                                                                            class="avatar-xs rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">Alex Smith</div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Clothes</td>
-                                                            <td>
-                                                                <span class="text-success">$109.00</span>
-                                                            </td>
-                                                            <td>Zoetic Fashion</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge bg-success-subtle text-success">Paid</span>
-                                                            </td>
-                                                            <td>
-                                                                <h5 class="fs-14 fw-medium mb-0">5.0<span
-                                                                        class="text-muted fs-11 ms-1">(61 votes)</span>
-                                                                </h5>
-                                                            </td>
-                                                        </tr><!-- end tr -->
-                                                        <tr>
-                                                            <td>
-                                                                <a href="apps-ecommerce-order-details.html"
-                                                                    class="fw-medium link-primary">#VZ2111</a>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0 me-2">
-                                                                        <img src="/velzon/assets/images/users/avatar-2.jpg"
-                                                                            alt=""
-                                                                            class="avatar-xs rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">Jansh Brown</div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Kitchen Storage</td>
-                                                            <td>
-                                                                <span class="text-success">$149.00</span>
-                                                            </td>
-                                                            <td>Micro Design</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge bg-warning-subtle text-warning">Pending</span>
-                                                            </td>
-                                                            <td>
-                                                                <h5 class="fs-14 fw-medium mb-0">4.5<span
-                                                                        class="text-muted fs-11 ms-1">(61 votes)</span>
-                                                                </h5>
-                                                            </td>
-                                                        </tr><!-- end tr -->
-                                                        <tr>
-                                                            <td>
-                                                                <a href="apps-ecommerce-order-details.html"
-                                                                    class="fw-medium link-primary">#VZ2109</a>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0 me-2">
-                                                                        <img src="/velzon/assets/images/users/avatar-3.jpg"
-                                                                            alt=""
-                                                                            class="avatar-xs rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">Ayaan Bowen</div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Bike Accessories</td>
-                                                            <td>
-                                                                <span class="text-success">$215.00</span>
-                                                            </td>
-                                                            <td>Nesta Technologies</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge bg-success-subtle text-success">Paid</span>
-                                                            </td>
-                                                            <td>
-                                                                <h5 class="fs-14 fw-medium mb-0">4.9<span
-                                                                        class="text-muted fs-11 ms-1">(89 votes)</span>
-                                                                </h5>
-                                                            </td>
-                                                        </tr><!-- end tr -->
-                                                        <tr>
-                                                            <td>
-                                                                <a href="apps-ecommerce-order-details.html"
-                                                                    class="fw-medium link-primary">#VZ2108</a>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0 me-2">
-                                                                        <img src="/velzon/assets/images/users/avatar-4.jpg"
-                                                                            alt=""
-                                                                            class="avatar-xs rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">Prezy Mark</div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Furniture</td>
-                                                            <td>
-                                                                <span class="text-success">$199.00</span>
-                                                            </td>
-                                                            <td>Syntyce Solutions</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge bg-danger-subtle text-danger">Unpaid</span>
-                                                            </td>
-                                                            <td>
-                                                                <h5 class="fs-14 fw-medium mb-0">4.3<span
-                                                                        class="text-muted fs-11 ms-1">(47 votes)</span>
-                                                                </h5>
-                                                            </td>
-                                                        </tr><!-- end tr -->
-                                                        <tr>
-                                                            <td>
-                                                                <a href="apps-ecommerce-order-details.html"
-                                                                    class="fw-medium link-primary">#VZ2107</a>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0 me-2">
-                                                                        <img src="/velzon/assets/images/users/avatar-6.jpg"
-                                                                            alt=""
-                                                                            class="avatar-xs rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">Vihan Hudda</div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Bags and Wallets</td>
-                                                            <td>
-                                                                <span class="text-success">$330.00</span>
-                                                            </td>
-                                                            <td>iTest Factory</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge bg-success-subtle text-success">Paid</span>
-                                                            </td>
-                                                            <td>
-                                                                <h5 class="fs-14 fw-medium mb-0">4.7<span
-                                                                        class="text-muted fs-11 ms-1">(161 votes)</span>
-                                                                </h5>
-                                                            </td>
-                                                        </tr><!-- end tr -->
-                                                    </tbody><!-- end tbody -->
-                                                </table><!-- end table -->
-                                            </div>
-                                        </div>
-                                    </div> <!-- .card-->
-                                </div> <!-- .col-->
-                            </div> <!-- end row--> --}}
-                                        <div class="card-body">
-                                            <table id="example"
+                                            <table id="order-datatable"
                                                 class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                                 <thead class="text-muted table-light">
                                                     <tr>
@@ -1379,180 +1169,53 @@
                                         </div>
                                     </div> --}}
                                     <div class="p-3">
-                                        <h6 class="text-muted mb-3 text-uppercase fw-semibold">Products Reviews</h6>
+                                        <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản phẩm</h6>
                                         <!-- Swiper -->
                                         <div class="swiper vertical-swiper" style="height: 250px;">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <div class="card border border-dashed shadow-none">
-                                                        <div class="card-body">
-                                                            <div class="d-flex">
-                                                                <div class="flex-shrink-0 avatar-sm">
-                                                                    <div class="avatar-title bg-light rounded">
-                                                                        <img src="/velzon/assets/images/companies/img-1.png"
-                                                                            alt="" height="30">
+                                                @foreach ($reviews as $review)
+                                                    <div class="swiper-slide">
+                                                        <div class="card border border-dashed shadow-none">
+                                                            <div class="card-body">
+                                                                <div class="d-flex">
+                                                                    <div class="flex-shrink-0">
+                                                                        <!-- Hiển thị ảnh người đánh giá -->
+                                                                        @if ($review->user && $review->user->image)
+                                                                            <img src="{{ asset('storage/' . $review->user->image) }}"
+                                                                                alt="" class="avatar-sm rounded">
+                                                                        @else
+                                                                            <div class="avatar-title bg-light rounded">
+                                                                                <span>{{ strtoupper(substr($review->user->name, 0, 1)) }}</span>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3">
-                                                                    <div>
-                                                                        <p
-                                                                            class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                            " Great product and looks great, lots of
-                                                                            features. "</p>
-                                                                        <div class="fs-11 align-middle text-warning">
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
+                                                                    <div class="flex-grow-1 ms-3">
+                                                                        <div>
+                                                                            <!-- Hiển thị nội dung đánh giá -->
+                                                                            <p
+                                                                                class="text-muted mb-1 fst-italic text-truncate-two-lines">
+                                                                                "{{ $review->review }}"
+                                                                            </p>
+                                                                            <div class="fs-11 align-middle text-warning">
+                                                                                <!-- Hiển thị sao đánh giá -->
+                                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                                    <i
+                                                                                        class="ri-star-fill {{ $i <= $review->rating ? '' : 'ri-star-line' }}"></i>
+                                                                                @endfor
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="text-end mb-0 text-muted">
-                                                                        - by <cite title="Source Title">Force
-                                                                            Medicines</cite>
+                                                                        <div class="text-end mb-0 text-muted">
+                                                                            <!-- Hiển thị tên người đánh giá -->
+                                                                            - by <cite
+                                                                                title="Source Title">{{ $review->user->name ?? 'Anonymous' }}</cite>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="card border border-dashed shadow-none">
-                                                        <div class="card-body">
-                                                            <div class="d-flex">
-                                                                <div class="flex-shrink-0">
-                                                                    <img src="/velzon/assets/images/users/avatar-3.jpg"
-                                                                        alt="" class="avatar-sm rounded">
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3">
-                                                                    <div>
-                                                                        <p
-                                                                            class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                            " Amazing template, very easy to understand and
-                                                                            manipulate. "</p>
-                                                                        <div class="fs-11 align-middle text-warning">
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-half-fill"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="text-end mb-0 text-muted">
-                                                                        - by <cite title="Source Title">Henry Baird</cite>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="card border border-dashed shadow-none">
-                                                        <div class="card-body">
-                                                            <div class="d-flex">
-                                                                <div class="flex-shrink-0 avatar-sm">
-                                                                    <div class="avatar-title bg-light rounded">
-                                                                        <img src="/velzon/assets/images/companies/img-8.png"
-                                                                            alt="" height="30">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3">
-                                                                    <div>
-                                                                        <p
-                                                                            class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                            "Very beautiful product and Very helpful
-                                                                            customer service."</p>
-                                                                        <div class="fs-11 align-middle text-warning">
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-line"></i>
-                                                                            <i class="ri-star-line"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="text-end mb-0 text-muted">
-                                                                        - by <cite title="Source Title">Zoetic
-                                                                            Fashion</cite>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="card border border-dashed shadow-none">
-                                                        <div class="card-body">
-                                                            <div class="d-flex">
-                                                                <div class="flex-shrink-0">
-                                                                    <img src="/velzon/assets/images/users/avatar-2.jpg"
-                                                                        alt="" class="avatar-sm rounded">
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3">
-                                                                    <div>
-                                                                        <p
-                                                                            class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                            " The product is very beautiful. I like it. "
-                                                                        </p>
-                                                                        <div class="fs-11 align-middle text-warning">
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-half-fill"></i>
-                                                                            <i class="ri-star-line"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="text-end mb-0 text-muted">
-                                                                        - by <cite title="Source Title">Nancy
-                                                                            Martino</cite>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @endforeach
                                             </div>
-                                        </div>
-                                    </div> --}}
-                                    <div class="swiper vertical-swiper" style="height: 250px;">
-                                        <div class="swiper-wrapper">
-                                            @foreach ($reviews as $review)
-                                                <div class="swiper-slide">
-                                                    <div class="card border border-dashed shadow-none">
-                                                        <div class="card-body">
-                                                            <div class="d-flex">
-                                                                <div class="flex-shrink-0">
-                                                                    <!-- Hiển thị ảnh người đánh giá -->
-                                                                    @if ($review->user && $review->user->image)
-                                                                        <img src="{{ asset('storage/' . $review->user->image) }}" alt="" class="avatar-sm rounded">
-                                                                    @else
-                                                                        <div class="avatar-title bg-light rounded">
-                                                                            <span>{{ strtoupper(substr($review->user->name, 0, 1)) }}</span>
-                                                                        </div>
-                                                                    @endif
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3">
-                                                                    <div>
-                                                                        <!-- Hiển thị nội dung đánh giá -->
-                                                                        <p class="text-muted mb-1 fst-italic text-truncate-two-lines">
-                                                                            "{{ $review->review }}"
-                                                                        </p>
-                                                                        <div class="fs-11 align-middle text-warning">
-                                                                            <!-- Hiển thị sao đánh giá -->
-                                                                            @for ($i = 1; $i <= 5; $i++)
-                                                                                <i class="ri-star-fill {{ $i <= $review->rating ? '' : 'ri-star-line' }}"></i>
-                                                                            @endfor
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="text-end mb-0 text-muted">
-                                                                        <!-- Hiển thị tên người đánh giá -->
-                                                                        - by <cite title="Source Title">{{ $review->user->name ?? 'Anonymous' }}</cite>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
                                         </div>
                                     </div>
 
@@ -1612,21 +1275,6 @@
                                             @endforeach
                                         </div>
                                     </div>
-
-                                    {{-- <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
-                                        <div class="card-body">
-                                            <img src="/velzon/assets/images/giftbox.png" alt="">
-                                            <div class="mt-4">
-                                                <h5>Invite New Seller</h5>
-                                                <p class="text-muted lh-base">Refer a new seller to us and earn $100 per
-                                                    refer.</p>
-                                                <button type="button" class="btn btn-primary btn-label rounded-pill"><i
-                                                        class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
-                                                    Invite Now</button>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-
                                 </div>
                             </div> <!-- end card-->
                         </div> <!-- end .rightbar-->
@@ -1687,6 +1335,11 @@
             $('#lowStockTable_filter input').css('width', '50px');
 
             $('#example').DataTable({});
+        });
+
+        $(document).ready(function() {
+            // Khởi tạo DataTable cho bảng đã đổi ID
+            $('#order-datatable').DataTable();
         });
     </script>
 @endsection
