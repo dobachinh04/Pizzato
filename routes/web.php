@@ -94,6 +94,10 @@ Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index')
 // });
 
 // Oder
-Route::get('/client/order_history/{userId}', [OrderController::class, 'index'])
+Route::get('/client/order_history', [OrderController::class, 'index'])
     ->name('client.order_history.index');
+    // ->middleware('auth');
+    Route::get('/client/order_history/{order}', [OrderController::class, 'show'])
+    ->name('client.order_history.show');
+    // ->middleware('auth');
 
