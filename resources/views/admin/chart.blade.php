@@ -62,13 +62,7 @@ Doanh Thu - Pizzato
         new Chart(ctx, {
             type: 'bar',
             data: chartData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+            
         });
 </script>
 

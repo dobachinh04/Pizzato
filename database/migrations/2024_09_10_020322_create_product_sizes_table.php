@@ -17,8 +17,9 @@ return new class extends Migration
 
             $table->foreignId('product_id')->constrained('products');
 
-            $table->string('name');
-            $table->double('price');
+            $table->string('size_name')->nullable();
+            $table->double('size_price')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
