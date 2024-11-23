@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductReview;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +19,15 @@ class DashboardController extends Controller
         $productCount = Product::count(); // Đếm số sản phẩm
         $orderCount = Order::count(); // Đếm số đơn hàng
         $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
-        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
+        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm 
         $totalReviews = ProductReview::count();
 
+        $reviews = ProductReview::with(['user', 'product'])
+          ->latest()
+          ->take(4)  // Lấy 4 đánh giá mới nhất
+          ->get();
+          return view('admin.dashboard', compact('productCount', 'orderCount','reviews', 'revenue', 'totalViews'));
+      
         // Lấy số lượng đánh giá theo từng mức sao (1 đến 5 sao)
         $ratingsCount = ProductReview::select(DB::raw('rating, COUNT(*) as count'))
             ->groupBy('rating')

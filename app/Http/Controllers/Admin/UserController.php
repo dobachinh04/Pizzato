@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Request;
 
@@ -51,7 +52,9 @@ class UserController extends Controller
                 $filename = null;
             }
             $param['image'] = $filename;
-
+            if (!empty($param['password'])) {
+                $param['password'] = Hash::make($param['password']);
+            }
             User::create($param);
 
             return redirect()

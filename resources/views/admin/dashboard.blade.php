@@ -1512,6 +1512,48 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div> --}}
+                                    <div class="swiper vertical-swiper" style="height: 250px;">
+                                        <div class="swiper-wrapper">
+                                            @foreach ($reviews as $review)
+                                                <div class="swiper-slide">
+                                                    <div class="card border border-dashed shadow-none">
+                                                        <div class="card-body">
+                                                            <div class="d-flex">
+                                                                <div class="flex-shrink-0">
+                                                                    <!-- Hiển thị ảnh người đánh giá -->
+                                                                    @if ($review->user && $review->user->image)
+                                                                        <img src="{{ asset('storage/' . $review->user->image) }}" alt="" class="avatar-sm rounded">
+                                                                    @else
+                                                                        <div class="avatar-title bg-light rounded">
+                                                                            <span>{{ strtoupper(substr($review->user->name, 0, 1)) }}</span>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <div>
+                                                                        <!-- Hiển thị nội dung đánh giá -->
+                                                                        <p class="text-muted mb-1 fst-italic text-truncate-two-lines">
+                                                                            "{{ $review->review }}"
+                                                                        </p>
+                                                                        <div class="fs-11 align-middle text-warning">
+                                                                            <!-- Hiển thị sao đánh giá -->
+                                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                                <i class="ri-star-fill {{ $i <= $review->rating ? '' : 'ri-star-line' }}"></i>
+                                                                            @endfor
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="text-end mb-0 text-muted">
+                                                                        <!-- Hiển thị tên người đánh giá -->
+                                                                        - by <cite title="Source Title">{{ $review->user->name ?? 'Anonymous' }}</cite>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
 
                                     <div class="p-3">
