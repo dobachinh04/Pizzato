@@ -246,7 +246,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
      });
 
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
-     Route::post('/notify-order', [OrderController::class, 'notifyOrder'])->name('notify.order');
+     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //dang loi
+
+     Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
 });

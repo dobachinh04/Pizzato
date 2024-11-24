@@ -416,7 +416,7 @@
                                                 </table>
 
                                                 {{-- popup thông báo --}}
-                                                {{-- <div class="modal fade" id="notifyModal" tabindex="-1"
+                                                <div class="modal fade" id="notifyModal" tabindex="-1"
                                                     aria-labelledby="notifyModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -442,7 +442,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div> --}}
+                                                </div>
 
                                             </div>
                                         </div> <!-- .card-->
@@ -957,49 +957,49 @@
         });
 
         // THông báo
-//         $(document).ready(function() {
-//     // Khi nhấn nút Thông báo (Event Delegation)
-//     $(document).on('click', '.notify-btn', function() {
-//         var orderId = $(this).data('id');
-//         var invoiceId = $(this).data('invoice');
+        $(document).ready(function() {
+    // Khi nhấn nút Thông báo (Event Delegation)
+    $(document).on('click', '.notify-btn', function() {
+        var orderId = $(this).data('id');
+        var invoiceId = $(this).data('invoice');
 
-//         // Gán giá trị vào modal
-//         $('#order_id').val(orderId);
-//         $('#invoice_id').val(invoiceId);
+        // Gán giá trị vào modal
+        $('#order_id').val(orderId);
+        $('#invoice_id').val(invoiceId);
 
-//         // Hiển thị modal
-//         $('#notifyModal').modal('show');
-//     });
+        // Hiển thị modal
+        $('#notifyModal').modal('show');
+    });
 
-//     // Xử lý gửi thông báo
-//     $('#notifyForm').on('submit', function(e) {
-//         e.preventDefault();
+    // Xử lý gửi thông báo
+    $('#notifyForm').on('submit', function(e) {
+        e.preventDefault();
 
-//         // Lấy dữ liệu từ form
-//         var orderId = $('#order_id').val();
-//         var invoiceId = $('#invoice_id').val();
-//         var message = $('#message').val();
+        // Lấy dữ liệu từ form
+        var orderId = $('#order_id').val();
+        var invoiceId = $('#invoice_id').val();
+        var message = $('#message').val();
 
-//         // Gửi AJAX request
-//         $.ajax({
-//             url: '/notify-order', // Đường dẫn xử lý
-//             type: 'POST',
-//             data: {
-//                 order_id: orderId,
-//                 invoice_id: invoiceId,
-//                 message: message,
-//                 _token: '{{ csrf_token() }}'
-//             },
-//             success: function(response) {
-//                 alert('Thông báo đã được gửi thành công!');
-//                 $('#notifyModal').modal('hide');
-//             },
-//             error: function() {
-//                 alert('Có lỗi xảy ra. Vui lòng thử lại!');
-//             }
-//         });
-//     });
-// });
+        // Gửi AJAX request
+        $.ajax({
+            url: '/notify-order', // Đường dẫn xử lý
+            type: 'POST',
+            data: {
+                order_id: orderId,
+                invoice_id: invoiceId,
+                message: message,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                alert('Thông báo đã được gửi thành công!');
+                $('#notifyModal').modal('hide');
+            },
+            error: function() {
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            }
+        });
+    });
+});
 
     </script>
 @endsection
