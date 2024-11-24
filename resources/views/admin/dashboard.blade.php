@@ -367,12 +367,11 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xl-8">
+                                    <div class="col-xl-12">
                                         <div class="card">
                                             <div class="card-header align-items-center d-flex">
-                                                <h3 class="card-title mb-0 flex-grow-1">Sản Phẩm Sắp Hết Hàng</h3>
+                                                <h3 class="card-title mb-0 flex-grow-1">Đơn hàng chưa thanh toán</h3>
                                             </div><!-- end card header -->
-
                                             <div class="card-body">
                                                 <table id="order-datatable"
                                                     class="table table-hover table-centered align-middle table-nowrap mb-0">
@@ -383,29 +382,68 @@
                                                             <th>Thanh Toán</th>
                                                             <th>Thời gian đặt hàng</th>
                                                             <th>Trạng thái</th>
+                                                            <th>Hành động</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($orderOvers as $item)
                                                             <tr>
-                                                                {{-- <li>
-                                                                Đơn hàng ID: {{ $order->id }} - Tổng tiền: {{ $order->grand_total }} VND <br>
-                                                                <small>Đã tạo: {{ $order->time_ago }}</small>
-                                                            </li> --}}
                                                                 <td>{{ $item->invoice_id }}</td>
-                                                                {{-- <td>{{$item->user->name}}</td> --}}
                                                                 <td>{{ $item->grand_total }}</td>
                                                                 <td><span
                                                                         class="badge bg-danger">{{ $item->payment_status }}</span>
                                                                 </td>
-                                                                <td> {{ $item->time_ago }}</td>
+                                                                <td data-order="{{ $item->created_at }}">
+                                                                    {{ $item->time_ago }}
+                                                                </td>
                                                                 <td><span
                                                                         class="badge bg-danger">{{ $item->order_status }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    @if (Carbon\Carbon::parse($item->created_at)->diffInMinutes(now()) > 30)
+                                                                        <button class="btn btn-warning btn-sm notify-btn"
+                                                                            data-id="{{ $item->id }}"
+                                                                            data-invoice="{{ $item->invoice_id }}">
+                                                                            Thông báo
+                                                                        </button>
+                                                                    @else
+                                                                        <span class="text-muted">Không cần thông báo</span>
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+
+                                                {{-- popup thông báo --}}
+                                                <div class="modal fade" id="notifyModal" tabindex="-1"
+                                                    aria-labelledby="notifyModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="notifyModalLabel">Thông báo
+                                                                    đơn hàng</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="notifyForm">
+                                                                    <input type="hidden" id="order_id" name="order_id">
+                                                                    <input type="hidden" id="invoice_id"
+                                                                        name="invoice_id">
+                                                                    <div class="mb-3">
+                                                                        <label for="message" class="form-label">Nội dung
+                                                                            thông báo</label>
+                                                                        <textarea class="form-control" id="message" name="message" rows="3" placeholder="Nhập nội dung thông báo"></textarea>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary">Gửi
+                                                                        thông báo</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div> <!-- .card-->
                                     </div> <!-- end col -->
@@ -917,5 +955,51 @@
             // Khởi tạo DataTable cho bảng đã đổi ID
             $('#order-datatable').DataTable();
         });
+
+        // THông báo
+        $(document).ready(function() {
+    // Khi nhấn nút Thông báo (Event Delegation)
+    $(document).on('click', '.notify-btn', function() {
+        var orderId = $(this).data('id');
+        var invoiceId = $(this).data('invoice');
+
+        // Gán giá trị vào modal
+        $('#order_id').val(orderId);
+        $('#invoice_id').val(invoiceId);
+
+        // Hiển thị modal
+        $('#notifyModal').modal('show');
+    });
+
+    // Xử lý gửi thông báo
+    $('#notifyForm').on('submit', function(e) {
+        e.preventDefault();
+
+        // Lấy dữ liệu từ form
+        var orderId = $('#order_id').val();
+        var invoiceId = $('#invoice_id').val();
+        var message = $('#message').val();
+
+        // Gửi AJAX request
+        $.ajax({
+            url: '/notify-order', // Đường dẫn xử lý
+            type: 'POST',
+            data: {
+                order_id: orderId,
+                invoice_id: invoiceId,
+                message: message,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                alert('Thông báo đã được gửi thành công!');
+                $('#notifyModal').modal('hide');
+            },
+            error: function() {
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            }
+        });
+    });
+});
+
     </script>
 @endsection
