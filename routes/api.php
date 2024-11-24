@@ -5,12 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\BlogController;
 use App\Http\Controllers\Client\MenuController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\VnpayController;
 use App\Http\Controllers\Client\DetailController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
-use App\Http\Controllers\Client\CouponController as ClientCouponController;
-use App\Http\Controllers\Client\ProductReviewController as ClientProductReviewController;
+use App\Http\Controllers\Client\CouponController;
+use App\Http\Controllers\Client\ProductReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,29 +51,24 @@ Route::get('/blogs', [BlogController::class, 'getBlog']);
 // http://127.0.0.1:8000/api/blog/1
 Route::get('/blog/{id}', [BlogController::class, 'getBlogDetail']);
 
-// Payment
+// CheckoutController
 Route::post('/checkout', [CheckoutController::class, 'store']);
+Route::get('/get-delivery-area', [CheckoutController::class, 'getDeliveryArea']);
+Route::post('/add-to-address', [CheckoutController::class, 'addToAddress']);
 Route::get('/payment-status', [VnpayController::class, 'callback']);
 
-// Coupons
+// CouponController
 // http://127.0.0.1:8000/api/coupons
-Route::get('/coupons', [ClientCouponController::class, 'getListCoupon']);
+Route::get('/coupons', [CouponController::class, 'getListCoupon']);
 // http://127.0.0.1:8000/api/show/code (code coupon not id)
-Route::get('/coupon/{code}', [ClientCouponController::class, 'getCouponDetail']); // Kiểm tra thông tin một mã giảm giá
+Route::get('/coupon/{code}', [CouponController::class, 'getCouponDetail']);
 
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::prefix('product/reviews')->name('product.reviews.')->group(function(){
-//         Route::get('', [ClientCouponController::class, 'getListCoupon']); // Lấy danh sách mã giảm giá khả dụng
-//         Route::post('product/reviews', [ClienProductReviewController::class, 'sendRating'])->name('product-reviews.index');
-//         Route::put('/{id}', [ClienProductReviewController::class, 'update'])->name('product-reviews.update');
-//         Route::delete('/{id}', [ClienProductReviewController::class, 'destroy'])->name('product-reviews.destroy');
-//     });
-// });
+// ProductReviewController
+Route::post('/reviews', [ProductReviewController::class, 'createReview']);
+Route::get('/products/{productId}/reviews', [ProductReviewController::class, 'getReviews']);
 
+Route::put('/reviews/{id}', [ProductReviewController::class, 'updateReview']);
+Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview']);
 
-    Route::post('/reviews', [ClientProductReviewController::class, 'createReview']);
-    Route::get('/products/{productId}/reviews', [ClientProductReviewController::class, 'getReviews']);
-
-    Route::put('/reviews/{id}', [ClientProductReviewController::class, 'updateReview']);
-    Route::delete('/reviews/{id}', [ClientProductReviewController::class, 'deleteReview']);
-
+// OrderController
+Route::get('/orders', [OrderController::class, 'index']);
