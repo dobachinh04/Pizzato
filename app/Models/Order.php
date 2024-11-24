@@ -15,7 +15,7 @@ class Order extends Model
         'address',
         'discount ',
         'delivery_charge',
-        'subtotal',
+        'sub_total',
         'grand_total',
         'product_qty',
         'payment_method',
@@ -30,12 +30,13 @@ class Order extends Model
 
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
-    // public function product()
-    // {
-    //     return $this->belongsTo(Product::class, 'product_id');
-    // }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 
     public function invoices()
     {
@@ -46,6 +47,7 @@ class Order extends Model
     {
         return $this->belongsTo(Address::class, 'address_id');
     }
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);
