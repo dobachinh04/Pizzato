@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Bảng sản phẩm ăn kèm (Nước...)
-        Schema::create('product_options', function (Blueprint $table) {
+        Schema::create('pizze_edges', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
             $table->string('name');
             $table->double('price');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_options');
+        Schema::dropIfExists('pizze_edges');
     }
 };

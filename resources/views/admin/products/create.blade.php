@@ -42,6 +42,17 @@
                                                             <div class="basic-form">
                                                                 <div class="row">
                                                                     <h3>Thông Tin Sản Phẩm</h3>
+
+                                                                    @if ($errors->any())
+                                                                        <div class="alert alert-danger">
+                                                                            <ul>
+                                                                                @foreach ($errors->all() as $error)
+                                                                                    <li>{{ $error }}</li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        </div>
+                                                                    @endif
+
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
                                                                             <label>Name</label>
@@ -160,8 +171,8 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Show at Home</label>
-                                                                            <select name="show_at_home" class="form-control"
-                                                                                id="">
+                                                                            <select name="show_at_home"
+                                                                                class="form-control" id="">
                                                                                 <option value="1">Yes</option>
                                                                                 <option selected value="0">No</option>
                                                                             </select>
@@ -277,11 +288,16 @@
                                                                         </div>
                                                                         <div class="form-group toggle-target"
                                                                             id="inputSizeFields" style="display: none;">
-                                                                            <select class="form-select mt-3" multiple aria-label="multiple select example">
-                                                                                <option selected>Open this select menu (multiple select option)</option>
-                                                                                <option value="1">One</option>
-                                                                                <option value="2">Two</option>
-                                                                                <option value="3">Three</option>
+                                                                            <select class="form-select mt-3" multiple
+                                                                                aria-label="multiple select example"
+                                                                                name="sizes[]">
+                                                                                @foreach ($sizes as $size)
+                                                                                    <option value="{{ $size->id }}">
+                                                                                        {{ $size->name }} -
+                                                                                        {{ number_format($size->price, 0, ',', '.') }}
+                                                                                        VND
+                                                                                    </option>
+                                                                                @endforeach
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -299,11 +315,16 @@
                                                                         </div>
                                                                         <div class="form-group toggle-target"
                                                                             id="inputEdgeFields" style="display: none;">
-                                                                            <select class="form-select mt-3" multiple aria-label="multiple select example">
-                                                                                <option selected>Open this select menu (multiple select option)</option>
-                                                                                <option value="1">One</option>
-                                                                                <option value="2">Two</option>
-                                                                                <option value="3">Three</option>
+                                                                            <select class="form-select mt-3" multiple
+                                                                                aria-label="multiple select example"
+                                                                                name="edges[]">
+                                                                                @foreach ($edges as $edge)
+                                                                                    <option value="{{ $edge->id }}">
+                                                                                        {{ $edge->name }} -
+                                                                                        {{ number_format($edge->price, 0, ',', '.') }}
+                                                                                        VND
+                                                                                    </option>
+                                                                                @endforeach
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -321,11 +342,16 @@
                                                                         </div>
                                                                         <div class="form-group mt-3 toggle-target"
                                                                             id="inputBaseFields" style="display: none;">
-                                                                            <select class="form-select mt-3" multiple aria-label="multiple select example">
-                                                                                <option selected>Open this select menu (multiple select option)</option>
-                                                                                <option value="1">One</option>
-                                                                                <option value="2">Two</option>
-                                                                                <option value="3">Three</option>
+                                                                            <select class="form-select mt-3" multiple
+                                                                                aria-label="multiple select example"
+                                                                                name="bases[]">
+                                                                                @foreach ($bases as $base)
+                                                                                    <option value="{{ $base->id }}">
+                                                                                        {{ $base->name }} -
+                                                                                        {{ number_format($base->price, 0, ',', '.') }}
+                                                                                        VND
+                                                                                    </option>
+                                                                                @endforeach
                                                                             </select>
                                                                         </div>
                                                                     </div>

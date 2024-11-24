@@ -50,12 +50,24 @@ class Product extends Model
         return $this->hasMany(ProductGallery::class);
     }
 
-    function productSizes()
+    public function productSizes()
     {
-        return $this->belongsToMany(ProductSize::class);
+        return $this->belongsToMany(ProductSize::class, 'product_product_size', 'product_id', 'product_size_id')
+            ->withPivot('price')
+            ->withTimestamps();
     }
 
-    function productOptions(): HasMany
+    function pizzaEdges()
+    {
+        return $this->belongsToMany(PizzeEdge::class);
+    }
+
+    function pizzaBase()
+    {
+        return $this->belongsToMany(PizzeBase::class);
+    }
+
+    public function productOptions()
     {
         return $this->hasMany(ProductOption::class);
     }

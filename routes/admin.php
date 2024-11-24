@@ -212,16 +212,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
     });
 
-     // Admin - refund
-     Route::prefix('refunds')->name('refunds.')->group(function () {
-        Route::get('/',                   [RefundController::class, 'index'])->name('index'); 
-        Route::get('/create',             [RefundController::class, 'create'])->name('create'); 
-        Route::post('/',                  [RefundController::class, 'store'])->name('store'); 
-        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
-        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update'); 
-        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy'); 
+    // Admin - refund
+    Route::prefix('refunds')->name('refunds.')->group(function () {
+        Route::get('/',                                 [RefundController::class, 'index'])->name('index');
+        Route::get('/create',                           [RefundController::class, 'create'])->name('create');
+        Route::post('/',                                [RefundController::class, 'store'])->name('store');
+        Route::get('/{refund}/edit',                    [RefundController::class, 'edit'])->name('edit');
+        Route::put('/{refund}',                         [RefundController::class, 'update'])->name('update');
+        Route::delete('/{refund}',                      [RefundController::class, 'destroy'])->name('destroy');
     });
-    
 
     // Admin - products:
     // Route::prefix('products')->name('products.')->group(function () {
@@ -234,18 +233,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //     Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
     // });
 
-
     // });
 
      /** Product Reviews Routes */
-     Route::prefix('product-reviews')->name('product-reviews.')->group(function(){
-         Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
-         Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
-         Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
-       
+    Route::prefix('product-reviews')->name('product-reviews.')->group(function(){
+        Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
+        Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
+        Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
 
-     });
 
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+    });
 
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
 });
