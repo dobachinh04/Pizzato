@@ -9,6 +9,7 @@ use App\Models\ProductReview;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -68,10 +69,29 @@ class DashboardController extends Controller
             ->select('id', 'name', 'thumb_image', 'qty')
             ->get();
 
+        // Láy các đơn hàng quá 30 phút và order = pending
+        $orderOvers = DB::table('orders')
+            ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
+            ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
+            ->get();
+
+        // Thêm thời gian tính toán "bao nhiêu phút trước"
+        foreach ($orderOvers as $order) {
+            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+        }
         // Trả về view với tất cả các biến đã được truyền
         return view('admin.dashboard', compact(
-            'productCount', 'orderCount', 'reviews', 'revenue', 'totalViews',
-            'totalReviews', 'ratingPercentages', 'averageRating', 'pendingOrders', 'lowStockProducts'
+            'productCount',
+            'orderCount',
+            'reviews',
+            'revenue',
+            'totalViews',
+            'totalReviews',
+            'ratingPercentages',
+            'averageRating',
+            'pendingOrders',
+            'lowStockProducts',
+            'orderOvers'
         ));
     }
 
@@ -121,5 +141,22 @@ class DashboardController extends Controller
     //         ->get();
 
     //     return view('admin.dashboard', compact('unreadAlerts'));
+    // }
+
+
+    // Láy các đơn hàng quá 30 phút và order = pending
+    // public function getPendingOrdersOver30Minutes()
+    // {
+    //     $orderOvers = DB::table('orders')
+    //         ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
+    //         ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
+    //         ->get();
+
+    //     // Thêm thời gian tính toán "bao nhiêu phút trước"
+    //     foreach ($orderOvers as $order) {
+    //         $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+    //     }
+    //     // return $orderOvers;
+    //     return view('admin.dashboard', compact('orderOvers'));
     // }
 }
