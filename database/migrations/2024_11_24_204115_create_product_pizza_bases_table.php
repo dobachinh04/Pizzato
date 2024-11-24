@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained();
             $table->foreignIdFor(PizzeBase::class)->constrained();
 
-            $table->primary(['product_id', 'base_id']);
+            $table->primary(['product_id', 'pizze_base_id']);
 
             $table->double('price');
             $table->timestamps();
