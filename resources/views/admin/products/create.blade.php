@@ -29,7 +29,7 @@
                                                         data-bs-toggle="collapse"
                                                         data-bs-target="#accor_plusExamplecollapse1" aria-expanded="true"
                                                         aria-controls="accor_plusExamplecollapse1">
-                                                        Thông Tin Cơ Bản
+                                                        Form Thêm Mới Sản Phẩm
                                                     </button>
                                                 </h2>
 
@@ -41,8 +41,9 @@
                                                         <div class="card-body">
                                                             <div class="basic-form">
                                                                 <div class="row">
+                                                                    <h3>Thông Tin Sản Phẩm</h3>
                                                                     <div class="col-6">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Name</label>
                                                                             <input type="text" name="name"
                                                                                 class="form-control"
@@ -53,7 +54,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Slug</label>
                                                                             <input type="text" name="slug"
                                                                                 class="form-control"
@@ -61,18 +62,7 @@
                                                                                 readonly>
                                                                         </div>
 
-                                                                        <div class="mt-3">
-                                                                            <label for="thumb_image"
-                                                                                class="form-label">Image</label>
-                                                                            <input type="file" class="form-control"
-                                                                                id="thumb_image" name="thumb_image">
-                                                                            @error('thumb_image')
-                                                                                <span
-                                                                                    class="text-danger">{{ $message }}</span>
-                                                                            @enderror
-                                                                        </div>
-
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Sku</label>
                                                                             <input type="text" name="sku"
                                                                                 class="form-control"
@@ -82,7 +72,8 @@
                                                                                     class="text-danger">{{ $message }}</span>
                                                                             @enderror
                                                                         </div>
-                                                                        <div class="form-group">
+
+                                                                        <div class="form-group mt-3">
                                                                             <label for="category_id"
                                                                                 class="form-label">Catalogue</label>
                                                                             <select type="text" class="form-select"
@@ -98,7 +89,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>View</label>
                                                                             <input type="text" name="view"
                                                                                 class="form-control"
@@ -110,11 +101,31 @@
                                                                             @enderror
                                                                         </div>
 
+                                                                        <div class="form-group mt-3">
+                                                                            <label for="thumb_image" class="form-label">Ảnh
+                                                                                Chính</label>
+                                                                            <input type="file" class="form-control"
+                                                                                id="thumb_image" name="thumb_image">
+                                                                            @error('thumb_image')
+                                                                                <span
+                                                                                    class="text-danger">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
 
+                                                                        <div class="form-group mt-3">
+                                                                            <label for="images" class="form-label">Ảnh
+                                                                                Phụ</label>
+                                                                            <input type="file" class="form-control"
+                                                                                id="images" name="images[]" multiple>
+                                                                            @error('images[]')
+                                                                                <span
+                                                                                    class="text-danger">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
 
                                                                     <div class="col-6">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Price</label>
                                                                             <input type="text" name="price"
                                                                                 class="form-control"
@@ -125,7 +136,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Offer Price</label>
                                                                             <input type="text" name="offer_price"
                                                                                 class="form-control"
@@ -136,7 +147,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Quantity</label>
                                                                             <input type="text" name="qty"
                                                                                 class="form-control"
@@ -147,10 +158,10 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Show at Home</label>
-                                                                            <select name="show_at_home" class="form-control"
-                                                                                id="">
+                                                                            <select name="show_at_home"
+                                                                                class="form-control" id="">
                                                                                 <option value="1">Yes</option>
                                                                                 <option selected value="0">No</option>
                                                                             </select>
@@ -160,7 +171,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Status</label>
                                                                             <select name="status" class="form-control"
                                                                                 id="">
@@ -173,7 +184,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Short Description</label>
                                                                             <textarea name="short_description" class="form-control" id="">{{ old('short_description') }}</textarea>
                                                                             @error('short_description')
@@ -182,7 +193,7 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div class="form-group">
+                                                                        <div class="form-group mt-3">
                                                                             <label>Long Description</label>
                                                                             <textarea name="long_description" class="form-control summernote" id="">{{ old('long_description') }}</textarea>
                                                                             @error('long_description')
@@ -192,12 +203,218 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <h3>Biến Thể Sản Phẩm</h3>
 
-                                                                <a href="{{ route('admin.products.index') }}"
-                                                                    class="btn btn-secondary">
-                                                                    Quay Lại</a>
-                                                                <button type="submit" class="btn btn-success">Thêm
-                                                                    Mới</button>
+                                                                    <!-- Size Bánh -->
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleSize">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleSize">Size Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row" id="sizeFieldsContainer"
+                                                                            style="display: none;">
+                                                                            <div class="col-6">
+                                                                                <div class="form-group toggle-target"
+                                                                                    id="inputSizeFields">
+                                                                                    <label class="mt-3">Tên Size
+                                                                                        Bánh</label>
+                                                                                    <input type="text"
+                                                                                        name="size_name[]"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('size_name') }}">
+                                                                                    @error('size_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <div class="form-group toggle-target"
+                                                                                    id="inputSizePrice">
+                                                                                    <label class="mt-3">Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="size_price[]"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('size_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('size_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button" id="addSizeFields"
+                                                                            class="btn btn-info mt-3"
+                                                                            style="display: none;">Thêm Giá Trị</button>
+                                                                    </div>
+
+
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleEdge">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleEdge">Viền Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group toggle-target"
+                                                                            id="inputEdgeFields" style="display: none;">
+                                                                            <div class="row mt-3">
+                                                                                <div class="col-6">
+                                                                                    <label>Tên Viền Bánh</label>
+                                                                                    <input type="text" name="edge_name"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('edge_name') }}">
+                                                                                    @error('edge_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <label>Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="edge_price"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('edge_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('edge_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleBase">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleBase">Đế Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group mt-3 toggle-target"
+                                                                            id="inputBaseFields" style="display: none;">
+                                                                            <div class="row mt-3">
+                                                                                <div class="col-6">
+                                                                                    <label>Tên Đế Bánh</label>
+                                                                                    <input type="text" name="base_name"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('base_name') }}">
+                                                                                    @error('base_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <label>Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="base_price"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('base_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('base_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                                            const toggles = document.querySelectorAll('.toggle-input');
+                                                                            const addSizeFieldsButton = document.getElementById('addSizeFields');
+                                                                            const sizeFieldsContainer = document.getElementById('sizeFieldsContainer');
+
+                                                                            toggles.forEach(function(toggle) {
+                                                                                toggle.addEventListener('change', function() {
+                                                                                    const targetFieldsId = this.id.replace('toggle', 'input') + 'Fields';
+                                                                                    const targetFields = document.getElementById(targetFieldsId);
+                                                                                    const priceFieldId = targetFieldsId.replace('Fields', 'Price');
+                                                                                    const priceField = document.getElementById(priceFieldId);
+
+                                                                                    // Khi kích hoạt checkbox
+                                                                                    if (this.checked) {
+                                                                                        sizeFieldsContainer.style.display = 'block';
+                                                                                        addSizeFieldsButton.style.display = 'inline-block'; // Hiển thị nút thêm
+                                                                                    } else {
+                                                                                        sizeFieldsContainer.style.display = 'none';
+                                                                                        addSizeFieldsButton.style.display = 'none'; // Ẩn nút thêm
+                                                                                    }
+                                                                                });
+                                                                            });
+
+                                                                            // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
+                                                                            addSizeFieldsButton.addEventListener('click', function() {
+                                                                                const newSizeFieldHTML = `
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group toggle-target">
+                                                                                            <label class="mt-3">Tên Size Bánh</label>
+                                                                                            <input type="text" name="size_name[]" class="form-control" value="">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group toggle-target">
+                                                                                            <label class="mt-3">Giá Tiền</label>
+                                                                                            <div class="input-group">
+                                                                                                <span class="input-group-text">VNĐ</span>
+                                                                                                <input type="text" name="size_price[]" class="form-control" value="">
+                                                                                                <span class="input-group-text">.000</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                `;
+
+                                                                                const newRow = document.createElement('div');
+                                                                                newRow.classList.add('row');
+                                                                                newRow.innerHTML = newSizeFieldHTML;
+                                                                                sizeFieldsContainer.appendChild(newRow);
+                                                                            });
+                                                                        });
+                                                                    </script>
+
+                                                                    <div class="mt-3">
+                                                                        <a href="{{ route('admin.products.index') }}"
+                                                                            class="btn btn-secondary">
+                                                                            Quay Lại</a>
+                                                                        <button type="submit"
+                                                                            class="btn btn-success">Thêm
+                                                                            Mới</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -205,101 +422,94 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                </form>
 
-                                <div class="card-body">
-                                    <div class="live-preview">
-                                        <div class="accordion custom-accordionwithicon-plus" id="accordionWithplusicon">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="accordionwithplusExample2">
-                                                    <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#accor_plusExamplecollapse2" aria-expanded="true"
-                                                        aria-controls="accor_plusExamplecollapse2">
-                                                        Biến Thể Sản Phẩm
-                                                    </button>
-                                                </h2>
+                {{-- <div class="card-body">
+                    <div class="live-preview">
+                        <div class="accordion custom-accordionwithicon-plus" id="accordionWithplusicon">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="accordionwithplusExample2">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#accor_plusExamplecollapse2" aria-expanded="true"
+                                        aria-controls="accor_plusExamplecollapse2">
+                                        Bản Xem Trước
+                                    </button>
+                                </h2>
 
-                                                <div id="accor_plusExamplecollapse2"
-                                                    class="accordion-collapse collapse show"
-                                                    aria-labelledby="accordionwithplusExample2"
-                                                    data-bs-parent="#accordionWithplusicon">
-                                                    <div class="accordion-body">
-                                                        <div class="basic-form">
-                                                            <h3>Thông Tin Sản Phẩm</h3>
-                                                            <table id="example"
-                                                                class="table table-bordered dt-responsive nowrap table-striped align-middle"
-                                                                style="width:100%">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th scope="col" style="width: 10px;">
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input fs-15"
-                                                                                    type="checkbox" id="checkAll">
-                                                                            </div>
-                                                                        </th>
-                                                                        <th>ID</th>
-                                                                        <th>Image</th>
-                                                                        <th>Name</th>
-                                                                        <th>Slug</th>
-                                                                        <th>Category</th>
-                                                                        <th>Price</th>
-                                                                        <th>Offer Price</th>
-                                                                        <th>Quantity in Stock</th>
-                                                                        <th>Show At Home</th>
-                                                                        <th>Status</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th scope="row">
-                                                                            <div class="form-check">
-                                                                                <input
-                                                                                    class="form-check-input fs-15 product-checkbox"
-                                                                                    type="checkbox" name="products[]"
-                                                                                    value="test">
-                                                                            </div>
-                                                                        </th>
-                                                                        <td id="preview-id"></td>
-                                                                        <td>
+                                <div id="accor_plusExamplecollapse2" class="accordion-collapse collapse show"
+                                    aria-labelledby="accordionwithplusExample2" data-bs-parent="#accordionWithplusicon">
+                                    <div class="accordion-body">
+                                        <div class="basic-form">
+                                            <h3>Thông Tin Sản Phẩm</h3>
+                                            <table id="example"
+                                                class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                                style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" style="width: 10px;">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input fs-15" type="checkbox"
+                                                                    id="checkAll">
+                                                            </div>
+                                                        </th>
+                                                        <th>ID</th>
+                                                        <th>Image</th>
+                                                        <th>Name</th>
+                                                        <th>Slug</th>
+                                                        <th>Category</th>
+                                                        <th>Price</th>
+                                                        <th>Offer Price</th>
+                                                        <th>Quantity in Stock</th>
+                                                        <th>Show At Home</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input fs-15 product-checkbox"
+                                                                    type="checkbox" name="products[]" value="test">
+                                                            </div>
+                                                        </th>
+                                                        <td id="preview-id"></td>
+                                                        <td>
 
-                                                                            <img src="test" alt=""
-                                                                                width="100px">
-                                                                        </td>
-                                                                        <td id="preview-name"></td>
-                                                                        <td id="preview-slug"></td>
-                                                                        <td id="preview-category"></td>
-                                                                        <td id="preview-price"></td>
-                                                                        <td id="preview-offer-price"></td>
-                                                                        <td id="preview-qty"></td>
-                                                                        {{-- <td>
+                                                            <img src="test" alt="" width="100px">
+                                                        </td>
+                                                        <td id="preview-name"></td>
+                                                        <td id="preview-slug"></td>
+                                                        <td id="preview-category"></td>
+                                                        <td id="preview-price"></td>
+                                                        <td id="preview-offer-price"></td>
+                                                        <td id="preview-qty"></td>
+                                                        {{-- <td>
                                                                             <input type="number"
                                                                                 class="form-control product-quantity"
                                                                                 name="quantities[test]" min="1"
                                                                                 max=test" value="1" data-stock="test"
                                                                                 disabled>
                                                                         </td> --}}
-                                                                        <td id="preview-show-at-home"></td>
-                                                                        <td id="preview-status"></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                {{-- <td id="preview-show-at-home"></td>
+                                                        <td id="preview-status"></td> --}}
+                {{-- </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div> --}}
             </div>
         </div>
     </div>
+    </div>
+    </div>
+    </div>
 
-    <script>
+    {{-- <script>
         // Lắng nghe sự kiện thay đổi trên các input
         document.addEventListener('DOMContentLoaded', function() {
             const fields = {
@@ -339,7 +549,7 @@
                 document.getElementById('preview-show-at-home').textContent = selectedOption;
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

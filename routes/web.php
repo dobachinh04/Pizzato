@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\MessageSent;
+use App\Http\Controllers\Client\RefundController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
@@ -101,3 +102,6 @@ Route::get('/client/order_history', [OrderController::class, 'index'])
     ->name('client.order_history.show');
     // ->middleware('auth');
 
+// refund
+Route::get('refunds/create', [RefundController::class, 'create'])->name('refunds.create');
+Route::post('/refunds', [RefundController::class, 'store'])->name('refunds.store');

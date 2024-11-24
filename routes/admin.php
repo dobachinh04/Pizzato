@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RefundController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\TagController;
@@ -211,6 +212,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
     });
 
+     // Admin - refund
+     Route::prefix('refunds')->name('refunds.')->group(function () {
+        Route::get('/',                   [RefundController::class, 'index'])->name('index');
+        Route::get('/create',             [RefundController::class, 'create'])->name('create');
+        Route::post('/',                  [RefundController::class, 'store'])->name('store');
+        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
+        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
+        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
+    });
+
+
     // Admin - products:
     // Route::prefix('products')->name('products.')->group(function () {
     //     Route::get('/',                                 [AdminProductController::class, 'index'])->name('index');
@@ -231,8 +243,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
          Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
          Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
 
+
      });
 
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //dang loi
+
+     Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
 });
