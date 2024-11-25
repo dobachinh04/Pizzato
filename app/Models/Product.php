@@ -57,14 +57,18 @@ class Product extends Model
             ->withTimestamps();
     }
 
-    function pizzaEdges()
+    public function pizzaEdges()
     {
-        return $this->belongsToMany(PizzaEdge::class);
+        return $this->belongsToMany(PizzaEdge::class, 'product_pizza_edges', 'product_id', 'pizza_edge_id')
+            ->withPivot('price')
+            ->withTimestamps();
     }
 
-    function pizzaBase()
+    public function pizzaBases()
     {
-        return $this->belongsToMany(PizzaBase::class);
+        return $this->belongsToMany(PizzaBase::class, 'product_pizza_bases', 'product_id', 'pizza_base_id')
+            ->withPivot('price')
+            ->withTimestamps();
     }
 
     public function productOptions()

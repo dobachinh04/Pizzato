@@ -70,55 +70,51 @@ class ProductController extends Controller
 
                 $product = Product::query()->create($data);
 
-                // Nếu sizes tồn tại và không rỗng
+                // Xử lý sizes
                 if ($request->filled('sizes')) {
-                    $sizes = $request->sizes; // Lấy danh sách size từ request
                     $sizePriceData = [];
-                    foreach ($sizes as $sizeId) {
+                    foreach ($request->sizes as $sizeId) {
                         $size = ProductSize::find($sizeId);
                         if ($size) {
                             $sizePriceData[$sizeId] = [
-                                'price' => $product->offer_price + $size->price,
+                                'price' => $size->price, // Lưu trực tiếp giá của size
                             ];
                         }
                     }
-
                     if (!empty($sizePriceData)) {
                         $product->productSizes()->attach($sizePriceData);
                     }
                 }
 
+                // Xử lý edges
                 if ($request->filled('edges')) {
-                    $edges = $request->edges; // Lấy danh sách size từ request
-                    $sizePriceData = [];
-                    foreach ($edges as $sizeId) {
-                        $size = ProductSize::find($sizeId);
-                        if ($size) {
-                            $sizePriceData[$sizeId] = [
-                                'price' => $product->offer_price + $size->price,
+                    $edgePriceData = [];
+                    foreach ($request->edges as $edgeId) {
+                        $edge = PizzaEdge::find($edgeId);
+                        if ($edge) {
+                            $edgePriceData[$edgeId] = [
+                                'price' => $edge->price, // Lưu trực tiếp giá của edge
                             ];
                         }
                     }
-
-                    if (!empty($sizePriceData)) {
-                        $product->productEdges()->attach($sizePriceData);
+                    if (!empty($edgePriceData)) {
+                        $product->pizzaEdges()->attach($edgePriceData);
                     }
                 }
 
-                if ($request->filled('sizes')) {
-                    $sizes = $request->sizes; // Lấy danh sách size từ request
-                    $sizePriceData = [];
-                    foreach ($sizes as $sizeId) {
-                        $size = ProductSize::find($sizeId);
-                        if ($size) {
-                            $sizePriceData[$sizeId] = [
-                                'price' => $product->offer_price + $size->price,
+                // Xử lý bases
+                if ($request->filled('bases')) {
+                    $basePriceData = [];
+                    foreach ($request->bases as $baseId) {
+                        $base = PizzaBase::find($baseId);
+                        if ($base) {
+                            $basePriceData[$baseId] = [
+                                'price' => $base->price, // Lưu trực tiếp giá của base
                             ];
                         }
                     }
-
-                    if (!empty($sizePriceData)) {
-                        $product->productSizes()->attach($sizePriceData);
+                    if (!empty($basePriceData)) {
+                        $product->pizzaBase()->attach($basePriceData);
                     }
                 }
             });
@@ -128,6 +124,7 @@ class ProductController extends Controller
             return back()->withErrors($exception->getMessage())->withInput();
         }
     }
+
 
     public function show(Product $product)
     {
@@ -181,6 +178,8 @@ class ProductController extends Controller
             DB::transaction(function () use ($product) {
                 // Làm trống tags - Xóa tags
                 $product->productSizes()->sync([]);
+                $product->pizzaEdges()->sync([]);
+                $product->pizzaBases()->sync([]);
 
                 // Xóa galleries
                 // $product->galleries()->delete();
