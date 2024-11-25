@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\PizzaEdge;
 use App\Http\Requests\StorePizzaEdgeRequest;
 use App\Http\Requests\UpdatePizzaEdgeRequest;

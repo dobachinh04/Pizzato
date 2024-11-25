@@ -30,16 +30,20 @@ class OrderFactory extends Factory
         // Lấy ngày hiện tại và tính ngày tối đa không được vượt quá
         $maxDate = $currentTime->format('Y-m-d');  // Lấy ngày hiện tại (năm-tháng-ngày)
 
-        // Logic để tạo 20 đơn hàng mới nhất trong 30 phút gần đây nhất tính từ thời điểm hiện tại
-        $isRecentOrder = rand(1, 100) <= 40;  // Xác suất 40% cho đơn hàng mới nhất trong 30 phút
+        // Xác suất 40% cho đơn hàng mới nhất trong khoảng từ 1 đến 30 phút
+        $isRecentOrder = rand(1, 100) <= 40;
 
         if ($isRecentOrder) {
-            // Tạo ngày trong vòng 30 phút từ thời điểm hiện tại
-            $createdAt = $this->faker->dateTimeBetween($currentTime->subMinutes(30), $currentTime);
+            // Random thời gian tạo trong khoảng từ 1 đến 30 phút
+            $randomMinutes = rand(20, 40); // Random số phút từ 1 đến 30
+            $createdAt = $this->faker->dateTimeBetween($currentTime->subMinutes($randomMinutes), $currentTime);
         } else {
             // Tạo ngày ngẫu nhiên trong năm nay nhưng không vượt quá ngày hiện tại
             $createdAt = $this->faker->dateTimeBetween('2024-01-01', $maxDate);
         }
+
+        // Xác định trạng thái đơn hàng: Nếu đơn được tạo quá 4 tiếng trước, không gán trạng thái 'pending'
+        $orderStatus = $createdAt >= $currentTime->subHours(4) ? $this->faker->randomElement(['pending', 'processing', 'completed', 'canceled']) : $this->faker->randomElement(['processing', 'completed', 'canceled']);
 
         return [
             // Mã invoice tăng dần từ 00001
@@ -80,7 +84,7 @@ class OrderFactory extends Factory
             'currency_name' => 'VND',
 
             // Trạng thái đơn hàng
-            'order_status' => $this->faker->randomElement(['pending', 'processing', 'completed', 'canceled']),
+            'order_status' => $orderStatus,
 
             // Ngày tạo đơn hàng ngẫu nhiên trong năm nay nhưng không vượt quá ngày hiện tại
             'created_at' => $createdAt,

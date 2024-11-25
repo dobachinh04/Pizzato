@@ -87,6 +87,40 @@ class ProductController extends Controller
                         $product->productSizes()->attach($sizePriceData);
                     }
                 }
+
+                if ($request->filled('edges')) {
+                    $edges = $request->edges; // Lấy danh sách size từ request
+                    $sizePriceData = [];
+                    foreach ($edges as $sizeId) {
+                        $size = ProductSize::find($sizeId);
+                        if ($size) {
+                            $sizePriceData[$sizeId] = [
+                                'price' => $product->offer_price + $size->price,
+                            ];
+                        }
+                    }
+
+                    if (!empty($sizePriceData)) {
+                        $product->productEdges()->attach($sizePriceData);
+                    }
+                }
+
+                if ($request->filled('sizes')) {
+                    $sizes = $request->sizes; // Lấy danh sách size từ request
+                    $sizePriceData = [];
+                    foreach ($sizes as $sizeId) {
+                        $size = ProductSize::find($sizeId);
+                        if ($size) {
+                            $sizePriceData[$sizeId] = [
+                                'price' => $product->offer_price + $size->price,
+                            ];
+                        }
+                    }
+
+                    if (!empty($sizePriceData)) {
+                        $product->productSizes()->attach($sizePriceData);
+                    }
+                }
             });
 
             return redirect()->route('admin.products.index')->with('success', 'Thêm thành công');
