@@ -370,7 +370,7 @@
                                     <div class="col-xl-12">
                                         <div class="card">
                                             <div class="card-header align-items-center d-flex">
-                                                <h3 class="card-title mb-0 flex-grow-1">Đơn hàng chưa thanh toán</h3>
+                                                <h3 class="card-title mb-0 flex-grow-1">Đơn hàng đang xử lý</h3>
                                             </div><!-- end card header -->
                                             <div class="card-body">
                                                 <table id="order-datatable"
@@ -388,16 +388,45 @@
                                                     <tbody>
                                                         @foreach ($orderOvers as $item)
                                                             <tr>
-                                                                <td>{{ $item->invoice_id }}</td>
-                                                                <td>{{ $item->grand_total }}</td>
-                                                                <td><span
-                                                                        class="badge bg-danger">{{ $item->payment_status }}</span>
+                                                                <td >
+                                                                    <a href="{{route('admin.orders.show', $item->id)}}"
+                                                                        class="fw-medium link-primary">{{ $item->invoice_id }}</a>
                                                                 </td>
+                                                                {{-- <td>{{ $item->grand_total }}</td> --}}
+                                                                <td>
+                                                                    <span
+                                                                        class="text-success">{{ number_format($item->grand_total) }}
+                                                                        VND</span>
+                                                                </td>
+                                                                {{-- <td class="text-center">
+                                                                    <span class="badge bg-success-subtle text-success">{{ $item->payment_status }}</span>
+                                                                </td> --}}
+                                                                <td class="text-center">
+                                                                    @if($item->payment_status === 'completed')
+                                                                        <span class="badge bg-success-subtle text-success">Hoàn thành</span>
+                                                                    @elseif($item->payment_status === 'pending')
+                                                                        <span class="badge bg-warning-subtle text-warning">Đang chờ</span>
+                                                                    @elseif($item->payment_status === 'failed')
+                                                                        <span class="badge bg-danger-subtle text-danger">Thất bại</span>
+                                                                    @else
+                                                                        <span class="badge bg-secondary-subtle text-secondary">{{ $item->payment_status }}</span>
+                                                                    @endif
+                                                                </td>
+
                                                                 <td data-order="{{ $item->created_at }}">
                                                                     {{ $item->time_ago }}
                                                                 </td>
-                                                                <td><span
+                                                                {{-- <td><span
                                                                         class="badge bg-danger">{{ $item->order_status }}</span>
+                                                                </td> --}}
+                                                                <td>
+                                                                    <span class="badge bg-warning-subtle text-warning">
+                                                                        @if ($item->order_status === 'pending')
+                                                                            Đang chờ
+                                                                        @else
+                                                                            {{ $item->order_status }}
+                                                                        @endif
+                                                                    </span>
                                                                 </td>
                                                                 <td>
                                                                     @if (Carbon\Carbon::parse($item->created_at)->diffInMinutes(now()) > 30)
@@ -471,10 +500,10 @@
                                                                             <option value="Khác">Khác </option>
                                                                         </select>
                                                                         <!-- Input hiện khi chọn "Khác" -->
-                                                                        <input type="text"
+                                                                        <textarea type="text"
                                                                             class="form-control mt-2 d-none"
                                                                             id="solution-input" name="solution_custom"
-                                                                            placeholder="Nhập cách giải quyết">
+                                                                            placeholder="Nhập cách giải quyết"></textarea>
                                                                     </div>
 
                                                                     <button type="submit" class="btn btn-primary">Gửi

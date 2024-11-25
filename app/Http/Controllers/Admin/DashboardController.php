@@ -181,7 +181,7 @@ class DashboardController extends Controller
             : $request->input('solution');
         // Lưu vào bảng delay_notifications
         DB::table('delay_notifications')->insert([
-            'id' => $request->input('order_id'),
+            // 'id' => $request->input('order_id'),
             'invoice_id' => $request->input('invoice_id'),
             'reason' => $message,
             'solution' => $solution, // Hiện tại chưa cần solution
