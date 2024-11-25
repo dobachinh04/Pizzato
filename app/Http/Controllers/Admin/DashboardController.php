@@ -160,20 +160,31 @@ class DashboardController extends Controller
     //     return view('admin.dashboard', compact('orderOvers'));
     // }
 
-    public function notifyOrder(Request $request){
+    public function notifyOrder(Request $request)
+    {
         // Validate dữ liệu
         $request->validate([
             'order_id' => 'required|integer',
             'invoice_id' => 'required|string',
             'message' => 'required|string|max:255',
+            'solution' => 'nullable|string|max:255',
+            'solution_custom' => 'nullable|string|max:255',
         ]);
 
+        // Lấy nội dung thông báo
+        $message = $request->input('message') === 'Khác'
+            ? $request->input('message_custom')
+            : $request->input('message');
+        // Nếu chọn "Khác", lấy nội dung từ solution_custom
+        $solution = $request->input('solution') === 'Khác'
+            ? $request->input('solution_custom')
+            : $request->input('solution');
         // Lưu vào bảng delay_notifications
         DB::table('delay_notifications')->insert([
             'id' => $request->input('order_id'),
             'invoice_id' => $request->input('invoice_id'),
-            'reason' => $request->input('message'),
-            'solution' => null, // Hiện tại chưa cần solution
+            'reason' => $message,
+            'solution' => $solution, // Hiện tại chưa cần solution
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -181,5 +192,4 @@ class DashboardController extends Controller
         // Redirect lại trang với thông báo thành công
         return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
     }
-
 }

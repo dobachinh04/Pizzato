@@ -427,16 +427,56 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="notifyForm" action="{{route('admin.notify.order')}}" method="POST">
+                                                                <form id="notifyForm"
+                                                                    action="{{ route('admin.notify.order') }}"
+                                                                    method="POST">
                                                                     @csrf
                                                                     <input type="hidden" id="order_id" name="order_id">
                                                                     <input type="hidden" id="invoice_id"
                                                                         name="invoice_id">
+                                                                    <!-- Nội dung thông báo -->
                                                                     <div class="mb-3">
                                                                         <label for="message" class="form-label">Nội dung
                                                                             thông báo</label>
-                                                                        <textarea class="form-control" id="message" name="message" rows="3" placeholder="Nhập nội dung thông báo"></textarea>
+                                                                        <select class="form-control" id="message-select"
+                                                                            name="message">
+                                                                            <option value="" disabled selected>Chọn
+                                                                                nội dung thông báo</option>
+                                                                            <option value="Đơn hàng chưa được thanh toán">
+                                                                                Đơn hàng chưa được thanh toán</option>
+                                                                            <option value="Đơn hàng đã bị trễ">Đơn hàng đã
+                                                                                bị trễ</option>
+                                                                            <option value="Hãy kiểm tra lại thông tin">Hãy
+                                                                                kiểm tra lại thông tin</option>
+                                                                            <option value="Khác">Khác</option>
+                                                                        </select>
+                                                                        <!-- Input hiện khi chọn "Khác" -->
+                                                                        <textarea class="form-control mt-2 d-none" id="message-input" name="message_custom" rows="3"
+                                                                            placeholder="Nhập nội dung thông báo"></textarea>
                                                                     </div>
+                                                                    <!-- Cách giải quyết -->
+                                                                    <div class="mb-3">
+                                                                        <label for="solution" class="form-label">Cách giải
+                                                                            quyết</label>
+                                                                        <select class="form-control" id="solution-select"
+                                                                            name="solution">
+                                                                            <option value="" disabled selected>Chọn
+                                                                                cách giải quyết</option>
+                                                                            <option value="Liên hệ khách hàng">Liên hệ
+                                                                                khách hàng</option>
+                                                                            <option value="Hủy đơn hàng">Hủy đơn hàng
+                                                                            </option>
+                                                                            <option value="Giao hàng ngay">Giao hàng ngay
+                                                                            </option>
+                                                                            <option value="Khác">Khác </option>
+                                                                        </select>
+                                                                        <!-- Input hiện khi chọn "Khác" -->
+                                                                        <input type="text"
+                                                                            class="form-control mt-2 d-none"
+                                                                            id="solution-input" name="solution_custom"
+                                                                            placeholder="Nhập cách giải quyết">
+                                                                    </div>
+
                                                                     <button type="submit" class="btn btn-primary">Gửi
                                                                         thông báo</button>
                                                                 </form>
@@ -959,12 +999,31 @@
 
         // THông báo
         $(document).ready(function() {
-            // Khi nhấn nút Thông báo (Event Delegation)
+            // Khi thay đổi chọn nội dung thông báo
+            $('#message-select').on('change', function() {
+                var selected = $(this).val();
+                if (selected === 'Khác') {
+                    $('#message-input').removeClass('d-none').attr('required', true);
+                } else {
+                    $('#message-input').addClass('d-none').removeAttr('required');
+                }
+            });
+            // Khi thay đổi chọn cách giải quyết
+            $('#solution-select').on('change', function() {
+                var selected = $(this).val();
+                if (selected === 'Khác') {
+                    $('#solution-input').removeClass('d-none').attr('required', true);
+                } else {
+                    $('#solution-input').addClass('d-none').removeAttr('required');
+                }
+            });
+
+            // Khi nhấn nút Thông báo
             $(document).on('click', '.notify-btn', function() {
                 var orderId = $(this).data('id');
                 var invoiceId = $(this).data('invoice');
 
-                // Gán giá trị vào modal
+                // Gán giá trị vào các trường ẩn
                 $('#order_id').val(orderId);
                 $('#invoice_id').val(invoiceId);
 

@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('delay_notifications', function (Blueprint $table) {
-            $table->id(); // ID chính
+            $table->id();
             $table->string('invoice_id')->unique(); // Mã đơn hàng
             $table->text('reason'); // Lý do chậm trễ
             $table->text('solution')->nullable(); // Giải pháp đề xuất
