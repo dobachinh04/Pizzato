@@ -247,6 +247,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
      Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //dang loi
 
+    //  Thông báo đơn hàng quá trễ
      Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
 });

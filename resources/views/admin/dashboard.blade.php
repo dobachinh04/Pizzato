@@ -427,7 +427,8 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="notifyForm">
+                                                                <form id="notifyForm" action="{{route('admin.notify.order')}}" method="POST">
+                                                                    @csrf
                                                                     <input type="hidden" id="order_id" name="order_id">
                                                                     <input type="hidden" id="invoice_id"
                                                                         name="invoice_id">
@@ -958,49 +959,48 @@
 
         // THông báo
         $(document).ready(function() {
-    // Khi nhấn nút Thông báo (Event Delegation)
-    $(document).on('click', '.notify-btn', function() {
-        var orderId = $(this).data('id');
-        var invoiceId = $(this).data('invoice');
+            // Khi nhấn nút Thông báo (Event Delegation)
+            $(document).on('click', '.notify-btn', function() {
+                var orderId = $(this).data('id');
+                var invoiceId = $(this).data('invoice');
 
-        // Gán giá trị vào modal
-        $('#order_id').val(orderId);
-        $('#invoice_id').val(invoiceId);
+                // Gán giá trị vào modal
+                $('#order_id').val(orderId);
+                $('#invoice_id').val(invoiceId);
 
-        // Hiển thị modal
-        $('#notifyModal').modal('show');
-    });
+                // Hiển thị modal
+                $('#notifyModal').modal('show');
+            });
 
-    // Xử lý gửi thông báo
-    $('#notifyForm').on('submit', function(e) {
-        e.preventDefault();
+            // Xử lý gửi thông báo
+            // $('#notifyForm').on('submit', function(e) {
+            //     e.preventDefault();
 
-        // Lấy dữ liệu từ form
-        var orderId = $('#order_id').val();
-        var invoiceId = $('#invoice_id').val();
-        var message = $('#message').val();
+            //     var orderId = $('#order_id').val();
+            //     var invoiceId = $('#invoice_id').val();
+            //     var message = $('#message').val();
+            //     var solution = $('#solution').val();
 
-        // Gửi AJAX request
-        $.ajax({
-            url: '/notify-order', // Đường dẫn xử lý
-            type: 'POST',
-            data: {
-                order_id: orderId,
-                invoice_id: invoiceId,
-                message: message,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                alert('Thông báo đã được gửi thành công!');
-                $('#notifyModal').modal('hide');
-            },
-            error: function() {
-                alert('Có lỗi xảy ra. Vui lòng thử lại!');
-            }
+            //     $.ajax({
+            //         url: '/notify-order',
+            //         type: 'POST',
+            //         data: {
+            //             order_id: orderId,
+            //             invoice_id: invoiceId,
+            //             message: message,
+            //             solution: solution,
+            //             _token: '{{ csrf_token() }}'
+            //         },
+            //         success: function(response) {
+            //             alert(response.message);
+            //             $('#notifyModal').modal('hide');
+            //         },
+            //         error: function() {
+            //             alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            //         }
+            //     });
+            // });
+
         });
-    });
-});
-
     </script>
 @endsection
-
