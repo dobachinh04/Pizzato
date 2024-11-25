@@ -208,23 +208,26 @@ class DashboardController extends Controller
     //     return view('admin.dashboard', compact('orderOvers'));
     // }
 
-    public function notifyOrder(Request $request)
-{
-    // Lấy dữ liệu từ request
-    $orderId = $request->input('order_id');
-    $invoiceId = $request->input('invoice_id');
-    $message = $request->input('message');
+    public function notifyOrder(Request $request){
+        // Validate dữ liệu
+        $request->validate([
+            'order_id' => 'required|integer',
+            'invoice_id' => 'required|string',
+            'message' => 'required|string|max:255',
+        ]);
 
-    // Xử lý thông báo (ví dụ: gửi email hoặc lưu thông báo vào DB)
-    // Ví dụ lưu vào bảng notifications
-    DB::table('notifications')->insert([
-        'order_id' => $orderId,
-        'invoice_id' => $invoiceId,
-        'message' => $message,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
+        // Lưu vào bảng delay_notifications
+        DB::table('delay_notifications')->insert([
+            'id' => $request->input('order_id'),
+            'invoice_id' => $request->input('invoice_id'),
+            'reason' => $request->input('message'),
+            'solution' => null, // Hiện tại chưa cần solution
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
-    return response()->json(['success' => true, 'message' => 'Notification sent successfully!']);
-}
+        // Redirect lại trang với thông báo thành công
+        return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
+    }
+
 }
