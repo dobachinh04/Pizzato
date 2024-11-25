@@ -180,4 +180,64 @@ class DashboardController extends Controller
             ->groupBy('categories.name')
             ->get();
     }
+
+    // Phương thức lấy thông báo đơn hàng chưa xử lý
+    // public function getPendingOrderNotification()
+    // {
+    //     $unreadAlerts = Auth::user()->unreadNotifications()
+    //         ->where('type', 'App\Notifications\OrderPendingNotification')
+    //         ->get();
+
+    //     return view('admin.dashboard', compact('unreadAlerts'));
+    // }
+
+
+    // Láy các đơn hàng quá 30 phút và order = pending
+    // public function getPendingOrdersOver30Minutes()
+    // {
+    //     $orderOvers = DB::table('orders')
+    //         ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
+    //         ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
+    //         ->get();
+
+    //     // Thêm thời gian tính toán "bao nhiêu phút trước"
+    //     foreach ($orderOvers as $order) {
+    //         $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+    //     }
+    //     // return $orderOvers;
+    //     return view('admin.dashboard', compact('orderOvers'));
+    // }
+
+    public function notifyOrder(Request $request)
+    {
+        // Validate dữ liệu
+        $request->validate([
+            'order_id' => 'required|integer',
+            'invoice_id' => 'required|string',
+            'message' => 'required|string|max:255',
+            'solution' => 'nullable|string|max:255',
+            'solution_custom' => 'nullable|string|max:255',
+        ]);
+
+        // Lấy nội dung thông báo
+        $message = $request->input('message') === 'Khác'
+            ? $request->input('message_custom')
+            : $request->input('message');
+        // Nếu chọn "Khác", lấy nội dung từ solution_custom
+        $solution = $request->input('solution') === 'Khác'
+            ? $request->input('solution_custom')
+            : $request->input('solution');
+        // Lưu vào bảng delay_notifications
+        DB::table('delay_notifications')->insert([
+            // 'id' => $request->input('order_id'),
+            'invoice_id' => $request->input('invoice_id'),
+            'reason' => $message,
+            'solution' => $solution, // Hiện tại chưa cần solution
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Redirect lại trang với thông báo thành công
+        return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
+    }
 }

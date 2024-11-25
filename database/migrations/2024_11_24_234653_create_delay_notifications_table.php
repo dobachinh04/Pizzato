@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('delay_notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_id')->unique(); // Mã đơn hàng
+            $table->string('invoice_id'); // Mã đơn hàng
             $table->text('reason'); // Lý do chậm trễ
             $table->text('solution')->nullable(); // Giải pháp đề xuất
             $table->timestamps(); // Thời gian tạo và cập nhật
