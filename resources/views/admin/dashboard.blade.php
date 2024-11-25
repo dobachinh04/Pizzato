@@ -316,6 +316,16 @@
                                         </div><!-- end card -->
                                     </div><!-- end col -->
 
+
+                                <div class="col-xl-8">
+                                    <div class="card">
+                                        <div class="card-header align-items-center d-flex">
+                                            <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
+                                            <div class="flex-shrink-0">
+                                                <button type="button" class="btn btn-soft-info btn-sm">
+                                                    <i class="ri-file-list-3-line align-middle"></i> Generate Report
+                                                </button>
+
                                     <div class="col-xl-4">
                                         <!-- card -->
                                         <div class="card card-height-100">
@@ -358,6 +368,7 @@
                                                             aria-valuemin="0" aria-valuemax="82"></div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <!-- end card body -->
                                         </div>
@@ -579,6 +590,69 @@
                                     </div> <!-- .card-->
                                 </div> <!-- .col-->
                             </div> <!-- end row-->
+
+                                    <div class="card-body">
+                                        <table id="example"
+                                            class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                            <thead class="text-muted table-light">
+                                                <tr>
+                                                    <th scope="col">Mã Hóa Đơn</th>
+                                                    <th scope="col">Khách Hàng</th>
+                                                    <th scope="col">Tổng Tiền</th>
+                                                    <th scope="col">Thanh Toán</th>
+                                                    <th scope="col">Trạng Thái</th>
+                                                    <th scope="col">Ngày Đặt</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($pendingOrders as $order)
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <a href="apps-ecommerce-order-details.html"</a>
+                                                           {{-- class="fw-medium link-primary">{{ $order->invoice_id }} --}}
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="/velzon/assets/images/users/image.png" alt=""
+                                                                    class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <div class="flex-grow-1">{{ $order->first_name }} {{
+                                                                $order->last_name }}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-success">{{ number_format($order->grand_total)
+                                                            }} VND</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="badge bg-success-subtle text-success">{{
+                                                            $order->payment_status }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-warning-subtle text-warning">
+                                                            @if($order->order_status === 'pending')
+                                                                Đang chờ
+                                                            @else
+                                                                {{ $order->order_status }}
+                                                            @endif
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html"
+                                                            class="fw-medium link-primary"></a>
+                                                            {{-- {{$order->created_at->format('d/m/Y') }} --}}
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table><!-- end table -->
+                                    </div>
+                                </div> <!-- .card-->
+                            </div> <!-- .col-->
+                        </div> <!-- end row-->
+
+
 
                         </div> <!-- end .h-100-->
 
@@ -840,15 +914,84 @@
                                                 <div class="flex-grow-1">
                                                     <div class="fs-16 align-middle text-warning">
 
+                                                        @for ($i = 1; $i <= floor($averageRating); $i++)
+                                                            <i class="ri-star-fill"></i> <!-- Hiển thị sao đầy đủ -->
+                                                        @endfor
+                                                        @if ($averageRating - floor($averageRating) >= 0.5)
+                                                            <i class="ri-star-half-fill"></i> <!-- Hiển thị nửa sao -->
+                                                        @endif
+                                                        @for ($i = ceil($averageRating); $i < 5; $i++)
+                                                            <i class="ri-star-line"></i> <!-- Hiển thị sao rỗng -->
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <h6 class="mb-0">{{ round($averageRating, 1) }} out of 5</h6>
+
+
                                                     </div>
                                                 </div>
                                                 <div class="flex-shrink-0">
                                                     <h6 class="mb-0">{{ number_format($averageRating, 1) }} out of 5
                                                     </h6>
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-center">
+
+                                            <div class="text-muted">
+                                                Total <span class="fw-medium">{{ number_format($totalReviews / 1000, 2) }}k</span> reviews
+                                            </div>
+                                        </div>
+                                        @foreach ([5, 4, 3, 2, 1] as $rating)
+                                        <div class="row align-items-center g-2">
+                                            <div class="col-auto">
+                                                <div class="p-1">
+                                                    <h6 class="mb-0">{{ $rating }} star</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="p-1">
+                                                    <div class="progress animated-progress progress-sm">
+                                                        <div class="progress-bar
+                                                            @if($rating == 5) bg-success
+                                                            @elseif($rating == 4) bg-primary
+                                                            @elseif($rating == 3) bg-warning
+                                                            @else bg-danger @endif"
+                                                            role="progressbar"
+                                                            style="width: {{ $ratingPercentages[$rating]['percentage'] }}%"
+                                                            aria-valuenow="{{ $ratingPercentages[$rating]['percentage'] }}"
+                                                            aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="p-1">
+                                                    <h6 class="mb-0 text-muted">{{ number_format($ratingPercentages[$rating]['count']) }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+
+
+
+                                    <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
+                                        <div class="card-body">
+                                            <img src="/velzon/assets/images/giftbox.png" alt="">
+                                            <div class="mt-4">
+                                                <h5>Invite New Seller</h5>
+                                                <p class="text-muted lh-base">Refer a new seller to us and earn $100 per
+                                                    refer.</p>
+                                                <button type="button" class="btn btn-primary btn-label rounded-pill"><i
+                                                        class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
+                                                    Invite Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                             <div class="text-muted">Tất cả <span
                                                     class="fw-medium">{{ number_format($totalReviews) }}</span>
                                                 Đánh Giá</div>
@@ -889,6 +1032,7 @@
                                             @endforeach
                                         </div>
                                     </div>
+
                                 </div>
                             </div> <!-- end card-->
                         </div> <!-- end .rightbar-->
@@ -943,6 +1087,16 @@
     </style>
     <script>
         $(document).ready(function() {
+
+
+        $('#lowStockTable').DataTable({});
+        // Thu ngắn ô tìm kiếm
+        $('#lowStockTable_filter input').css('width', '50px');
+
+        $('#example').DataTable({});
+    });
+
+</script>
 
             $('#lowStockTable').DataTable({});
             // Thu ngắn ô tìm kiếm

@@ -20,7 +20,33 @@ class DashboardController extends Controller
         $orderCount = Order::count(); // Đếm số đơn hàng
         $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
         $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
-        $totalReviews = ProductReview::count();
+        $totalReviews = ProductReview::count(); // Tổng số đánh giá
+
+        // Lấy số lượng đánh giá theo từng mức sao (sao đã làm tròn)
+        $ratingsCount = ProductReview::select(DB::raw('ROUND(rating) as rounded_rating, COUNT(*) as count'))
+            ->groupBy('rounded_rating')
+            ->get()
+            ->keyBy('rounded_rating'); // Tạo key là số sao làm tròn
+
+        // Tính tổng số sao
+        $totalStars = 0;
+        foreach ($ratingsCount as $rating => $data) {
+            $totalStars += $rating * $data->count; // Tích số sao và số lượng
+        }
+
+        // Tính điểm trung bình dựa trên tổng số sao
+        $averageRating = $totalReviews ? round($totalStars / $totalReviews, 1) : 0;
+
+        // Tính tỷ lệ phần trăm cho từng mức sao
+        $ratingPercentages = [];
+        foreach ([5, 4, 3, 2, 1] as $rating) {
+            $count = $ratingsCount->get($rating)->count ?? 0;
+            $percentage = $totalReviews ? ($count / $totalReviews) * 100 : 0;
+            $ratingPercentages[$rating] = [
+                'count' => $count,
+                'percentage' => round($percentage, 2),
+            ];
+        }
 
         // Lấy 4 đánh giá mới nhất
         $reviews = ProductReview::with(['user', 'product'])
@@ -48,10 +74,15 @@ class DashboardController extends Controller
         // Tính điểm trung bình của tất cả các đánh giá
         $averageRating = ProductReview::avg('rating');
 
+
         // Lấy ra đơn hàng mới nhất chưa xử lý (trạng thái pending)
         $pendingOrders = Order::with('addresses')
             ->select(
+
+                'orders.invoice_id',
+
                 'orders.invoice_id', // Lấy cột invoice_id từ bảng orders.
+
                 'addresses.first_name',
                 'addresses.last_name',
                 'orders.grand_total',
@@ -59,9 +90,13 @@ class DashboardController extends Controller
                 'orders.order_status',
                 'orders.created_at'
             )
-            ->join('addresses', 'orders.address_id', '=', 'addresses.id') // join 2 bảng address và order
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id') // Join bảng addresses và orders
             ->where('orders.order_status', 'pending')
+
+            ->orderByDesc('orders.created_at') // Sắp xếp giảm dần theo created_at
+
             ->orderByDesc('orders.created_at') // Sắp xếp kết quả theo thứ tự giảm dần của cột created_at trong bảng orders.
+
             ->get();
 
         // Lấy danh sách sản phẩm có quantity dưới 10
@@ -69,11 +104,19 @@ class DashboardController extends Controller
             ->select('id', 'name', 'thumb_image', 'qty')
             ->get();
 
+
+        // Gộp tất cả biến vào view
+        return view('admin.dashboard', compact(
+            'productCount',
+            'orderCount'
+             // Đừng quên thêm biến này vào compact()
+        ));
+
         // Láy các đơn hàng quá 30 phút và order = pending
-        $orderOvers = DB::table('orders')
-            ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
-            ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
-            ->get();
+        // $orderOvers = DB::table('orders')
+        //     ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
+        //     ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
+        //     ->get();
 
         // Thêm thời gian tính toán "bao nhiêu phút trước"
         foreach ($orderOvers as $order) {
@@ -84,16 +127,21 @@ class DashboardController extends Controller
             'productCount',
             'orderCount',
             'reviews',
+
             'revenue',
             'totalViews',
             'totalReviews',
             'ratingPercentages',
             'averageRating',
             'pendingOrders',
+
+            'lowStockProducts',
             'lowStockProducts',
             'orderOvers'
+
         ));
     }
+
 
     // Phương thức thống kê doanh thu theo tháng
     public function chart(Request $request)
