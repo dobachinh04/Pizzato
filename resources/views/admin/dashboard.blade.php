@@ -388,8 +388,8 @@
                                                     <tbody>
                                                         @foreach ($orderOvers as $item)
                                                             <tr>
-                                                                <td >
-                                                                    <a href="{{route('admin.orders.show', $item->id)}}"
+                                                                <td>
+                                                                    <a href="{{ route('admin.orders.show', $item->id) }}"
                                                                         class="fw-medium link-primary">{{ $item->invoice_id }}</a>
                                                                 </td>
                                                                 {{-- <td>{{ $item->grand_total }}</td> --}}
@@ -402,14 +402,21 @@
                                                                     <span class="badge bg-success-subtle text-success">{{ $item->payment_status }}</span>
                                                                 </td> --}}
                                                                 <td class="text-center">
-                                                                    @if($item->payment_status === 'completed')
-                                                                        <span class="badge bg-success-subtle text-success">Hoàn thành</span>
+                                                                    @if ($item->payment_status === 'completed')
+                                                                        <span
+                                                                            class="badge bg-success-subtle text-success">Hoàn
+                                                                            thành</span>
                                                                     @elseif($item->payment_status === 'pending')
-                                                                        <span class="badge bg-warning-subtle text-warning">Đang chờ</span>
+                                                                        <span
+                                                                            class="badge bg-warning-subtle text-warning">Đang
+                                                                            chờ</span>
                                                                     @elseif($item->payment_status === 'failed')
-                                                                        <span class="badge bg-danger-subtle text-danger">Thất bại</span>
+                                                                        <span
+                                                                            class="badge bg-danger-subtle text-danger">Thất
+                                                                            bại</span>
                                                                     @else
-                                                                        <span class="badge bg-secondary-subtle text-secondary">{{ $item->payment_status }}</span>
+                                                                        <span
+                                                                            class="badge bg-secondary-subtle text-secondary">{{ $item->payment_status }}</span>
                                                                     @endif
                                                                 </td>
 
@@ -500,9 +507,7 @@
                                                                             <option value="Khác">Khác </option>
                                                                         </select>
                                                                         <!-- Input hiện khi chọn "Khác" -->
-                                                                        <textarea type="text"
-                                                                            class="form-control mt-2 d-none"
-                                                                            id="solution-input" name="solution_custom"
+                                                                        <textarea type="text" class="form-control mt-2 d-none" id="solution-input" name="solution_custom"
                                                                             placeholder="Nhập cách giải quyết"></textarea>
                                                                     </div>
 
@@ -1059,36 +1064,8 @@
                 // Hiển thị modal
                 $('#notifyModal').modal('show');
             });
-
-            // Xử lý gửi thông báo
-            // $('#notifyForm').on('submit', function(e) {
-            //     e.preventDefault();
-
-            //     var orderId = $('#order_id').val();
-            //     var invoiceId = $('#invoice_id').val();
-            //     var message = $('#message').val();
-            //     var solution = $('#solution').val();
-
-            //     $.ajax({
-            //         url: '/notify-order',
-            //         type: 'POST',
-            //         data: {
-            //             order_id: orderId,
-            //             invoice_id: invoiceId,
-            //             message: message,
-            //             solution: solution,
-            //             _token: '{{ csrf_token() }}'
-            //         },
-            //         success: function(response) {
-            //             alert(response.message);
-            //             $('#notifyModal').modal('hide');
-            //         },
-            //         error: function() {
-            //             alert('Có lỗi xảy ra. Vui lòng thử lại!');
-            //         }
-            //     });
-            // });
-
         });
+
+
     </script>
 @endsection
