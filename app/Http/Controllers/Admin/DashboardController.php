@@ -22,41 +22,45 @@ class DashboardController extends Controller
 
         $totalReviews = ProductReview::count();
 
+        $totalReviews = ProductReview::count();
+
         // Lấy số lượng đánh giá theo từng mức sao (1 đến 5 sao)
-        $ratingsCount = ProductReview::select(DB::raw('rating, COUNT(*) as count'))
-            ->groupBy('rating')
+        $ratingsCount = ProductReview::select(DB::raw('ROUND(rating) as rounded_rating, COUNT(*) as count'))
+            ->groupBy('rounded_rating')
             ->get()
-            ->keyBy('rating');
+            ->keyBy('rounded_rating'); // Tạo key là số sao làm tròn
 
+        // Tính tổng số sao
+        $totalStars = 0;
+        foreach ($ratingsCount as $rating => $data) {
+            $totalStars += $rating * $data->count; // Tích số sao và số lượng
+        }
 
-            $totalReviews = ProductReview::count();
+        // Tính điểm trung bình (dựa trên tổng số sao và tổng số đánh giá)
+        $averageRating = $totalReviews ? $totalStars / $totalReviews : 0;
+        // Tính tỷ lệ phần trăm cho từng mức sao
+        $ratingPercentages = [];
+        foreach ([5, 4, 3, 2, 1] as $rating) {
+            $count = $ratingsCount->get($rating)->count ?? 0;
+            $percentage = $totalReviews ? ($count / $totalReviews) * 100 : 0;
+            $ratingPercentages[$rating] = [
+                'count' => $count,
+                'percentage' => $percentage,
+            ];
+        }
 
-            // Lấy số lượng đánh giá theo từng mức sao (1 đến 5 sao)
-            $ratingsCount = ProductReview::select(DB::raw('rating, COUNT(*) as count'))
-                ->groupBy('rating')
-                ->get()
-                ->keyBy('rating'); // Tạo một mảng với key là rating (1-5)
+        // Tính điểm trung bình của tất cả các đánh giá
+        $averageRating = ProductReview::avg('rating');
 
-            // Tính tỷ lệ phần trăm cho từng mức sao
-            $ratingPercentages = [];
-            foreach ([5, 4, 3, 2, 1] as $rating) {
-                $count = $ratingsCount->get($rating)->count ?? 0;
-                $percentage = $totalReviews ? ($count / $totalReviews) * 100 : 0;
-                $ratingPercentages[$rating] = [
-                    'count' => $count,
-                    'percentage' => $percentage,
-                ];
-            }
-
-            // Tính điểm trung bình của tất cả các đánh giá
-            $averageRating = ProductReview::avg('rating');
-
-            return view('admin.dashboard', compact(
-                'productCount', 'orderCount', 'revenue', 'totalViews',
-                'totalReviews', 'ratingPercentages', 'averageRating'
-            ));
-
-
+        return view('admin.dashboard', compact(
+            'productCount',
+            'orderCount',
+            'revenue',
+            'totalViews',
+            'totalReviews',
+            'ratingPercentages',
+            'averageRating'
+        ));
     }
 
     // Phương thức thống kê doanh thu theo tháng
@@ -82,7 +86,7 @@ class DashboardController extends Controller
     public function source(Request $request)
     {
         $dateRange = $request->input('date_range', now()->format('Y-m'));
-        $sourceStats = Order::with('items.product.category')//tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
+        $sourceStats = Order::with('items.product.category') //tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
             //lấy tên danh mục và tổng doanh thu (được tính bằng tổng số lượng nhân với đơn giá) cho từng danh mục.
             ->select(DB::raw('categories.name as category_name, SUM(order_items.qty * order_items.unit_price) as total_revenue'))
             //nối ordersbảng với order_items bảng trên id
