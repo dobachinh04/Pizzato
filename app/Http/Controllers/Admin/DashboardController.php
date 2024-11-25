@@ -121,7 +121,7 @@ class DashboardController extends Controller
 
     private function getLowStockProducts()
     {
-        return Product::where('qty', '<', 10)
+        return Product::where('qty', '<=', 10)
             ->select('id', 'name', 'thumb_image', 'qty')
             ->get();
     }
