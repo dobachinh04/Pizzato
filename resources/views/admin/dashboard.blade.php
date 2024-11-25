@@ -388,8 +388,8 @@
                                                     <tbody>
                                                         @foreach ($orderOvers as $item)
                                                             <tr>
-                                                                <td >
-                                                                    <a href="{{route('admin.orders.show', $item->id)}}"
+                                                                <td>
+                                                                    <a href="{{ route('admin.orders.show', $item->id) }}"
                                                                         class="fw-medium link-primary">{{ $item->invoice_id }}</a>
                                                                 </td>
                                                                 {{-- <td>{{ $item->grand_total }}</td> --}}
@@ -402,14 +402,21 @@
                                                                     <span class="badge bg-success-subtle text-success">{{ $item->payment_status }}</span>
                                                                 </td> --}}
                                                                 <td class="text-center">
-                                                                    @if($item->payment_status === 'completed')
-                                                                        <span class="badge bg-success-subtle text-success">Hoàn thành</span>
+                                                                    @if ($item->payment_status === 'completed')
+                                                                        <span
+                                                                            class="badge bg-success-subtle text-success">Hoàn
+                                                                            thành</span>
                                                                     @elseif($item->payment_status === 'pending')
-                                                                        <span class="badge bg-warning-subtle text-warning">Đang chờ</span>
+                                                                        <span
+                                                                            class="badge bg-warning-subtle text-warning">Đang
+                                                                            chờ</span>
                                                                     @elseif($item->payment_status === 'failed')
-                                                                        <span class="badge bg-danger-subtle text-danger">Thất bại</span>
+                                                                        <span
+                                                                            class="badge bg-danger-subtle text-danger">Thất
+                                                                            bại</span>
                                                                     @else
-                                                                        <span class="badge bg-secondary-subtle text-secondary">{{ $item->payment_status }}</span>
+                                                                        <span
+                                                                            class="badge bg-secondary-subtle text-secondary">{{ $item->payment_status }}</span>
                                                                     @endif
                                                                 </td>
 
@@ -483,7 +490,7 @@
                                                                         <textarea class="form-control mt-2 d-none" id="message-input" name="message_custom" rows="3"
                                                                             placeholder="Nhập nội dung thông báo"></textarea>
                                                                     </div>
-                                                                    <!-- Cách giải quyết -->
+                                                                    {{-- <!-- Cách giải quyết -->
                                                                     <div class="mb-3">
                                                                         <label for="solution" class="form-label">Cách giải
                                                                             quyết</label>
@@ -500,10 +507,33 @@
                                                                             <option value="Khác">Khác </option>
                                                                         </select>
                                                                         <!-- Input hiện khi chọn "Khác" -->
-                                                                        <textarea type="text"
-                                                                            class="form-control mt-2 d-none"
-                                                                            id="solution-input" name="solution_custom"
+                                                                        <textarea type="text" class="form-control mt-2 d-none" id="solution-input" name="solution_custom"
                                                                             placeholder="Nhập cách giải quyết"></textarea>
+                                                                        <!-- Hiển thị đoạn văn -->
+                                                                        <textarea class="form-control mt-2 d-none" id="solution-description" readonly></textarea>
+                                                                    </div> --}}
+
+                                                                    <!-- Cách giải quyết -->
+                                                                    <div class="mb-3">
+                                                                        <label for="solution" class="form-label">Cách giải
+                                                                            quyết</label>
+                                                                        <select class="form-control" id="solution-select"
+                                                                            name="solution">
+                                                                            <option value="" disabled selected>Chọn
+                                                                                cách giải quyết</option>
+                                                                            <option value="Liên hệ khách hàng">Liên hệ
+                                                                                khách hàng</option>
+                                                                            <option value="Hủy đơn hàng">Hủy đơn hàng
+                                                                            </option>
+                                                                            <option value="Giao hàng ngay">Giao hàng ngay
+                                                                            </option>
+                                                                            <option value="Khác">Khác</option>
+                                                                        </select>
+
+                                                                        <!-- Textarea để hiển thị và chỉnh sửa -->
+                                                                        <textarea type="text" class="form-control mt-2 d-none" id="solution-input" name="solution_custom"
+                                                                            placeholder="Nhập hoặc chỉnh sửa cách giải quyết">
+                                                                        </textarea>
                                                                     </div>
 
                                                                     <button type="submit" class="btn btn-primary">Gửi
@@ -866,8 +896,7 @@
                                                                         <!-- Hiển thị ảnh người đánh giá -->
                                                                         @if ($review->user && $review->user->image)
                                                                             <img src="{{ asset('storage/' . $review->user->image) }}"
-                                                                                alt=""
-                                                                                class="avatar-sm rounded">
+                                                                                alt="" class="avatar-sm rounded">
                                                                         @else
                                                                             <div class="avatar-title bg-light rounded">
                                                                                 <span>{{ strtoupper(substr($review->user->name, 0, 1)) }}</span>
@@ -881,8 +910,7 @@
                                                                                 class="text-muted mb-1 fst-italic text-truncate-two-lines">
                                                                                 "{{ $review->review }}"
                                                                             </p>
-                                                                            <div
-                                                                                class="fs-11 align-middle text-warning">
+                                                                            <div class="fs-11 align-middle text-warning">
                                                                                 <!-- Hiển thị sao đánh giá -->
                                                                                 @for ($i = 1; $i <= 5; $i++)
                                                                                     <i
@@ -984,8 +1012,7 @@
                                                 <p class="text-muted lh-base">Refer a new seller to us and earn $100
                                                     per
                                                     refer.</p>
-                                                <button type="button"
-                                                    class="btn btn-primary btn-label rounded-pill"><i
+                                                <button type="button" class="btn btn-primary btn-label rounded-pill"><i
                                                         class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
                                                     Invite Now</button>
                                             </div>
@@ -1061,7 +1088,7 @@
             $('#order-datatable').DataTable();
         });
 
-        // THông báo
+        // THông báo order quá hạn
         $(document).ready(function() {
             // Khi thay đổi chọn nội dung thông báo
             $('#message-select').on('change', function() {
@@ -1095,35 +1122,62 @@
                 $('#notifyModal').modal('show');
             });
 
-            // Xử lý gửi thông báo
-            // $('#notifyForm').on('submit', function(e) {
-            //     e.preventDefault();
 
-            //     var orderId = $('#order_id').val();
-            //     var invoiceId = $('#invoice_id').val();
-            //     var message = $('#message').val();
-            //     var solution = $('#solution').val();
+        });
 
-            //     $.ajax({
-            //         url: '/notify-order',
-            //         type: 'POST',
-            //         data: {
-            //             order_id: orderId,
-            //             invoice_id: invoiceId,
-            //             message: message,
-            //             solution: solution,
-            //             _token: '{{ csrf_token() }}'
-            //         },
-            //         success: function(response) {
-            //             alert(response.message);
-            //             $('#notifyModal').modal('hide');
-            //         },
-            //         error: function() {
-            //             alert('Có lỗi xảy ra. Vui lòng thử lại!');
-            //         }
-            //     });
-            // });
+        $(document).ready(function() {
+            const solutions = {
+                "Liên hệ khách hàng": "Liên hệ với khách hàng để xác nhận đơn hàng và xử lý các vấn đề phát sinh.",
+                "Hủy đơn hàng": "Hủy đơn hàng trong hệ thống và thông báo cho khách hàng qua email hoặc SMS.",
+                "Giao hàng ngay": "Chuẩn bị đơn hàng và giao ngay trong vòng 1 giờ để đảm bảo thời gian giao hàng đúng hạn.",
+                "Khác": ""
+            };
 
+            // Khi thay đổi chọn cách giải quyết
+            $('#solution-select').on('change', function() {
+                const selected = $(this).val();
+
+                if (selected === "Khác") {
+                    $('#solution-input')
+                        .removeClass('d-none')
+                        .val("")
+                        .attr('placeholder', 'Nhập cách giải quyết');
+                } else {
+                    const solutionText = solutions[selected];
+                    $('#solution-input')
+                        .removeClass('d-none')
+                        .val(solutionText) // Điền nội dung mặc định
+                        .removeAttr('placeholder');
+                }
+            });
+
+            // Cập nhật khi sửa văn bản trong textarea
+            $('#solution-input').on('input', function() {
+                const selectedSolution = $('#solution-select').val();
+                const customSolution = $(this).val();
+
+                // Cập nhật lại giải pháp nếu người dùng sửa nội dung trong textarea
+                if (selectedSolution === "Khác") {
+                    solutions[selectedSolution] = customSolution; // Lưu nội dung sửa đổi
+                } else {
+                    // Lưu lại nội dung sửa đổi vào solutions đối với các lựa chọn khác
+                    solutions[selectedSolution] = customSolution;
+                }
+            });
+
+            // Khi submit form, đảm bảo giá trị được gửi đúng
+            $('#notifyForm').on('submit', function() {
+                const selectedSolution = $('#solution-select').val();
+                const customSolution = $('#solution-input').val();
+
+                // Nếu chọn "Khác", lấy giá trị sửa trong textarea
+                if (selectedSolution === "Khác") {
+                    $('#solution-input').val(customSolution); // Đảm bảo lấy giá trị sửa đổi
+                } else {
+                    // Nếu chọn giải pháp khác, đảm bảo giữ nguyên giá trị đã chọn
+                    $('#solution-input').val(solutions[selectedSolution]);
+                }
+            });
         });
     </script>
 @endsection

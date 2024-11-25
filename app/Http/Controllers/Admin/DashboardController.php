@@ -130,7 +130,7 @@ class DashboardController extends Controller
     {
         $orderOvers = DB::table('orders')
             ->where('order_status', 'pending')
-            ->where('created_at', '<=', Carbon::now()->subMinutes(30))
+            ->where('created_at', '<=', Carbon::now()->subMinutes(20))
             ->get();
 
         foreach ($orderOvers as $order) {
@@ -223,10 +223,13 @@ class DashboardController extends Controller
         $message = $request->input('message') === 'Khác'
             ? $request->input('message_custom')
             : $request->input('message');
+
+
         // Nếu chọn "Khác", lấy nội dung từ solution_custom
+        // Lấy nội dung cách giải quyết
         $solution = $request->input('solution') === 'Khác'
             ? $request->input('solution_custom')
-            : $request->input('solution');
+            : $request->input('solution_custom') ?? $request->input('solution');
         // Lưu vào bảng delay_notifications
         DB::table('delay_notifications')->insert([
             // 'id' => $request->input('order_id'),
