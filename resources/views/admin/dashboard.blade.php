@@ -871,7 +871,8 @@
                                                                         <!-- Hiển thị ảnh người đánh giá -->
                                                                         @if ($review->user && $review->user->image)
                                                                             <img src="{{ asset('storage/' . $review->user->image) }}"
-                                                                                alt="" class="avatar-sm rounded">
+                                                                                alt=""
+                                                                                class="avatar-sm rounded">
                                                                         @else
                                                                             <div class="avatar-title bg-light rounded">
                                                                                 <span>{{ strtoupper(substr($review->user->name, 0, 1)) }}</span>
@@ -885,7 +886,8 @@
                                                                                 class="text-muted mb-1 fst-italic text-truncate-two-lines">
                                                                                 "{{ $review->review }}"
                                                                             </p>
-                                                                            <div class="fs-11 align-middle text-warning">
+                                                                            <div
+                                                                                class="fs-11 align-middle text-warning">
                                                                                 <!-- Hiển thị sao đánh giá -->
                                                                                 @for ($i = 1; $i <= 5; $i++)
                                                                                     <i
@@ -915,55 +917,88 @@
                                                 <div class="flex-grow-1">
                                                     <div class="fs-16 align-middle text-warning">
 
+                                                        @for ($i = 1; $i <= floor($averageRating); $i++)
+                                                            <i class="ri-star-fill"></i> <!-- Hiển thị sao đầy đủ -->
+                                                        @endfor
+                                                        @if ($averageRating - floor($averageRating) >= 0.5)
+                                                            <i class="ri-star-half-fill"></i> <!-- Hiển thị nửa sao -->
+                                                        @endif
+                                                        @for ($i = ceil($averageRating); $i < 5; $i++)
+                                                            <i class="ri-star-line"></i> <!-- Hiển thị sao rỗng -->
+                                                        @endfor
                                                     </div>
                                                 </div>
                                                 <div class="flex-shrink-0">
-                                                    <h6 class="mb-0">{{ number_format($averageRating, 1) }} out of 5
-                                                    </h6>
+                                                    <h6 class="mb-0">{{ round($averageRating, 1) }} out of 5</h6>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <h6 class="mb-0">{{ number_format($averageRating, 1) }} out of 5
+                                                </h6>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+
+                                        <div class="text-muted">
+                                            Total <span
+                                                class="fw-medium">{{ number_format($totalReviews / 1000, 2) }}k</span>
+                                            reviews
+                                        </div>
+                                    </div>
+                                    @foreach ([5, 4, 3, 2, 1] as $rating)
+                                        <div class="row align-items-center g-2">
+                                            <div class="col-auto">
+                                                <div class="p-1">
+                                                    <h6 class="mb-0">{{ $rating }} star</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="p-1">
+                                                    <div class="progress animated-progress progress-sm">
+                                                        <div class="progress-bar
+                                                        @if ($rating == 5) bg-success
+                                                        @elseif($rating == 4) bg-primary
+                                                        @elseif($rating == 3) bg-warning
+                                                        @else bg-danger @endif"
+                                                            role="progressbar"
+                                                            style="width: {{ $ratingPercentages[$rating]['percentage'] }}%"
+                                                            aria-valuenow="{{ $ratingPercentages[$rating]['percentage'] }}"
+                                                            aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="p-1">
+                                                    <h6 class="mb-0 text-muted">
+                                                        {{ number_format($ratingPercentages[$rating]['count']) }}</h6>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="text-center">
-                                            <div class="text-muted">Tất cả <span
-                                                    class="fw-medium">{{ number_format($totalReviews) }}</span>
-                                                Đánh Giá</div>
-                                        </div>
+                                    @endforeach
 
-                                        <div class="mt-3">
-                                            @foreach ([5, 4, 3, 2, 1] as $rating)
-                                                <div class="row align-items-center g-2">
-                                                    <div class="col-auto">
-                                                        <div class="p-1">
-                                                            <h6 class="mb-0">{{ $rating }} star</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="p-1">
-                                                            <div class="progress animated-progress progress-sm">
-                                                                <div class="progress-bar
-                                                                @if ($rating == 5) bg-success
-                                                                @elseif($rating == 4) bg-primary
-                                                                @elseif($rating == 3) bg-warning
-                                                                @else bg-danger @endif"
-                                                                    role="progressbar"
-                                                                    style="width: {{ $ratingPercentages[$rating]['percentage'] }}%"
-                                                                    aria-valuenow="{{ $ratingPercentages[$rating]['percentage'] }}"
-                                                                    aria-valuemin="0" aria-valuemax="100">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <div class="p-1">
-                                                            <h6 class="mb-0 text-muted">
-                                                                {{ number_format($ratingPercentages[$rating]['count']) }}
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
+                                    <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
+                                        <div class="card-body">
+                                            <img src="/velzon/assets/images/giftbox.png" alt="">
+                                            <div class="mt-4">
+                                                <h5>Invite New Seller</h5>
+                                                <p class="text-muted lh-base">Refer a new seller to us and earn $100
+                                                    per
+                                                    refer.</p>
+                                                <button type="button"
+                                                    class="btn btn-primary btn-label rounded-pill"><i
+                                                        class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
+                                                    Invite Now</button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="text-muted">Tất cả <span
+                                            class="fw-medium">{{ number_format($totalReviews) }}</span>
+                                        Đánh Giá</div>
                                 </div>
                             </div> <!-- end card-->
                         </div> <!-- end .rightbar-->

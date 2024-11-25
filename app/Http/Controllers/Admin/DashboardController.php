@@ -4,54 +4,108 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Models\ProductReview;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    // Phương thức hiển thị thống kê tổng quát
     public function index()
     {
-        $productCount = Product::count(); // Đếm số sản phẩm
-        $orderCount = Order::count(); // Đếm số đơn hàng
-        $revenue = Order::sum('grand_total'); // Tính tổng doanh thu
-        $totalViews = Product::sum('view'); // Tính tổng lượt xem sản phẩm
-        $totalReviews = ProductReview::count();
+        return view('admin.dashboard', [
+            'productCount' => $this->getProductCount(),
+            'orderCount' => $this->getOrderCount(),
+            'revenue' => $this->getTotalRevenue(),
+            'totalViews' => $this->getTotalViews(),
+            'totalReviews' => $this->getTotalReviews(),
+            'reviews' => $this->getRecentReviews(),
+            'ratingPercentages' => $this->calculateRatingPercentages(),
+            'averageRating' => $this->calculateAverageRating(),
+            'pendingOrders' => $this->getPendingOrders(),
+            'lowStockProducts' => $this->getLowStockProducts(),
+            'orderOvers' => $this->getPendingOrdersOver30Minutes(),
+        ]);
+    }
 
-        // Lấy 4 đánh giá mới nhất
-        $reviews = ProductReview::with(['user', 'product'])
+    private function getProductCount()
+    {
+        return Product::count();
+    }
+
+    private function getOrderCount()
+    {
+        return Order::count();
+    }
+
+    private function getTotalRevenue()
+    {
+        return Order::sum('grand_total');
+    }
+
+    private function getTotalViews()
+    {
+        return Product::sum('view');
+    }
+
+    private function getTotalReviews()
+    {
+        return ProductReview::count();
+    }
+
+    private function getRecentReviews()
+    {
+        return ProductReview::with(['user', 'product'])
             ->latest()
-            ->take(4)  // Lấy 4 đánh giá mới nhất
+            ->take(4)
             ->get();
+    }
 
-        // Lấy số lượng đánh giá theo từng mức sao (1 đến 5 sao)
-        $ratingsCount = ProductReview::select(DB::raw('rating, COUNT(*) as count'))
-            ->groupBy('rating')
+    private function calculateRatingPercentages()
+    {
+        $ratingsCount = ProductReview::select(DB::raw('ROUND(rating) as rounded_rating, COUNT(*) as count'))
+            ->groupBy('rounded_rating')
             ->get()
-            ->keyBy('rating'); // Tạo một mảng với key là rating (1-5)
+            ->keyBy('rounded_rating');
 
-        // Tính tỷ lệ phần trăm cho từng mức sao
+        $totalReviews = $this->getTotalReviews();
         $ratingPercentages = [];
+
         foreach ([5, 4, 3, 2, 1] as $rating) {
             $count = $ratingsCount->get($rating)->count ?? 0;
             $percentage = $totalReviews ? ($count / $totalReviews) * 100 : 0;
             $ratingPercentages[$rating] = [
                 'count' => $count,
-                'percentage' => $percentage,
+                'percentage' => round($percentage, 2),
             ];
         }
 
-        // Tính điểm trung bình của tất cả các đánh giá
-        $averageRating = ProductReview::avg('rating');
+        return $ratingPercentages;
+    }
 
-        // Lấy ra đơn hàng mới nhất chưa xử lý (trạng thái pending)
-        $pendingOrders = Order::with('addresses')
+    private function calculateAverageRating()
+    {
+        $ratingsCount = ProductReview::select(DB::raw('ROUND(rating) as rounded_rating, COUNT(*) as count'))
+            ->groupBy('rounded_rating')
+            ->get()
+            ->keyBy('rounded_rating');
+
+        $totalReviews = $this->getTotalReviews();
+        $totalStars = 0;
+
+        foreach ($ratingsCount as $rating => $data) {
+            $totalStars += $rating * $data->count;
+        }
+
+        return $totalReviews ? round($totalStars / $totalReviews, 1) : 0;
+    }
+
+    private function getPendingOrders()
+    {
+        return Order::with('addresses')
             ->select(
-                'orders.invoice_id', // Lấy cột invoice_id từ bảng orders.
+                'orders.invoice_id',
                 'addresses.first_name',
                 'addresses.last_name',
                 'orders.grand_total',
@@ -59,51 +113,45 @@ class DashboardController extends Controller
                 'orders.order_status',
                 'orders.created_at'
             )
-            ->join('addresses', 'orders.address_id', '=', 'addresses.id') // join 2 bảng address và order
+            ->join('addresses', 'orders.address_id', '=', 'addresses.id')
             ->where('orders.order_status', 'pending')
-            ->orderByDesc('orders.created_at') // Sắp xếp kết quả theo thứ tự giảm dần của cột created_at trong bảng orders.
+            ->orderByDesc('orders.created_at')
             ->get();
+    }
 
-        // Lấy danh sách sản phẩm có quantity dưới 10
-        $lowStockProducts = Product::where('qty', '<', 10)
+    private function getLowStockProducts()
+    {
+        return Product::where('qty', '<=', 10)
             ->select('id', 'name', 'thumb_image', 'qty')
             ->get();
+    }
 
-        // Láy các đơn hàng quá 30 phút và order = pending
+    private function getPendingOrdersOver30Minutes()
+    {
         $orderOvers = DB::table('orders')
-            ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
-            ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
+            ->where('order_status', 'pending')
+            ->where('created_at', '<=', Carbon::now()->subMinutes(30))
             ->get();
 
-        // Thêm thời gian tính toán "bao nhiêu phút trước"
         foreach ($orderOvers as $order) {
             $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
         }
-        // Trả về view với tất cả các biến đã được truyền
-        return view('admin.dashboard', compact(
-            'productCount',
-            'orderCount',
-            'reviews',
-            'revenue',
-            'totalViews',
-            'totalReviews',
-            'ratingPercentages',
-            'averageRating',
-            'pendingOrders',
-            'lowStockProducts',
-            'orderOvers'
-        ));
+
+        return $orderOvers;
     }
 
-    // Phương thức thống kê doanh thu theo tháng
     public function chart(Request $request)
     {
-        // Thống kê doanh thu theo tháng
+        $revenueStats = $this->getMonthlyRevenueStats();
+        return view('admin.chart', compact('revenueStats'));
+    }
+
+    private function getMonthlyRevenueStats()
+    {
         $revenueStats = [];
         for ($i = 1; $i <= 12; $i++) {
-            // Lọc các bản ghi trong bảng orders dựa trên tháng
             $totalRevenue = Order::whereMonth('created_at', $i)
-                ->whereYear('created_at', date('Y')) // Lọc các bản ghi theo năm
+                ->whereYear('created_at', date('Y'))
                 ->sum('grand_total');
 
             $revenueStats[] = [
@@ -112,25 +160,25 @@ class DashboardController extends Controller
             ];
         }
 
-        return view('admin.chart', compact('revenueStats'));
+        return $revenueStats;
     }
 
-    // Phương thức thống kê nguồn doanh thu
     public function source(Request $request)
     {
-        $dateRange = $request->input('date_range', now()->format('Y-m'));
-        $sourceStats = Order::with('items.product.category') // Tự động tải dữ liệu liên quan cho các mô hình items, product, và category.
+        $sourceStats = $this->getSourceRevenueStats($request->input('date_range', now()->format('Y-m')));
+        return view('admin.source', compact('sourceStats'));
+    }
+
+    private function getSourceRevenueStats($dateRange)
+    {
+        return Order::with('items.product.category')
             ->select(DB::raw('categories.name as category_name, SUM(order_items.qty * order_items.unit_price) as total_revenue'))
-            // Nối orders bảng với order_items bảng trên id
             ->join('order_items', 'orders.id', '=', 'order_items.order_id')
             ->join('products', 'order_items.product_id', '=', 'products.id')
             ->join('categories', 'products.category_id', '=', 'categories.id')
-            // Lọc các bản ghi có created_at cột trong orders bảng bắt đầu bằng giá trị $dateRange
             ->where('orders.created_at', 'like', "$dateRange%")
             ->groupBy('categories.name')
             ->get();
-
-        return view('admin.source', compact('sourceStats'));
     }
 
     // Phương thức lấy thông báo đơn hàng chưa xử lý
