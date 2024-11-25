@@ -7,6 +7,12 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\PizzeBase;
+use App\Models\PizzeEdge;
+use App\Models\ProductOption;
+use App\Models\ProductSize;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -32,30 +38,62 @@ class ProductController extends Controller
         $slug = '';
         $categories = Category::query()->pluck('name', 'id')->all();
 
-        return view("admin.products.create", compact('categories', 'sku', 'slug'));
+        $sizes = ProductSize::select('id', 'name', 'price')->get();
+        $edges = PizzeEdge::select('id', 'name', 'price')->get();
+        $bases = PizzeBase::select('id', 'name', 'price')->get();
+
+        return view("admin.products.create", compact('categories', 'sku', 'slug', 'sizes', 'edges', 'bases'));
     }
 
+    private function calculateOptionPrice($sizeId, $edgeId, $baseId)
+    {
+        $sizePrice = ProductSize::find($sizeId)?->price ?? 0;
+        $edgePrice = PizzeEdge::find($edgeId)?->price ?? 0;
+        $basePrice = PizzeBase::find($baseId)?->price ?? 0;
+
+        return $sizePrice + $edgePrice + $basePrice;
+    }
 
     public function store(StoreProductRequest $request)
     {
-        $data = $request->except('thumb_image');
-        if ($request->hasFile('thumb_image')) {
-            $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
+        try {
+            DB::transaction(function () use ($request) {
+                // Lưu dữ liệu sản phẩm
+                $data = $request->except('thumb_image', 'sizes', 'edges', 'bases'); // Loại bỏ các trường không liên quan
+                if ($request->hasFile('thumb_image')) {
+                    $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
+                }
+
+                $data['slug'] = $this->createSlug($request->name);
+                $data['status'] = $request->qty > 0 ? 1 : 0; // Trạng thái tự động
+                $data['view'] = 0; // Giá trị mặc định
+
+                $product = Product::query()->create($data);
+
+                // Nếu sizes tồn tại và không rỗng
+                if ($request->filled('sizes')) {
+                    $sizes = $request->sizes; // Lấy danh sách size từ request
+                    $sizePriceData = [];
+                    foreach ($sizes as $sizeId) {
+                        $size = ProductSize::find($sizeId);
+                        if ($size) {
+                            $sizePriceData[$sizeId] = [
+                                'price' => $product->offer_price + $size->price,
+                            ];
+                        }
+                    }
+
+                    if (!empty($sizePriceData)) {
+                        $product->productSizes()->attach($sizePriceData);
+                    }
+                }
+            });
+
+            return redirect()->route('admin.products.index')->with('success', 'Thêm thành công');
+        } catch (Exception $exception) {
+            return back()->withErrors($exception->getMessage())->withInput();
         }
-
-        $data['slug'] = $this->createSlug($request->name);
-
-        // Tự động cập nhật trạng thái dựa vào qty
-        $data['status'] = $request->qty > 0 ? 1 : 0;
-
-        // Đảm bảo trường 'view' có giá trị mặc định là 0
-        $data['view'] = 0;
-
-        Product::query()->create($data);
-        return back()
-            ->with('success', 'Thêm sản phẩm thành công!');
     }
-
 
     public function show(Product $product)
     {
@@ -105,15 +143,32 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->thumb_image && Storage::exists($product->thumb_image)) {
-            // Xóa file thumb_image từ storage
-            Storage::delete($product->thumb_image);
+        try {
+            DB::transaction(function () use ($product) {
+                // Làm trống tags - Xóa tags
+                $product->productSizes()->sync([]);
+
+                // Xóa galleries
+                // $product->galleries()->delete();
+
+                // Xóa product
+                $product->delete();
+            });
+
+            // Xóa ảnh trong product
+            if ($product->thumb_image && Storage::exists($product->thumb_image)) {
+                // Xóa file thumb_image từ storage
+                Storage::delete($product->thumb_image);
+            }
+
+            // foreach ($product->galleries as $item) {
+            //     $item
+            // }
+
+            return redirect()->route('admin.products.index')->with('success', 'Xóa thành công');
+        } catch (Exception $exception) {
+            return back()->withErrors($exception->getMessage())->withInput();
         }
-
-        $product->delete();
-
-        return back()
-            ->with('success', 'Xoá sản phẩm thành công!');
     }
 
     protected function generateUniqueSku()

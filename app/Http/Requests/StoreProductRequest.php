@@ -35,6 +35,8 @@ class StoreProductRequest extends FormRequest
             'sku' => 'required|string|max:255|unique:products,sku',
             'show_at_home' => 'required|boolean',
             'status' => 'required|boolean',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'nullable|integer',
         ];
     }
 

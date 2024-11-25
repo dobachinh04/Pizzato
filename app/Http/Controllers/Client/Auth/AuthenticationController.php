@@ -20,7 +20,7 @@ class AuthenticationController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $address = Address::where('user_id', $user->id)->first();
+            $address = Address::where('user_id', $user->id)->get();
             return response()->json([
                 'message' => 'Đăng nhập thành công',
                 'user' => $user,

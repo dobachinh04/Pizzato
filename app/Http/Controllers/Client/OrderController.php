@@ -9,14 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $userId = Auth::id();
+        $userId = $request->get('user_id');
         $orders = Order::where('user_id', $userId)
             ->with(['users', 'addresses'])
             ->get();
 
-        return view('client.order_history.index', compact('orders'));
+        return response()->json([
+            'success' => true,
+            'orders' => $orders
+        ]);
     }
 
     public function show($orderId)

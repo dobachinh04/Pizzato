@@ -52,7 +52,7 @@
                                             <th>Trạng Thái Thanh Toán</th>
                                             {{-- sửa ngày thanh toán thành ngày đặt --}}
                                             <th>Ngày Đặt Hàng (Nhớ sửa)</th>
-                                            <th>Trạng Thái Giao Hàng</th>
+                                            <th>Trạng Thái đơn hàng</th>
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
