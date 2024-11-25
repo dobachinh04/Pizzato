@@ -108,13 +108,15 @@ class DashboardController extends Controller
         // Gộp tất cả biến vào view
         return view('admin.dashboard', compact(
             'productCount',
-            'orderCount',
+            'orderCount'
+             // Đừng quên thêm biến này vào compact()
+        ));
 
         // Láy các đơn hàng quá 30 phút và order = pending
-        $orderOvers = DB::table('orders')
-            ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
-            ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
-            ->get();
+        // $orderOvers = DB::table('orders')
+        //     ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
+        //     ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
+        //     ->get();
 
         // Thêm thời gian tính toán "bao nhiêu phút trước"
         foreach ($orderOvers as $order) {
