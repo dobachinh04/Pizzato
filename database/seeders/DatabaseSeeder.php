@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             ProductReviewSeeder::class,
             OrderSeeder::class,
             ProductSizeSeeder::class,
-            PizzeBaseSeeder::class,
-            PizzeEdgeSeeder::class,
+            PizzaBaseSeeder::class,
+            PizzaEdgeSeeder::class,
         ]);
 
         DB::table('users')->insert([

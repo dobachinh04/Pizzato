@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\PizzeEdge;
+use App\Models\PizzaEdge;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PizzeEdgeSeeder extends Seeder
+class PizzaEdgeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,7 +27,7 @@ class PizzeEdgeSeeder extends Seeder
         ];
 
         foreach ($edges as $edge) {
-            PizzeEdge::create($edge);
+            PizzaEdge::create($edge);
         }
     }
 }

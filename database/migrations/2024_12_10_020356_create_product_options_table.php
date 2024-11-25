@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\PizzeBase;
-use App\Models\PizzeEdge;
+use App\Models\PizzaBase;
+use App\Models\PizzaEdge;
 use App\Models\Product;
 use App\Models\ProductSize;
 use Illuminate\Database\Migrations\Migration;
@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->id(); // ID tự tăng
             // $table->foreignIdFor(Product::class)->constrained();
             // $table->foreignId('size_id')->nullable()->constrained('product_sizes'); // Rõ ràng tên cột
-            // $table->foreignId('edge_id')->nullable()->constrained('pizze_edges'); // Rõ ràng tên cột
-            // $table->foreignId('base_id')->nullable()->constrained('pizze_bases'); // Rõ ràng tên cột
+            // $table->foreignId('edge_id')->nullable()->constrained('pizza_edges'); // Rõ ràng tên cột
+            // $table->foreignId('base_id')->nullable()->constrained('pizza_bases'); // Rõ ràng tên cột
 
             // $table->double('price');
             // $table->timestamps();

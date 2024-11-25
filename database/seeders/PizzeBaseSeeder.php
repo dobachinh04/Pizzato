@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\PizzeBase;
+use App\Models\PizzaBase;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PizzeBaseSeeder extends Seeder
+class PizzaBaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -32,7 +32,7 @@ class PizzeBaseSeeder extends Seeder
         ];
 
         foreach ($bases as $base) {
-            PizzeBase::create($base);
+            PizzaBase::create($base);
         }
     }
 }

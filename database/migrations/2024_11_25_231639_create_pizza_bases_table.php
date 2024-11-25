@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pizze_edges', function (Blueprint $table) {
+        Schema::create('pizza_bases', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->double('price');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pizze_edges');
+        Schema::dropIfExists('pizza_bases');
     }
 };

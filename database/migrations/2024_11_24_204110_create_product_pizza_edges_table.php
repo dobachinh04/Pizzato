@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\PizzeEdge;
+use App\Models\PizzaEdge;
 use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('product_pizza_edges', function (Blueprint $table) {
             $table->foreignIdFor(Product::class)->constrained();
-            $table->foreignIdFor(PizzeEdge::class)->constrained();
+            $table->foreignIdFor(PizzaEdge::class)->constrained();
 
-            $table->primary(['product_id', 'pizze_edge_id']);
+            $table->primary(['product_id', 'pizza_edge_id']);
 
             $table->double('price');
             $table->timestamps();

@@ -34,11 +34,11 @@ class ProductOption extends Model
 
     // public function edge()
     // {
-    //     return $this->belongsTo(PizzeEdge::class, 'edge_id');
+    //     return $this->belongsTo(PizzaEdge::class, 'edge_id');
     // }
 
     // public function base()
     // {
-    //     return $this->belongsTo(PizzeBase::class, 'base_id');
+    //     return $this->belongsTo(PizzaBase::class, 'base_id');
     // }
 }

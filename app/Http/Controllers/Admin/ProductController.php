@@ -7,8 +7,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\PizzeBase;
-use App\Models\PizzeEdge;
+use App\Models\PizzaBase;
+use App\Models\PizzaEdge;
 use App\Models\ProductOption;
 use App\Models\ProductSize;
 use Exception;
@@ -39,8 +39,8 @@ class ProductController extends Controller
         $categories = Category::query()->pluck('name', 'id')->all();
 
         $sizes = ProductSize::select('id', 'name', 'price')->get();
-        $edges = PizzeEdge::select('id', 'name', 'price')->get();
-        $bases = PizzeBase::select('id', 'name', 'price')->get();
+        $edges = PizzaEdge::select('id', 'name', 'price')->get();
+        $bases = PizzaBase::select('id', 'name', 'price')->get();
 
         return view("admin.products.create", compact('categories', 'sku', 'slug', 'sizes', 'edges', 'bases'));
     }
@@ -48,8 +48,8 @@ class ProductController extends Controller
     private function calculateOptionPrice($sizeId, $edgeId, $baseId)
     {
         $sizePrice = ProductSize::find($sizeId)?->price ?? 0;
-        $edgePrice = PizzeEdge::find($edgeId)?->price ?? 0;
-        $basePrice = PizzeBase::find($baseId)?->price ?? 0;
+        $edgePrice = PizzaEdge::find($edgeId)?->price ?? 0;
+        $basePrice = PizzaBase::find($baseId)?->price ?? 0;
 
         return $sizePrice + $edgePrice + $basePrice;
     }

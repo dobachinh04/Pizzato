@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PizzeBase;
-use App\Http\Requests\StorePizzeBaseRequest;
-use App\Http\Requests\UpdatePizzeBaseRequest;
+use App\Models\PizzaEdge;
+use App\Http\Requests\StorePizzaEdgeRequest;
+use App\Http\Requests\UpdatePizzaEdgeRequest;
 
-class PizzeBaseController extends Controller
+class PizzaEdgeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class PizzeBaseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePizzeBaseRequest $request)
+    public function store(StorePizzaEdgeRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class PizzeBaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PizzeBase $pizzeBase)
+    public function show(PizzaEdge $pizzaEdge)
     {
         //
     }
@@ -43,7 +43,7 @@ class PizzeBaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PizzeBase $pizzeBase)
+    public function edit(PizzaEdge $pizzaEdge)
     {
         //
     }
@@ -51,7 +51,7 @@ class PizzeBaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePizzeBaseRequest $request, PizzeBase $pizzeBase)
+    public function update(UpdatePizzaEdgeRequest $request, PizzaEdge $pizzaEdge)
     {
         //
     }
@@ -59,7 +59,7 @@ class PizzeBaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PizzeBase $pizzeBase)
+    public function destroy(PizzaEdge $pizzaEdge)
     {
         //
     }

@@ -59,12 +59,12 @@ class Product extends Model
 
     function pizzaEdges()
     {
-        return $this->belongsToMany(PizzeEdge::class);
+        return $this->belongsToMany(PizzaEdge::class);
     }
 
     function pizzaBase()
     {
-        return $this->belongsToMany(PizzeBase::class);
+        return $this->belongsToMany(PizzaBase::class);
     }
 
     public function productOptions()
