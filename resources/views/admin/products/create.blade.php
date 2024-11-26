@@ -124,22 +124,22 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        {{-- <div class="form-group mt-3">
-                                                                            <label for="images" class="form-label">Ảnh
-                                                                                Phụ</label>
+                                                                        <div class="form-group mt-3">
+                                                                            <label for="galleries" class="form-label">Các
+                                                                                Ảnh Phụ</label>
                                                                             <input type="file" class="form-control"
-                                                                                id="images" name="images[]" multiple>
-                                                                            @error('images[]')
+                                                                                id="galleries" name="galleries[]" multiple>
+                                                                            @error('galleries.*')
                                                                                 <span
                                                                                     class="text-danger">{{ $message }}</span>
                                                                             @enderror
-                                                                        </div> --}}
+                                                                        </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
                                                                             <label>Price</label>
-                                                                            <input type="text" name="price"
+                                                                            <input type="number" name="price"
                                                                                 class="form-control"
                                                                                 value="{{ old('price') }}">
                                                                             @error('price')
@@ -150,7 +150,7 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Offer Price</label>
-                                                                            <input type="text" name="offer_price"
+                                                                            <input type="number" name="offer_price"
                                                                                 class="form-control"
                                                                                 value="{{ old('offer_price') }}">
                                                                             @error('offer_price')
@@ -161,7 +161,7 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Quantity</label>
-                                                                            <input type="text" name="qty"
+                                                                            <input type="number" name="qty"
                                                                                 class="form-control"
                                                                                 value="{{ old('qty') }}">
                                                                             @error('qty')

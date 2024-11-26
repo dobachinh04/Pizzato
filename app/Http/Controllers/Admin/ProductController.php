@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\PizzaBase;
 use App\Models\PizzaEdge;
-use App\Models\ProductOption;
+use App\Models\ProductGallery;
 use App\Models\ProductSize;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -60,8 +60,17 @@ class ProductController extends Controller
             DB::transaction(function () use ($request) {
                 // Lưu dữ liệu sản phẩm
                 $data = $request->except('thumb_image', 'sizes', 'edges', 'bases'); // Loại bỏ các trường không liên quan
+
                 if ($request->hasFile('thumb_image')) {
                     $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
+                }
+
+                if ($request->hasFile('galleries')) {
+                    $galleryPaths = []; // Mảng để lưu đường dẫn các file
+                    foreach ($request->file('galleries') as $image) {
+                        $galleryPaths[] = Storage::put('galleries', $image); // Lưu từng file và lưu đường dẫn vào mảng
+                    }
+                    $data['galleries'] = $galleryPaths; // Lưu mảng trực tiếp vào cơ sở dữ liệu
                 }
 
                 $data['slug'] = $this->createSlug($request->name);
@@ -69,6 +78,16 @@ class ProductController extends Controller
                 $data['view'] = 0; // Giá trị mặc định
 
                 $product = Product::query()->create($data);
+
+                // Lưu nhiều ảnh vào bảng `product_galleries` nếu cần
+                if ($request->hasFile('galleries')) {
+                    foreach ($request->file('galleries') as $image) {
+                        ProductGallery::create([
+                            'product_id' => $product->id,
+                            'galleries' => Storage::put('galleries', $image), // Lưu file vào thư mục 'galleries'
+                        ]);
+                    }
+                }
 
                 // Xử lý sizes
                 if ($request->filled('sizes')) {
@@ -124,7 +143,6 @@ class ProductController extends Controller
             return back()->withErrors($exception->getMessage())->withInput();
         }
     }
-
 
     public function show(Product $product)
     {
