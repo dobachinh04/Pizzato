@@ -11,6 +11,7 @@ use App\Http\Controllers\Client\DetailController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Client\CouponController;
+use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\ProductReviewController;
 
 /*
@@ -72,3 +73,7 @@ Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview'])
 
 // OrderController
 Route::get('/orders', [OrderController::class, 'index']);
+
+// Notification of delay orders
+// Route::get('/overdue-orders', [OrderController::class, 'overdueOrders']);
+Route::get('/notifications/invoice/{invoice_id}', [NotificationController::class, 'getNotificationByInvoiceId']);
