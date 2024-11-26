@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductReview;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NotifyDelayOrderRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -211,13 +212,13 @@ class DashboardController extends Controller
     public function notifyOrder(Request $request)
     {
         // Validate dữ liệu
-        $request->validate([
-            'order_id' => 'required|integer',
-            'invoice_id' => 'required|string',
-            'message' => 'required|string|max:255',
-            'solution' => 'nullable|string|max:255',
-            'solution_custom' => 'nullable|string|max:255',
-        ]);
+        // $request->validate([
+        //     'order_id' => 'required|integer',
+        //     'invoice_id' => 'required|string',
+        //     'message' => 'required|string|max:255',
+        //     'solution' => 'nullable|string|max:255',
+        //     'solution_custom' => 'nullable|string|max:255',
+        // ]);
 
         // Lấy nội dung thông báo
         $message = $request->input('message') === 'Khác'

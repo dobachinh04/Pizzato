@@ -463,19 +463,20 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="notifyForm"
+                                                                <form id="notifyForm" class="needs-validation"
                                                                     action="{{ route('admin.notify.order') }}"
-                                                                    method="POST">
+                                                                    method="POST" novalidate>
                                                                     @csrf
                                                                     <input type="hidden" id="order_id" name="order_id">
                                                                     <input type="hidden" id="invoice_id"
                                                                         name="invoice_id">
+
                                                                     <!-- Nội dung thông báo -->
                                                                     <div class="mb-3">
                                                                         <label for="message" class="form-label">Nội dung
                                                                             thông báo</label>
                                                                         <select class="form-control" id="message-select"
-                                                                            name="message">
+                                                                            name="message" required>
                                                                             <option value="" disabled selected>Chọn
                                                                                 nội dung thông báo</option>
                                                                             <option value="Đơn hàng chưa được thanh toán">
@@ -486,39 +487,17 @@
                                                                                 kiểm tra lại thông tin</option>
                                                                             <option value="Khác">Khác</option>
                                                                         </select>
-                                                                        <!-- Input hiện khi chọn "Khác" -->
                                                                         <textarea class="form-control mt-2 d-none" id="message-input" name="message_custom" rows="3"
                                                                             placeholder="Nhập nội dung thông báo"></textarea>
+                                                                        <div class="invalid-feedback">Hãy nhập lý do</div>
                                                                     </div>
-                                                                    {{-- <!-- Cách giải quyết -->
-                                                                    <div class="mb-3">
-                                                                        <label for="solution" class="form-label">Cách giải
-                                                                            quyết</label>
-                                                                        <select class="form-control" id="solution-select"
-                                                                            name="solution">
-                                                                            <option value="" disabled selected>Chọn
-                                                                                cách giải quyết</option>
-                                                                            <option value="Liên hệ khách hàng">Liên hệ
-                                                                                khách hàng</option>
-                                                                            <option value="Hủy đơn hàng">Hủy đơn hàng
-                                                                            </option>
-                                                                            <option value="Giao hàng ngay">Giao hàng ngay
-                                                                            </option>
-                                                                            <option value="Khác">Khác </option>
-                                                                        </select>
-                                                                        <!-- Input hiện khi chọn "Khác" -->
-                                                                        <textarea type="text" class="form-control mt-2 d-none" id="solution-input" name="solution_custom"
-                                                                            placeholder="Nhập cách giải quyết"></textarea>
-                                                                        <!-- Hiển thị đoạn văn -->
-                                                                        <textarea class="form-control mt-2 d-none" id="solution-description" readonly></textarea>
-                                                                    </div> --}}
 
                                                                     <!-- Cách giải quyết -->
                                                                     <div class="mb-3">
                                                                         <label for="solution" class="form-label">Cách giải
                                                                             quyết</label>
                                                                         <select class="form-control" id="solution-select"
-                                                                            name="solution">
+                                                                            name="solution" required>
                                                                             <option value="" disabled selected>Chọn
                                                                                 cách giải quyết</option>
                                                                             <option value="Liên hệ khách hàng">Liên hệ
@@ -529,16 +508,16 @@
                                                                             </option>
                                                                             <option value="Khác">Khác</option>
                                                                         </select>
-
-                                                                        <!-- Textarea để hiển thị và chỉnh sửa -->
                                                                         <textarea type="text" class="form-control mt-2 d-none" id="solution-input" name="solution_custom"
-                                                                            placeholder="Nhập hoặc chỉnh sửa cách giải quyết">
-                                                                        </textarea>
+                                                                            placeholder="Nhập hoặc chỉnh sửa cách giải quyết"></textarea>
+                                                                        <div class="invalid-feedback">Hãy nhập cách giải
+                                                                            quyết</div>
                                                                     </div>
 
                                                                     <button type="submit" class="btn btn-primary">Gửi
                                                                         thông báo</button>
                                                                 </form>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1121,10 +1100,9 @@
                 // Hiển thị modal
                 $('#notifyModal').modal('show');
             });
-
-
         });
 
+        // Tuỳ chỉnh textarea
         $(document).ready(function() {
             const solutions = {
                 "Liên hệ khách hàng": "Liên hệ với khách hàng để xác nhận đơn hàng và xử lý các vấn đề phát sinh.",
@@ -1179,5 +1157,170 @@
                 }
             });
         });
+
+
+        // validate form order notify
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('notifyForm');
+            const messageSelect = document.getElementById('message-select');
+            const messageInput = document.getElementById('message-input');
+            const solutionSelect = document.getElementById('solution-select');
+            const solutionInput = document.getElementById('solution-input');
+
+            // Hiển thị các input tùy chỉnh khi chọn "Khác"
+            messageSelect.addEventListener('change', function() {
+                if (messageSelect.value === 'Khác') {
+                    messageInput.classList.remove('d-none');
+                    messageInput.required = true;
+                } else {
+                    messageInput.classList.add('d-none');
+                    messageInput.required = false;
+                }
+            });
+
+            solutionSelect.addEventListener('change', function() {
+                if (solutionSelect.value === 'Khác') {
+                    solutionInput.classList.remove('d-none');
+                    solutionInput.required = true;
+                } else {
+                    solutionInput.classList.add('d-none');
+                    solutionInput.required = false;
+                }
+            });
+
+            // Xử lý submit form
+            form.addEventListener('submit', function(event) {
+                // Nếu form không hợp lệ, ngăn chặn gửi form
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                // Thêm class 'was-validated' để kích hoạt hiển thị lỗi
+                form.classList.add('was-validated');
+            });
+        });
+
+        //         // Xử lý hiển thị input tùy chỉnh khi chọn "Khác"
+        // function handleCustomInput(selectElement, inputElement) {
+        //     const selected = selectElement.value;
+        //     if (selected === 'Khác') {
+        //         inputElement.classList.remove('d-none');
+        //         inputElement.required = true;
+        //     } else {
+        //         inputElement.classList.add('d-none');
+        //         inputElement.required = false;
+        //     }
+        // }
+
+        // // Xử lý nút Thông báo
+        // function handleNotifyButtonClick(orderIdField, invoiceIdField, modalElement, buttonElement) {
+        //     const orderId = buttonElement.dataset.id;
+        //     const invoiceId = buttonElement.dataset.invoice;
+
+        //     // Gán giá trị vào các trường ẩn
+        //     orderIdField.value = orderId;
+        //     invoiceIdField.value = invoiceId;
+
+        //     // Hiển thị modal
+        //     $(modalElement).modal('show');
+        // }
+
+        // // Xử lý textarea tuỳ chỉnh
+        // function handleSolutionChange(solutionSelect, solutionInput, solutions) {
+        //     const selected = solutionSelect.value;
+
+        //     if (selected === "Khác") {
+        //         solutionInput.classList.remove('d-none');
+        //         solutionInput.value = "";
+        //         solutionInput.placeholder = 'Nhập cách giải quyết';
+        //     } else {
+        //         const solutionText = solutions[selected];
+        //         solutionInput.classList.remove('d-none');
+        //         solutionInput.value = solutionText;
+        //         solutionInput.placeholder = "";
+        //     }
+        // }
+
+        // // Lưu lại giá trị sửa đổi
+        // function saveSolutionChange(solutionSelect, solutionInput, solutions) {
+        //     const selectedSolution = solutionSelect.value;
+        //     const customSolution = solutionInput.value;
+
+        //     if (selectedSolution) {
+        //         solutions[selectedSolution] = customSolution;
+        //     }
+        // }
+
+        // // Xử lý submit form
+        // function handleFormSubmit(form, messageSelect, messageInput, solutionSelect, solutionInput) {
+        //     // Xử lý sự kiện khi form được submit
+        //     form.addEventListener('submit', function(event) {
+        //         // Nếu form không hợp lệ, ngăn chặn gửi form
+        //         if (!form.checkValidity()) {
+        //             event.preventDefault();
+        //             event.stopPropagation();
+        //         }
+
+        //         // Thêm class 'was-validated' để kích hoạt hiển thị lỗi
+        //         form.classList.add('was-validated');
+        //     });
+
+        //     // Hiển thị hoặc ẩn input tùy chỉnh khi chọn "Khác" (message select)
+        //     messageSelect.addEventListener('change', function() {
+        //         if (messageSelect.value === 'Khác') {
+        //             messageInput.classList.remove('d-none');
+        //             messageInput.required = true;
+        //         } else {
+        //             messageInput.classList.add('d-none');
+        //             messageInput.required = false;
+        //         }
+        //     });
+
+        //     // Hiển thị hoặc ẩn input tùy chỉnh khi chọn "Khác" (solution select)
+        //     solutionSelect.addEventListener('change', function() {
+        //         if (solutionSelect.value === 'Khác') {
+        //             solutionInput.classList.remove('d-none');
+        //             solutionInput.required = true;
+        //         } else {
+        //             solutionInput.classList.add('d-none');
+        //             solutionInput.required = false;
+        //         }
+        //     });
+        // }
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const messageSelect = document.getElementById('message-select');
+        //     const messageInput = document.getElementById('message-input');
+        //     const solutionSelect = document.getElementById('solution-select');
+        //     const solutionInput = document.getElementById('solution-input');
+        //     const form = document.getElementById('notifyForm');
+        //     const solutions = {
+        //         "Liên hệ khách hàng": "Liên hệ với khách hàng để xác nhận đơn hàng và xử lý các vấn đề phát sinh.",
+        //         "Hủy đơn hàng": "Hủy đơn hàng trong hệ thống và thông báo cho khách hàng qua email hoặc SMS.",
+        //         "Giao hàng ngay": "Chuẩn bị đơn hàng và giao ngay trong vòng 1 giờ để đảm bảo thời gian giao hàng đúng hạn.",
+        //         "Khác": ""
+        //     };
+
+        //     // Hiển thị các input tùy chỉnh khi chọn "Khác"
+        //     messageSelect.addEventListener('change', () => handleCustomInput(messageSelect, messageInput));
+        //     solutionSelect.addEventListener('change', () => handleSolutionChange(solutionSelect, solutionInput, solutions));
+
+        //     // Cập nhật nội dung khi textarea thay đổi
+        //     solutionInput.addEventListener('input', () => saveSolutionChange(solutionSelect, solutionInput, solutions));
+
+        //     // Xử lý submit form
+        //     handleFormSubmit(form, messageSelect, messageInput, solutionSelect, solutionInput);
+
+        //     // Khi nhấn nút Thông báo
+        //     document.querySelectorAll('.notify-btn').forEach(button => {
+        //         button.addEventListener('click', function() {
+        //             const orderIdField = document.getElementById('order_id');
+        //             const invoiceIdField = document.getElementById('invoice_id');
+        //             const modalElement = document.getElementById('notifyModal');
+        //             handleNotifyButtonClick(orderIdField, invoiceIdField, modalElement, button);
+        //         });
+        //     });
+        // });
     </script>
 @endsection
