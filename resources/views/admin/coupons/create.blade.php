@@ -130,7 +130,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@section('script')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const generateCodeButton = document.getElementById('generate-code');

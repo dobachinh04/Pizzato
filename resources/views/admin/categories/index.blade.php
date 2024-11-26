@@ -66,8 +66,20 @@
                                                 {{-- <td>{{ $category->id }}</td> --}}
                                                 <td>{{ $category->name }}</td>
                                                 <td>{{ $category->slug }}</td>
-                                                <td> 
+                                                {{-- <td>
                                                     <img src="{{ asset('uploads/categories/'.$category->image) }}" width="70px" height="70px" alt="image">
+                                                </td> --}}
+                                                <td>
+                                                    @php
+                                                        $url = $category->image;
+                                                        if (!\Str::contains($url, 'http')) {
+                                                            // $url = \Storage::url($url);
+                                                            $url = asset('uploads/categories/' . $category->image);
+                                                        }else {
+
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $url }}" alt="" width="100px">
                                                 </td>
                                                 {{-- <td>{{ $category->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td> --}}
                                                 {{-- <td>{{ $category->show_at_home == 0 ? 'Ẩn' : 'Hiển thị' }}</td> --}}

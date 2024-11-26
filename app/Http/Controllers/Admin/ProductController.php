@@ -34,7 +34,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $sku = $this->generateUniqueSku();
+        // $sku = $this->generateUniqueSku();
         $slug = '';
         $categories = Category::query()->pluck('name', 'id')->all();
 
@@ -42,7 +42,7 @@ class ProductController extends Controller
         $edges = PizzaEdge::select('id', 'name', 'price')->get();
         $bases = PizzaBase::select('id', 'name', 'price')->get();
 
-        return view("admin.products.create", compact('categories', 'sku', 'slug', 'sizes', 'edges', 'bases'));
+        return view("admin.products.create", compact('categories', 'slug', 'sizes', 'edges', 'bases'));
     }
 
     private function calculateOptionPrice($sizeId, $edgeId, $baseId)
@@ -58,13 +58,13 @@ class ProductController extends Controller
     {
         try {
             DB::transaction(function () use ($request) {
-                // Lưu dữ liệu sản phẩm
+                // xử lý ảnh
                 $data = $request->except('thumb_image', 'sizes', 'edges', 'bases'); // Loại bỏ các trường không liên quan
                 if ($request->hasFile('thumb_image')) {
                     $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
                 }
 
-                $data['slug'] = $this->createSlug($request->name);
+                // $data['slug'] = $this->createSlug($request->name);
                 $data['status'] = $request->qty > 0 ? 1 : 0; // Trạng thái tự động
                 $data['view'] = 0; // Giá trị mặc định
 
@@ -155,7 +155,7 @@ class ProductController extends Controller
         $currentImage = $product->thumb_image;
 
         // Tạo slug từ tên sản phẩm
-        $data['slug'] = $this->createSlug($request->name);
+        // $data['slug'] = $this->createSlug($request->name);
 
         // Tự động cập nhật trạng thái dựa vào qty
         $data['status'] = $request->qty > 0 ? 1 : 0;
