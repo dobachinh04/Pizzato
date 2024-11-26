@@ -152,49 +152,70 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        $product->load(['category', 'galleries', 'sizes']);
+
         $slug = '';
 
         // Nếu muốn thay đổi SKU thì sinh lại mã SKU mới
         // $data['sku'] = $this->generateUniqueSku();
 
         $categories = Category::query()->pluck('name', 'id')->all();
-        return view("admin.products.edit", compact('product', 'categories', 'slug'));
+
+        $sizes = ProductSize::pluck('name', 'id')->all();
+
+        $productSizes = $product->sizes->pluck('id')->all();
+
+        return view("admin.products.edit", compact('product', 'categories', 'slug', 'sizes', 'productSizes'));
     }
 
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $data = $request->except('thumb_image');
+        try {
+            DB::transaction(function () use ($request, $product) {
+                $data = $request->except('thumb_image');
 
-        if ($request->hasFile('thumb_image')) {
-            $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
+                if ($request->hasFile('thumb_image')) {
+                    $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
+                }
+
+                $currentImage = $product->thumb_image;
+
+                // Tạo slug từ tên sản phẩm
+                $data['slug'] = $this->createSlug($request->name);
+
+                // Tự động cập nhật trạng thái dựa vào qty
+                $data['status'] = $request->qty > 0 ? 1 : 0;
+
+                $product->update($data);
+
+                foreach ($request->galleries ?? [] as $id => $image) {
+                    // Thêm biến và model findOrFail
+                    $gallery = ProductGallery::findOrFail($id);
+
+                    // Xóa bỏ model và sửa từ create sang update
+                    $gallery->update([
+                        'product_id' => $product->id,
+                        'galleries' => Storage::put('galleries', $image),
+                    ]);
+                }
+
+                $product->productSizes()->sync($request->sizes);
+                $product->pizzaEdges()->sync($request->sizes);
+                $product->pizzaBases()->sync($request->sizes);
+            });
+
+            return back()->with('success', 'Cập Nhật thành công');
+        } catch (Exception $exception) {
+            return back()->withErrors($exception->getMessage())->withInput();
         }
-
-        $currentImage = $product->thumb_image;
-
-        // Tạo slug từ tên sản phẩm
-        $data['slug'] = $this->createSlug($request->name);
-
-        // Tự động cập nhật trạng thái dựa vào qty
-        $data['status'] = $request->qty > 0 ? 1 : 0;
-
-        $product->update($data);
-
-        // Nếu có giá trị 'thumb_image' hiện tại và tệp tồn tại trong hệ thống lưu trữ
-        if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
-            Storage::delete($currentImage);
-        }
-
-        return back()
-            ->with('success', 'Cập nhật sản phẩm thành công');
     }
-
 
     public function destroy(Product $product)
     {
         try {
             DB::transaction(function () use ($product) {
-                // Làm trống tags - Xóa tags
+                // Làm trống sizes - Xóa sizes
                 $product->productSizes()->sync([]);
                 $product->pizzaEdges()->sync([]);
                 $product->pizzaBases()->sync([]);
