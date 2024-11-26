@@ -37,7 +37,6 @@ class CouponController extends Controller
     public function store(StoreCouponRequest $request)
     {
         $data = $request->all();
-
         // Tự động cập nhật trạng thái dựa vào qty
         // $data['status'] = $request->qty > 0 ? 1 : 0;
 

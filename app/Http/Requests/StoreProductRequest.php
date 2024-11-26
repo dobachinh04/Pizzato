@@ -78,10 +78,10 @@ class StoreProductRequest extends FormRequest
             'qty.integer' => 'Số lượng phải là số nguyên.',
             'qty.min' => 'Số lượng phải lớn hơn hoặc bằng 0.',
 
-            'sku.required' => 'Mã SKU là bắt buộc.',
-            'sku.string' => 'Mã SKU phải là chuỗi ký tự.',
-            'sku.max' => 'Mã SKU không được vượt quá 255 ký tự.',
-            'sku.unique' => 'Mã SKU đã tồn tại, vui lòng chọn mã khác.',
+            'sku.required' => 'Mã sản phẩm là bắt buộc.',
+            'sku.string' => 'Mã sản phẩm phải là chuỗi ký tự.',
+            'sku.max' => 'Mã sản phẩm không được vượt quá 255 ký tự.',
+            'sku.unique' => 'Mã sản phẩm đã tồn tại, vui lòng chọn mã khác.',
 
             'show_at_home.required' => 'Trường hiển thị trên trang chủ là bắt buộc.',
             'show_at_home.boolean' => 'Giá trị hiển thị trên trang chủ chỉ có thể là Yes hoặc No.',
