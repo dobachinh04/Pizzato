@@ -100,6 +100,7 @@
                                                                             @enderror
                                                                         </div>
 
+
                                                                         <div class="form-group mt-3">
                                                                             <label>View</label>
                                                                             <input type="text" name="view"
@@ -217,7 +218,8 @@
 
                                                                 <hr>
 
-                                                                <div class="row">
+                                                                <div class="row" id="variantFields"
+                                                                    style="display: none;">
                                                                     <h3>Biến Thể Sản Phẩm</h3>
 
                                                                     <!-- Size Bánh -->
@@ -642,6 +644,31 @@
     </script> --}}
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy các phần tử cần thiết
+            const categorySelect = document.getElementById("category_id");
+            const variantFields = document.getElementById("variantFields");
+
+            // Hàm kiểm tra và cập nhật hiển thị của variantFields
+            function toggleVariantFields() {
+                const selectedCategory = categorySelect.options[categorySelect.selectedIndex].text.trim();
+                if (selectedCategory === "Pizza") {
+                    variantFields.style.display = "flex"; // Giữ bố cục ngang
+                } else {
+                    variantFields.style.display = "none"; // Ẩn
+                }
+            }
+
+            // Gọi hàm khi thay đổi danh mục
+            categorySelect.addEventListener("change", toggleVariantFields);
+
+            // Gọi hàm khi tải trang lần đầu
+            toggleVariantFields();
+        });
+    </script>
+
+    <script>
+        // Biến thể
         document.addEventListener('DOMContentLoaded', function() {
             // Lấy danh sách tất cả các nút switch
             const toggleInputs = document.querySelectorAll('.toggle-input');
@@ -710,6 +737,7 @@
             });
         });
 
+        // Slug
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.querySelector('input[name="name"]');
             const slugInput = document.querySelector('input[name="slug"]');
