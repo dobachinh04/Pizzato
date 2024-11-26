@@ -199,8 +199,7 @@ class ProductController extends Controller
                 $product->pizzaEdges()->sync([]);
                 $product->pizzaBases()->sync([]);
 
-                // Xóa galleries
-                // $product->galleries()->delete();
+                $product->productGalleries()->delete();
 
                 // Xóa product
                 $product->delete();
@@ -212,9 +211,9 @@ class ProductController extends Controller
                 Storage::delete($product->thumb_image);
             }
 
-            // foreach ($product->galleries as $item) {
-            //     $item
-            // }
+            if ($product->galleries && Storage::exists($product->galleries)) {
+                Storage::delete($product->galleries);
+            }
 
             return redirect()->route('admin.products.index')->with('success', 'Xóa thành công');
         } catch (Exception $exception) {
