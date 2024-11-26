@@ -43,7 +43,7 @@
                                                                 <div class="row">
                                                                     <h3>Thông Tin Sản Phẩm</h3>
 
-                                                                    @if ($errors->any())
+                                                                    {{-- @if ($errors->any())
                                                                         <div class="alert alert-danger">
                                                                             <ul>
                                                                                 @foreach ($errors->all() as $error)
@@ -51,13 +51,13 @@
                                                                                 @endforeach
                                                                             </ul>
                                                                         </div>
-                                                                    @endif
+                                                                    @endif --}}
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
                                                                             <label>Name</label>
                                                                             <input type="text" name="name"
-                                                                                class="form-control"
+                                                                                class="form-control @error('name') is-invalid @enderror"
                                                                                 value="{{ old('name') }}">
                                                                             @error('name')
                                                                                 <span
@@ -67,17 +67,42 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Slug</label>
-                                                                            <input type="text" name="slug"
-                                                                                class="form-control"
-                                                                                value="{{ old('slug', isset($product) ? $product->slug : $slug) }}"
-                                                                                readonly>
+                                                                            <div class="input-group">
+                                                                                <input type="text" name="slug"
+                                                                                    class="form-control @error('slug') is-invalid @enderror"
+                                                                                    value="{{ old('slug', isset($product) ? $product->slug : $slug) }}">
+                                                                                <button type="button" id="generate-slug"
+                                                                                    class="btn btn-secondary">Tạo
+                                                                                    slug</button>
+                                                                            </div>
+                                                                            @error('slug')
+                                                                                <span
+                                                                                    class="text-danger">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
 
-                                                                        <div class="form-group mt-3">
+                                                                        {{-- <div class="form-group mt-3">
                                                                             <label>Sku</label>
                                                                             <input type="text" name="sku"
                                                                                 class="form-control"
                                                                                 value="{{ old('sku', $sku) }}" readonly>
+                                                                            @error('sku')
+                                                                                <span
+                                                                                    class="text-danger">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div> --}}
+                                                                        <div class="form-group">
+                                                                            <label>Mã sản phẩm</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" id="sku"
+                                                                                    name="sku"
+                                                                                    class="form-control @error('sku') is-invalid @enderror"
+                                                                                    value="{{ old('sku') }}"
+                                                                                    placeholder="Nhập mã sản phẩm">
+                                                                                <button type="button" id="generate-sku"
+                                                                                    class="btn btn-secondary">Ngẫu
+                                                                                    nhiên</button>
+                                                                            </div>
                                                                             @error('sku')
                                                                                 <span
                                                                                     class="text-danger">{{ $message }}</span>
@@ -138,9 +163,9 @@
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
-                                                                            <label>Price</label>
+                                                                            <label>Giá sản phẩm</label>
                                                                             <input type="number" name="price"
-                                                                                class="form-control"
+                                                                                class="form-control @error('price') is-invalid @enderror"
                                                                                 value="{{ old('price') }}">
                                                                             @error('price')
                                                                                 <span
@@ -160,9 +185,9 @@
                                                                         </div>
 
                                                                         <div class="form-group mt-3">
-                                                                            <label>Quantity</label>
-                                                                            <input type="number" name="qty"
-                                                                                class="form-control"
+                                                                            <label>Số lượng</label>
+                                                                            <input type="text" name="qty"
+                                                                                class="form-control @error('qty') is-invalid @enderror"
                                                                                 value="{{ old('qty') }}">
                                                                             @error('qty')
                                                                                 <span
@@ -737,20 +762,89 @@
             });
         });
 
+        // Slug theo name
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const nameInput = document.querySelector('input[name="name"]');
+        //     const slugInput = document.querySelector('input[name="slug"]');
+
+        //     nameInput.addEventListener('input', function() {
+        //         slugInput.value = nameInput.value
+        //             .toLowerCase()
+        //             .trim()
+        //             .replace(/[\s]+/g, '-') // Thay thế khoảng trắng bằng dấu -
+        //             .replace(/[^\w\-]+/g, '') // Xóa ký tự không phải chữ, số hoặc dấu -
+        //             .replace(/\-\-+/g, '-') // Xóa dấu gạch nối kép
+        //             .replace(/^-+/, '') // Xóa dấu gạch nối đầu
+        //             .replace(/-+$/, ''); // Xóa dấu gạch nối
+        //     });
+        // });
+
+
+        // Slug theo name
         // Slug
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.querySelector('input[name="name"]');
             const slugInput = document.querySelector('input[name="slug"]');
+            const generateSlugButton = document.getElementById('generate-slug');
 
-            nameInput.addEventListener('input', function() {
-                slugInput.value = nameInput.value
+            //  chuyển đổi sang tieng viet khong dau
+            function removeVietnameseTones(str) {
+                return str
+                    .normalize('NFD') // Chuẩn hóa chuỗi thành dạng ký tự tổ hợp
+                    .replace(/[\u0300-\u036f]/g, '') // Xóa các dấu tổ hợp
+                    .replace(/đ/g, 'd')
+                    .replace(/Đ/g, 'D');
+            }
+
+            // chuyen doi slug->name
+            function convertToSlug(text) {
+                return removeVietnameseTones(text)
                     .toLowerCase()
                     .trim()
                     .replace(/[\s]+/g, '-') // Thay thế khoảng trắng bằng dấu -
                     .replace(/[^\w\-]+/g, '') // Xóa ký tự không phải chữ, số hoặc dấu -
                     .replace(/\-\-+/g, '-') // Xóa dấu gạch nối kép
                     .replace(/^-+/, '') // Xóa dấu gạch nối đầu
-                    .replace(/-+$/, ''); // Xóa dấu gạch nối
+                    .replace(/-+$/, ''); // Xóa dấu gạch nối cuối
+            }
+
+            //  sự kiện thay đổi trên ô nhập "name"
+            nameInput.addEventListener('input', function() {
+                if (!slugInput.dataset.manual) {
+                    slugInput.value = convertToSlug(nameInput.value);
+                }
+            });
+            // event click button
+            generateSlugButton.addEventListener('click', function() {
+                // Generate slug từ trường "name"
+                slugInput.value = convertToSlug(nameInput.value);
+                slugInput.dataset.manual = false; // Đặt lại trạng thái tự động
+            });
+
+            // event nhap tren o input
+            slugInput.addEventListener('input', function() {
+                slugInput.dataset.manual = true; // Đánh dấu rằng người dùng đang tự nhập slug
+            });
+        });
+
+
+
+        // Generate mã sản phẩm
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateSkuButton = document.getElementById('generate-sku');
+            const ProductSkuInput = document.getElementById('sku');
+
+            generateSkuButton.addEventListener('click', function() {
+                // Random mã sản phẩm (10 ký tự, chữ và số)
+                const randomSku = Array.from({
+                    length: 15
+                }, () => {
+                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+
+                // Gán mã vào ô input
+                ProductSkuInput.value = randomSku;
             });
         });
     </script>
