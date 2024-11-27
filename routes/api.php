@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\BlogController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Client\Auth\AuthenticationController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\ProductReviewController;
+use App\Http\Controllers\Client\RefundController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +70,11 @@ Route::get('/coupon/{code}', [CouponController::class, 'getCouponDetail']);
 Route::post('/reviews', [ProductReviewController::class, 'createReview']);
 Route::get('/products/{productId}/reviews', [ProductReviewController::class, 'getReviews']);
 
+// shttp://127.0.0.1:8000/api/reviews/13
+// sửa theo id đánh giá nhưng đánh giá đó phải thuộc về người dùng hiện tại
+// controller đang fix cứng id user = 1
 Route::put('/reviews/{id}', [ProductReviewController::class, 'updateReview']);
+
 Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview']);
 
 // OrderController
@@ -77,3 +83,6 @@ Route::get('/orders', [OrderController::class, 'index']);
 // Notification of delay orders
 // Route::get('/overdue-orders', [OrderController::class, 'overdueOrders']);
 Route::get('/notifications/invoice/{invoice_id}', [NotificationController::class, 'getNotificationByInvoiceId']);
+
+// refunds
+Route::post('/refund-request', [RefundController::class, 'createRefundRequest']);
