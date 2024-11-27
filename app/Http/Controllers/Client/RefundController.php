@@ -42,7 +42,6 @@ class RefundController extends Controller
     // }
     public function createRefundRequest(RefundRequestStore $request)
     {
-
         $refund = RefundRequest::create([
             'name' => $request->name,
             'email' => $request->email,

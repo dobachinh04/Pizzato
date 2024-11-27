@@ -13,7 +13,7 @@ class OrderController extends Controller
     {
         $userId = $request->get('user_id');
         $orders = Order::where('user_id', $userId)
-            ->with(['users', 'addresses'])
+            ->with(['users', 'addresses', 'items.product'])
             ->get();
 
         return response()->json([
