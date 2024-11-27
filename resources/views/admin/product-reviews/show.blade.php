@@ -61,8 +61,16 @@
                                     <table class="table table-bordered table-striped table-hover">
                                         <tbody>
                                             <tr>
+                                                <th>Id sản phẩm đánh giá</th>
+                                                <td>{{$productReview->product->id}}</td>
+                                            </tr>
+                                            <tr>
                                                 <th>Sản phẩm đánh giá</th>
                                                 <td>{{ $productReview->product->name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Id người dùng</th>
+                                                <td>{{$productReview->user->id}}</td>
                                             </tr>
                                             <tr>
                                                 <th>Người Đánh Giá</th>

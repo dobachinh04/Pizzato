@@ -106,10 +106,10 @@
                                 <a href="{{ route('admin.products.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Đế Bánh</a>
                             </li>
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ route('admin.product-reviews.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Đánh giá sản phẩm</a>
-                            </li> --}}
+                            </li>
                         </ul>
                     </div>
                 </li>
