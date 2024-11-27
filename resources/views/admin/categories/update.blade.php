@@ -62,7 +62,7 @@ Cập Nhật Danh Mục - Pizzato
                                         <br>
                                     </div>
 
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label>Hình Ảnh</label>
                                         <input type="file" name="image" class="form-control input-default " id="image"
                                             value="{{ old('image') ?? $categories->image}}">
@@ -72,8 +72,31 @@ Cập Nhật Danh Mục - Pizzato
                                         <p style="color: red">{{ $message }}</p>
                                         @enderror
                                         <br>
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label>Hình Ảnh</label>
+                                        <input type="file" name="image" class="form-control input-default" id="image"
+                                            value="{{ old('image') ?? $categories->image }}">
+
+                                        @php
+                                            // Kiểm tra xem $categories->image là URL hay đường dẫn cục bộ
+                                            $imageUrl = $categories->image;
+
+                                            if (!\Str::contains($imageUrl, 'http')) {
+                                                // Nếu không phải URL, tạo đường dẫn đầy đủ cho ảnh cục bộ
+                                                $imageUrl = asset('uploads/categories/' . $categories->image);
+                                            }
+                                        @endphp
+
+                                        <!-- Hiển thị hình ảnh -->
+                                        <img src="{{ $imageUrl }}" width="70px" height="70px" alt="image">
+
+                                        @error('image')
+                                        <p style="color: red">{{ $message }}</p>
+                                        @enderror
+                                        <br>
                                     </div>
-                                    
+
                                     {{-- <div class="form-group">
                                         <label>Trạng Thái Hiển Thị</label>
                                         <select name="show_at_home" class="form-control input-default">

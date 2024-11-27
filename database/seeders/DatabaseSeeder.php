@@ -18,12 +18,20 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             ProductSeeder::class,
+            ProductSizeSeeder::class,
+            PizzaBaseSeeder::class,
+            PizzaEdgeSeeder::class,
+
+            DeliveryAreaSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            AddressSeeder::class,
+
             CartSeeder::class,
             CouponSeeder::class,
-            ProductReviewSeeder::class,
+
             OrderSeeder::class,
+            ProductReviewSeeder::class,
         ]);
 
         DB::table('users')->insert([

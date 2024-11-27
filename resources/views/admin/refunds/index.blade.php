@@ -1,9 +1,7 @@
-
-
 @extends('admin.layouts.master')
 
 @section('title')
-Yêu Cầu Hoàn Tiền - Pizzato
+    Yêu Cầu Hoàn Tiền - Pizzato
 @endsection
 
 @section('content')
@@ -30,57 +28,57 @@ Yêu Cầu Hoàn Tiền - Pizzato
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Sản Phẩm</h5>
-                                <a href="{{ route('admin.products.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Yêu Càu Hoàn Tiền</h5>
                             </div>
 
                             <div class="card-body">
                                 <table class="table table-bordered dt-responsive nowrap table-striped align-middle"
-                                style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Mã Hóa Đơn</th>
-                                        <th>Tên Khách Hàng</th>
-                                        <th>Email</th>
-                                        <th>Số Tiền</th>
-                                        <th>Trạng Thái</th>
-                                        <th>Hành Động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($refunds as $refund)
+                                    style="width:100%">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $refund->id }}</td>
-                                            <td>{{ $refund->invoice_id }}</td>
-                                            <td>{{ $refund->name }}</td>
-                                            <td>{{ $refund->email }}</td>
-                                            <td>${{ number_format($refund->refund_amount, 2) }}</td>
-                                            <td>
-                                                {!! $refund->status == 'Pending'
-                                                    ? '<span class="badge bg-warning">Pending</span>'
-                                                    : ($refund->status == 'Approved'
-                                                        ? '<span class="badge bg-primary">Approved</span>'
-                                                        : '<span class="badge bg-danger">Rejected</span>') !!}
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info"
-                                                    href="{{ route('admin.refunds.edit', $refund->id) }}">Chi Tiết</a>
-                                                <a class="btn btn-warning"
-                                                    href="{{ route('admin.refunds.edit', $refund->id) }}">Sửa</a>
-                                                <form action="{{ route('admin.refunds.destroy', $refund->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button onclick="return confirm('Bạn có chắc chắn muốn xóa yêu cầu hoàn tiền này?');" type="submit"
-                                                        class="btn btn-danger">Xóa</button>
-                                                </form>
-                                            </td>
+                                            <th>ID</th>
+                                            <th>Mã Hóa Đơn</th>
+                                            <th>Tên Khách Hàng</th>
+                                            <th>Email</th>
+                                            <th>Số Tiền</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Hành Động</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($refunds as $refund)
+                                            <tr>
+                                                <td>{{ $refund->id }}</td>
+                                                <td>{{ $refund->invoice_id }}</td>
+                                                <td>{{ $refund->name }}</td>
+                                                <td>{{ $refund->email }}</td>
+                                                <td>${{ number_format($refund->refund_amount, 2) }}</td>
+                                                <td>
+                                                    {!! $refund->status == 'Pending'
+                                                        ? '<span class="badge bg-warning">Pending</span>'
+                                                        : ($refund->status == 'Approved'
+                                                            ? '<span class="badge bg-primary">Approved</span>'
+                                                            : '<span class="badge bg-danger">Rejected</span>') !!}
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-info"
+                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Chi Tiết</a>
+                                                    <a class="btn btn-warning"
+                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Sửa</a>
+                                                    <form action="{{ route('admin.refunds.destroy', $refund->id) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button
+                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa yêu cầu hoàn tiền này?');"
+                                                            type="submit" class="btn btn-danger">Xóa</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
                     </div><!--end col-->

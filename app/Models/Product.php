@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Category;
 use App\Models\ProductGallery;
-use App\Models\ProductOption;
 use App\Models\ProductSize;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -50,13 +49,24 @@ class Product extends Model
         return $this->hasMany(ProductGallery::class);
     }
 
-    function productSizes(): HasMany
+    public function productSizes()
     {
-        return $this->hasMany(ProductSize::class);
+        return $this->belongsToMany(ProductSize::class, 'product_product_sizes', 'product_id', 'product_size_id')
+            ->withPivot('price')
+            ->withTimestamps();
     }
 
-    function productOptions(): HasMany
+    public function pizzaEdges()
     {
-        return $this->hasMany(ProductOption::class);
+        return $this->belongsToMany(PizzaEdge::class, 'product_pizza_edges', 'product_id', 'pizza_edge_id')
+            ->withPivot('price')
+            ->withTimestamps();
+    }
+
+    public function pizzaBases()
+    {
+        return $this->belongsToMany(PizzaBase::class, 'product_pizza_bases', 'product_id', 'pizza_base_id')
+            ->withPivot('price')
+            ->withTimestamps();
     }
 }

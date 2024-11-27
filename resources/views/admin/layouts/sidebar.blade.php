@@ -95,21 +95,21 @@
                                     data-key="t-one-page">Danh Sách Sản Phẩm</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.products.create') }}" class="nav-link"
-                                    data-key="t-nft-landing">Thêm Sản Phẩm</a>
+                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                    data-key="t-nft-landing">Size Bánh</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.products.index') }}" class="nav-link"
-                                    data-key="t-nft-landing">Danh Sách Size</a>
+                                    data-key="t-nft-landing">Viền Bánh</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.products.create') }}" class="nav-link"
-                                    data-key="t-nft-landing">Thêm Size</a>
+                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                    data-key="t-nft-landing">Đế Bánh</a>
                             </li>
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ route('admin.product-reviews.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Đánh giá sản phẩm</a>
-                            </li> --}}
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -234,15 +234,14 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarRefunds" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRefunds">
-                        <i class="fa-solid fa-images"></i> <span data-key="t-landing">Hoàn Tiền</span>
+                        <i class="fa-solid fa-comments-dollar"></i> <span data-key="t-landing">Hoàn Tiền</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarRefunds">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                {{-- <a href="{{ route('admin.refunds.index') }}" class="nav-link" data-key="t-one-page">Danh
-                                    Sách Hoàn Tiền</a> --}}
+                                <a href="{{ route('admin.refunds.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                    Sách Hoàn Tiền</a>
                             </li>
-
                         </ul>
                     </div>
                 </li>

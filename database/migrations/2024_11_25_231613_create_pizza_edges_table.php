@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Bảng kích thước sản phẩm
-        Schema::create('product_sizes', function (Blueprint $table) {
+        Schema::create('pizza_edges', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->double('price');
             $table->string('image')->nullable();
             $table->timestamps();
-
-            // $table->foreignId('product_id')->constrained('products');
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_sizes');
+        Schema::dropIfExists('pizza_edges');
     }
 };

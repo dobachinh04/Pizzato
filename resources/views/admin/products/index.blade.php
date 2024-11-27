@@ -31,7 +31,15 @@
                                 <h5 class="card-title mb-0">Danh Sách Sản Phẩm</h5>
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <table id="example"
                                     class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -101,8 +109,8 @@
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")' type="submit"
-                                                            class="btn btn-danger">Xóa</button>
+                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
+                                                            type="submit" class="btn btn-danger">Xóa</button>
                                                     </form>
                                                 </td>
                                             </tr>

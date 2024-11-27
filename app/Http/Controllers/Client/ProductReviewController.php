@@ -41,6 +41,7 @@ class ProductReviewController extends Controller
     }
 
     // sửa đánh giá của người dùng
+    // sửa theo
     public function updateReview(UpdateReviewRequest $request, $id)
     {
         // Kiểm tra xem đánh giá có tồn tại và thuộc về người dùng hiện tại hay không

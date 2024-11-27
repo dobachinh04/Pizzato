@@ -234,7 +234,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //     Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
     // });
 
-
     // });
 
      /** Product Reviews Routes */
@@ -244,10 +243,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
          Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
 
 
-     });
+    });
 
      Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //dang loi
 
+    //  Thông báo đơn hàng quá trễ
      Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
 });
