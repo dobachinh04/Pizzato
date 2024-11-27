@@ -124,6 +124,7 @@ class VnpayController extends Controller
                     'address_id' => $orderData['address_id'],
                     'order_status' => 'pending',
                     'payment_status' => 'paid',
+                    'payment_method' => $orderData['payment_method'],
                 ]);
 
                 // Lưu chi tiết đơn hàng
