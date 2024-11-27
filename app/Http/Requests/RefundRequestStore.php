@@ -22,13 +22,25 @@ class RefundRequestStore extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'invoice_id' => 'required|exists:orders,invoice_id',
-            'refund_amount' => 'required|numeric|min:0',
             'refund_reason' => 'required|string',
             'bank_number' => 'required|string|max:20',
             'bank_type' => 'required|string|max:50',
         ];
     }
+
+    public function messages(): array
+{
+    return [
+        'refund_reason.required' => 'Lý do hoàn tiền là bắt buộc.',
+        'refund_reason.string' => 'Lý do hoàn tiền phải là chuỗi ký tự.',
+
+        'bank_number.required' => 'Số tài khoản ngân hàng là bắt buộc.',
+        'bank_number.string' => 'Số tài khoản ngân hàng phải là chuỗi ký tự.',
+        'bank_number.max' => 'Số tài khoản ngân hàng không được vượt quá 20 ký tự.',
+
+        'bank_type.required' => 'Loại ngân hàng là bắt buộc.',
+        'bank_type.string' => 'Loại ngân hàng phải là chuỗi ký tự.',
+        'bank_type.max' => 'Loại ngân hàng không được vượt quá 50 ký tự.',
+    ];
+}
 }
