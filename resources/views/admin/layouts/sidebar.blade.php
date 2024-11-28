@@ -48,8 +48,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button" aria-expanded="false"
-                        aria-controls="sidebarHome">
+                    <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarHome">
                         <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
                     </a>
                 </li>
@@ -160,7 +160,8 @@
                     <div class="collapse menu-dropdown" id="sidebarOrders">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.orders.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                <a href="{{ route('admin.orders.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh
                                     Sách Đơn Hàng</a>
                             </li>
                             <li class="nav-item">
@@ -183,7 +184,8 @@
                     <div class="collapse menu-dropdown" id="sidebarBlogs">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.blogs.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                <a href="{{ route('admin.blogs.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh
                                     Sách Blogs</a>
                             </li>
                             <li class="nav-item">
@@ -202,7 +204,8 @@
                     <div class="collapse menu-dropdown" id="sidebarUsers">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                <a href="{{ route('admin.users.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh
                                     Sách Người Dùng</a>
                             </li>
                             <li class="nav-item">
@@ -221,7 +224,8 @@
                     <div class="collapse menu-dropdown" id="sidebarSliders">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.sliders.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                <a href="{{ route('admin.sliders.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh
                                     Sách Sliders</a>
                             </li>
                             <li class="nav-item">
@@ -239,7 +243,8 @@
                     <div class="collapse menu-dropdown" id="sidebarRefunds">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('admin.refunds.index') }}" class="nav-link" data-key="t-one-page">Danh
+                                <a href="{{ route('admin.refunds.index') }}" class="nav-link"
+                                    data-key="t-one-page">Danh
                                     Sách Hoàn Tiền</a>
                             </li>
                         </ul>
@@ -251,13 +256,13 @@
                         <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin Nhắn</span>
                     </a>
 
-                </li> --}}
+                </li>
 
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Phương
-                        Thức</span></li>
+                        Thức</span></li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDeliveryArea" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDeliveryArea">
                         <i class="fa-solid fa-truck-fast"></i> <span data-key="t-landing">Vận Chuyển</span>
@@ -274,12 +279,12 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebardelivery_areas" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebardelivery_areas">
-                        <i class="fa-solid fa-map-location"></i> <span data-key="t-landing">Địa chỉ giao hàng</span>
+                    <a class="nav-link menu-link" href="#sidebardelivery_areas" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebardelivery_areas">
+                        <i class="fa-solid fa-map-location"></i> <span data-key="t-landing">Địa Chỉ Giao Hàng</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebardelivery_areas">
                         <ul class="nav nav-sm flex-column">
@@ -292,9 +297,16 @@
                                     data-key="t-nft-landing">Thêm Địa chỉ giao hàng</a>
                             </li>
                     </div>
-
+                </li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.chat.index') }}">
+                        <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin Nhắn</span>
+                    </a>
+
+                </li>
+
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPayment" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPayment">
                         <i class="fa-regular fa-credit-card"></i> <span data-key="t-landing">Thanh Toán</span>
@@ -311,13 +323,13 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Điều Hướng</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="http://localhost:3000" role="button"
-                        aria-expanded="false" aria-controls="sidebarHome">
+                    <a class="nav-link menu-link" href="http://localhost:3000" role="button" aria-expanded="false"
+                        aria-controls="sidebarHome">
                         <i class="fa-solid fa-door-open"></i> <span data-key="t-dashboards">Quay Về Trang Chủ</span>
                     </a>
                 </li>
