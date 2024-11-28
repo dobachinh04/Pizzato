@@ -24,6 +24,7 @@ class CheckoutController extends Controller
             'grand_total' => $request->grand_total,
             'product_qty' => $request->product_qty,
             'address_id' => $request->address_id,
+            'payment_method' => $request->payment_method,
             'cartItems' => $request->cartItems,
         ];
 
@@ -53,6 +54,7 @@ class CheckoutController extends Controller
             'grand_total' => $request->grand_total,
             'product_qty' => $request->product_qty,
             'address_id' => $request->address_id,
+            'payment_method' => 'COD',
             'order_status' => 'pending',
         ]);
 

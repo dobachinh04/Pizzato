@@ -43,7 +43,7 @@
                                                                 <div class="row">
                                                                     <h3>Thông Tin Sản Phẩm</h3>
 
-                                                                    {{-- @if ($errors->any())
+                                                                    @if ($errors->any())
                                                                         <div class="alert alert-danger">
                                                                             <ul>
                                                                                 @foreach ($errors->all() as $error)
@@ -51,7 +51,7 @@
                                                                                 @endforeach
                                                                             </ul>
                                                                         </div>
-                                                                    @endif --}}
+                                                                    @endif
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
@@ -148,22 +148,22 @@
                                                                             @enderror
                                                                         </div>
 
-                                                                        {{-- <div class="form-group mt-3">
-                                                                            <label for="images" class="form-label">Ảnh
-                                                                                Phụ</label>
+                                                                        <div class="form-group mt-3">
+                                                                            <label for="galleries" class="form-label">Các
+                                                                                Ảnh Phụ</label>
                                                                             <input type="file" class="form-control"
-                                                                                id="images" name="images[]" multiple>
-                                                                            @error('images[]')
+                                                                                id="galleries" name="galleries[]" multiple>
+                                                                            @error('galleries.*')
                                                                                 <span
                                                                                     class="text-danger">{{ $message }}</span>
                                                                             @enderror
-                                                                        </div> --}}
+                                                                        </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
                                                                             <label>Giá sản phẩm</label>
-                                                                            <input type="text" name="price"
+                                                                            <input type="number" name="price"
                                                                                 class="form-control @error('price') is-invalid @enderror"
                                                                                 value="{{ old('price') }}">
                                                                             @error('price')
@@ -174,7 +174,7 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Offer Price</label>
-                                                                            <input type="text" name="offer_price"
+                                                                            <input type="number" name="offer_price"
                                                                                 class="form-control"
                                                                                 value="{{ old('offer_price') }}">
                                                                             @error('offer_price')
@@ -242,7 +242,8 @@
 
                                                                 <hr>
 
-                                                                <div class="row">
+                                                                <div class="row" id="variantFields"
+                                                                    style="display: none;">
                                                                     <h3>Biến Thể Sản Phẩm</h3>
 
                                                                     <!-- Size Bánh -->
@@ -520,15 +521,14 @@
                                                                             </div>
                                                                         </div>
                                                                     </div> --}}
+                                                                </div>
 
-                                                                    <div class="mt-3">
-                                                                        <a href="{{ route('admin.products.index') }}"
-                                                                            class="btn btn-secondary">
-                                                                            Quay Lại</a>
-                                                                        <button type="submit"
-                                                                            class="btn btn-success">Thêm
-                                                                            Mới</button>
-                                                                    </div>
+                                                                <div class="mt-3">
+                                                                    <a href="{{ route('admin.products.index') }}"
+                                                                        class="btn btn-secondary">
+                                                                        Quay Lại</a>
+                                                                    <button type="submit" class="btn btn-success">Thêm
+                                                                        Mới</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -667,6 +667,31 @@
     </script> --}}
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy các phần tử cần thiết
+            const categorySelect = document.getElementById("category_id");
+            const variantFields = document.getElementById("variantFields");
+
+            // Hàm kiểm tra và cập nhật hiển thị của variantFields
+            function toggleVariantFields() {
+                const selectedCategory = categorySelect.options[categorySelect.selectedIndex].text.trim();
+                if (selectedCategory === "Pizza") {
+                    variantFields.style.display = "flex"; // Giữ bố cục ngang
+                } else {
+                    variantFields.style.display = "none"; // Ẩn
+                }
+            }
+
+            // Gọi hàm khi thay đổi danh mục
+            categorySelect.addEventListener("change", toggleVariantFields);
+
+            // Gọi hàm khi tải trang lần đầu
+            toggleVariantFields();
+        });
+    </script>
+
+    <script>
+        // Biến thể
         document.addEventListener('DOMContentLoaded', function() {
             // Lấy danh sách tất cả các nút switch
             const toggleInputs = document.querySelectorAll('.toggle-input');
