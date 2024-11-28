@@ -162,6 +162,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/deleted',                          [OrderController::class, 'deleted'])->name('deleted');
 
         Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
+        Route::put('/{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+
     });
 
     Route::prefix('shipping')->name('shipping.')->group(function () {

@@ -21,6 +21,52 @@
         </div>
     @endif
 
+    <style>
+        .bg-warning {
+            background-color: #ffc107 !important;
+            color: #212529 !important;
+        }
+
+        .bg-warning:hover {
+            background-color: #e0a800 !important;
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+
+        .bg-primary {
+            background-color: #007bff !important;
+            color: #ffffff !important;
+        }
+
+        .bg-primary:hover {
+            background-color: #0056b3 !important;
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+            color: #ffffff !important;
+        }
+
+        .bg-success:hover {
+            background-color: #218838 !important;
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+            color: #ffffff !important;
+        }
+
+        .bg-danger:hover {
+            background-color: #bd2130 !important;
+            color: #ffffff !important;
+            cursor: pointer;
+        }
+    </style>
+
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -73,43 +119,76 @@
                                                 <td>{{ $order->created_at }}</td>
 
                                                 <td>
-                                                    <form action="{{ route('admin.orders.update_status', $order) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <select class="form-select form-select-sm" name="order_status"
-                                                            onchange="this.form.submit()">
-                                                            <option value="pending"
-                                                                {{ $order->order_status == 'pending' ? 'selected' : '' }}>
-                                                                Pending</option>
-                                                            <option value="processing"
-                                                                {{ $order->order_status == 'processing' ? 'selected' : '' }}>
-                                                                Processing</option>
-                                                            <option value="completed"
-                                                                {{ $order->order_status == 'completed' ? 'selected' : '' }}>
-                                                                Completed</option>
-                                                            <option value="canceled"
-                                                                {{ $order->order_status == 'canceled' ? 'selected' : '' }}>
-                                                                Canceled</option>
-                                                        </select>
-                                                    </form>
+                                                    {{-- Kiểm tra trạng thái đơn hàng --}}
+                                                    @if ($order->order_status == 'canceled')
+                                                        {{-- Nếu trạng thái là "canceled", chỉ hiển thị badge --}}
+                                                        <span class="badge bg-danger text-dark">Đã Bị Hủy</span>
+                                                    @else
+                                                        {{-- Nếu trạng thái không phải "canceled", hiển thị dropdown select --}}
+                                                        <form action="{{ route('admin.orders.update_status', $order) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+
+                                                            {{-- Dropdown cho các trạng thái khác --}}
+                                                            <select class="form-select form-select-sm order-status-select"
+                                                                name="order_status" {{-- Disable select nếu trạng thái là "completed" --}}
+                                                                {{ $order->order_status == 'completed' ? 'disabled' : '' }}
+                                                                onchange="this.className='form-select form-select-sm order-status-select ' + this.options[this.selectedIndex].className; this.form.submit();">
+
+                                                                {{-- Hiển thị option "pending" nếu trạng thái không phải "processing" hoặc "completed" --}}
+                                                                @if ($order->order_status != 'processing' && $order->order_status != 'completed')
+                                                                    <option value="pending" class="bg-warning text-dark"
+                                                                        {{ $order->order_status == 'pending' ? 'selected' : '' }}>
+                                                                        Chờ Xác Nhận
+                                                                    </option>
+                                                                @endif
+
+                                                                {{-- Hiển thị option "processing" nếu trạng thái không phải "completed" --}}
+                                                                @if ($order->order_status != 'completed')
+                                                                    <option value="processing" class="bg-primary text-white"
+                                                                        {{ $order->order_status == 'processing' ? 'selected' : '' }}>
+                                                                        Đang Giao
+                                                                    </option>
+                                                                @endif
+
+                                                                {{-- Hiển thị option "completed" nếu trạng thái không phải "canceled" hoặc "processing" --}}
+                                                                @if ($order->order_status != 'canceled')
+                                                                    <option value="completed" class="bg-success text-white"
+                                                                        {{ $order->order_status == 'completed' ? 'selected' : '' }}>
+                                                                        Hoàn Thành
+                                                                    </option>
+                                                                @endif
+                                                            </select>
+                                                        </form>
+                                                    @endif
                                                 </td>
+
 
                                                 <td>
                                                     <a href="{{ route('admin.orders.show', $order) }}"
                                                         class="btn btn-info">Chi Tiết</a>
-                                                    <a href="{{ route('admin.orders.edit', $order) }}"
-                                                        class="btn btn-warning">Sửa</a>
 
-                                                    <form action="{{ route('admin.orders.destroy', $order) }}"
-                                                        method="POST" style="display: inline;"
-                                                        onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
-                                                        @csrf
-                                                        @method('DELETE')
+                                                    @if (!in_array($order->order_status, ['canceled', 'processing', 'completed']))
+                                                        <a href="{{ route('admin.orders.edit', $order) }}"
+                                                            class="btn btn-warning">Sửa</a>
 
-                                                        <button type="submit" class="btn btn-danger">Hủy Đơn</button>
-                                                    </form>
+                                                        {{-- Form hủy đơn hàng --}}
+                                                        <form action="{{ route('admin.orders.cancel', $order) }}"
+                                                            method="POST" style="display: inline;"
+                                                            onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?');">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-danger">Hủy</button>
+                                                        </form>
+                                                    @elseif (in_array($order->order_status, ['canceled']))
+                                                        <button class="btn btn-warning notify-btn" data-id=""
+                                                            data-invoice="">
+                                                            <i class="fa-regular fa-bell fa-lg"></i>
+                                                        </button>
+                                                    @endif
                                                 </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -121,6 +200,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.order-status-select').forEach(function(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            select.className = 'form-select form-select-sm order-status-select ' + selectedOption.className;
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
