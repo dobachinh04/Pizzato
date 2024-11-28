@@ -50,8 +50,7 @@
                                             <th>Phí Vận Chuyển</th>
                                             <th>Tổng Tiền</th>
                                             <th>Trạng Thái Thanh Toán</th>
-                                            {{-- sửa ngày thanh toán thành ngày đặt --}}
-                                            <th>Ngày Đặt Hàng (Nhớ sửa)</th>
+                                            <th>Ngày Đặt Hàng</th>
                                             <th>Trạng Thái đơn hàng</th>
                                             <th>Hành Động</th>
                                         </tr>
@@ -72,7 +71,30 @@
                                                 <td>{{ $order->grand_total }}</td>
                                                 <td>{{ $order->payment_status }}</td>
                                                 <td>{{ $order->created_at }}</td>
-                                                <td>{{ $order->order_status }}</td>
+
+                                                <td>
+                                                    <form action="{{ route('admin.orders.update_status', $order) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <select class="form-select form-select-sm" name="order_status"
+                                                            onchange="this.form.submit()">
+                                                            <option value="pending"
+                                                                {{ $order->order_status == 'pending' ? 'selected' : '' }}>
+                                                                Pending</option>
+                                                            <option value="processing"
+                                                                {{ $order->order_status == 'processing' ? 'selected' : '' }}>
+                                                                Processing</option>
+                                                            <option value="completed"
+                                                                {{ $order->order_status == 'completed' ? 'selected' : '' }}>
+                                                                Completed</option>
+                                                            <option value="canceled"
+                                                                {{ $order->order_status == 'canceled' ? 'selected' : '' }}>
+                                                                Canceled</option>
+                                                        </select>
+                                                    </form>
+                                                </td>
+
                                                 <td>
                                                     <a href="{{ route('admin.orders.show', $order) }}"
                                                         class="btn btn-info">Chi Tiết</a>

@@ -59,7 +59,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $order = Order::findOrFail($id);
 
@@ -72,7 +72,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, String $id)
+    public function update(UpdateOrderRequest $request, string $id)
     {
         if ($request->isMethod('PUT')) {
             $param = $request->except('__token', '__method');
@@ -86,10 +86,24 @@ class OrderController extends Controller
         }
     }
 
+    public function updateStatus(UpdateOrderRequest $request, $id)
+    {
+        $order = Order::findOrFail($id);
+
+        $request->validate([
+            'order_status' => 'required|in:pending,processing,completed,canceled',
+        ]);
+
+        $order->order_status = $request->order_status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Trạng thái đơn hàng đã được cập nhật thành công.');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $id)
+    public function destroy(string $id)
     {
         $orders = Order::findOrFail($id);
 
