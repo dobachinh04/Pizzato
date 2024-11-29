@@ -84,15 +84,15 @@
                                                     : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
                                                     <a class="btn btn-info"
-                                                        href="{{ route('admin.coupons.show', $item->id) }}">Chi Tiết</a>
+                                                        href="{{ route('admin.coupons.show', $item->id) }}"><i class="fa fa-info-circle"></i></a>
                                                     <a class="btn btn-warning"
-                                                        href="{{ route('admin.coupons.edit', $item->id) }}">Sửa</a>
+                                                        href="{{ route('admin.coupons.edit', $item->id) }}"><i class="fa fa-edit"> </i></a>
                                                     <form action="{{ route('admin.coupons.destroy', $item->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
-                                                            type="submit" class="btn btn-danger">Xóa</button>
+                                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

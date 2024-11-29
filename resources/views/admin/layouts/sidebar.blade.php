@@ -251,8 +251,17 @@
                     </div>
                 </li>
 
+
+                {{-- <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('admin.chat.index')}}">
+                        <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin Nhắn</span>
+                    </a>
+
+                </li> --}}
+
                 {{-- <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Phương
                         Thức</span></li> --}}
+
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDeliveryArea" data-bs-toggle="collapse" role="button"
