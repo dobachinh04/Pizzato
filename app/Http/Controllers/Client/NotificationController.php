@@ -44,18 +44,18 @@ class NotificationController extends Controller
     // }
 
 
-    public function getNotificationByInvoiceId($invoice_id){
-            $notification = DB::table('delay_notifications')
-                ->where('invoice_id', $invoice_id)
-                // ->orderBy('id', 'desc') //lấy theo id mới nhất
-                ->orderBy('created_at', 'desc')  // lấy theo time mới nhất
-                ->select('invoice_id', 'reason', 'solution', 'created_at')
-                ->first();
+    public function getNotificationByInvoiceId(String $id)
+    {
+        $notification = DB::table('delay_notifications')
+            ->join('orders', 'delay_notifications.invoice_id', '=', 'orders.invoice_id')
+            ->where('orders.user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->select('delay_notifications.invoice_id', 'reason', 'solution', 'delay_notifications.created_at')
+            ->get();
 
-            return response()->json([
-                'success' => true,
-                'data' => $notification,
-            ], 200);
-        }
-
+        return response()->json([
+            'success' => true,
+            'notification' => $notification,
+        ], 200);
+    }
 }

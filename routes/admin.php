@@ -254,4 +254,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //  Thông báo đơn hàng quá trễ
      Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
+    //  chat
+    Route::prefix('chat')->name('chat.')->group(function () {
+
+        Route::get('/', [ChatController::class, 'index'])->name('index');
+        Route::get('/{clientId}', [ChatController::class, 'chatWithClient'])->name('chatWithClient');
+        Route::post('/send', [ChatController::class, 'sendMessage'])->name('send');
+    });
+
+    Route::get('/chat', [ChatController::class, 'index'])->name('admin.chat');
+    Route::get('/chat/{clientId}', [ChatController::class, 'chatWithClient'])->name('admin.chatWithClient');
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('admin.chat.send');
 });
