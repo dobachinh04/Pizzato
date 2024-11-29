@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use id;
 use App\Models\Order;
 use App\Models\Invoice;
@@ -59,7 +60,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $order = Order::findOrFail($id);
 
@@ -72,7 +73,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, String $id)
+    public function update(UpdateOrderRequest $request, string $id)
     {
         if ($request->isMethod('PUT')) {
             $param = $request->except('__token', '__method');
@@ -86,25 +87,50 @@ class OrderController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(String $id)
+    public function updateStatus(UpdateOrderRequest $request, $id)
     {
-        $orders = Order::findOrFail($id);
+        $order = Order::findOrFail($id);
 
-        $orders->delete();
+        $request->validate([
+            'order_status' => 'required|in:pending,processing,completed,canceled',
+        ]);
 
-        return redirect()
-            ->route('admin.order.index')
-            ->with('errors', 'Xóa thành công');
+        $order->order_status = $request->order_status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Trạng thái đơn hàng đã được cập nhật thành công.');
     }
 
-    public function deleted()
+    public function cancel(Order $order)
     {
-        $orders = Order::get();
-        return view('admin.orders.index', compact('orders'));
+        try {
+            DB::beginTransaction();
+
+            // Kiểm tra trạng thái đơn hàng
+            if (in_array($order->order_status, ['processing'])) {
+                return redirect()->back()->with('error', 'Đơn hàng "Đang Được Giao", không thể hủy.');
+            } elseif (in_array($order->order_status, ['completed'])) {
+                return redirect()->back()->with('error', 'Đơn hàng "Đã Hoàn Thành", không thể hủy.');
+            } elseif (in_array($order->order_status, ['cancelled'])) {
+                return redirect()->back()->with('error', 'Đơn hàng "Đã Bị Hủy", không thể hủy lần nữa.');
+            }
+
+            // Cập nhật trạng thái đơn hàng
+            $order->update([
+                'order_status' => 'cancelled',
+                'updated_at' => now(),
+            ]);
+
+            // Cập nhật lại stock nếu cần (tuỳ vào nghiệp vụ)
+            // foreach ($order->orderItems as $item) {
+            //     $item->product->increment('stock', $item->quantity);
+            // }
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Đã xảy ra lỗi khi hủy đơn hàng: ' . $e->getMessage());
+        }
     }
-
-
 }
