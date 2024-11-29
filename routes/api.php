@@ -82,7 +82,7 @@ Route::get('/orders', [OrderController::class, 'index']);
 
 // Notification of delay orders
 // Route::get('/overdue-orders', [OrderController::class, 'overdueOrders']);
-Route::get('/notifications/invoice/{invoice_id}', [NotificationController::class, 'getNotificationByInvoiceId']);
+Route::get('/notifications/{id}', [NotificationController::class, 'getNotificationByInvoiceId']);
 
 // refunds
 Route::post('/refund-request', [RefundController::class, 'createRefundRequest']);
