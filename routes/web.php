@@ -51,15 +51,7 @@ Route::get('/forgot-password', [AuthenticationController::class, 'showForgotPass
 // Route để xử lý việc đặt lại mật khẩu
 Route::post('/reset-password', [AuthenticationController::class, 'resetPassword'])->name('password.update');
 
-// Logout:
-// Route::post('/logout',                                  [AuthenticationController::class, 'logout'])->name('client.logout');
 
-// Forgot Password:
-// Route::get('forgot-password',                           [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-// Route::post('forgot-password',                          [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
-// Route::get('reset-password/{token}',                    [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-// Route::post('reset-password',                           [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
 

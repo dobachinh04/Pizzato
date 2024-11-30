@@ -38,12 +38,7 @@ Route::prefix('admin/auth')->name('admin.')->group(function () {
 
 Route::view('403-page', 'admin.auth.403')->name('403Page');
 
-// Route::middleware(['auth.role:admin', 'no-cache'])->group(function(){
-//     Route::prefix('admin')->name('admin.')->group(function(){
-//         // Admin - Dashboard:
-//     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
-//     });
-// });
+
 
 // Route::middleware('auth.role:admin')->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
