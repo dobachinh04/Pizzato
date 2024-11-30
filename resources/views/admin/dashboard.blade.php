@@ -28,9 +28,6 @@
                                 <div class="col-12">
                                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                         <div class="flex-grow-1">
-                                            {{-- <h4 class="fs-16 mb-1">Xin chào, {{ Auth::user()->name }}</h4> --}}
-                                            {{-- <p class="text-muted mb-0">Here's what's happening with your store today.
-                                        </p> --}}
                                             <p class="text-muted mb-0">Đây là những gì đang xảy ra với cửa hàng của bạn ngày
                                                 hôm nay.</p>
 
@@ -218,14 +215,7 @@
                                                         class="text-decoration-underline">See Revenue Details</a>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    {{-- <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                                            class="counter-value" data-target="{{ $revenue }}"></span>
-                                                        VNĐ
-                                                    </h4>
-                                                    <a href="" class="text-decoration-underline">See Revenue
-                                                        Details</a>
-                                                </div> --}}
+
 
                                                     <style>
                                                         .revenue-icon {
@@ -435,9 +425,7 @@
                                                                 <td data-order="{{ $item->created_at }}">
                                                                     {{ $item->time_ago }}
                                                                 </td>
-                                                                {{-- <td><span
-                                                                        class="badge bg-danger">{{ $item->order_status }}</span>
-                                                                </td> --}}
+                                                        
                                                                 <td>
                                                                     <span class="badge bg-warning-subtle text-warning">
                                                                         @if ($item->order_status === 'pending')
