@@ -23,7 +23,6 @@ class AddressController extends Controller
         return view('admin.addresses.index', compact('addresses'));
     }
 
-
     public function create()
     {
         $users = User::all();
@@ -31,7 +30,6 @@ class AddressController extends Controller
 
         return view('admin.addresses.create', compact('users', 'delivery_areas'));
     }
-
 
     public function store(StoreAddressRequest $request)
     {
@@ -43,9 +41,7 @@ class AddressController extends Controller
             ->with('success', 'Địa chỉ đã được thêm thành công!');
     }
 
-
     public function show(string $id) {}
-
 
     public function edit(string $id)
     {
@@ -58,7 +54,6 @@ class AddressController extends Controller
             compact('address', 'users', 'delivery_areas')
         );
     }
-
 
     public function update(UpdateAddressRequest $request, Address $address)
     {

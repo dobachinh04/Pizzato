@@ -107,6 +107,7 @@
                                                     <img src="{{ \Storage::url($product->thumb_image) }}" width="100px"
                                                         height="100px" alt="image">
                                                 @endif
+
                                                 @error('thumb_image')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

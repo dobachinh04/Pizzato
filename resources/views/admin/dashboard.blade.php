@@ -538,7 +538,7 @@
                                                                         {{ $product->name }}
                                                                     </a>
                                                                 </td>
-                                                                <td>
+                                                                {{-- <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="flex-shrink-0 me-2">
                                                                             <a
@@ -549,7 +549,19 @@
                                                                             </a>
                                                                         </div>
                                                                     </div>
+                                                                </td> --}}
+                                                                <a href="{{ route('admin.products.show', $product->id) }}">
+                                                                    <td>
+                                                                    @php
+                                                                        $url = $product->thumb_image;
+                                                                        if (!\Str::contains($url, 'http')) {
+                                                                            $url = \Storage::url($url);
+                                                                        }
+                                                                    @endphp
+                                                                    <img src="{{ $url }}" alt="" width="100px">
                                                                 </td>
+                                                                </a>
+
                                                                 <td class="text-center">
                                                                     <a href="apps-ecommerce-order-details.html"
                                                                         class="fw-medium link-primary"

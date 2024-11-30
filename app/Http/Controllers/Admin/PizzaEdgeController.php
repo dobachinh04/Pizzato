@@ -3,65 +3,76 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PizzaEdge;
 use App\Http\Requests\StorePizzaEdgeRequest;
 use App\Http\Requests\UpdatePizzaEdgeRequest;
+use App\Models\PizzaEdge;
+use Illuminate\Support\Facades\Storage;
 
 class PizzaEdgeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    const PATH_UPLOAD = 'products/pizza-edges';
+
     public function index()
     {
-        //
+        $pizzaEdges = PizzaEdge::query()->latest('id')->get();
+        return view('admin.pizza-edges.index', compact('pizzaEdges'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.pizza-edges.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePizzaEdgeRequest $request)
     {
-        //
+        // Xử lý ảnh
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
+        }
+
+        PizzaEdge::query()->create($data);
+
+        return redirect()
+            ->route('admin.pizza-edges.index')
+            ->with('success', 'Thêm thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PizzaEdge $pizzaEdge)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(PizzaEdge $pizzaEdge)
     {
-        //
+        return view('admin.pizza-edges.edit', compact('pizzaEdge'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePizzaEdgeRequest $request, PizzaEdge $pizzaEdge)
     {
-        //
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
+        }
+        $currentImage = $pizzaEdge->image; // Lưu giá trị ảnh hiện tại
+
+        $pizzaEdge->update($data);
+
+        // Xóa ảnh cũ nếu cần
+        if ($request->hasFile('image') && $currentImage && Storage::exists($currentImage)) {
+            Storage::delete($currentImage);
+        }
+
+        return back()
+            ->with('success', 'Sửa thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(PizzaEdge $pizzaEdge)
     {
-        //
+        // Xóa ảnh nếu tồn tại
+        if ($pizzaEdge->image && Storage::exists($pizzaEdge->image)) {
+            Storage::delete($pizzaEdge->image);
+        }
+
+        $pizzaEdge->delete();
+
+        return redirect()
+            ->route('admin.pizza-edges.index')
+            ->with('success', 'Xóa thành công');
     }
 }

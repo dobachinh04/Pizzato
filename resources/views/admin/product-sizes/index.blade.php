@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Người Dùng - Pizzato
+    Size sản phẩm - Pizzato
 @endsection
-
+{{-- demo branch command line --}}
 @section('content')
     <!--datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
@@ -28,8 +28,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Người Dùng</h5>
-                                <a href="{{ route('admin.users.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Size Pizza</h5>
+                                <a href="{{ route('admin.product-sizes.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">
@@ -44,40 +44,44 @@
                                                         value="option">
                                                 </div>
                                             </th>
-                                            <th>Tên người dùng</th>
-                                            <th>Ảnh đại diện</th>
-                                            <th>Email</th>
-                                            <th>Quyền</th>
-                                            <th>Hành động</th>
+                                            <th>ID</th>
+                                            <th>Tên Pizza Base</th>
+                                            <th>Giá</th>
+                                            <th>Hình Ảnh</th>
+                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $stt => $user)
+                                        @foreach ($productSizes as $item)
                                             <tr>
-                                                <td>{{ $stt + 1 }}</td>
-                                                <td>{{ $user->name }}</td>
-
+                                                <th scope="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input fs-15" type="checkbox"
+                                                            name="checkAll" value="option1">
+                                                    </div>
+                                                </th>
+                                                <td>{{ $item->id }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ number_format($item->price, 0, ',', '.') }}₫</td>
                                                 <td>
-                                                    <img src="{{ asset('storage/' . $user->image) }}"
-                                                        style="width: 75px; height: 75px; object-fit: cover"
-                                                        alt="Ảnh Người Dùng">
+                                                    @php
+                                                        $url = $item->image;
+                                                        if (!\Str::contains($url, 'http')) {
+                                                            $url = \Storage::url($url);
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $url }}" alt="" width="100px">
                                                 </td>
-
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->role->name }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.users.show', $user) }}"
-                                                        class="btn btn-info"><i class="fa fa-info-circle"></i></a>
-                                                    <a href="{{ route('admin.users.edit', $user) }}"
-                                                        class="btn btn-warning"><i class="fa fa-edit"> </i></a>
-
-                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
-                                                        style="display: inline;"
+                                                    <a href="{{ route('admin.product-sizes.edit', $item->id) }}"
+                                                        class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                                    <form action="{{ route('admin.product-sizes.destroy', $item->id) }}"
+                                                        method="POST" style="display:inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
                                                         @method('DELETE')
-
-                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-danger"><i
+                                                                class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -91,6 +95,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
