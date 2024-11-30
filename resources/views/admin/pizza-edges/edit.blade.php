@@ -5,14 +5,14 @@
 @endsection
 
 @section('content')
-    @if (Session::has('success'))
+    {{-- @if (Session::has('success'))
         <div class="alert alert-success solid alert-dismissible fade show">
             <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
                         class="mdi mdi-close"></i></span>
             </button>
             <strong>Success!</strong> {{ Session::get('success') }}.
         </div>
-    @endif
+    @endif --}}
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
@@ -31,22 +31,22 @@
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Cập Nhật Kích Thước Sản Phẩm</h4>
+                                <h4 class="card-title">Cập Nhật Viền Pizza</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form action="{{ route('admin.product-sizes.update', $productSize->id) }}"
+                                    <form action="{{ route('admin.pizza-edges.update', $pizzaEdge->id) }}"
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
 
-                                        <!-- Tên Kích Thước -->
+                                        <!-- Tên Viền -->
                                         <div class="form-group">
-                                            <label>Tên Kích Thước</label>
+                                            <label>Tên Viền</label>
                                             <input type="text" name="name"
                                                 class="form-control input-default @error('name') is-invalid @enderror"
-                                                placeholder="Tên Kích Thước (VD: Small, Medium, Large)"
-                                                value="{{ old('name', $productSize->name) }}">
+                                                placeholder="Tên Viền (VD: Viền Phô Mai, Viền Xúc Xích)"
+                                                value="{{ old('name', $pizzaEdge->name) }}">
                                             @error('name')
                                                 <p style="color: red">{{ $message }}</p>
                                             @enderror
@@ -58,8 +58,8 @@
                                             <label>Giá</label>
                                             <input type="number" name="price"
                                                 class="form-control input-default @error('price') is-invalid @enderror"
-                                                placeholder="Nhập Giá (VD: 50000)"
-                                                value="{{ old('price', $productSize->price)  }}">
+                                                placeholder="Nhập Giá (VD: 100000)"
+                                                value="{{ old('price', $pizzaEdge->price) }}">
 
                                             @error('price')
                                                 <p style="color: red">{{ $message }}</p>
@@ -74,7 +74,7 @@
 
                                             @php
                                                 // Xử lý đường dẫn ảnh
-                                                $imageUrl = $productSize->image;
+                                                $imageUrl = $pizzaEdge->image;
                                                 if (!\Str::contains($imageUrl, 'http')) {
                                                     $imageUrl = \Storage::url($imageUrl);
                                                 }
@@ -82,7 +82,7 @@
 
                                             <!-- Hiển thị hình ảnh -->
                                             @if (!empty($imageUrl))
-                                                <img src="{{ $imageUrl }}" width="100px" height="100px" alt="image">
+                                                <img src="{{ $imageUrl }}" width="100px" height="100px" alt="Hình ảnh viền pizza">
                                             @endif
 
                                             @error('image')
@@ -90,14 +90,11 @@
                                             @enderror
                                         </div>
 
-
-
-
                                         <!-- Nút Hành Động -->
-                                        <a href="{{ route('admin.product-sizes.index') }}" class="btn btn-secondary">
+                                        <a href="{{ route('admin.pizza-edges.index') }}" class="btn btn-secondary">
                                             Quay Lại
                                         </a>
-                                        <button type="submit" class="btn btn-success">Sửa</button>
+                                        <button type="submit" class="btn btn-success">Cập Nhật</button>
                                     </form>
                                 </div>
                             </div>
@@ -107,5 +104,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection

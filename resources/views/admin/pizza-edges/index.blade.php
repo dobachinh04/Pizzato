@@ -28,8 +28,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Kích Thước Sản Phẩm</h5>
-                                <a href="{{ route('admin.product-sizes.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Viền Pizza</h5>
+                                <a href="{{ route('admin.pizza-edges.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">
@@ -45,14 +45,14 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
-                                            <th>Tên Kích Thước</th>
+                                            <th>Tên Viền Bánh</th>
                                             <th>Giá</th>
                                             <th>Hình Ảnh</th>
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($productSizes as $item)
+                                        @foreach ($pizzaEdges as $item)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -60,7 +60,7 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{$item->id}}</td>
+                                                <td>{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ number_format($item->price, 0, ',', '.') }}₫</td>
                                                 <td>
@@ -70,12 +70,12 @@
                                                             $url = \Storage::url($url);
                                                         }
                                                     @endphp
-                                                    <img src="{{ $url }}" alt="" width="100px">
+                                                    <img src="{{ $url }}" alt="Hình ảnh viền pizza" width="100px">
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.product-sizes.edit', $item->id) }}"
+                                                    <a href="{{ route('admin.pizza-edges.edit', $item->id) }}"
                                                         class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{ route('admin.product-sizes.destroy', $item) }}"
+                                                    <form action="{{ route('admin.pizza-edges.destroy', $item->id) }}"
                                                         method="POST" style="display:inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
@@ -94,6 +94,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"

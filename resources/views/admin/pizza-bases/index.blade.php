@@ -28,7 +28,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Pizza Bases</h5>
+                                <h5 class="card-title mb-0">Danh Sách Đế Pizza</h5>
                                 <a href="{{ route('admin.pizza-bases.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 

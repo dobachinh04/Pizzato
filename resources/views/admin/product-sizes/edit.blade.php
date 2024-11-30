@@ -16,7 +16,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -24,14 +24,14 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- row -->
                 <div class="row">
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Cập Nhật Kích Thước Sản Phẩm</h4>
+                                <h4 class="card-title">Cập Nhật Kích Thước Pizza</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
