@@ -69,12 +69,7 @@ Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.de
 Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
 
 
-// Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-// Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-// VNPay Payment
-//Route::get('payment/vnpay',             [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
-//Route::get('payment/vnpay/callback',    [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
 // Momo Payment
 Route::get('payment/momo',             [MomoController::class, 'createPayment'])->name('payment.momo.create');
@@ -85,14 +80,7 @@ Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('pa
 Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
 Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index');
-// Route::get('/redis-test', function () {
-//   return Redis::ping();
-// });
-// Route::post('message', function (Request $request) {
-//   broadcast(new MessageSent(auth()->user(), $request->input('message')));
 
-//   return $request->input('message');
-// });
 
 // Oder
 Route::get('/client/order_history', [OrderController::class, 'index'])
