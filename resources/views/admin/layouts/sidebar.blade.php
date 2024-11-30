@@ -95,15 +95,15 @@
                                     data-key="t-one-page">Danh Sách Sản Phẩm</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                <a href="{{ route('admin.product-sizes.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Size Bánh</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                <a href="{{ route('admin.pizza-edges.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Viền Bánh</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.products.index') }}" class="nav-link"
+                                <a href="{{ route('admin.pizza-bases.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Đế Bánh</a>
                             </li>
                             <li class="nav-item">
@@ -258,10 +258,10 @@
 
                 </li>
 
-
-                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Phương
+                {{-- <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Quản Lý Phương
                         Thức</span></li> --}}
 
+                {{-- <li class="nav-item">
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDeliveryArea" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDeliveryArea">
@@ -299,12 +299,12 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.chat.index') }}">
                         <i class="fas fa-comment-dots"></i> <span data-key="t-landing">Tin Nhắn</span>
                     </a>
 
-                </li>
+                </li> --}}
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPayment" data-bs-toggle="collapse" role="button"

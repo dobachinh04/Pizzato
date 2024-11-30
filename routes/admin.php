@@ -24,7 +24,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\PizzaBaseController;
+use App\Http\Controllers\Admin\PizzaEdgeController;
 use App\Http\Controllers\Admin\ProductReviewController as AdminProductReviewController;
+use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Middleware\CheckFormLogin;
 
@@ -261,4 +264,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/chat', [ChatController::class, 'index'])->name('admin.chat');
     Route::get('/chat/{clientId}', [ChatController::class, 'chatWithClient'])->name('admin.chatWithClient');
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('admin.chat.send');
+
+    // biến thể sản phẩm
+    // Route::prefix('products')->name('products.')->group(function () {
+        Route::resource('pizza-edges', PizzaEdgeController::class);
+        Route::resource('pizza-bases', PizzaBaseController::class);
+        Route::resource('product-sizes', ProductSizeController::class);
+    // });
+
 });

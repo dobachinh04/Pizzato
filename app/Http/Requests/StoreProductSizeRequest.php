@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePizzaBaseRequest extends FormRequest
+class StoreProductSizeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,9 +31,9 @@ class StorePizzaBaseRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Tên đế bánh là bắt buộc.',
-            'name.string' => 'Tên đế bánh phải là chuỗi ký tự.',
-            'name.max' => 'Tên đế bánh không được vượt quá 255 ký tự.',
+            'name.required' => 'Tên kích thước là bắt buộc.',
+            'name.string' => 'Tên kích thước phải là chuỗi ký tự.',
+            'name.max' => 'Tên kích thước không được vượt quá 255 ký tự.',
 
             'price.required' => 'Giá là bắt buộc.',
             'price.numeric' => 'Giá phải là một số.',
