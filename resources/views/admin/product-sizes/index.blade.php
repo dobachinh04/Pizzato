@@ -28,8 +28,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Pizza Bases</h5>
-                                <a href="{{ route('admin.pizza-bases.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Size Pizza</h5>
+                                <a href="{{ route('admin.product-sizes.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">
@@ -52,7 +52,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($pizzaBases as $item)
+                                        @foreach ($productSizes as $item)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -73,9 +73,9 @@
                                                     <img src="{{ $url }}" alt="" width="100px">
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.pizza-bases.edit', $item->id) }}"
+                                                    <a href="{{ route('admin.product-sizes.edit', $item->id) }}"
                                                         class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{ route('admin.pizza-bases.destroy', $item->id) }}"
+                                                    <form action="{{ route('admin.product-sizes.destroy', $item->id) }}"
                                                         method="POST" style="display:inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf

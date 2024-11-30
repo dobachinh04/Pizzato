@@ -71,10 +71,14 @@
                                                 <td>{{ $item->code }}</td>
                                                 <td>{{ $item->qty }}</td>
                                                 {{-- <td>{{ number_format($item->min_purchase_amount) }} VND</td> --}}
-                                                <td>{{ number_format($item->min_purchase_amount, 0, ',', '.') }} VNĐ</td>
+                                                <td>{{ number_format($item->min_purchase_amount, 0, ',', '.') }} ₫</td>
 
-                                                <td>{{ ucfirst($item->discount_type) }}</td>
-                                                <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount, 0, ',', '.') . ' VNĐ' }}
+                                                {{-- <td>{{ ucfirst($item->discount_type) }}</td> --}}
+                                                <td>
+                                                    {{ ucfirst($item->discount_type === 'amount' ? 'Giảm theo số tiền' : 'Giảm theo phần trăm' )}}
+                                                </td>
+
+                                                <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount, 0, ',', '.') . ' ₫' }}
                                                 </td>
                                                 {{-- <td>{{ $item->expire_date }}</td> --}}
                                                 <!-- Giờ hết hạn -->

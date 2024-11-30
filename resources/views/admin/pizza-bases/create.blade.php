@@ -31,7 +31,7 @@
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Thêm Đế Bánh</h4>
+                                <h4 class="card-title">Thêm Đế Pizza</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
@@ -41,7 +41,7 @@
 
                                         <!-- Tên Pizza Base -->
                                         <div class="form-group">
-                                            <label>Tên Đế Bánh</label>
+                                            <label>Tên Đế </label>
                                             <input type="text" name="name"
                                                 class="form-control input-default @error('name') is-invalid @enderror"
                                                 placeholder="Tên Pizza Base (VD: Đế mỏng, đế dày)"
