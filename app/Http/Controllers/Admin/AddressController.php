@@ -23,7 +23,7 @@ class AddressController extends Controller
         return view('admin.addresses.index', compact('addresses'));
     }
 
-    
+
     public function create()
     {
         $users = User::all();
@@ -32,22 +32,21 @@ class AddressController extends Controller
         return view('admin.addresses.create', compact('users', 'delivery_areas'));
     }
 
-   
+
     public function store(StoreAddressRequest $request)
     {
         // Tạo một địa chỉ mới
         Address::create($request->all());
 
-        // Redirect về trang danh sách với thông báo thành công
         return redirect()
             ->route('admin.addresses.index')
             ->with('success', 'Địa chỉ đã được thêm thành công!');
     }
 
-  
+
     public function show(string $id) {}
 
-   
+
     public function edit(string $id)
     {
         $address = Address::findOrFail($id);
@@ -60,7 +59,7 @@ class AddressController extends Controller
         );
     }
 
-  
+
     public function update(UpdateAddressRequest $request, Address $address)
     {
         // Cập nhật địa chỉ
@@ -71,7 +70,7 @@ class AddressController extends Controller
             ->route('admin.addresses.index')
             ->with('success', 'Địa chỉ đã được cập nhật thành công!');
     }
-   
+
     public function destroy(Address $address)
     {
         // Xóa địa chỉ
