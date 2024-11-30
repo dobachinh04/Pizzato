@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm Mới Size Bánh
+    Thêm Mới Đế Bánh
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -24,27 +24,27 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- row -->
                 <div class="row">
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Thêm Mới Kích Thước Sản Phẩm</h4>
+                                <h4 class="card-title">Thêm Đế Bánh</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form action="{{ route('admin.product-sizes.store') }}" method="POST"
+                                    <form action="{{ route('admin.pizza-bases.store') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
 
-                                        <!-- Tên Kích Thước -->
+                                        <!-- Tên Pizza Base -->
                                         <div class="form-group">
-                                            <label>Tên Kích Thước</label>
+                                            <label>Tên Đế Bánh</label>
                                             <input type="text" name="name"
                                                 class="form-control input-default @error('name') is-invalid @enderror"
-                                                placeholder="Tên Kích Thước (VD: Nhỏ, Vừa, Lớn)"
+                                                placeholder="Tên Pizza Base (VD: Đế mỏng, đế dày)"
                                                 value="{{ old('name') }}">
 
                                             @error('name')
@@ -77,7 +77,7 @@
                                         </div>
 
                                         <!-- Nút Hành Động -->
-                                        <a href="{{ route('admin.product-sizes.index') }}" class="btn btn-secondary">
+                                        <a href="{{ route('admin.pizza-bases.index') }}" class="btn btn-secondary">
                                             Quay Lại
                                         </a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>
@@ -90,5 +90,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection
