@@ -9,26 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
         $sliders = sliders::get();
         return view('admin.sliders.index',compact('sliders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
         return view('admin.sliders.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
         $request->validate([
@@ -60,17 +54,13 @@ class SliderController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(string $id)
     {
         $slider = sliders::findOrFail($id);
@@ -79,9 +69,7 @@ class SliderController extends Controller
         return view('admin.sliders.update', compact('slider'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(Request $request, string $id)
     {
         $sliders = Sliders::findOrFail($id);

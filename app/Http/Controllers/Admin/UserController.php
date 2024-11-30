@@ -63,17 +63,12 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+  
     public function show(User $user)
     {
         return view('admin.users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $user = User::with('role')->findOrFail($id);
@@ -88,9 +83,7 @@ class UserController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+ 
     public function update(UpdateUserRequest $request, string $id)
     {
         $users = User::findOrFail($id);
@@ -117,9 +110,7 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(string $id)
     {
         $users = User::findOrFail($id);
@@ -135,3 +126,4 @@ class UserController extends Controller
             ->with('errors', 'Xóa thành công');
     }
 }
+//
