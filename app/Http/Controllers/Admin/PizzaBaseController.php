@@ -3,65 +3,76 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PizzaBase;
 use App\Http\Requests\StorePizzaBaseRequest;
 use App\Http\Requests\UpdatePizzaBaseRequest;
+use App\Models\PizzaBase;
+use Illuminate\Support\Facades\Storage;
 
 class PizzaBaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    const PATH_UPLOAD = 'products/pizza-bases';
+
     public function index()
     {
-        //
+        $pizzaBases = PizzaBase::query()->latest('id')->get();
+        return view('admin.pizza-bases.index', compact('pizzaBases'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.pizza-bases.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePizzaBaseRequest $request)
     {
-        //
+        // Xử lý ảnh
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
+        }
+
+        PizzaBase::query()->create($data);
+
+        return redirect()
+            ->route('admin.pizza-bases.index')
+            ->with('success', 'Thêm thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PizzaBase $pizzaBase)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(PizzaBase $pizzaBase)
     {
-        //
+        return view('admin.pizza-bases.edit', compact('pizzaBase'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePizzaBaseRequest $request, PizzaBase $pizzaBase)
     {
-        //
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
+        }
+
+        $currentImage = $pizzaBase->image;
+
+        $pizzaBase->update($data);
+
+        if ($request->hasFile('image') && $currentImage && Storage::exists($currentImage)) {
+            Storage::delete($currentImage);
+        }
+
+        return back()
+            ->with('success', 'Sửa thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(PizzaBase $pizzaBase)
     {
-        //
+        if ($pizzaBase->image && Storage::exists($pizzaBase->image)) {
+            Storage::delete($pizzaBase->image);
+        }
+
+        $pizzaBase->delete();
+
+        return redirect()
+            ->route('admin.pizza-bases.index')
+            ->with('success', 'Xóa thành công');
     }
 }

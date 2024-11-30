@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm Mới Danh Mục
+    Thêm Mới Đế Bánh
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -24,74 +24,62 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- row -->
-
                 <div class="row">
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Thêm Mới Danh Mục</h4>
+                                <h4 class="card-title">Thêm Đế Pizza</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form action="{{ route('admin.categories.store') }}" method="POST"
+                                    <form action="{{ route('admin.pizza-bases.store') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
 
+                                        <!-- Tên Pizza Base -->
                                         <div class="form-group">
-                                            <label>Tên</label>
-                                            <input type="text" name="name" class="form-control input-default "
-                                                placeholder="Tên Danh Mục" value="{{ old('name') }}">
+                                            <label>Tên Đế </label>
+                                            <input type="text" name="name"
+                                                class="form-control input-default @error('name') is-invalid @enderror"
+                                                placeholder="Tên Pizza Base (VD: Đế mỏng, đế dày)"
+                                                value="{{ old('name') }}">
+
                                             @error('name')
                                                 <p style="color: red">{{ $message }}</p>
                                             @enderror
                                             <br>
                                         </div>
 
+                                        <!-- Giá -->
                                         <div class="form-group">
-                                            <label>Slug</label>
-                                            <input type="text" name="slug" class="form-control input-default "
-                                                placeholder="VD: danh-muc-1" value="{{ old('slug') }}">
-                                            @error('slug')
+                                            <label>Giá</label>
+                                            <input type="number" name="price"
+                                                class="form-control input-default @error('price') is-invalid @enderror"
+                                                placeholder="Nhập Giá (VD: 50000)"
+                                                value="{{ old('price') }}">
+                                            @error('price')
                                                 <p style="color: red">{{ $message }}</p>
                                             @enderror
                                             <br>
                                         </div>
 
+                                        <!-- Hình Ảnh -->
                                         <div class="form-group">
                                             <label>Hình Ảnh</label>
-                                            <input type="file" name="image" class="form-control input-default "
-                                                id="image" value="{{ old('image') }}">
+                                            <input type="file" name="image" class="form-control input-default" id="image">
                                             @error('image')
                                                 <p style="color: red">{{ $message }}</p>
                                             @enderror
                                             <br>
                                         </div>
 
-                                        {{-- <div class="form-group">
-                                        <label>Trạng Thái Hàng</label>
-                                        <select name="status" class="form-control input-default">
-                                            <option disabled>Chọn Trạng Thái</option>
-                                            <option value="1" selected>Còn hàng</option>
-                                            <option value="0">Hết hàng</option>
-                                        </select>
-                                        <br>
-                                    </div> --}}
-
-                                        {{-- <div class="form-group">
-                                        <label>Trạng Thái Hiển Thị</label>
-                                        <select name="show_at_home" class="form-control input-default">
-                                            <option disabled>Chọn Trạng Thái</option>
-                                            <option value="1">Hiển thị</option>
-                                            <option value="0" selected>Ẩn</option>
-                                        </select>
-                                        <br>
-                                    </div> --}}
-
-                                        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">
-                                            Quay Lại</a>
+                                        <!-- Nút Hành Động -->
+                                        <a href="{{ route('admin.pizza-bases.index') }}" class="btn btn-secondary">
+                                            Quay Lại
+                                        </a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>
                                     </form>
                                 </div>
@@ -102,4 +90,6 @@
             </div>
         </div>
     </div>
+
+
 @endsection

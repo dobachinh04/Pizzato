@@ -19,10 +19,27 @@ class UpdatePizzaBaseRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Tên đế bánh là bắt buộc.',
+            'name.string' => 'Tên đế bánh phải là chuỗi ký tự.',
+            'name.max' => 'Tên đế bánh không được vượt quá 255 ký tự.',
+            'price.required' => 'Giá là bắt buộc.',
+            'price.numeric' => 'Giá phải là một số.',
+            'price.min' => 'Giá không được nhỏ hơn 0.',
+            'image.image' => 'Hình ảnh phải là định dạng ảnh.',
+            'image.mimes' => 'Hình ảnh chỉ chấp nhận các định dạng jpg, jpeg, png.',
+            'image.max' => 'Kích thước ảnh không được vượt quá 2MB.',
         ];
     }
 }

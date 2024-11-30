@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Mã Giảm Giá - Pizzato
+    Size sản phẩm - Pizzato
 @endsection
-
+{{-- demo branch command line --}}
 @section('content')
     <!--datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
@@ -12,14 +12,14 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
-    {{-- @if (Session::has('success'))
+    @if (Session::has('success'))
         <div class="alert alert-success solid alert-dismissible fade show">
             <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
                         class="mdi mdi-close"></i></span>
             </button>
             <strong>Hoàn Tất!</strong> {{ Session::get('success') }}.
         </div>
-    @endif --}}
+    @endif
 
     <div class="main-content">
         <div class="page-content">
@@ -28,8 +28,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Mã Giảm Giá</h5>
-                                <a href="{{ route('admin.coupons.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Size Pizza</h5>
+                                <a href="{{ route('admin.product-sizes.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">
@@ -45,20 +45,14 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
-                                            <th>Tên Mã</th>
-                                            <th>Mã Giảm</th>
-                                            <th>Số Lượng</th>
-                                            <th>Giá Mua Tối Thiểu</th>
-                                            <th>Loại Giảm Giá</th>
-                                            <th>Giảm Giá</th>
-                                            <th>Giờ Hết Hạn</th>
-                                            <th>Ngày Hết Hạn</th>
-                                            <th>Trạng Thái</th>
-                                            <th>Hành động</th>
+                                            <th>Tên Pizza Base</th>
+                                            <th>Giá</th>
+                                            <th>Hình Ảnh</th>
+                                            <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $item)
+                                        @foreach ($productSizes as $item)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -68,37 +62,26 @@
                                                 </th>
                                                 <td>{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->code }}</td>
-                                                <td>{{ $item->qty }}</td>
-                                                {{-- <td>{{ number_format($item->min_purchase_amount) }} VND</td> --}}
-                                                <td>{{ number_format($item->min_purchase_amount, 0, ',', '.') }} ₫</td>
-
-                                                {{-- <td>{{ ucfirst($item->discount_type) }}</td> --}}
+                                                <td>{{ number_format($item->price, 0, ',', '.') }}₫</td>
                                                 <td>
-                                                    {{ ucfirst($item->discount_type === 'amount' ? 'Giảm theo số tiền' : 'Giảm theo phần trăm' )}}
+                                                    @php
+                                                        $url = $item->image;
+                                                        if (!\Str::contains($url, 'http')) {
+                                                            $url = \Storage::url($url);
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $url }}" alt="" width="100px">
                                                 </td>
-
-                                                <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount, 0, ',', '.') . ' ₫' }}
-                                                </td>
-                                                {{-- <td>{{ $item->expire_date }}</td> --}}
-                                                <!-- Giờ hết hạn -->
-                                                <td>{{ \Carbon\Carbon::parse($item->expire_date)->format('H:i') }}</td>
-                                                <!-- Ngày hết hạn -->
-                                                <td>{{ \Carbon\Carbon::parse($item->expire_date)->format('d-m-Y') }}</td>
-                                                <td>{!! $item->status
-                                                    ? '<span class="badge bg-primary">Active</span>'
-                                                    : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
-                                                    <a class="btn btn-info"
-                                                        href="{{ route('admin.coupons.show', $item->id) }}"><i class="fa fa-info-circle"></i></a>
-                                                    <a class="btn btn-warning"
-                                                        href="{{ route('admin.coupons.edit', $item->id) }}"><i class="fa fa-edit"> </i></a>
-                                                    <form action="{{ route('admin.coupons.destroy', $item->id) }}"
-                                                        method="POST" style="display:inline;">
+                                                    <a href="{{ route('admin.product-sizes.edit', $item->id) }}"
+                                                        class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                                    <form action="{{ route('admin.product-sizes.destroy', $item->id) }}"
+                                                        method="POST" style="display:inline;"
+                                                        onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
-                                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-danger"><i
+                                                                class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -112,6 +95,9 @@
             </div>
         </div>
     </div>
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 

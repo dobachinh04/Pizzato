@@ -128,13 +128,13 @@
                                                 <td>{{$item->created_at}}</td>
                                                 <td>
                                                     <a href="{{ route('admin.product-reviews.show', $item->id) }}"
-                                                        class="btn btn-soft-info">Chi tiết</a>
+                                                        class="btn btn-info"><i class="fa fa-info-circle"></i></a>
                                                         <form action="{{ route('admin.product-reviews.destroy', $item->id) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button onclick='return confirm("Bạn có chắc là muốn xóa không?")' type="submit"
-                                                                class="btn btn-danger">Xóa</button>
+                                                                class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                         </form>
                                                 </td>
                                             </tr>

@@ -87,8 +87,10 @@
                                                 </td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->category->name }}</td>
-                                                <td>{{ $item->price }}</td>
-                                                <td>{{ $item->offer_price }}</td>
+                                                {{-- <td>{{ $item->price }}</td> --}}
+                                                <td>{{ number_format($item->price, 0, ',', '.') }}₫</td>
+                                                {{-- <td>{{ $item->offer_price }}</td> --}}
+                                                <td>{{ number_format($item->offer_price, 0, ',', '.') }}₫</td>
                                                 <td>{{ $item->qty }}</td>
 
                                                 <td>{!! $item->show_at_home
