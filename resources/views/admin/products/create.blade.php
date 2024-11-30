@@ -42,11 +42,22 @@
                                                             <div class="basic-form">
                                                                 <div class="row">
                                                                     <h3>Thông Tin Sản Phẩm</h3>
+
+                                                                    @if ($errors->any())
+                                                                        <div class="alert alert-danger">
+                                                                            <ul>
+                                                                                @foreach ($errors->all() as $error)
+                                                                                    <li>{{ $error }}</li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        </div>
+                                                                    @endif
+
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
                                                                             <label>Name</label>
                                                                             <input type="text" name="name"
-                                                                                class="form-control"
+                                                                                class="form-control @error('name') is-invalid @enderror"
                                                                                 value="{{ old('name') }}">
                                                                             @error('name')
                                                                                 <span
@@ -56,17 +67,42 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Slug</label>
-                                                                            <input type="text" name="slug"
-                                                                                class="form-control"
-                                                                                value="{{ old('slug', isset($product) ? $product->slug : $slug) }}"
-                                                                                readonly>
+                                                                            <div class="input-group">
+                                                                                <input type="text" name="slug"
+                                                                                    class="form-control @error('slug') is-invalid @enderror"
+                                                                                    value="{{ old('slug', isset($product) ? $product->slug : $slug) }}">
+                                                                                <button type="button" id="generate-slug"
+                                                                                    class="btn btn-secondary">Tạo
+                                                                                    slug</button>
+                                                                            </div>
+                                                                            @error('slug')
+                                                                                <span
+                                                                                    class="text-danger">{{ $message }}</span>
+                                                                            @enderror
                                                                         </div>
 
-                                                                        <div class="form-group mt-3">
+                                                                        {{-- <div class="form-group mt-3">
                                                                             <label>Sku</label>
                                                                             <input type="text" name="sku"
                                                                                 class="form-control"
                                                                                 value="{{ old('sku', $sku) }}" readonly>
+                                                                            @error('sku')
+                                                                                <span
+                                                                                    class="text-danger">{{ $message }}</span>
+                                                                            @enderror
+                                                                        </div> --}}
+                                                                        <div class="form-group">
+                                                                            <label>Mã sản phẩm</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" id="sku"
+                                                                                    name="sku"
+                                                                                    class="form-control @error('sku') is-invalid @enderror"
+                                                                                    value="{{ old('sku') }}"
+                                                                                    placeholder="Nhập mã sản phẩm">
+                                                                                <button type="button" id="generate-sku"
+                                                                                    class="btn btn-secondary">Ngẫu
+                                                                                    nhiên</button>
+                                                                            </div>
                                                                             @error('sku')
                                                                                 <span
                                                                                     class="text-danger">{{ $message }}</span>
@@ -113,11 +149,11 @@
                                                                         </div>
 
                                                                         <div class="form-group mt-3">
-                                                                            <label for="images" class="form-label">Ảnh
-                                                                                Phụ</label>
+                                                                            <label for="galleries" class="form-label">Các
+                                                                                Ảnh Phụ</label>
                                                                             <input type="file" class="form-control"
-                                                                                id="images" name="images[]" multiple>
-                                                                            @error('images[]')
+                                                                                id="galleries" name="galleries[]" multiple>
+                                                                            @error('galleries.*')
                                                                                 <span
                                                                                     class="text-danger">{{ $message }}</span>
                                                                             @enderror
@@ -126,9 +162,9 @@
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
-                                                                            <label>Price</label>
-                                                                            <input type="text" name="price"
-                                                                                class="form-control"
+                                                                            <label>Giá sản phẩm</label>
+                                                                            <input type="number" name="price"
+                                                                                class="form-control @error('price') is-invalid @enderror"
                                                                                 value="{{ old('price') }}">
                                                                             @error('price')
                                                                                 <span
@@ -138,7 +174,7 @@
 
                                                                         <div class="form-group mt-3">
                                                                             <label>Offer Price</label>
-                                                                            <input type="text" name="offer_price"
+                                                                            <input type="number" name="offer_price"
                                                                                 class="form-control"
                                                                                 value="{{ old('offer_price') }}">
                                                                             @error('offer_price')
@@ -148,9 +184,9 @@
                                                                         </div>
 
                                                                         <div class="form-group mt-3">
-                                                                            <label>Quantity</label>
+                                                                            <label>Số lượng</label>
                                                                             <input type="text" name="qty"
-                                                                                class="form-control"
+                                                                                class="form-control @error('qty') is-invalid @enderror"
                                                                                 value="{{ old('qty') }}">
                                                                             @error('qty')
                                                                                 <span
@@ -203,12 +239,15 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
                                                                 <hr>
-                                                                <div class="row">
+
+                                                                <div class="row" id="variantFields"
+                                                                    style="display: none;">
                                                                     <h3>Biến Thể Sản Phẩm</h3>
 
                                                                     <!-- Size Bánh -->
-                                                                    <div class="col-12">
+                                                                    {{-- <div class="col-12">
                                                                         <div class="form-group mt-3">
                                                                             <div class="form-check form-switch form-switch-lg"
                                                                                 dir="ltr">
@@ -260,10 +299,90 @@
                                                                         <button type="button" id="addSizeFields"
                                                                             class="btn btn-info mt-3"
                                                                             style="display: none;">Thêm Giá Trị</button>
+                                                                    </div> --}}
+
+                                                                    <div class="col-4">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleSize">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleSize">Size Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group toggle-target"
+                                                                            id="inputSizeFields" style="display: none;">
+                                                                            <select class="form-select mt-3" multiple
+                                                                                aria-label="multiple select example"
+                                                                                name="sizes[]">
+                                                                                @foreach ($sizes as $size)
+                                                                                    <option value="{{ $size->id }}">
+                                                                                        {{ $size->name }} -
+                                                                                        {{ number_format($size->price, 0, ',', '.') }}
+                                                                                        VND
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
 
+                                                                    <div class="col-4">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleEdge">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleEdge">Viền Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group toggle-target"
+                                                                            id="inputEdgeFields" style="display: none;">
+                                                                            <select class="form-select mt-3" multiple
+                                                                                aria-label="multiple select example"
+                                                                                name="edges[]">
+                                                                                @foreach ($edges as $edge)
+                                                                                    <option value="{{ $edge->id }}">
+                                                                                        {{ $edge->name }} -
+                                                                                        {{ number_format($edge->price, 0, ',', '.') }}
+                                                                                        VND
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
 
-                                                                    <div class="col-12">
+                                                                    <div class="col-4">
+                                                                        <div class="form-group mt-3">
+                                                                            <div class="form-check form-switch form-switch-lg"
+                                                                                dir="ltr">
+                                                                                <input type="checkbox"
+                                                                                    class="form-check-input toggle-input"
+                                                                                    id="toggleBase">
+                                                                                <label class="form-check-label"
+                                                                                    for="toggleBase">Đế Bánh</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group mt-3 toggle-target"
+                                                                            id="inputBaseFields" style="display: none;">
+                                                                            <select class="form-select mt-3" multiple
+                                                                                aria-label="multiple select example"
+                                                                                name="bases[]">
+                                                                                @foreach ($bases as $base)
+                                                                                    <option value="{{ $base->id }}">
+                                                                                        {{ $base->name }} -
+                                                                                        {{ number_format($base->price, 0, ',', '.') }}
+                                                                                        VND
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {{-- <div class="col-12">
                                                                         <div class="form-group mt-3">
                                                                             <div class="form-check form-switch form-switch-lg"
                                                                                 dir="ltr">
@@ -277,7 +396,7 @@
                                                                         <div class="form-group toggle-target"
                                                                             id="inputEdgeFields" style="display: none;">
                                                                             <div class="row mt-3">
-                                                                                <div class="col-6">
+                                                                                <div class="col-4">
                                                                                     <label>Tên Viền Bánh</label>
                                                                                     <input type="text" name="edge_name"
                                                                                         class="form-control"
@@ -286,9 +405,59 @@
                                                                                         <span
                                                                                             class="text-danger">{{ $message }}</span>
                                                                                     @enderror
+
+                                                                                    <label class="mt-3">Tên Viền Bánh</label>
+                                                                                    <input type="text" name="edge_name"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('edge_name') }}">
+                                                                                    @error('edge_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+
+                                                                                    <label class="mt-3">Tên Viền Bánh</label>
+                                                                                    <input type="text" name="edge_name"
+                                                                                        class="form-control"
+                                                                                        value="{{ old('edge_name') }}">
+                                                                                    @error('edge_name')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
                                                                                 </div>
-                                                                                <div class="col-6">
+                                                                                <div class="col-4">
                                                                                     <label>Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="edge_price"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('edge_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('edge_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+
+                                                                                    <label class="mt-3">Giá Tiền</label>
+                                                                                    <div class="input-group">
+                                                                                        <span
+                                                                                            class="input-group-text">VNĐ</span>
+                                                                                        <input type="text"
+                                                                                            name="edge_price"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('edge_price') }}">
+                                                                                        <span
+                                                                                            class="input-group-text">.000</span>
+                                                                                    </div>
+                                                                                    @error('edge_price')
+                                                                                        <span
+                                                                                            class="text-danger">{{ $message }}</span>
+                                                                                    @enderror
+
+                                                                                    <label class="mt-3">Giá Tiền</label>
                                                                                     <div class="input-group">
                                                                                         <span
                                                                                             class="input-group-text">VNĐ</span>
@@ -306,9 +475,9 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> --}}
 
-                                                                    <div class="col-12">
+                                                                    {{-- <div class="col-12">
                                                                         <div class="form-group mt-3">
                                                                             <div class="form-check form-switch form-switch-lg"
                                                                                 dir="ltr">
@@ -351,69 +520,15 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> --}}
+                                                                </div>
 
-                                                                    <script>
-                                                                        document.addEventListener('DOMContentLoaded', function() {
-                                                                            const toggles = document.querySelectorAll('.toggle-input');
-                                                                            const addSizeFieldsButton = document.getElementById('addSizeFields');
-                                                                            const sizeFieldsContainer = document.getElementById('sizeFieldsContainer');
-
-                                                                            toggles.forEach(function(toggle) {
-                                                                                toggle.addEventListener('change', function() {
-                                                                                    const targetFieldsId = this.id.replace('toggle', 'input') + 'Fields';
-                                                                                    const targetFields = document.getElementById(targetFieldsId);
-                                                                                    const priceFieldId = targetFieldsId.replace('Fields', 'Price');
-                                                                                    const priceField = document.getElementById(priceFieldId);
-
-                                                                                    // Khi kích hoạt checkbox
-                                                                                    if (this.checked) {
-                                                                                        sizeFieldsContainer.style.display = 'block';
-                                                                                        addSizeFieldsButton.style.display = 'inline-block'; // Hiển thị nút thêm
-                                                                                    } else {
-                                                                                        sizeFieldsContainer.style.display = 'none';
-                                                                                        addSizeFieldsButton.style.display = 'none'; // Ẩn nút thêm
-                                                                                    }
-                                                                                });
-                                                                            });
-
-                                                                            // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
-                                                                            addSizeFieldsButton.addEventListener('click', function() {
-                                                                                const newSizeFieldHTML = `
-                                                                                    <div class="col-6">
-                                                                                        <div class="form-group toggle-target">
-                                                                                            <label class="mt-3">Tên Size Bánh</label>
-                                                                                            <input type="text" name="size_name[]" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-6">
-                                                                                        <div class="form-group toggle-target">
-                                                                                            <label class="mt-3">Giá Tiền</label>
-                                                                                            <div class="input-group">
-                                                                                                <span class="input-group-text">VNĐ</span>
-                                                                                                <input type="text" name="size_price[]" class="form-control" value="">
-                                                                                                <span class="input-group-text">.000</span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                `;
-
-                                                                                const newRow = document.createElement('div');
-                                                                                newRow.classList.add('row');
-                                                                                newRow.innerHTML = newSizeFieldHTML;
-                                                                                sizeFieldsContainer.appendChild(newRow);
-                                                                            });
-                                                                        });
-                                                                    </script>
-
-                                                                    <div class="mt-3">
-                                                                        <a href="{{ route('admin.products.index') }}"
-                                                                            class="btn btn-secondary">
-                                                                            Quay Lại</a>
-                                                                        <button type="submit"
-                                                                            class="btn btn-success">Thêm
-                                                                            Mới</button>
-                                                                    </div>
+                                                                <div class="mt-3">
+                                                                    <a href="{{ route('admin.products.index') }}"
+                                                                        class="btn btn-secondary">
+                                                                        Quay Lại</a>
+                                                                    <button type="submit" class="btn btn-success">Thêm
+                                                                        Mới</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -552,19 +667,181 @@
     </script> --}}
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy các phần tử cần thiết
+            const categorySelect = document.getElementById("category_id");
+            const variantFields = document.getElementById("variantFields");
+
+            // Hàm kiểm tra và cập nhật hiển thị của variantFields
+            function toggleVariantFields() {
+                const selectedCategory = categorySelect.options[categorySelect.selectedIndex].text.trim();
+                if (selectedCategory === "Pizza") {
+                    variantFields.style.display = "flex"; // Giữ bố cục ngang
+                } else {
+                    variantFields.style.display = "none"; // Ẩn
+                }
+            }
+
+            // Gọi hàm khi thay đổi danh mục
+            categorySelect.addEventListener("change", toggleVariantFields);
+
+            // Gọi hàm khi tải trang lần đầu
+            toggleVariantFields();
+        });
+    </script>
+
+    <script>
+        // Biến thể
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy danh sách tất cả các nút switch
+            const toggleInputs = document.querySelectorAll('.toggle-input');
+
+            toggleInputs.forEach(toggleInput => {
+                toggleInput.addEventListener('change', function() {
+                    // Tìm div target tương ứng với id
+                    const targetId = this.id.replace('toggle', 'input') + 'Fields';
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        // Hiển thị hoặc ẩn div
+                        targetElement.style.display = this.checked ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggles = document.querySelectorAll('.toggle-input');
+            const addSizeFieldsButton = document.getElementById('addSizeFields');
+            const sizeFieldsContainer = document.getElementById('sizeFieldsContainer');
+
+            toggles.forEach(function(toggle) {
+                toggle.addEventListener('change', function() {
+                    const targetFieldsId = this.id.replace('toggle', 'input') + 'Fields';
+                    const targetFields = document.getElementById(targetFieldsId);
+                    const priceFieldId = targetFieldsId.replace('Fields', 'Price');
+                    const priceField = document.getElementById(priceFieldId);
+
+                    // Khi kích hoạt checkbox
+                    if (this.checked) {
+                        sizeFieldsContainer.style.display = 'block';
+                        addSizeFieldsButton.style.display = 'inline-block'; // Hiển thị nút thêm
+                    } else {
+                        sizeFieldsContainer.style.display = 'none';
+                        addSizeFieldsButton.style.display = 'none'; // Ẩn nút thêm
+                    }
+                });
+            });
+
+            // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
+            addSizeFieldsButton.addEventListener('click', function() {
+                const newSizeFieldHTML = `
+                    <div class="col-6">
+                        <div class="form-group toggle-target">
+                            <label class="mt-3">Tên Size Bánh</label>
+                            <input type="text" name="size_name[]" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group toggle-target">
+                            <label class="mt-3">Giá Tiền</label>
+                            <div class="input-group">
+                                <span class="input-group-text">VNĐ</span>
+                                <input type="text" name="size_price[]" class="form-control" value="">
+                                <span class="input-group-text">.000</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                const newRow = document.createElement('div');
+                newRow.classList.add('row');
+                newRow.innerHTML = newSizeFieldHTML;
+                sizeFieldsContainer.appendChild(newRow);
+            });
+        });
+
+        // Slug theo name
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const nameInput = document.querySelector('input[name="name"]');
+        //     const slugInput = document.querySelector('input[name="slug"]');
+
+        //     nameInput.addEventListener('input', function() {
+        //         slugInput.value = nameInput.value
+        //             .toLowerCase()
+        //             .trim()
+        //             .replace(/[\s]+/g, '-') // Thay thế khoảng trắng bằng dấu -
+        //             .replace(/[^\w\-]+/g, '') // Xóa ký tự không phải chữ, số hoặc dấu -
+        //             .replace(/\-\-+/g, '-') // Xóa dấu gạch nối kép
+        //             .replace(/^-+/, '') // Xóa dấu gạch nối đầu
+        //             .replace(/-+$/, ''); // Xóa dấu gạch nối
+        //     });
+        // });
+
+
+        // Slug theo name
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.querySelector('input[name="name"]');
             const slugInput = document.querySelector('input[name="slug"]');
+            const generateSlugButton = document.getElementById('generate-slug');
 
-            nameInput.addEventListener('input', function() {
-                slugInput.value = nameInput.value
+            //  chuyển đổi sang tieng viet khong dau
+            function removeVietnameseTones(str) {
+                return str
+                    .normalize('NFD') // Chuẩn hóa chuỗi thành dạng ký tự tổ hợp
+                    .replace(/[\u0300-\u036f]/g, '') // Xóa các dấu tổ hợp
+                    .replace(/đ/g, 'd')
+                    .replace(/Đ/g, 'D');
+            }
+
+            // chuyen doi slug->name
+            function convertToSlug(text) {
+                return removeVietnameseTones(text)
                     .toLowerCase()
                     .trim()
                     .replace(/[\s]+/g, '-') // Thay thế khoảng trắng bằng dấu -
                     .replace(/[^\w\-]+/g, '') // Xóa ký tự không phải chữ, số hoặc dấu -
                     .replace(/\-\-+/g, '-') // Xóa dấu gạch nối kép
                     .replace(/^-+/, '') // Xóa dấu gạch nối đầu
-                    .replace(/-+$/, ''); // Xóa dấu gạch nối
+                    .replace(/-+$/, ''); // Xóa dấu gạch nối cuối
+            }
+
+            //  sự kiện thay đổi trên ô nhập "name"
+            nameInput.addEventListener('input', function() {
+                if (!slugInput.dataset.manual) {
+                    slugInput.value = convertToSlug(nameInput.value);
+                }
+            });
+            // event click button
+            generateSlugButton.addEventListener('click', function() {
+                // Generate slug từ trường "name"
+                slugInput.value = convertToSlug(nameInput.value);
+                slugInput.dataset.manual = false; // Đặt lại trạng thái tự động
+            });
+
+            // event nhap tren o input
+            slugInput.addEventListener('input', function() {
+                slugInput.dataset.manual = true; // Đánh dấu rằng người dùng đang tự nhập slug
+            });
+        });
+
+
+
+        // Generate mã sản phẩm
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateSkuButton = document.getElementById('generate-sku');
+            const ProductSkuInput = document.getElementById('sku');
+
+            generateSkuButton.addEventListener('click', function() {
+                // Random mã sản phẩm (10 ký tự, chữ và số)
+                const randomSku = Array.from({
+                    length: 15
+                }, () => {
+                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+
+                // Gán mã vào ô input
+                ProductSkuInput.value = randomSku;
             });
         });
     </script>

@@ -13,6 +13,10 @@ class ProductReviewSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductReview::factory(50)->create();
+        // Random tạo từ 100 đến 250 đánh giá
+        $randomReviewCount = rand(100, 250);
+
+        // Tạo số lượng review ngẫu nhiên
+        ProductReview::factory($randomReviewCount)->create();
     }
 }

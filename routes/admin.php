@@ -24,7 +24,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\PizzaBaseController;
+use App\Http\Controllers\Admin\PizzaEdgeController;
 use App\Http\Controllers\Admin\ProductReviewController as AdminProductReviewController;
+use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Middleware\CheckFormLogin;
 
@@ -136,6 +139,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{order}',                     [OrderController::class, 'show'])->name('show');
         Route::delete('/{order}',                       [OrderController::class, 'destroy'])->name('destroy');
         Route::get('/deleted',                          [OrderController::class, 'deleted'])->name('deleted');
+
+        Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
+        Route::put('/{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+
     });
 
     Route::prefix('shipping')->name('shipping.')->group(function () {
@@ -190,24 +197,45 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
      // Admin - refund
      Route::prefix('refunds')->name('refunds.')->group(function () {
-        Route::get('/',                   [RefundController::class, 'index'])->name('index'); 
-        Route::get('/create',             [RefundController::class, 'create'])->name('create'); 
-        Route::post('/',                  [RefundController::class, 'store'])->name('store'); 
+        Route::get('/',                   [RefundController::class, 'index'])->name('index');
+        Route::get('/create',             [RefundController::class, 'create'])->name('create');
+        Route::post('/',                  [RefundController::class, 'store'])->name('store');
         Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
-        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update'); 
-        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy'); 
+        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
+        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
     });
-    
 
-    
+     /** Product Reviews Routes */
      Route::prefix('product-reviews')->name('product-reviews.')->group(function(){
          Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
          Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
          Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
-       
 
-     });
 
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+    });
+
+     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //dang loi
+
+    //  Thông báo đơn hàng quá trễ
+     Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
+
+    //  chat
+    Route::prefix('chat')->name('chat.')->group(function () {
+
+        Route::get('/', [ChatController::class, 'index'])->name('index');
+        Route::get('/{clientId}', [ChatController::class, 'chatWithClient'])->name('chatWithClient');
+        Route::post('/send', [ChatController::class, 'sendMessage'])->name('send');
+    });
+
+    Route::get('/chat', [ChatController::class, 'index'])->name('admin.chat');
+    Route::get('/chat/{clientId}', [ChatController::class, 'chatWithClient'])->name('admin.chatWithClient');
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('admin.chat.send');
+
+    // biến thể sản phẩm
+    // Route::prefix('products')->name('products.')->group(function () {
+        Route::resource('pizza-edges', PizzaEdgeController::class);
+        Route::resource('pizza-bases', PizzaBaseController::class);
+        Route::resource('product-sizes', ProductSizeController::class);
+    // });
 
 });

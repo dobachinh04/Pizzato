@@ -31,7 +31,15 @@
                                 <h5 class="card-title mb-0">Danh Sách Sản Phẩm</h5>
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <table id="example"
                                     class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -79,8 +87,10 @@
                                                 </td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->category->name }}</td>
-                                                <td>{{ $item->price }}</td>
-                                                <td>{{ $item->offer_price }}</td>
+                                                {{-- <td>{{ $item->price }}</td> --}}
+                                                <td>{{ number_format($item->price, 0, ',', '.') }}₫</td>
+                                                {{-- <td>{{ $item->offer_price }}</td> --}}
+                                                <td>{{ number_format($item->offer_price, 0, ',', '.') }}₫</td>
                                                 <td>{{ $item->qty }}</td>
 
                                                 <td>{!! $item->show_at_home
@@ -92,17 +102,17 @@
                                                     : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
                                                     <a class="btn btn-info"
-                                                        href="{{ route('admin.products.show', $item->id) }}">Chi Tiết</a>
+                                                        href="{{ route('admin.products.show', $item->id) }}"><i class="fa fa-info-circle"></i></a>
 
                                                     <a class="btn btn-warning"
-                                                        href="{{ route('admin.products.edit', $item->id) }}">Sửa</a>
+                                                        href="{{ route('admin.products.edit', $item->id) }}"><i class="fa fa-edit"> </i></a>
 
                                                     <form action="{{ route('admin.products.destroy', $item->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")' type="submit"
-                                                            class="btn btn-danger">Xóa</button>
+                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
+                                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

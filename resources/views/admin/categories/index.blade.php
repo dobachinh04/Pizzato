@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="card-title mb-0">Danh Mục Món Ăn</h5>
-                                <a href="{{ route('admin.categories.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <a href="{{ route('admin.categories.create') }}" class="btn btn-success ms-auto">Thêm mới </a>
                             </div>
 
                             <div class="card-body">
@@ -66,8 +66,20 @@
                                                 {{-- <td>{{ $category->id }}</td> --}}
                                                 <td>{{ $category->name }}</td>
                                                 <td>{{ $category->slug }}</td>
-                                                <td> 
+                                                {{-- <td>
                                                     <img src="{{ asset('uploads/categories/'.$category->image) }}" width="70px" height="70px" alt="image">
+                                                </td> --}}
+                                                <td>
+                                                    @php
+                                                        $url = $category->image;
+                                                        if (!\Str::contains($url, 'http')) {
+                                                            // $url = \Storage::url($url);
+                                                            $url = asset('uploads/categories/' . $category->image);
+                                                        }else {
+
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $url }}" alt="" width="100px">
                                                 </td>
                                                 {{-- <td>{{ $category->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td> --}}
                                                 {{-- <td>{{ $category->show_at_home == 0 ? 'Ẩn' : 'Hiển thị' }}</td> --}}
@@ -75,13 +87,13 @@
                                                     <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>  --}}
                                                 <td>
                                                     <a href="{{ route('admin.categories.edit', $category->id) }}"
-                                                        class="btn btn-warning">Sửa</a>
+                                                        class="btn btn-warning"><i class="fa fa-edit"> </i></a>
                                                     <form action="{{ route('admin.categories.destroy', $category) }}"
                                                         method="POST" style="display:inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

@@ -118,11 +118,13 @@ class VnpayController extends Controller
                     'invoice_id' => $orderData['invoice_id'],
                     'user_id' => $orderData['user_id'],
                     'address' => $orderData['address'],
+                    'sub_total' => $orderData['sub_total'],
                     'grand_total' => $orderData['grand_total'],
                     'product_qty' => $orderData['product_qty'],
                     'address_id' => $orderData['address_id'],
                     'order_status' => 'pending',
                     'payment_status' => 'paid',
+                    'payment_method' => $orderData['payment_method'],
                 ]);
 
                 // Lưu chi tiết đơn hàng
