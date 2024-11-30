@@ -62,8 +62,8 @@
                                                             class="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i
                                                                 class="ri-pulse-line"></i></button>
                                                     </div>
-                                                    <!--end col-->
-                                        
+                       
+
                                                 </div>
                                             </form>
                                         </div>
