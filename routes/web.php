@@ -29,21 +29,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Client\MomoController;
 use App\Http\Controllers\Client\VnpayController;
 use Illuminate\Support\Facades\Redis;
-// Client Views demo
-// Route::get('/',                                             [ProductController::class, 'index'])->name('client.home');
-// Route::get('/show/{product}',                               [ProductController::class, 'show'])->name('client.show');
 
-// Route::get('/categories/{id}',                          [PostController::class, 'categories'])->name('client.category');
-// Route::get('/author/{id}',                              [PostController::class, 'author'])->name('client.author');
-// Route::get('/show/{id}',                                [PostController::class, 'show'])->name('client.show');
-
-// Display View:
-// Route::get('/login', [AuthenticationController::class, 'displayLogin'])->name('client.login');
-// Route::get('/register', [AuthenticationController::class, 'displayRegister'])->name('client.register');
-
-// Login & Register:
-// Route::post('/login', [AuthenticationController::class, 'login']);
-// Route::post('/register', [AuthenticationController::class, 'register']);
 
 // Route cho form đặt lại mật khẩu trực tiếp, không qua email
 Route::get('/forgot-password', [AuthenticationController::class, 'showForgotPasswordForm'])->name('password.request');
@@ -51,15 +37,7 @@ Route::get('/forgot-password', [AuthenticationController::class, 'showForgotPass
 // Route để xử lý việc đặt lại mật khẩu
 Route::post('/reset-password', [AuthenticationController::class, 'resetPassword'])->name('password.update');
 
-// Logout:
-// Route::post('/logout',                                  [AuthenticationController::class, 'logout'])->name('client.logout');
 
-// Forgot Password:
-// Route::get('forgot-password',                           [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-// Route::post('forgot-password',                          [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
-// Route::get('reset-password/{token}',                    [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-// Route::post('reset-password',                           [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
 
@@ -69,12 +47,7 @@ Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.de
 Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
 
 
-// Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-// Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-// VNPay Payment
-//Route::get('payment/vnpay',             [VnpayController::class, 'createPayment'])->name('payment.vnpay.create');
-//Route::get('payment/vnpay/callback',    [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
 // Momo Payment
 Route::get('payment/momo',             [MomoController::class, 'createPayment'])->name('payment.momo.create');
@@ -85,14 +58,7 @@ Route::get('payment/vnpay', [VnpayController::class, 'createPayment'])->name('pa
 Route::get('payment/vnpay/callback', [VnpayController::class, 'callback'])->name('payment.vnpay.callback');
 
 Route::get('/chat', [ChatController::class, 'index'])->name('client.chat.index');
-// Route::get('/redis-test', function () {
-//   return Redis::ping();
-// });
-// Route::post('message', function (Request $request) {
-//   broadcast(new MessageSent(auth()->user(), $request->input('message')));
 
-//   return $request->input('message');
-// });
 
 // Oder
 Route::get('/client/order_history', [OrderController::class, 'index'])

@@ -335,7 +335,7 @@
                 </li>
             </ul>
         </div>
-        <!-- Sidebar -->
+      
     </div>
 
     <div class="sidebar-background"></div>
