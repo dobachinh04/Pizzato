@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Size sản phẩm - Pizzato
+    Danh sách đế bánh Pizza - Pizzato
 @endsection
 {{-- demo branch command line --}}
 @section('content')
@@ -28,8 +28,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Kích Thước Sản Phẩm</h5>
-                                <a href="{{ route('admin.product-sizes.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <h5 class="card-title mb-0">Danh Sách Pizza Bases</h5>
+                                <a href="{{ route('admin.pizza-bases.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
                             </div>
 
                             <div class="card-body">
@@ -45,14 +45,14 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
-                                            <th>Tên Kích Thước</th>
+                                            <th>Đế Bánh</th>
                                             <th>Giá</th>
                                             <th>Hình Ảnh</th>
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($productSizes as $item)
+                                        @foreach ($pizzaBases as $item)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -60,7 +60,7 @@
                                                             name="checkAll" value="option1">
                                                     </div>
                                                 </th>
-                                                <td>{{$item->id}}</td>
+                                                <td>{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ number_format($item->price, 0, ',', '.') }}₫</td>
                                                 <td>
@@ -70,17 +70,18 @@
                                                             $url = \Storage::url($url);
                                                         }
                                                     @endphp
-                                                    <img src="{{ $url }}" alt="" width="100px">
+                                                    <img src="{{ $url }}" alt="HÌnh ảnh" width="100px">
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.product-sizes.edit', $item->id) }}"
+                                                    <a href="{{ route('admin.pizza-bases.edit', $item->id) }}"
                                                         class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{ route('admin.product-sizes.destroy', $item) }}"
+                                                    <form action="{{ route('admin.pizza-bases.destroy', $item) }}"
                                                         method="POST" style="display:inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-danger"><i
+                                                                class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -94,6 +95,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Cập Nhật Kích thước bánh - Pizzato
+    Sửa đế bánh - Pizzato
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -24,29 +24,29 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <!-- row -->
                 <div class="row">
                     <div class="col-xl-12 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Cập Nhật Kích Thước Sản Phẩm</h4>
+                                <h4 class="card-title">Sửa Đế Bánh</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form action="{{ route('admin.product-sizes.update', $productSize->id) }}"
+                                    <form action="{{ route('admin.pizza-bases.update', $pizzaBase->id) }}"
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
 
-                                        <!-- Tên Kích Thước -->
+                                        <!-- Tên Pizza Base -->
                                         <div class="form-group">
-                                            <label>Tên Kích Thước</label>
+                                            <label>Tên Pizza Base</label>
                                             <input type="text" name="name"
                                                 class="form-control input-default @error('name') is-invalid @enderror"
-                                                placeholder="Tên Kích Thước (VD: Small, Medium, Large)"
-                                                value="{{ old('name', $productSize->name) }}">
+                                                placeholder="Tên Pizza Base (VD: Thin Crust, Deep Dish)"
+                                                value="{{ old('name', $pizzaBase->name) }}">
                                             @error('name')
                                                 <p style="color: red">{{ $message }}</p>
                                             @enderror
@@ -59,8 +59,7 @@
                                             <input type="number" name="price"
                                                 class="form-control input-default @error('price') is-invalid @enderror"
                                                 placeholder="Nhập Giá (VD: 50000)"
-                                                value="{{ old('price', $productSize->price)  }}">
-
+                                                value="{{ old('price', $pizzaBase->price) }}">
                                             @error('price')
                                                 <p style="color: red">{{ $message }}</p>
                                             @enderror
@@ -74,7 +73,7 @@
 
                                             @php
                                                 // Xử lý đường dẫn ảnh
-                                                $imageUrl = $productSize->image;
+                                                $imageUrl = $pizzaBase->image;
                                                 if (!\Str::contains($imageUrl, 'http')) {
                                                     $imageUrl = \Storage::url($imageUrl);
                                                 }
@@ -82,7 +81,7 @@
 
                                             <!-- Hiển thị hình ảnh -->
                                             @if (!empty($imageUrl))
-                                                <img src="{{ $imageUrl }}" width="100px" height="100px" alt="image">
+                                                <img src="{{ $imageUrl }}" width="100px" height="100px" alt="Pizza Base Image">
                                             @endif
 
                                             @error('image')
@@ -90,14 +89,11 @@
                                             @enderror
                                         </div>
 
-
-
-
                                         <!-- Nút Hành Động -->
-                                        <a href="{{ route('admin.product-sizes.index') }}" class="btn btn-secondary">
+                                        <a href="{{ route('admin.pizza-bases.index') }}" class="btn btn-secondary">
                                             Quay Lại
                                         </a>
-                                        <button type="submit" class="btn btn-success">Sửa</button>
+                                        <button type="submit" class="btn btn-success">Cập Nhật</button>
                                     </form>
                                 </div>
                             </div>
@@ -107,5 +103,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection
