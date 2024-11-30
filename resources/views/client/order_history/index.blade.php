@@ -11,7 +11,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>ID Người dùng</th>
-                        {{-- <th>Tên Người dùng</th> --}}
+                     
                         <th>Mã hóa đơn</th>
                         <th>Tổng phụ</th>
                         <th>Tổng cộng</th>
