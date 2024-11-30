@@ -71,14 +71,14 @@
                                 <a href="{{ route('admin.categories.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Danh Mục Sản Phẩm</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('admin.blog-categories.index') }}" class="nav-link"
                                     data-key="t-nft-landing">Danh Mục Blog</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.blog-categories.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Danh Mục Blog</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
@@ -176,7 +176,7 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarBlogs" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarBlogs">
                         <i class="fa-solid fa-newspaper"></i> <span data-key="t-landing">Blogs</span>
@@ -194,7 +194,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"
@@ -335,7 +335,7 @@
                 </li>
             </ul>
         </div>
-      
+
     </div>
 
     <div class="sidebar-background"></div>

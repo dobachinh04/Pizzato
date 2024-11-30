@@ -5,7 +5,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Dashboard | Velzon - Admin & Dashboard Template</title>
+    <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -211,7 +211,9 @@
                                 id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bx-bell fs-22'></i>
-                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"> {{ count($notifications) }}
+                                <span
+                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">
+                                    {{ count($notifications) }}
                                     <span class="visually-hidden">unread messages</span>
                                 </span>
                             </button>
@@ -309,13 +311,13 @@
                                     <img class="rounded-circle header-profile-user"
                                         src="/velzon/assets/images/users/avatar-1.jpg" alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
-                                       
+
                                         <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Founder</span>
                                     </span>
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                            
+
                                 <a class="dropdown-item" href="pages-profile.html"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>
@@ -336,7 +338,7 @@
                                         class="badge bg-success-subtle text-success mt-1 float-end">New</span><i
                                         class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Settings</span></a>
-                             
+
                             </div>
                         </div>
                     </div>

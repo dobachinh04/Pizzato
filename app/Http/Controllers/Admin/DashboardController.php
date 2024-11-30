@@ -106,6 +106,7 @@ class DashboardController extends Controller
     {
         return Order::with('addresses')
             ->select(
+                'orders.id', // Thêm cột ID để sử dụng trong route
                 'orders.invoice_id',
                 'addresses.first_name',
                 'addresses.last_name',
@@ -182,11 +183,9 @@ class DashboardController extends Controller
             ->get();
     }
 
-   
-
     public function notifyOrder(Request $request)
     {
-       
+
 
         // Lấy nội dung thông báo
         $message = $request->input('message') === 'Khác'
