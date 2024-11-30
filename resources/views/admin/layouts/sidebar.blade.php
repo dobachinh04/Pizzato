@@ -239,8 +239,7 @@
                     <div class="collapse menu-dropdown" id="sidebarRefunds">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                {{-- <a href="{{ route('admin.refunds.index') }}" class="nav-link" data-key="t-one-page">Danh
-                                    Sách Hoàn Tiền</a> --}}
+                             
                             </li>
 
                         </ul>
@@ -324,7 +323,7 @@
                 </li>
             </ul>
         </div>
-        <!-- Sidebar -->
+      
     </div>
 
     <div class="sidebar-background"></div>
