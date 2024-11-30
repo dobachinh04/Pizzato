@@ -316,6 +316,18 @@
                                         </div><!-- end card -->
                                     </div><!-- end col -->
 
+
+
+                                <div class="col-xl-8">
+                                    <div class="card">
+                                        <div class="card-header align-items-center d-flex">
+                                            <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
+                                            <div class="flex-shrink-0">
+                                                <button type="button" class="btn btn-soft-info btn-sm">
+                                                    <i class="ri-file-list-3-line align-middle"></i> Generate Report
+                                                </button>
+
+
                                     <div class="col-xl-4">
                                         <!-- card -->
                                         <div class="card card-height-100">
