@@ -28,9 +28,6 @@
                                 <div class="col-12">
                                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                                         <div class="flex-grow-1">
-                                            {{-- <h4 class="fs-16 mb-1">Xin chào, {{ Auth::user()->name }}</h4> --}}
-                                            {{-- <p class="text-muted mb-0">Here's what's happening with your store today.
-                                        </p> --}}
                                             <p class="text-muted mb-0">Đây là những gì đang xảy ra với cửa hàng của bạn ngày
                                                 hôm nay.</p>
 
@@ -65,23 +62,9 @@
                                                             class="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i
                                                                 class="ri-pulse-line"></i></button>
                                                     </div>
-                                                    <!--end col-->
-                                                </div>
-                                                <!--end col-->
-                                                {{-- <div class="col-auto">
-                                                <button type="button" class="btn btn-soft-success"><i
-                                                        class="ri-add-circle-line align-middle me-1"></i> Add
-                                                    Product</button>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-auto">
-                                                <button type="button"
-                                                    class="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i
-                                                        class="ri-pulse-line"></i></button>
-                                            </div> --}}
-                                                <!--end col-->
+                       
 
-                                                <!--end row-->
+                                                </div>
                                             </form>
                                         </div>
                                     </div><!-- end card header -->
@@ -218,14 +201,7 @@
                                                         class="text-decoration-underline">See Revenue Details</a>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    {{-- <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                                            class="counter-value" data-target="{{ $revenue }}"></span>
-                                                        VNĐ
-                                                    </h4>
-                                                    <a href="" class="text-decoration-underline">See Revenue
-                                                        Details</a>
-                                                </div> --}}
+
 
                                                     <style>
                                                         .revenue-icon {
@@ -315,6 +291,18 @@
                                             </div><!-- end card body -->
                                         </div><!-- end card -->
                                     </div><!-- end col -->
+
+
+
+                                <div class="col-xl-8">
+                                    <div class="card">
+                                        <div class="card-header align-items-center d-flex">
+                                            <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
+                                            <div class="flex-shrink-0">
+                                                <button type="button" class="btn btn-soft-info btn-sm">
+                                                    <i class="ri-file-list-3-line align-middle"></i> Generate Report
+                                                </button>
+
 
                                     <div class="col-xl-4">
                                         <!-- card -->
@@ -423,9 +411,7 @@
                                                                 <td data-order="{{ $item->created_at }}">
                                                                     {{ $item->time_ago }}
                                                                 </td>
-                                                                {{-- <td><span
-                                                                        class="badge bg-danger">{{ $item->order_status }}</span>
-                                                                </td> --}}
+
                                                                 <td>
                                                                     <span class="badge bg-warning-subtle text-warning">
                                                                         @if ($item->order_status === 'pending')
