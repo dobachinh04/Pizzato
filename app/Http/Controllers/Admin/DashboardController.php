@@ -27,6 +27,8 @@ class DashboardController extends Controller
             'pendingOrders' => $this->getPendingOrders(),
             'lowStockProducts' => $this->getLowStockProducts(),
             'orderOvers' => $this->getPendingOrdersOver30Minutes(),
+            'products' => $this->getTopViewedProducts(),
+
         ]);
     }
 
@@ -53,6 +55,17 @@ class DashboardController extends Controller
     private function getTotalReviews()
     {
         return ProductReview::count();
+    }
+
+    public function getTopViewedProducts($limit = 10)
+    {
+        // Lấy danh sách sản phẩm nhiều lượt xem nhất
+        $products = Product::select('id', 'name', 'view', 'slug', 'thumb_image')
+            ->orderByDesc('view') // Sắp xếp theo số lượt xem giảm dần
+            ->limit($limit) // Giới hạn số lượng sản phẩm
+            ->get();
+
+        return $products;  // Trả về sản phẩm
     }
 
     private function getRecentReviews()

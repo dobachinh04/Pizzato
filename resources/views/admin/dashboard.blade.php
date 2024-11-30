@@ -708,58 +708,6 @@
                                         </div>
                                     </div> --}}
 
-                                    {{-- <div class="p-3 mt-2">
-                                        <h6 class="text-muted mb-3 text-uppercase fw-semibold">Top 10 Categories
-                                        </h6>
-
-                                        <ol class="ps-3 text-muted">
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Mobile & Accessories <span
-                                                        class="float-end">(10,294)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Desktop <span
-                                                        class="float-end">(6,256)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Electronics <span
-                                                        class="float-end">(3,479)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Home & Furniture <span
-                                                        class="float-end">(2,275)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Grocery <span
-                                                        class="float-end">(1,950)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Fashion <span
-                                                        class="float-end">(1,582)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Appliances <span
-                                                        class="float-end">(1,037)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Beauty, Toys & More <span
-                                                        class="float-end">(924)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Food & Drinks <span
-                                                        class="float-end">(701)</span></a>
-                                            </li>
-                                            <li class="py-1">
-                                                <a href="#" class="text-muted">Toys & Games <span
-                                                        class="float-end">(239)</span></a>
-                                            </li>
-                                        </ol>
-                                        <div class="mt-3 text-center">
-                                            <a href="javascript:void(0);"
-                                                class="text-muted text-decoration-underline">View
-                                                all Categories</a>
-                                        </div>
-                                    </div> --}}
                                     <div class="p-3">
                                         <h6 class="text-muted mb-3 text-uppercase fw-semibold">Đánh giá sản phẩm</h6>
                                         <!-- Swiper -->
@@ -870,6 +818,30 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                    </div>
+
+                                    <div class="p-3 mt-2">
+                                        <h6 class="text-muted mb-3 text-uppercase fw-semibold">Sản Phẩm Nhiều Lượt Xem Nhất
+                                        </h6>
+
+                                        <ol class="ps-3 text-muted">
+                                            @forelse ($products as $product)
+                                                <li class="py-2">
+                                                    <a href="{{ route('admin.products.show', $product->id) }}"
+                                                        class="text-muted">
+                                                        {{ $product->name }}
+                                                        <span class="float-end">({{ $product->view }} lượt xem)</span>
+                                                    </a>
+                                                </li>
+                                            @empty
+                                                <li class="py-2 text-danger">Không có sản phẩm nào!</li>
+                                            @endforelse
+                                        </ol>
+                                        <div class="mt-3 text-center">
+                                            <a href="{{ route('admin.products.index') }}"
+                                                class="text-muted text-decoration-underline">Xem
+                                                Tất Cả Sản Phẩm</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
