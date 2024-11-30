@@ -64,21 +64,6 @@
                                                     </div>
                                                     <!--end col-->
                                                 </div>
-                                                <!--end col-->
-                                                {{-- <div class="col-auto">
-                                                <button type="button" class="btn btn-soft-success"><i
-                                                        class="ri-add-circle-line align-middle me-1"></i> Add
-                                                    Product</button>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-auto">
-                                                <button type="button"
-                                                    class="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i
-                                                        class="ri-pulse-line"></i></button>
-                                            </div> --}}
-                                                <!--end col-->
-
-                                                <!--end row-->
                                             </form>
                                         </div>
                                     </div><!-- end card header -->
@@ -425,7 +410,7 @@
                                                                 <td data-order="{{ $item->created_at }}">
                                                                     {{ $item->time_ago }}
                                                                 </td>
-                                                        
+
                                                                 <td>
                                                                     <span class="badge bg-warning-subtle text-warning">
                                                                         @if ($item->order_status === 'pending')
