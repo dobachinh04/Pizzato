@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use Carbon\Carbon;
+// use Illuminate\Support\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
@@ -20,16 +21,33 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        // Sử dụng view composer để truyền biến $notifications
-        View::composer('admin.layouts.header', function ($view) {
-            // $notifications = Auth::check() ? Auth::user()->unreadNotifications : collect();
+    // public function boot(): void
+    // {
+    //     // Sử dụng view composer để truyền biến $notifications
+    //     View::composer('admin.layouts.header', function ($view) {
+    //         // $notifications = Auth::check() ? Auth::user()->unreadNotifications : collect();
 
-            $notifications = DB::table('notifications')
-            ->orderBy('created_at', 'desc')
+    //         $notifications = DB::table('notifications')
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
+    //         $view->with('notifications', $notifications);
+    //     });
+    // }
+
+    public function boot()
+{
+    View::composer('admin.layouts.header', function ($view) {
+        $pendingOrders = DB::table('orders')
+            ->where('order_status', 'pending')
+            ->where('created_at', '<=', Carbon::now()->subMinutes(30))
             ->get();
-            $view->with('notifications', $notifications);
-        });
-    }
+
+        foreach ($pendingOrders as $order) {
+            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+        }
+
+        $view->with('pendingOrders', $pendingOrders);
+        $view->with('alertCount', $pendingOrders->count());
+    });
+}
 }

@@ -211,8 +211,9 @@
                                 id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bx-bell fs-22'></i>
-                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"> {{ count($notifications) }}
-                                    <span class="visually-hidden">unread messages</span>
+                                <span
+                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">
+                                    {{ $alertCount ?? 0 }}
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -226,7 +227,7 @@
                                             <div class="col-auto dropdown-tabs">
                                                 <span
                                                     class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">
-                                                    {{ count($notifications) }}
+                                                    {{ $alertCount ?? 0 }} new
                                                 </span>
                                             </div>
                                         </div>
@@ -238,7 +239,7 @@
                                             <li class="nav-item waves-effect waves-light">
                                                 <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab"
                                                     role="tab" aria-selected="true">
-                                                    All ({{ count($notifications) }})
+                                                    All ({{ $alertCount ?? 0 }})
                                                 </a>
                                             </li>
                                             <li class="nav-item waves-effect waves-light">
@@ -258,47 +259,93 @@
                                 </div>
 
                                 <div class="tab-content position-relative" id="notificationItemsTabContent">
-
+                                    <!-- Tab Alerts -->
                                     <div class="tab-pane fade show active p-4" id="alerts-tab" role="tabpanel"
                                         aria-labelledby="alerts-tab">
-                                        @if (isset($notifications) && count($notifications) > 0)
-                                            @foreach ($notifications as $notification)
-                                                <div class="text-reset notification-item d-block dropdown-item">
-                                                    <div class="d-flex">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">
-                                                                {{ $notification->data['message'] }}</h6>
-                                                            <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                                <span><i class="mdi mdi-clock-outline"></i>
-                                                                    {{ $notification->created_at->diffForHumans() }}</span>
-                                                            </p>
+                                        <div data-simplebar style="max-height: 300px;" class="pe-2">
+                                            @if (isset($pendingOrders) && count($pendingOrders) > 0)
+                                                @foreach ($pendingOrders as $order)
+                                                    <div class="text-reset notification-item d-block dropdown-item position-relative"
+                                                        id="notification-{{ $order->id }}">
+                                                        <div class="d-flex">
+                                                            <img src="assets/images/orders/default-order.jpg"
+                                                                class="me-3 rounded-circle avatar-xs flex-shrink-0"
+                                                                alt="order-pic">
+
+                                                            <!-- Thông tin thông báo -->
+                                                            <div class="flex-grow-1">
+                                                                <a href="#!" class="stretched-link">
+                                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Đơn hàng
+                                                                        #{{ $order->invoice_id }}</h6>
+                                                                </a>
+                                                                <div class="fs-13 text-muted">
+                                                                    <p class="mb-1">Đơn hàng này đã quá hạn thanh
+                                                                        toán.</p>
+                                                                </div>
+                                                                <p
+                                                                    class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                                    <span><i class="mdi mdi-clock-outline"></i>
+                                                                        {{ $order->time_ago }}</span>
+                                                                </p>
+                                                            </div>
+                                                            {{-- checkbox --}}
+                                                            <div class="px-2 fs-15">
+                                                                {{-- <div class="form-check notification-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="order-notification-check{{ $order->id }}">
+                                                                <label class="form-check-label" for="order-notification-check{{ $order->id }}"></label>
+                                                            </div> --}}
+                                                                <div class="form-check notification-check me-2">
+                                                                    <input class="form-check-input select-notification"
+                                                                        type="checkbox" value="{{ $order->id }}"
+                                                                        id="order-notification-check{{ $order->id }}">
+                                                                    <label class="form-check-label"
+                                                                        for="order-notification-check{{ $order->id }}"></label>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="text-center p-4">
-                                                <p class="text-muted mb-0">No notifications available.</p>
+                                                @endforeach
+                                            @else
+                                                <p class="text-muted text-center">Không có thông báo.</p>
+                                            @endif
+
+                                            <div class="my-3 text-center view-all">
+                                                <a href="{{ route('admin.notifications') }}">
+                                                    <button type="button"
+                                                        class="btn btn-soft-success waves-effect waves-light">
+                                                        Xem toàn bộ thông báo
+                                                        <i class="ri-arrow-right-line align-middle"></i>
+                                                    </button>
+                                                </a>
                                             </div>
-                                        @endif
-                                        <div class="my-3 text-center view-all">
-                                            <button type="button"
-                                                class="btn btn-soft-success waves-effect waves-light">View
-                                                All Messages <i class="ri-arrow-right-line align-middle"></i></button>
                                         </div>
                                     </div>
 
-                                    <div class="notification-actions" id="notification-actions">
-                                        <div class="d-flex text-muted justify-content-center">
-                                            Select <div id="select-content" class="text-body fw-semibold px-1">0</div>
-                                            Result <button type="button" class="btn btn-link link-danger p-0 ms-3"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#removeNotificationModal">Remove</button>
-                                        </div>
+                                </div>
+
+                                <!-- Hiển thị Action Panel -->
+                                {{-- <div class="notification-actions" id="notification-actions">
+                                    <div class="d-flex text-muted justify-content-center">
+                                        Select <div id="select-content" class="text-body fw-semibold px-1">0</div>
+                                        Result <button type="button" class="btn btn-link link-danger p-0 ms-3"
+                                            data-bs-toggle="modal" data-bs-target="#removeNotificationModal">Remove</button>
+                                    </div>
+                                </div> --}}
+                                <div class="notification-actions d-none" id="notification-actions">
+                                    <div class="d-flex text-muted justify-content-center">
+                                        Select <div id="select-content" class="text-body fw-semibold px-1">0</div>
+                                        Result
+                                        <button type="button" class="btn btn-link link-danger p-0 ms-3"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#removeNotificationModal">Remove</button>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
+
 
 
 
@@ -350,7 +397,7 @@
             </div>
         </header>
 
-        <!-- removeNotificationModal -->
+        {{-- <!-- removeNotificationModal -->
         <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -377,4 +424,31 @@
 
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        </div><!-- /.modal --> --}}
+
+        <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            id="NotificationModalbtn-close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-2 text-center">
+                            <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                                colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px">
+                            </lord-icon>
+                            <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                                <h4>Bạn có chắc chắn?</h4>
+                                <p class="text-muted mx-4 mb-0">Bạn có chắc chắn muốn xóa các thông báo này?</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn w-sm btn-danger" id="delete-notification">Xóa
+                                ngay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

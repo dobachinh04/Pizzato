@@ -1,5 +1,3 @@
-
-
 <!--start back-to-top-->
 <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
     <i class="ri-arrow-up-line"></i>
@@ -836,6 +834,62 @@
 
 <script src="https://kit.fontawesome.com/9cc1e5b793.js" crossorigin="anonymous"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.select-notification');
+    const actionPanel = document.getElementById('notification-actions');
+    const selectContent = document.getElementById('select-content');
+    const deleteButton = document.getElementById('delete-notification');
+
+    let selectedIds = [];
+
+    // Cập nhật danh sách thông báo đã chọn
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const id = this.value;
+            if (this.checked) {
+                selectedIds.push(id);
+            } else {
+                selectedIds = selectedIds.filter(selectedId => selectedId !== id);
+            }
+
+            // Cập nhật số lượng và hiển thị panel
+            selectContent.textContent = selectedIds.length;
+            actionPanel.classList.toggle('d-none', selectedIds.length === 0);
+        });
+    });
+
+    // Xử lý nút xóa
+    deleteButton.addEventListener('click', function () {
+        if (selectedIds.length > 0) {
+            fetch('{{ route('admin.notifications.delete') }}', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({ ids: selectedIds }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    selectedIds.forEach(id => {
+                        const notification = document.getElementById(`notification-${id}`);
+                        if (notification) notification.remove();
+                    });
+                    selectedIds = [];
+                    selectContent.textContent = 0;
+                    actionPanel.classList.add('d-none');
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+    });
+});
+
+</script>
 @yield('script')
 </body>
 
