@@ -53,6 +53,15 @@ class NotificationController extends Controller
             ->select('delay_notifications.id', 'delay_notifications.invoice_id', 'reason', 'solution', 'delay_notifications.created_at')
             ->first();
 
+        // Kiểm tra nếu không có thông báo
+        if (!$notification) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không có thông báo!',
+            ], 404);
+        }
+
+        // Trả về thông báo nếu có
         return response()->json([
             'success' => true,
             'notification' => $notification,
