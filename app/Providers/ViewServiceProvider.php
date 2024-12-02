@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use Carbon\Carbon;
 // use Illuminate\Support\Carbon;
 use Illuminate\Support\ServiceProvider;
@@ -37,17 +38,41 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
 {
     View::composer('admin.layouts.header', function ($view) {
-        $pendingOrders = DB::table('orders')
-            ->where('order_status', 'pending')
-            ->where('created_at', '<=', Carbon::now()->subMinutes(30))
+        // Lấy thông báo chưa đọc, chưa xóa mềm, và sắp xếp theo thời gian
+        $notifications = DB::table('notifications')
+            ->where('type', 'order_overdue')
+            ->where('is_read', false)
+            ->whereNull('deleted_at') // Bỏ qua thông báo bị xóa mềm
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        foreach ($pendingOrders as $order) {
-            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
-        }
+        // Tính toán `time_ago` cho từng thông báo
+        $notifications->transform(function ($notification) {
+            $notification->time_ago = Carbon::parse($notification->created_at)->diffForHumans();
+            return $notification;
+        });
 
-        $view->with('pendingOrders', $pendingOrders);
-        $view->with('alertCount', $pendingOrders->count());
+        // Đếm số lượng thông báo chưa đọc và chưa bị xóa mềm
+        $alertCount = $notifications->count();
+
+        // Truyền dữ liệu sang view
+        $view->with([
+            'notifications' => $notifications,
+            'alertCount' => $alertCount,
+        ]);
     });
 }
 }
+// View::composer('admin.layouts.header', function ($view) {
+        //     $pendingOrders = DB::table('orders')
+        //         ->where('order_status', 'pending')
+        //         ->where('created_at', '<=', Carbon::now()->subMinutes(20))
+        //         ->get();
+
+        //     foreach ($pendingOrders as $order) {
+        //         $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+        //     }
+
+        //     $view->with('pendingOrders', $pendingOrders);
+        //     $view->with('alertCount', $pendingOrders->count());
+        // });

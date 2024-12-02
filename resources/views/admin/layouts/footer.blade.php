@@ -835,60 +835,132 @@
 <script src="https://kit.fontawesome.com/9cc1e5b793.js" crossorigin="anonymous"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const checkboxes = document.querySelectorAll('.select-notification');
-    const actionPanel = document.getElementById('notification-actions');
-    const selectContent = document.getElementById('select-content');
-    const deleteButton = document.getElementById('delete-notification');
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const checkboxes = document.querySelectorAll('.select-notification');
+    //     const actionPanel = document.getElementById('notification-actions');
+    //     const selectContent = document.getElementById('select-content');
+    //     const deleteButton = document.getElementById('delete-notification');
 
-    let selectedIds = [];
+    //     let selectedIds = [];
 
-    // Cập nhật danh sách thông báo đã chọn
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            const id = this.value;
-            if (this.checked) {
-                selectedIds.push(id);
-            } else {
-                selectedIds = selectedIds.filter(selectedId => selectedId !== id);
+    //     // Cập nhật danh sách thông báo đã chọn
+    //     checkboxes.forEach(checkbox => {
+    //         checkbox.addEventListener('change', function() {
+    //             const id = this.value;
+    //             if (this.checked) {
+    //                 selectedIds.push(id);
+    //             } else {
+    //                 selectedIds = selectedIds.filter(selectedId => selectedId !== id);
+    //             }
+
+    //             // Cập nhật số lượng và hiển thị panel
+    //             selectContent.textContent = selectedIds.length;
+    //             actionPanel.classList.toggle('d-none', selectedIds.length === 0);
+    //         });
+    //     });
+
+    //     // Xử lý nút xóa
+    //     deleteButton.addEventListener('click', function() {
+    //         if (selectedIds.length > 0) {
+    //             fetch('{{ route('admin.notifications.delete') }}', {
+    //                     method: 'DELETE',
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                     },
+    //                     body: JSON.stringify({
+    //                         ids: selectedIds
+    //                     }),
+    //                 })
+    //                 .then(response => response.json())
+    //                 .then(data => {
+    //                     if (data.status === 'success') {
+    //                         selectedIds.forEach(id => {
+    //                             const notification = document.getElementById(
+    //                                 `notification-${id}`);
+    //                             if (notification) notification.remove();
+    //                         });
+    //                         selectedIds = [];
+    //                         selectContent.textContent = 0;
+    //                         actionPanel.classList.add('d-none');
+    //                         alert(data.message);
+    //                     } else {
+    //                         alert(data.message);
+    //                     }
+    //                 });
+    //         }
+    //     });
+    // });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.select-notification');
+        const actionPanel = document.getElementById('notification-actions');
+        const selectContent = document.getElementById('select-content');
+        const deleteButton = document.getElementById('delete-notification');
+        const alertCountElement = document.querySelector(
+        '.topbar-badge'); // Phần tử hiển thị số lượng thông báo
+
+        let selectedIds = [];
+
+        // Cập nhật danh sách thông báo đã chọn
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const id = this.value;
+                if (this.checked) {
+                    selectedIds.push(id);
+                } else {
+                    selectedIds = selectedIds.filter(selectedId => selectedId !== id);
+                }
+
+                // Cập nhật số lượng và hiển thị panel
+                selectContent.textContent = selectedIds.length;
+                actionPanel.classList.toggle('d-none', selectedIds.length === 0);
+            });
+        });
+
+        // Xử lý nút xóa
+        deleteButton.addEventListener('click', function() {
+            if (selectedIds.length > 0) {
+                const formData = new FormData();
+                formData.append('_token', '{{ csrf_token() }}');
+                formData.append('ids', JSON.stringify(selectedIds));
+
+                fetch('{{ route('admin.notifications.delete') }}', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Xóa thông báo khỏi giao diện
+                            selectedIds.forEach(id => {
+                                const notification = document.getElementById(
+                                    `notification-${id}`);
+                                if (notification) notification.remove();
+                            });
+
+                            // Reset danh sách đã chọn
+                            selectedIds = [];
+                            selectContent.textContent = 0;
+                            actionPanel.classList.add('d-none');
+
+                            // Cập nhật số lượng thông báo
+                            const currentCount = parseInt(alertCountElement.textContent, 10) || 0;
+                            const updatedCount = currentCount - data.deleted_count;
+                            alertCountElement.textContent = updatedCount >= 0 ? updatedCount : 0;
+
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Đã xảy ra lỗi, vui lòng thử lại.');
+                    });
             }
-
-            // Cập nhật số lượng và hiển thị panel
-            selectContent.textContent = selectedIds.length;
-            actionPanel.classList.toggle('d-none', selectedIds.length === 0);
         });
     });
-
-    // Xử lý nút xóa
-    deleteButton.addEventListener('click', function () {
-        if (selectedIds.length > 0) {
-            fetch('{{ route('admin.notifications.delete') }}', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify({ ids: selectedIds }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    selectedIds.forEach(id => {
-                        const notification = document.getElementById(`notification-${id}`);
-                        if (notification) notification.remove();
-                    });
-                    selectedIds = [];
-                    selectContent.textContent = 0;
-                    actionPanel.classList.add('d-none');
-                    alert(data.message);
-                } else {
-                    alert(data.message);
-                }
-            });
-        }
-    });
-});
-
 </script>
 @yield('script')
 </body>

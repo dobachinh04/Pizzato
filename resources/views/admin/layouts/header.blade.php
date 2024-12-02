@@ -168,7 +168,6 @@
                     </div>
 
                     <div class="d-flex align-items-center">
-
                         <div class="dropdown d-md-none topbar-head-dropdown header-item">
                             <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                                 id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -189,7 +188,6 @@
                                 </form>
                             </div>
                         </div>
-
 
 
                         <div class="ms-1 header-item d-none d-sm-flex">
@@ -236,7 +234,7 @@
                                     <div class="px-2 pt-2">
                                         <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom"
                                             data-dropdown-tabs="true" id="notificationItemsTab" role="tablist">
-                                            <li class="nav-item waves-effect waves-light">
+                                            {{-- <li class="nav-item waves-effect waves-light">
                                                 <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab"
                                                     role="tab" aria-selected="true">
                                                     All ({{ $alertCount ?? 0 }})
@@ -247,11 +245,11 @@
                                                     role="tab" aria-selected="false">
                                                     Messages
                                                 </a>
-                                            </li>
+                                            </li> --}}
                                             <li class="nav-item waves-effect waves-light">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#alerts-tab"
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#alerts-tab"
                                                     role="tab" aria-selected="false">
-                                                    Alerts
+                                                    All ( {{ $alertCount ?? 0 }})
                                                 </a>
                                             </li>
                                         </ul>
@@ -262,21 +260,23 @@
                                     <!-- Tab Alerts -->
                                     <div class="tab-pane fade show active p-4" id="alerts-tab" role="tabpanel"
                                         aria-labelledby="alerts-tab">
+
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                            @if (isset($pendingOrders) && count($pendingOrders) > 0)
-                                                @foreach ($pendingOrders as $order)
+                                            @if (isset($notifications) && count($notifications) > 0)
+                                                @foreach ($notifications as $notification)
                                                     <div class="text-reset notification-item d-block dropdown-item position-relative"
-                                                        id="notification-{{ $order->id }}">
+                                                        id="notification-{{ $notification->id }}">
                                                         <div class="d-flex">
                                                             <img src="assets/images/orders/default-order.jpg"
                                                                 class="me-3 rounded-circle avatar-xs flex-shrink-0"
-                                                                alt="order-pic">
+                                                                alt="notification-pic">
 
                                                             <!-- Thông tin thông báo -->
                                                             <div class="flex-grow-1">
                                                                 <a href="#!" class="stretched-link">
-                                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Đơn hàng
-                                                                        #{{ $order->invoice_id }}</h6>
+                                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">
+                                                                        {{ $notification->message }}
+                                                                    </h6>
                                                                 </a>
                                                                 <div class="fs-13 text-muted">
                                                                     <p class="mb-1">Đơn hàng này đã quá hạn thanh
@@ -285,24 +285,22 @@
                                                                 <p
                                                                     class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                                     <span><i class="mdi mdi-clock-outline"></i>
-                                                                        {{ $order->time_ago }}</span>
+                                                                        {{ $notification->time_ago }}
+                                                                    </span>
                                                                 </p>
                                                             </div>
-                                                            {{-- checkbox --}}
+
+                                                            <!-- Checkbox -->
                                                             <div class="px-2 fs-15">
-                                                                {{-- <div class="form-check notification-check">
-                                                                <input class="form-check-input" type="checkbox" value="" id="order-notification-check{{ $order->id }}">
-                                                                <label class="form-check-label" for="order-notification-check{{ $order->id }}"></label>
-                                                            </div> --}}
-                                                                <div class="form-check notification-check me-2">
+                                                                <div class="form-check notification-check">
                                                                     <input class="form-check-input select-notification"
-                                                                        type="checkbox" value="{{ $order->id }}"
-                                                                        id="order-notification-check{{ $order->id }}">
+                                                                        type="checkbox"
+                                                                        value="{{ $notification->id }}"
+                                                                        id="notification-check{{ $notification->id }}">
                                                                     <label class="form-check-label"
-                                                                        for="order-notification-check{{ $order->id }}"></label>
+                                                                        for="notification-check{{ $notification->id }}"></label>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -320,6 +318,7 @@
                                                 </a>
                                             </div>
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -332,6 +331,8 @@
                                             data-bs-toggle="modal" data-bs-target="#removeNotificationModal">Remove</button>
                                     </div>
                                 </div> --}}
+
+                                <!-- Panel điều khiển -->
                                 <div class="notification-actions d-none" id="notification-actions">
                                     <div class="d-flex text-muted justify-content-center">
                                         Select <div id="select-content" class="text-body fw-semibold px-1">0</div>
@@ -341,7 +342,6 @@
                                             data-bs-target="#removeNotificationModal">Remove</button>
                                     </div>
                                 </div>
-
 
                             </div>
                         </div>
@@ -397,8 +397,8 @@
             </div>
         </header>
 
-        {{-- <!-- removeNotificationModal -->
-        <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <!-- removeNotificationModal -->
+        {{-- <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -426,6 +426,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal --> --}}
 
+        <!-- Modal xác nhận -->
         <div id="removeNotificationModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

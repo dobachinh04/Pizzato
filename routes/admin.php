@@ -30,6 +30,8 @@ use App\Http\Controllers\Admin\ProductReviewController as AdminProductReviewCont
 use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Middleware\CheckFormLogin;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 // Login admin
 Route::prefix('admin/auth')->name('admin.')->group(function () {
@@ -251,9 +253,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
     });
-        // notification header
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //het loi
-     Route::delete('/notifications/delete', [NotificationController::class, 'delete'])->name('notifications.delete');
+
+
 
 
     //  Thông báo đơn hàng quá trễ
@@ -277,5 +278,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('pizza-bases', PizzaBaseController::class);
         Route::resource('product-sizes', ProductSizeController::class);
     // });
+    // notification header
+     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //het loi
+    //  Route::delete('/notifications/delete', [NotificationController::class, 'delete'])->name('notifications.delete');
+     Route::post('/admin/notifications/delete', [NotificationController::class, 'deleteNotifications'])->name('notifications.delete');
+
+
+     Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
 
 });

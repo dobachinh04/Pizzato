@@ -130,15 +130,36 @@ class DashboardController extends Controller
     // lấy thông báo đơn hàng chưa xử lý quá 30 phút
     private function getPendingOrdersOver30Minutes()
     {
+        // Lấy danh sách đơn hàng quá hạn
         $orderOvers = DB::table('orders')
             ->where('order_status', 'pending')
             ->where('created_at', '<=', Carbon::now()->subMinutes(20))
             ->get();
 
-            // Thêm thời gian tính toán "bao nhiêu phút trước"
+
         foreach ($orderOvers as $order) {
-            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+        // Tính toán thời gian "bao nhiêu phút trước"
+        $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+
+        // Kiểm tra xem thông báo cho đơn hàng này đã tồn tại và chưa bị xoá (xoá cứng)
+        $existingNotification = DB::table('notifications')
+            ->where('type', 'order_overdue')
+            ->where('reference_id', $order->invoice_id)
+            // ->whereNull('deleted_at') // Chỉ lấy những thông báo chưa bị xóa mềm
+            ->first();
+
+        // Chỉ tạo thông báo nếu chưa có thông báo tương ứng
+        if (!$existingNotification) {
+            DB::table('notifications')->insert([
+                'type' => 'order_overdue', // Loại thông báo
+                'reference_id' => $order->invoice_id, // ID của đơn hàng liên quan
+                'message' => "Đơn hàng #{$order->invoice_id} đã quá hạn thanh toán {$order->time_ago}.",
+                'is_read' => false, // Thông báo mặc định là chưa đọc
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
+    }
 
         return $orderOvers;
     }
