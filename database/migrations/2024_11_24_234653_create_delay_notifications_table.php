@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('invoice_id'); // Mã đơn hàng
             $table->text('reason'); // Lý do chậm trễ
             $table->text('solution')->nullable(); // Giải pháp đề xuất
+            $table->boolean('is_read')->default(false);
             $table->timestamps(); // Thời gian tạo và cập nhật
         });
     }

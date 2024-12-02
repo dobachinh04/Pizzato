@@ -162,16 +162,34 @@ class DashboardController extends Controller
             // ->whereNull('deleted_at') // Chỉ lấy những thông báo chưa bị xóa mềm
             ->first();
 
+
         // Chỉ tạo thông báo nếu chưa có thông báo tương ứng
+        // Nếu thông báo chưa tồn tại
         if (!$existingNotification) {
-            DB::table('notifications')->insert([
-                'type' => 'order_overdue', // Loại thông báo
-                'reference_id' => $order->invoice_id, // ID của đơn hàng liên quan
-                'message' => "Đơn hàng #{$order->invoice_id} đã quá hạn thanh toán {$order->time_ago}.",
-                'is_read' => false, // Thông báo mặc định là chưa đọc
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // Tạo thông báo tùy thuộc vào trạng thái của đơn hàng
+            $message = '';
+
+            if ($order->order_status === 'pending') {
+                $message = "Đơn hàng #{$order->invoice_id} chưa được xử lý.";
+            }
+
+            if ($order->payment_status === 'pending') {
+                $message = "Đơn hàng #{$order->invoice_id} chưa được thanh toán.";
+            } elseif ($order->payment_status === 'failed') {
+                $message = "Đơn hàng #{$order->invoice_id} thanh toán thất bại.";
+            }
+// 'message' => "Đơn hàng #{$order->invoice_id} đã quá hạn thanh toán {$order->time_ago}."
+            // Chỉ tạo thông báo nếu message không rỗng
+            if (!empty($message)) {
+                DB::table('notifications')->insert([
+                    'type' => 'order_overdue', // Loại thông báo
+                    'reference_id' => $order->invoice_id, // ID của đơn hàng liên quan
+                    'message' => $message,
+                    'is_read' => false, // Thông báo mặc định là chưa đọc
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
     }
 
