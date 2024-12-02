@@ -73,8 +73,6 @@ Route::post('/reviews', [ProductReviewController::class, 'createReview']);
 Route::get('/products/{productId}/reviews', [ProductReviewController::class, 'getReviews']);
 
 // shttp://127.0.0.1:8000/api/reviews/13
-// sửa theo id đánh giá nhưng đánh giá đó phải thuộc về người dùng hiện tại
-// controller đang fix cứng id user = 1
 Route::put('/reviews/{id}', [ProductReviewController::class, 'updateReview']);
 
 Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview']);
@@ -82,16 +80,13 @@ Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview'])
 // OrderController
 Route::get('/orders', [OrderController::class, 'index']);
 
-// Notification of delay orders
-// Route::get('/overdue-orders', [OrderController::class, 'overdueOrders']);
+// Notifications
 Route::get('/notifications/{id}', [NotificationController::class, 'getNotificationByInvoiceId']);
+Route::put('/notifications/{id}/read', [NotificationController::class, 'readNotification']);
+Route::delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);
 
 // refunds
 Route::post('/refund-request', [RefundController::class, 'createRefundRequest']);
 
 Route::get('/chat/{adminId}', [ChatController::class, 'getMessages']);
 Route::post('/chat/send', [ChatController::class, 'sendMessage']);
-
-
-// category
-Route::get('/categories', [CategoryController::class, 'index']);

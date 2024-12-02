@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('type'); // Loại thông báo (e.g., order_overdue)
-            $table->unsignedBigInteger('reference_id'); // ID liên kết (e.g., order_id)
+            $table->string('reference_id'); // ID liên kết (e.g., order_id)
             $table->text('message'); // Nội dung thông báo
             $table->boolean('is_read')->default(false); // Đã đọc hay chưa
             $table->timestamp('read_at')->nullable();
