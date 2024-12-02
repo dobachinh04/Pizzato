@@ -17,7 +17,7 @@
             <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
                         class="mdi mdi-close"></i></span>
             </button>
-            <strong>Hoàn Tất!</strong> {{ Session::get('success') }}.
+            <strong>Hoàn Tất</strong> {{ Session::get('success') }}.
         </div>
     @endif
 
