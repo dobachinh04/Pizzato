@@ -17,7 +17,7 @@
             <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
                         class="mdi mdi-close"></i></span>
             </button>
-            <strong>Hoàn Tất</strong> {{ Session::get('success') }}.
+            <strong>Hoàn Tất!</strong> {{ Session::get('success') }}.
         </div>
     @endif
 
@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="card-title mb-0">Danh Sách Blog</h5>
-                                <a href="{{ route('admin.blogs.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                <a href="{{ route('admin.blogs.create') }}" class="btn btn-success ms-auto">Thêm Mới Blog</a>
                             </div>
 
                             <div class="card-body">
