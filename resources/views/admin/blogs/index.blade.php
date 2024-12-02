@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh Sách Blog - Pizzato
+    Danh Sách Blog 
 @endsection
 
 @section('content')
