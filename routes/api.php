@@ -16,6 +16,8 @@ use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\ProductReviewController;
 use App\Http\Controllers\Client\RefundController;
 use App\Http\Controllers\Client\ChatController;
+use App\Http\Controllers\Client\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -89,3 +91,7 @@ Route::post('/refund-request', [RefundController::class, 'createRefundRequest'])
 
 Route::get('/chat/{adminId}', [ChatController::class, 'getMessages']);
 Route::post('/chat/send', [ChatController::class, 'sendMessage']);
+
+
+// category
+Route::get('/categories', [CategoryController::class, 'index']);

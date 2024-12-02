@@ -17,7 +17,9 @@
                 <img src="/velzon/images/logo.webp" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="/velzon/images/logo-pizzato-1.png" alt="" height="17">
+                {{-- <img src="/velzon/assets/images/logo-light.png" alt="" height="17"> --}}
+                <img src="/velzon/images/logo-pizzato-3.png" alt="" height="17">
+                {{-- PIZZATO --}}
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
