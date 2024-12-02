@@ -141,6 +141,7 @@ class DashboardController extends Controller
             ->get();
     }
 
+    // lấy thông báo đơn hàng chưa xử lý quá 30 phút
     private function getPendingOrdersOver30Minutes()
     {
         $orderOvers = DB::table('orders')
@@ -148,6 +149,7 @@ class DashboardController extends Controller
             ->where('created_at', '<=', Carbon::now()->subMinutes(20))
             ->get();
 
+            // Thêm thời gian tính toán "bao nhiêu phút trước"
         foreach ($orderOvers as $order) {
             $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
         }
