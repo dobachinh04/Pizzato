@@ -50,8 +50,8 @@ class NotificationController extends Controller
             ->join('orders', 'delay_notifications.invoice_id', '=', 'orders.invoice_id')
             ->where('orders.user_id', $id)
             ->orderBy('created_at', 'desc')
-            ->select('delay_notifications.invoice_id', 'reason', 'solution', 'delay_notifications.created_at')
-            ->get();
+            ->select('delay_notifications.id', 'delay_notifications.invoice_id', 'reason', 'solution', 'delay_notifications.created_at')
+            ->first();
 
         return response()->json([
             'success' => true,

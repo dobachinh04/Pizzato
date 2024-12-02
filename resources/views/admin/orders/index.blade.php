@@ -164,14 +164,13 @@
                                                     @endif
                                                 </td>
 
-
                                                 <td>
                                                     <a href="{{ route('admin.orders.show', $order) }}"
                                                         class="btn btn-info"><i class="fa fa-info-circle"></i></a>
 
                                                     @if (!in_array($order->order_status, ['canceled', 'processing', 'completed']))
-                                                        <a href="{{ route('admin.orders.edit', $order) }}"
-                                                            class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                                        {{-- <a href="{{ route('admin.orders.edit', $order) }}"
+                                                            class="btn btn-warning"><i class="fa fa-edit"></i></a> --}}
 
                                                         {{-- Form hủy đơn hàng --}}
                                                         <form action="{{ route('admin.orders.cancel', $order) }}"
@@ -179,21 +178,17 @@
                                                             onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?');">
                                                             @csrf
                                                             @method('PUT')
-                                                            <button type="submit" class="btn btn-danger"> <i class="fas fa-times-circle"></i></button>
+                                                            <button type="submit" class="btn btn-danger"> <i
+                                                                    class="fas fa-times-circle"></i></button>
                                                         </form>
                                                     @elseif (in_array($order->order_status, ['canceled']))
-                                                        {{-- <button class="btn btn-warning notify-btn" data-id=""
-                                                            data-invoice="">
-                                                            <i class="fa-regular fa-bell fa-lg"></i>
-                                                        </button> --}}
-                                                        <button class="btn btn-warning btn-sm notify-btn"
+                                                        <button class="btn btn-warning notify-btn"
                                                             data-id="{{ $order->id }}"
                                                             data-invoice="{{ $order->invoice_id }}">
                                                             <i class="fa-regular fa-bell fa-lg"></i>
                                                         </button>
                                                     @endif
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>

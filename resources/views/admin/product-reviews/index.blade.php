@@ -62,10 +62,9 @@
                                             <th>Tên Sản Phẩm</th>
                                             <th>Ảnh Sản Phẩm</th>
                                             <th>Điểm Đánh Giá</th>
-                                            {{-- <th>Nội Dung Đánh Giá</th> --}}
-                                            {{-- <th>Trạng Thái</th> --}}
+                                       
                                             <th>Thời Gian Đánh Giá</th>
-                                            {{-- <th>Thời Gian Duyệt</th>--}}
+                                          
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>

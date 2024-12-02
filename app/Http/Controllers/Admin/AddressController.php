@@ -23,9 +23,6 @@ class AddressController extends Controller
         return view('admin.addresses.index', compact('addresses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $users = User::all();
@@ -34,28 +31,18 @@ class AddressController extends Controller
         return view('admin.addresses.create', compact('users', 'delivery_areas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreAddressRequest $request)
     {
         // Tạo một địa chỉ mới
         Address::create($request->all());
 
-        // Redirect về trang danh sách với thông báo thành công
         return redirect()
             ->route('admin.addresses.index')
             ->with('success', 'Địa chỉ đã được thêm thành công!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id) {}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $address = Address::findOrFail($id);
@@ -68,9 +55,6 @@ class AddressController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateAddressRequest $request, Address $address)
     {
         // Cập nhật địa chỉ
@@ -81,9 +65,7 @@ class AddressController extends Controller
             ->route('admin.addresses.index')
             ->with('success', 'Địa chỉ đã được cập nhật thành công!');
     }
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Address $address)
     {
         // Xóa địa chỉ

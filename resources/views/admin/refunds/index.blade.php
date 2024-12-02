@@ -28,7 +28,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
-                                <h5 class="card-title mb-0">Danh Sách Yêu Càu Hoàn Tiền</h5>
+                                <h5 class="card-title mb-0">Danh Sách Yêu Cầu Hoàn Tiền</h5>
                             </div>
 
                             <div class="card-body">

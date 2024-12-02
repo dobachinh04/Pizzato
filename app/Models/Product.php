@@ -69,4 +69,9 @@ class Product extends Model
             ->withPivot('price')
             ->withTimestamps();
     }
+
+    public function getStatusAttribute()
+    {
+        return $this->qty > 0;
+    }
 }

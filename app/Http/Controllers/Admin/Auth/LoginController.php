@@ -16,10 +16,7 @@ class LoginController extends Controller
             // Nếu đã đăng nhập, chuyển hướng về trang dashboard hoặc trang chủ
             return redirect()->route('admin.dashboard')->with('message', 'Bạn đã đăng nhập');
         }
-        // session()->forget('success');
-
-        // Thêm header để tránh cache
-        // return view('admin.auth.login');
+       
         return response()
             ->view('admin.auth.login')
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
