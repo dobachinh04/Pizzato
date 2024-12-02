@@ -43,7 +43,7 @@
                                                                 <div class="row">
                                                                     <h3>Thông Tin Sản Phẩm</h3>
 
-                                                                    {{-- @if ($errors->any())
+                                                                    @if ($errors->any())
                                                                         <div class="alert alert-danger">
                                                                             <ul>
                                                                                 @foreach ($errors->all() as $error)
@@ -51,7 +51,7 @@
                                                                                 @endforeach
                                                                             </ul>
                                                                         </div>
-                                                                    @endif --}}
+                                                                    @endif
 
                                                                     <div class="col-6">
                                                                         <div class="form-group mt-3">
@@ -124,7 +124,6 @@
                                                                                     class="text-danger">{{ $message }}</span>
                                                                             @enderror
                                                                         </div>
-
 
                                                                         <div class="form-group mt-3">
                                                                             <label>View</label>
@@ -522,15 +521,14 @@
                                                                             </div>
                                                                         </div>
                                                                     </div> --}}
+                                                                </div>
 
-                                                                    <div class="mt-3">
-                                                                        <a href="{{ route('admin.products.index') }}"
-                                                                            class="btn btn-secondary">
-                                                                            Quay Lại</a>
-                                                                        <button type="submit"
-                                                                            class="btn btn-success">Thêm
-                                                                            Mới</button>
-                                                                    </div>
+                                                                <div class="mt-3">
+                                                                    <a href="{{ route('admin.products.index') }}"
+                                                                        class="btn btn-secondary">
+                                                                        Quay Lại</a>
+                                                                    <button type="submit" class="btn btn-success">Thêm
+                                                                        Mới</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -781,7 +779,6 @@
 
 
         // Slug theo name
-        // Slug
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.querySelector('input[name="name"]');
             const slugInput = document.querySelector('input[name="slug"]');

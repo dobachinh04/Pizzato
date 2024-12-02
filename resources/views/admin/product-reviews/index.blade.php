@@ -62,10 +62,9 @@
                                             <th>Tên Sản Phẩm</th>
                                             <th>Ảnh Sản Phẩm</th>
                                             <th>Điểm Đánh Giá</th>
-                                            {{-- <th>Nội Dung Đánh Giá</th> --}}
-                                            {{-- <th>Trạng Thái</th> --}}
+                                       
                                             <th>Thời Gian Đánh Giá</th>
-                                            {{-- <th>Thời Gian Duyệt</th>--}}
+                                          
                                             <th>Hành Động</th>
                                         </tr>
                                     </thead>
@@ -128,13 +127,13 @@
                                                 <td>{{$item->created_at}}</td>
                                                 <td>
                                                     <a href="{{ route('admin.product-reviews.show', $item->id) }}"
-                                                        class="btn btn-soft-info">Chi tiết</a>
+                                                        class="btn btn-info"><i class="fa fa-info-circle"></i></a>
                                                         <form action="{{ route('admin.product-reviews.destroy', $item->id) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button onclick='return confirm("Bạn có chắc là muốn xóa không?")' type="submit"
-                                                                class="btn btn-danger">Xóa</button>
+                                                                class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                         </form>
                                                 </td>
                                             </tr>

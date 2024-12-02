@@ -15,7 +15,7 @@ use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\ProductReviewController;
 use App\Http\Controllers\Client\RefundController;
-
+use App\Http\Controllers\Client\ChatController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -82,7 +82,10 @@ Route::get('/orders', [OrderController::class, 'index']);
 
 // Notification of delay orders
 // Route::get('/overdue-orders', [OrderController::class, 'overdueOrders']);
-Route::get('/notifications/invoice/{invoice_id}', [NotificationController::class, 'getNotificationByInvoiceId']);
+Route::get('/notifications/{id}', [NotificationController::class, 'getNotificationByInvoiceId']);
 
 // refunds
 Route::post('/refund-request', [RefundController::class, 'createRefundRequest']);
+
+Route::get('/chat/{adminId}', [ChatController::class, 'getMessages']);
+Route::post('/chat/send', [ChatController::class, 'sendMessage']);

@@ -45,14 +45,14 @@ class ProductController extends Controller
         return view("admin.products.create", compact('categories', 'slug', 'sizes', 'edges', 'bases'));
     }
 
-    private function calculateOptionPrice($sizeId, $edgeId, $baseId)
-    {
-        $sizePrice = ProductSize::find($sizeId)?->price ?? 0;
-        $edgePrice = PizzaEdge::find($edgeId)?->price ?? 0;
-        $basePrice = PizzaBase::find($baseId)?->price ?? 0;
+    // private function calculateOptionPrice($sizeId, $edgeId, $baseId)
+    // {
+    //     $sizePrice = ProductSize::find($sizeId)?->price ?? 0;
+    //     $edgePrice = PizzaEdge::find($edgeId)?->price ?? 0;
+    //     $basePrice = PizzaBase::find($baseId)?->price ?? 0;
 
-        return $sizePrice + $edgePrice + $basePrice;
-    }
+    //     return $sizePrice + $edgePrice + $basePrice;
+    // }
 
     public function store(StoreProductRequest $request)
     {
@@ -133,7 +133,7 @@ class ProductController extends Controller
                         }
                     }
                     if (!empty($basePriceData)) {
-                        $product->pizzaBase()->attach($basePriceData);
+                        $product->pizzaBases()->attach($basePriceData);
                     }
                 }
             });
@@ -149,10 +149,9 @@ class ProductController extends Controller
         return view("admin.products.show", compact('product'));
     }
 
-
     public function edit(Product $product)
     {
-        $product->load(['category', 'galleries', 'sizes']);
+        $product->load(['category', 'productGalleries', 'productSizes', 'pizzaEdges', 'pizzaBases']);
 
         $slug = '';
 
@@ -161,13 +160,30 @@ class ProductController extends Controller
 
         $categories = Category::query()->pluck('name', 'id')->all();
 
-        $sizes = ProductSize::pluck('name', 'id')->all();
+        $sizes = ProductSize::all();
+        $productSizes = $product->productSizes->pluck('id')->all();
 
-        $productSizes = $product->sizes->pluck('id')->all();
+        $edges = PizzaEdge::all();
+        $pizzaEdges = $product->pizzaEdges->pluck('id')->all();
 
-        return view("admin.products.edit", compact('product', 'categories', 'slug', 'sizes', 'productSizes'));
+        $bases = PizzaBase::all();
+        $pizzaBases = $product->pizzaBases->pluck('id')->all();
+
+        return view(
+            "admin.products.edit",
+            compact(
+                'product',
+                'categories',
+                'slug',
+                'sizes',
+                'edges',
+                'bases',
+                'productSizes',
+                'pizzaEdges',
+                'pizzaBases'
+            )
+        );
     }
-
 
     public function update(UpdateProductRequest $request, Product $product)
     {
@@ -181,8 +197,8 @@ class ProductController extends Controller
 
                 $currentImage = $product->thumb_image;
 
-        // Tạo slug từ tên sản phẩm
-        // $data['slug'] = $this->createSlug($request->name);
+                // Tạo slug từ tên sản phẩm
+                // $data['slug'] = $this->createSlug($request->name);
                 // Tạo slug từ tên sản phẩm
                 $data['slug'] = $this->createSlug($request->name);
 
@@ -192,19 +208,32 @@ class ProductController extends Controller
                 $product->update($data);
 
                 foreach ($request->galleries ?? [] as $id => $image) {
-                    // Thêm biến và model findOrFail
-                    $gallery = ProductGallery::findOrFail($id);
-
-                    // Xóa bỏ model và sửa từ create sang update
-                    $gallery->update([
-                        'product_id' => $product->id,
-                        'galleries' => Storage::put('galleries', $image),
-                    ]);
+                    // Kiểm tra xem ID có phải là số hợp lệ
+                    if (is_numeric($id)) {
+                        // Tìm ProductGallery bằng ID
+                        $gallery = ProductGallery::find($id);
+                        if ($gallery) {
+                            // Nếu tìm thấy, cập nhật gallery
+                            $gallery->update([
+                                'product_id' => $product->id,
+                                'galleries' => Storage::put('galleries', $image),
+                            ]);
+                        } else {
+                            // Báo lỗi nếu không tìm thấy
+                            return back()->withErrors("Không tìm thấy gallery với ID: $id.");
+                        }
+                    } else {
+                        // Nếu không có ID, tạo mới gallery
+                        ProductGallery::create([
+                            'product_id' => $product->id,
+                            'galleries' => Storage::put('galleries', $image),
+                        ]);
+                    }
                 }
 
                 $product->productSizes()->sync($request->sizes);
-                $product->pizzaEdges()->sync($request->sizes);
-                $product->pizzaBases()->sync($request->sizes);
+                $product->pizzaEdges()->sync($request->edges);
+                $product->pizzaBases()->sync($request->bases);
             });
 
             return back()->with('success', 'Cập Nhật thành công');

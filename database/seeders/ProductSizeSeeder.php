@@ -17,7 +17,7 @@ class ProductSizeSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'S',
-                'price' => '10000',
+                'price' => '0',
             ],
             [
                 'id' => 2,

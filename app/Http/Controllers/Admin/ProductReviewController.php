@@ -17,18 +17,7 @@ class ProductReviewController extends Controller
         // return response()->json($reviews); // Nếu cần trả JSON
     }
 
-    // public function show($id)
-    // {
-    //     $productReview = Product::findOrFail($id);
-
-    //     // Lấy tất cả đánh giá cho sản phẩm này,
-    //     $productReviews = ProductReview::where('product_id', $id)
-    //         ->with('user') // Nếu có liên kết với bảng người dùng để lấy thông tin người đánh giá
-    //         ->orderBy('created_at', 'desc')
-    //         ->get();
-
-    //     return view('admin.product-reviews.show', compact('product', 'productReviews'));
-    // }
+ 
 
     public function show($id)
     {
@@ -41,12 +30,7 @@ class ProductReviewController extends Controller
         return view('admin.product-reviews.show', compact('product', 'productReview'));
     }
 
-    // public function destroy($id)
-    // {
-    //     $review = ProductReview::findOrFail($id);
-    //     $review->delete();
-    //     return redirect()->route('product-reviews.index')->with('success', 'Đánh giá đã được xoá bỏ');
-    // }
+  
     public function destroy($id)
     {
         $productReview = ProductReview::findOrFail($id);

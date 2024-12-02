@@ -24,9 +24,14 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\PizzaBaseController;
+use App\Http\Controllers\Admin\PizzaEdgeController;
 use App\Http\Controllers\Admin\ProductReviewController as AdminProductReviewController;
+use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Middleware\CheckFormLogin;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 // Login admin
 Route::prefix('admin/auth')->name('admin.')->group(function () {
@@ -38,12 +43,7 @@ Route::prefix('admin/auth')->name('admin.')->group(function () {
 
 Route::view('403-page', 'admin.auth.403')->name('403Page');
 
-// Route::middleware(['auth.role:admin', 'no-cache'])->group(function(){
-//     Route::prefix('admin')->name('admin.')->group(function(){
-//         // Admin - Dashboard:
-//     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
-//     });
-// });
+
 
 // Route::middleware('auth.role:admin')->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -62,16 +62,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
     });
 
-    // Admin - products:
-    // Route::prefix('products')->name('products.')->group(function () {
-    //     Route::get('/',                                 [AdminProductController::class, 'index'])->name('index');
-    //     Route::get('/create',                           [AdminProductController::class, 'create'])->name('create');
-    //     Route::post('/',                                [AdminProductController::class, 'store'])->name('store');
-    //     Route::get('/{product}/edit',                   [AdminProductController::class, 'edit'])->name('edit');
-    //     Route::put('/{product}',                        [AdminProductController::class, 'update'])->name('update');
-    //     Route::get('/show/{product}',                   [AdminProductController::class, 'show'])->name('show');
-    //     Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
-    // });
 
     Route::resource('products', AdminProductController::class);
 
@@ -96,16 +86,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{deliveryArea}',                [DeliveryAreaController::class, 'destroy'])->name('destroy');
     });
 
-    // Admin - Tags:
-    // Route::prefix('tags')->name('tags.')->group(function() {
-    //     Route::get('/',                                 [TagController::class, 'index'])->name('index');
-    //     Route::get('/create',                           [TagController::class, 'create'])->name('create');
-    //     Route::post('/',                                [TagController::class, 'store'])->name('store');
-    //     Route::get('/{id}/edit',                        [TagController::class, 'edit'])->name('edit');
-    //     Route::put('/{id}',                             [TagController::class, 'update'])->name('update');
-    //     Route::get('/show/{id}',                        [TagController::class, 'show'])->name('show');
-    //     Route::delete('/{id}',                          [TagController::class, 'destroy'])->name('destroy');
-    // });
+ 
 
     // Admin - Users:
     Route::prefix('users')->name('users.')->group(function () {
@@ -160,6 +141,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{order}',                     [OrderController::class, 'show'])->name('show');
         Route::delete('/{order}',                       [OrderController::class, 'destroy'])->name('destroy');
         Route::get('/deleted',                          [OrderController::class, 'deleted'])->name('deleted');
+
+        Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
+        Route::put('/{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+
     });
 
     Route::prefix('shipping')->name('shipping.')->group(function () {
@@ -222,20 +207,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
     });
 
-
-    // Admin - products:
-    // Route::prefix('products')->name('products.')->group(function () {
-    //     Route::get('/',                                 [AdminProductController::class, 'index'])->name('index');
-    //     Route::get('/create',                           [AdminProductController::class, 'create'])->name('create');
-    //     Route::post('/',                                [AdminProductController::class, 'store'])->name('store');
-    //     Route::get('/{product}/edit',                   [AdminProductController::class, 'edit'])->name('edit');
-    //     Route::put('/{product}',                        [AdminProductController::class, 'update'])->name('update');
-    //     Route::get('/show/{product}',                   [AdminProductController::class, 'show'])->name('show');
-    //     Route::delete('/{product}',                     [AdminProductController::class, 'destroy'])->name('destroy');
-    // });
-
-    // });
-
      /** Product Reviews Routes */
      Route::prefix('product-reviews')->name('product-reviews.')->group(function(){
          Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
@@ -245,9 +216,36 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     });
 
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //dang loi
+
+
 
     //  Thông báo đơn hàng quá trễ
      Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
+
+    //  chat
+    Route::prefix('chat')->name('chat.')->group(function () {
+
+        Route::get('/', [ChatController::class, 'index'])->name('index');
+        Route::get('/{clientId}', [ChatController::class, 'chatWithClient'])->name('chatWithClient');
+        Route::post('/send', [ChatController::class, 'sendMessage'])->name('send');
+    });
+
+    Route::get('/chat', [ChatController::class, 'index'])->name('admin.chat');
+    Route::get('/chat/{clientId}', [ChatController::class, 'chatWithClient'])->name('admin.chatWithClient');
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('admin.chat.send');
+
+    // biến thể sản phẩm
+    // Route::prefix('products')->name('products.')->group(function () {
+        Route::resource('pizza-edges', PizzaEdgeController::class);
+        Route::resource('pizza-bases', PizzaBaseController::class);
+        Route::resource('product-sizes', ProductSizeController::class);
+    // });
+    // notification header
+     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //het loi
+    //  Route::delete('/notifications/delete', [NotificationController::class, 'delete'])->name('notifications.delete');
+     Route::post('/admin/notifications/delete', [NotificationController::class, 'deleteNotifications'])->name('notifications.delete');
+
+
+     Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
 
 });

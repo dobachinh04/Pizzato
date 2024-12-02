@@ -27,6 +27,8 @@ class DashboardController extends Controller
             'pendingOrders' => $this->getPendingOrders(),
             'lowStockProducts' => $this->getLowStockProducts(),
             'orderOvers' => $this->getPendingOrdersOver30Minutes(),
+            'products' => $this->getTopViewedProducts(),
+
         ]);
     }
 
@@ -53,6 +55,17 @@ class DashboardController extends Controller
     private function getTotalReviews()
     {
         return ProductReview::count();
+    }
+
+    public function getTopViewedProducts($limit = 10)
+    {
+        // Lấy danh sách sản phẩm nhiều lượt xem nhất
+        $products = Product::select('id', 'name', 'view', 'slug', 'thumb_image')
+            ->orderByDesc('view') // Sắp xếp theo số lượt xem giảm dần
+            ->limit($limit) // Giới hạn số lượng sản phẩm
+            ->get();
+
+        return $products;  // Trả về sản phẩm
     }
 
     private function getRecentReviews()
@@ -106,6 +119,7 @@ class DashboardController extends Controller
     {
         return Order::with('addresses')
             ->select(
+                'orders.id', // Thêm cột ID để sử dụng trong route
                 'orders.invoice_id',
                 'addresses.first_name',
                 'addresses.last_name',
@@ -127,16 +141,57 @@ class DashboardController extends Controller
             ->get();
     }
 
+    // lấy thông báo đơn hàng chưa xử lý quá 30 phút
     private function getPendingOrdersOver30Minutes()
     {
+        // Lấy danh sách đơn hàng quá hạn
         $orderOvers = DB::table('orders')
             ->where('order_status', 'pending')
             ->where('created_at', '<=', Carbon::now()->subMinutes(20))
             ->get();
 
+
         foreach ($orderOvers as $order) {
-            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+        // Tính toán thời gian "bao nhiêu phút trước"
+        $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+
+        // Kiểm tra xem thông báo cho đơn hàng này đã tồn tại và chưa bị xoá (xoá cứng)
+        $existingNotification = DB::table('notifications')
+            ->where('type', 'order_overdue')
+            ->where('reference_id', $order->invoice_id)
+            // ->whereNull('deleted_at') // Chỉ lấy những thông báo chưa bị xóa mềm
+            ->first();
+
+
+        // Chỉ tạo thông báo nếu chưa có thông báo tương ứng
+        // Nếu thông báo chưa tồn tại
+        if (!$existingNotification) {
+            // Tạo thông báo tùy thuộc vào trạng thái của đơn hàng
+            $message = '';
+
+            if ($order->order_status === 'pending') {
+                $message = "Đơn hàng #{$order->invoice_id} chưa được xử lý.";
+            }
+
+            if ($order->payment_status === 'pending') {
+                $message = "Đơn hàng #{$order->invoice_id} chưa được thanh toán.";
+            } elseif ($order->payment_status === 'failed') {
+                $message = "Đơn hàng #{$order->invoice_id} thanh toán thất bại.";
+            }
+// 'message' => "Đơn hàng #{$order->invoice_id} đã quá hạn thanh toán {$order->time_ago}."
+            // Chỉ tạo thông báo nếu message không rỗng
+            if (!empty($message)) {
+                DB::table('notifications')->insert([
+                    'type' => 'order_overdue', // Loại thông báo
+                    'reference_id' => $order->invoice_id, // ID của đơn hàng liên quan
+                    'message' => $message,
+                    'is_read' => false, // Thông báo mặc định là chưa đọc
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
+    }
 
         return $orderOvers;
     }
@@ -182,43 +237,9 @@ class DashboardController extends Controller
             ->get();
     }
 
-    // Phương thức lấy thông báo đơn hàng chưa xử lý
-    // public function getPendingOrderNotification()
-    // {
-    //     $unreadAlerts = Auth::user()->unreadNotifications()
-    //         ->where('type', 'App\Notifications\OrderPendingNotification')
-    //         ->get();
-
-    //     return view('admin.dashboard', compact('unreadAlerts'));
-    // }
-
-
-    // Láy các đơn hàng quá 30 phút và order = pending
-    // public function getPendingOrdersOver30Minutes()
-    // {
-    //     $orderOvers = DB::table('orders')
-    //         ->where('order_status', 'pending') // Chỉ lấy các đơn hàng có trạng thái pending
-    //         ->where('created_at', '<=', Carbon::now()->subMinutes(30)) // Thời gian tạo hơn 30 phút trước
-    //         ->get();
-
-    //     // Thêm thời gian tính toán "bao nhiêu phút trước"
-    //     foreach ($orderOvers as $order) {
-    //         $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
-    //     }
-    //     // return $orderOvers;
-    //     return view('admin.dashboard', compact('orderOvers'));
-    // }
-
     public function notifyOrder(Request $request)
     {
-        // Validate dữ liệu
-        // $request->validate([
-        //     'order_id' => 'required|integer',
-        //     'invoice_id' => 'required|string',
-        //     'message' => 'required|string|max:255',
-        //     'solution' => 'nullable|string|max:255',
-        //     'solution_custom' => 'nullable|string|max:255',
-        // ]);
+
 
         // Lấy nội dung thông báo
         $message = $request->input('message') === 'Khác'
