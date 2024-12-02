@@ -267,20 +267,33 @@
                                                     <div class="text-reset notification-item d-block dropdown-item position-relative"
                                                         id="notification-{{ $notification->id }}">
                                                         <div class="d-flex">
-                                                            <img src="assets/images/orders/default-order.jpg"
+                                                            {{-- <img src="assets/images/orders/default-order.jpg"
                                                                 class="me-3 rounded-circle avatar-xs flex-shrink-0"
-                                                                alt="notification-pic">
+                                                                alt="notification-pic"> --}}
 
                                                             <!-- Thông tin thông báo -->
                                                             <div class="flex-grow-1">
-                                                                <a href="#!" class="stretched-link">
+                                                                @if ($notification->reference_id)
+                                                                    <a href="{{ route('admin.orders.show', ['order' => $notification->reference_id]) }}"
+                                                                        class="stretched-link">
+                                                                        <h6 class="mt-0 mb-1 fs-13 fw-semibold">
+                                                                            {{ $notification->message }}
+                                                                        </h6>
+                                                                    </a>
+                                                                @else
                                                                     <h6 class="mt-0 mb-1 fs-13 fw-semibold">
                                                                         {{ $notification->message }}
                                                                     </h6>
-                                                                </a>
+                                                                @endif
+                                                                {{-- <a href="{{ route('admin.orders.show', ['order' => $notification->reference_id]) }}"
+                                                                    class="stretched-link">
+                                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">
+                                                                        {{ $notification->message }}
+                                                                    </h6>
+                                                                </a> --}}
                                                                 <div class="fs-13 text-muted">
-                                                                    <p class="mb-1">Đơn hàng này đã quá hạn thanh
-                                                                        toán.</p>
+                                                                    <p class="mb-1">
+                                                                        {{ $notification->order_time_ago }}</p>
                                                                 </div>
                                                                 <p
                                                                     class="mb-0 fs-11 fw-medium text-uppercase text-muted">
