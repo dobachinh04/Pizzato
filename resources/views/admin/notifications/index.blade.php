@@ -1,24 +1,51 @@
 @extends('admin.layouts.master')
 
 @section('content')
-<div class="container">
-    <h1 class="my-4">Tất cả thông báo</h1>
-
-    @if(isset($pendingOrders) && count($pendingOrders) > 0)
-        <ul class="list-group">
-            @foreach($pendingOrders as $order)
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1">Đơn hàng #{{ $order->invoice_id }}</h5>
-                        <p class="mb-1 text-muted">Đơn hàng này đã quá hạn thanh toán.</p>
-                        <small class="text-muted"><i class="mdi mdi-clock-outline"></i> {{ $order->time_ago }}</small>
-                    </div>
-                    <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-primary btn-sm">Xem chi tiết</a>
-                </li>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nội dung</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($notifications as $notification)
+                <tr>
+                    <td>{{ $notification->id }}</td>
+                    <td>{{ $notification->message }}</td>
+                    <td>{{ $notification->time_ago }}</td>
+                    <td>
+                        @if ($notification->deleted_at)
+                            <span class="text-danger">Đã xóa mềm</span>
+                        @else
+                            <span class="text-success">Hoạt động</span>
+                        @endif
+                    </td>
+                    {{-- <td>
+                        @if ($notification->deleted_at)
+                            <!-- Xóa cứng -->
+                            <form action="{{ route('admin.notifications.forceDelete', $notification->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa cứng thông báo này?')">Xóa cứng</button>
+                            </form>
+                        @else
+                            <!-- Xóa mềm -->
+                            <form action="{{ route('admin.notifications.softDelete', $notification->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Bạn có chắc muốn xóa mềm thông báo này?')">Xóa mềm</button>
+                            </form>
+                        @endif
+                    </td> --}}
+                </tr>
             @endforeach
-        </ul>
-    @else
-        <p class="text-muted">Không có thông báo.</p>
-    @endif
+        </tbody>
+    </table>
 </div>
+
 @endsection

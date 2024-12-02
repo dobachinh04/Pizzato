@@ -11,21 +11,36 @@ use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
+    // public function index()
+    // {
+    //     // $notifications = DB::table('notifications')->orderBy('created_at', 'desc')->get();
+    //     // Truyền thông báo sang view
+    //     $pendingOrders = DB::table('orders')
+    //         ->where('order_status', 'pending')
+    //         ->where('created_at', '<=', Carbon::now()->subMinutes(30))
+    //         ->get();
+
+    //     foreach ($pendingOrders as $order) {
+    //         $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+    //     }
+
+    //     return view('admin.notifications.index', compact('pendingOrders'));
+    // }
     public function index()
-    {
-        // $notifications = DB::table('notifications')->orderBy('created_at', 'desc')->get();
-        // Truyền thông báo sang view
-        $pendingOrders = DB::table('orders')
-            ->where('order_status', 'pending')
-            ->where('created_at', '<=', Carbon::now()->subMinutes(30))
-            ->get();
+{
+    // Lấy toàn bộ thông báo, bao gồm cả những thông báo bị xóa mềm
+    $notifications = DB::table('notifications')
+        // ->withTrashed() // Bao gồm cả các thông báo đã bị xóa mềm
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        foreach ($pendingOrders as $order) {
-            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
-        }
-
-        return view('admin.notifications.index', compact('pendingOrders'));
+    // Thêm trường `time_ago` để hiển thị thời gian thông báo đã được tạo
+    foreach ($notifications as $notification) {
+        $notification->time_ago = Carbon::parse($notification->created_at)->diffForHumans();
     }
+
+    return view('admin.notifications.index', compact('notifications'));
+}
 
 
     public function markAsRead(Request $request)
