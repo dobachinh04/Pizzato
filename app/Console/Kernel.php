@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // Chạy mỗi 30 phút
-        $schedule->command('orders:check-pending')->everyThirtyMinutes();
+        // $schedule->command('orders:check-pending')->everyThirtyMinutes();
     }
 
     /**

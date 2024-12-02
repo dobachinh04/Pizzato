@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCouponRequest;
 use App\Http\Requests\UpdateCouponRequest;
 use App\Models\Coupon;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class CouponController extends Controller
@@ -18,8 +19,19 @@ class CouponController extends Controller
 
     public function index()
     {
-        $data = Coupon::query()->latest('id')->get();
+        // $data = Coupon::query()->latest('id')->get();
+        $data = Coupon::all();
 
+        foreach ($data as $coupon) {
+            // Kiểm tra nếu mã giảm giá đã hết hạn hoặc số lượng bằng 0
+            if ($coupon->expire_date < Carbon::now() || $coupon->qty <= 0) {
+                // Cập nhật trạng thái thành Inactive nếu chưa
+                if ($coupon->status) {
+                    $coupon->status = false; // Chuyển trạng thái Inactive
+                    $coupon->save(); // Lưu thay đổi
+                }
+            }
+        }
         return view("admin.coupons.index", compact('data'));
     }
 
