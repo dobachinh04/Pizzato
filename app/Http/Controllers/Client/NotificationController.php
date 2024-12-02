@@ -51,7 +51,7 @@ class NotificationController extends Controller
             ->where('orders.user_id', $id)
             ->orderBy('created_at', 'desc')
             ->select('delay_notifications.id', 'delay_notifications.invoice_id', 'reason', 'solution', 'delay_notifications.created_at')
-            ->first();
+            ->get();
 
         // Kiểm tra nếu không có thông báo
         if (!$notification) {
