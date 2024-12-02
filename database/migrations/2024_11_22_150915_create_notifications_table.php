@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('type');
-            $table->morphs('notifiable');
-            $table->text('data');
+            $table->id();
+            $table->string('type'); // Loại thông báo (e.g., order_overdue)
+            $table->unsignedBigInteger('reference_id'); // ID liên kết (e.g., order_id)
+            $table->text('message'); // Nội dung thông báo
+            $table->boolean('is_read')->default(false); // Đã đọc hay chưa
             $table->timestamp('read_at')->nullable();
-            $table->timestamps();
+            $table->timestamps(); // Thời gian tạo và cập nhật
+            $table->softDeletes(); // Thêm trường deleted_at
         });
+
     }
 
     /**
