@@ -13,7 +13,7 @@ Doanh Thu - Pizzato
                 <div class="col">
 
                     <div class="container">
-                        <h3>Thống Kê Nguồn Doanh Thu</h3>
+                        <h3>Thống Kê Doanh Thu Theo Danh Mục</h3>
                         <form method="GET" action="{{ route('admin.source') }}">
                             <input type="month" name="date_range" value="{{ request('date_range') }}">
                             <button type="submit">Lọc</button>
