@@ -22,12 +22,27 @@ class OrderController extends Controller
         ]);
     }
 
-    public function show($orderId)
+    public function detailOrder($orderId)
     {
-        $order = Order::with(['items.product'])->findOrFail($orderId);
-        $items = $order->items;
+        $order = Order::where('id', $orderId)
+            ->with(['users', 'addresses', 'items.product'])
+            ->first();
 
-        return view('client.order_history.show', compact('order', 'items'));
+        return response()->json([
+            'success' => true,
+            'order' => $order
+        ]);
     }
 
+    public function cancelOrder($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        $order->update(['order_status' => 'canceled']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Đơn hàng thành công',
+        ]);
+    }
 }

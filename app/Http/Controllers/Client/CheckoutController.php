@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Client;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Address;
+use App\Models\Product;
 use App\Models\OrderItem;
+use App\Models\DeliveryArea;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Address;
-use App\Models\DeliveryArea;
 use Illuminate\Support\Facades\Cache;
 
 class CheckoutController extends Controller
@@ -66,6 +67,14 @@ class CheckoutController extends Controller
                 'qty' => $item['quantity'],
                 'size' => $item['size'],
             ]);
+
+            $product = Product::find($item['id']);
+
+            if ($product) {
+                // Cập nhật lại số lượng tồn kho
+                $product->qty -= $item['quantity'];
+                $product->save();
+            }
         }
 
         return response()->json([
