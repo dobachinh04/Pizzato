@@ -52,7 +52,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
+                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Danh Mục</span>
                     </a>
                 </li>
 
