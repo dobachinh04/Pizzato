@@ -19,9 +19,7 @@ return new class extends Migration {
             $table->timestamps(); // Thời gian tạo và cập nhật
         });
     }
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('delay_notifications');
