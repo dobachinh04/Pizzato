@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Cập Nhật Danh Mục Blog - Pizzato
+Cập Nhật Danh Mục Blog
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@ Cập Nhật Danh Mục Blog - Pizzato
                 <div class="col-xl-12 col-xxl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Cập nhật Danh Mục Blog</h4>
+                            <h4 class="card-title">Cập Nhật Danh Mục Blog</h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
