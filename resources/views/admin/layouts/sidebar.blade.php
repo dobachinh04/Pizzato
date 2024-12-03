@@ -5,20 +5,21 @@
         <!-- Dark Logo-->
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="/velzon/assets/images/logo-sm.png" alt="" height="22">
+                <img src="/velzon/images/logo-pizzato-3.png" alt="" height="17" width="17">
+
             </span>
             <span class="logo-lg">
-                <img src="/velzon/assets/images/logo-dark.png" alt="" height="17">
+                <img src="/velzon/images/logo-pizzato-3.png" alt="" height="120" width="120">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="/velzon/images/logo.webp" alt="" height="22">
+                <img src="/velzon/images/logo-pizzato-3.png" alt="" height="50">
             </span>
             <span class="logo-lg">
                 {{-- <img src="/velzon/assets/images/logo-light.png" alt="" height="17"> --}}
-                <img src="/velzon/images/logo-pizzato-3.png" alt="" height="17">
+                <img src="/velzon/images/logo-pizzato-3.png" alt="" height="120" width="120">
                 {{-- PIZZATO --}}
             </span>
         </a>
@@ -52,7 +53,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Nguồn</span>
+                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Danh Mục</span>
                     </a>
                 </li>
 
