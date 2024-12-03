@@ -38,10 +38,10 @@ Doanh Thu - Pizzato
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)', // Màu Tháng 1
                     'rgba(54, 162, 235, 0.6)', // Màu Tháng 2
-                    'rgba(255, 206, 86, 0.6)', // Tháng 3
-                    'rgba(75, 192, 192, 0.6)', // Tháng 4
-                    'rgba(153, 102, 255, 0.6)', // Tháng 5
-                    'rgba(255, 159, 64, 0.6)', // Tháng 6
+                    'rgba(255, 206, 86, 0.6)', // Màu Tháng 3
+                    'rgba(75, 192, 192, 0.6)', // Màu Tháng 4
+                    'rgba(153, 102, 255, 0.6)', // Màu Tháng 5
+                    'rgba(255, 159, 64, 0.6)', // Màu Tháng 6
                     'rgba(255, 99, 71, 0.6)', // Tháng 7
                     'rgba(135, 206, 250, 0.6)', // Tháng 8
                     'rgba(255, 215, 0, 0.6)', // Tháng 9
