@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Doanh Thu - Pizzato
+Doanh Thu 
 @endsection
 
 @section('content')
@@ -36,7 +36,7 @@ Doanh Thu - Pizzato
             label: 'Doanh thu theo danh mục',
             data: @json($sourceStats->pluck('total_revenue')),
             backgroundColor: [
-                'rgb(255, 99, 132)',
+                'rgb(255, 99, 132)',//màu hồng
                 'rgb(54, 162, 235)', 
                 'rgb(255, 205, 86)',
                 'rgb(75, 192, 192)',
