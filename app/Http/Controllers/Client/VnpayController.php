@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -136,6 +137,14 @@ class VnpayController extends Controller
                         'qty' => $item['quantity'],
                         'size' => $item['size'],
                     ]);
+
+                    $product = Product::find($item['id']);
+
+                    if ($product) {
+                        // Cập nhật lại số lượng tồn kho
+                        $product->qty -= $item['quantity'];
+                        $product->save();
+                    }
                 }
 
                 return redirect()->away('http://127.0.0.1:3000/payment-successed');
