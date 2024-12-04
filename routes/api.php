@@ -16,7 +16,6 @@ use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\ProductReviewController;
 use App\Http\Controllers\Client\RefundController;
 use App\Http\Controllers\Client\ChatController;
-use App\Http\Controllers\Client\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +78,8 @@ Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview'])
 
 // OrderController
 Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/order/{id}', [OrderController::class, 'detailOrder']);
+Route::put('/order/{id}', [OrderController::class, 'cancelOrder']);
 
 // Notifications
 Route::get('/notifications/{id}', [NotificationController::class, 'getNotificationByInvoiceId']);
