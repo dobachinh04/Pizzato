@@ -230,10 +230,34 @@ class ProductController extends Controller
                         ]);
                     }
                 }
+                // Đồng bộ giá trị size
+                if ($request->has('sizes')) {
+                    $productSizesData = [];
+                    foreach ($request->sizes as $key => $sizeId) {
+                        $productSizesData[$sizeId] = ['price' => $request->size_price[$key] ?? 0];
+                    }
+                    $product->productSizes()->sync($productSizesData);
+                }
+                // Đồng bộ giá trị viền
+                if ($request->has('edges')) {
+                    $pizzaEdgesData = [];
+                    foreach ($request->edges as $key => $edgeId) {
+                        $pizzaEdgesData[$edgeId] = ['price' => $request->edge_price[$key] ?? 0];
+                    }
+                    $product->pizzaEdges()->sync($pizzaEdgesData);
+                }
 
-                $product->productSizes()->sync($request->sizes);
-                $product->pizzaEdges()->sync($request->edges);
-                $product->pizzaBases()->sync($request->bases);
+                // Đồng bộ giá trị đế bánh
+                if ($request->has('bases')) {
+                    $pizzaBasesData = [];
+                    foreach ($request->bases as $key => $baseId) {
+                        $pizzaBasesData[$baseId] = ['price' => $request->base_price[$key] ?? 0];
+                    }
+                    $product->pizzaBases()->sync($pizzaBasesData);
+                }
+                // $product->productSizes()->sync($request->sizes);
+                // $product->pizzaEdges()->sync($request->edges);
+                // $product->pizzaBases()->sync($request->bases);
             });
 
             return back()->with('success', 'Cập Nhật thành công');
