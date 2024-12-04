@@ -34,9 +34,9 @@ class OrderController extends Controller
         ]);
     }
 
-    public function cancelOrder($orderId)
+    public function cancelOrder(String $id)
     {
-        $order = Order::findOrFail($orderId);
+        $order = Order::findOrFail($id);
 
         $order->update(['order_status' => 'canceled']);
 
