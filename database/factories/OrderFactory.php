@@ -45,6 +45,21 @@ class OrderFactory extends Factory
         // Xác định trạng thái đơn hàng: Nếu đơn được tạo quá 4 tiếng trước, không gán trạng thái 'pending'
         $orderStatus = $createdAt >= $currentTime->subHours(4) ? $this->faker->randomElement(['pending', 'processing', 'completed', 'canceled']) : $this->faker->randomElement(['processing', 'completed', 'canceled']);
 
+        // Lấy ngẫu nhiên coupon
+        $coupon = Coupon::inRandomOrder()->first();
+
+        // Tính toán mức giảm giá dựa trên loại giảm giá
+        $discount = 0;
+        if ($coupon) {
+            if ($coupon->discount_type === 'percent') {
+                // Giảm giá theo phần trăm
+                $discount = $this->faker->randomFloat(2, 0, $coupon->discount);
+            } elseif ($coupon->discount_type === 'amount') {
+                // Giảm giá theo số tiền cố định
+                $discount = min($coupon->discount, $this->faker->randomFloat(2, 0, 500000)); // Giới hạn mức giảm tối đa
+            }
+        }
+
         return [
             // Mã invoice tăng dần từ 00001
             'invoice_id' => $invoiceId,
@@ -57,9 +72,9 @@ class OrderFactory extends Factory
             'address' => $this->faker->address,
 
             // Chọn ngẫu nhiên mức giảm giá, phí giao hàng, tổng số tiền
-            'discount' => $this->faker->randomFloat(2, 0, 100),
-            'delivery_charge' => $this->faker->randomFloat(2, 0, 50),
-            'sub_total' => $this->faker->randomFloat(2, 100, 1000),
+            'discount' => $discount, // Mức giảm giá đã tính
+            'delivery_charge' => $this->faker->randomFloat(2, 0, 50000), // Phí giao hàng từ 0 đến 50 nghìn VND
+            'sub_total' => $this->faker->randomFloat(2, 100000, 1000000),
 
             // Tính grand_total với giá trị số (không có đơn vị tiền tệ)
             'grand_total' => fn(array $attributes) => $attributes['sub_total'] - $attributes['discount'] + $attributes['delivery_charge'],
@@ -75,10 +90,7 @@ class OrderFactory extends Factory
             'payment_approve_date' => $this->faker->optional()->dateTime,
 
             // Thông tin mã giảm giá (nếu có)
-            'coupon_info' => function () {
-                $coupon = Coupon::inRandomOrder()->first(); // Lấy một mã giảm giá ngẫu nhiên
-                return $coupon ? json_encode(['code' => $coupon->code]) : null;
-            },
+            'coupon_info' => Coupon::inRandomOrder()->first()?->name ?? '',
 
             // Đơn vị tiền tệ
             'currency_name' => 'VND',

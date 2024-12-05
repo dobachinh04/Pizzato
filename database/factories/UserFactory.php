@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -13,11 +12,6 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
     /**
      * Define the model's default state.
      *
@@ -27,14 +21,32 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        // Danh sách email cần tránh
+        $restrictedEmails = ['admin@gmail.com', 'user@gmail.com'];
+
+        // Tạo email ngẫu nhiên và kiểm tra trùng lặp
+        $email = $this->generateUniqueEmail($restrictedEmails);
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => fake('vi_VN')->name(), // Tên tiếng Việt
+            'email' => $email, // Email ngẫu nhiên không trùng
             'email_verified_at' => now(),
-            'password' => bcrypt('password'), // Mật khẩu mặc định là "password"
+            'password' => bcrypt('123456'), // Mật khẩu mặc định
             'remember_token' => Str::random(10),
-            'role_id' => Role::inRandomOrder()->first()->id ?? 1, // Lấy role ngẫu nhiên hoặc mặc định là 1
+            'role_id' => fake()->numberBetween(1, 3), // Role ID ngẫu nhiên từ 1 đến 3
         ];
+    }
+
+    /**
+     * Generate a unique email address avoiding restricted ones.
+     */
+    private function generateUniqueEmail(array $restrictedEmails): string
+    {
+        do {
+            $email = fake()->unique()->safeEmail();
+        } while (in_array($email, $restrictedEmails));
+
+        return $email;
     }
 
     /**
@@ -42,7 +54,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

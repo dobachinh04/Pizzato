@@ -15,60 +15,26 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // $faker = Faker::create();
+        // Tạo 20 người dùng ngẫu nhiên
+        User::factory(28)->create();
 
-        // $users = [];
+        // Tạo tài khoản admin cụ thể
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('123456'), // Mật khẩu 123456
+            'role_id' => 2,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
 
-        // // Tạo 3 user cho mỗi role
-        // for ($i = 0; $i < 5; $i++) {
-        //     // User cho admin
-        //     $users[] = [
-        //         'name' => $faker->name,
-        //         'image' => $faker->imageUrl(640, 480, 'people'),
-        //         'email' => $faker->unique()->safeEmail,
-        //         'email_verified_at' => now(),
-        //         'password' => Hash::make('password'), // Mật khẩu giả
-        //         'role_id' => 2, // ID cho admin
-        //         'remember_token' => Str::random(10),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ];
-
-        //     // User cho regular user
-        //     $users[] = [
-        //         'name' => $faker->name,
-        //         'image' => $faker->imageUrl(640, 480, 'people'),
-        //         'email' => $faker->unique()->safeEmail,
-        //         'email_verified_at' => now(),
-        //         'password' => Hash::make('password'), // Mật khẩu giả
-        //         'role_id' => 1, // ID cho user
-        //         'remember_token' => Str::random(10),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ];
-
-        //     // User cho employee
-        //     $users[] = [
-        //         'name' => $faker->name,
-        //         'image' => $faker->imageUrl(640, 480, 'people'),
-        //         'email' => $faker->unique()->safeEmail,
-        //         'email_verified_at' => now(),
-        //         'password' => Hash::make('password'), // Mật khẩu giả
-        //         'role_id' => 3, // ID cho employee
-        //         'remember_token' => Str::random(10),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ];
-        // }
-
-        // Tạo 10 người dùng
-        $users = User::factory()->count(10)->create();
-
-        // Tạo địa chỉ cho mỗi người dùng
-        $users->each(function ($user) {
-            \App\Models\Address::factory()->create([
-                'user_id' => $user->id,  // Gán địa chỉ cho người dùng đã tạo
-            ]);
-        });
+        User::create([
+            'name' => 'User',
+            'email' => 'user@gmail.com',
+            'password' => bcrypt('123456'), // Mật khẩu 123456
+            'role_id' => 1,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
     }
 }

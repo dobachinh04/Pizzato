@@ -113,8 +113,8 @@
                                                 <td>{{ $order->invoice_id }}</td>
                                                 <td>{{ $order->user_id }}</td>
                                                 <td>{{ $order->address_id }}</td>
-                                                <td>{{ $order->delivery_charge }}</td>
-                                                <td>{{ $order->grand_total }}</td>
+                                                <td>{{ number_format($order->delivery_charge, 0, ',', '.') }}₫
+                                                <td>{{ number_format($order->grand_total, 0, ',', '.') }}₫</td>
                                                 <td>
                                                     @if ($order->payment_status === 'completed')
                                                         <span class="badge bg-success">Hoàn

@@ -152,46 +152,46 @@ class DashboardController extends Controller
 
 
         foreach ($orderOvers as $order) {
-        // Tính toán thời gian "bao nhiêu phút trước"
-        $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
+            // Tính toán thời gian "bao nhiêu phút trước"
+            $order->time_ago = Carbon::parse($order->created_at)->diffForHumans();
 
-        // Kiểm tra xem thông báo cho đơn hàng này đã tồn tại và chưa bị xoá (xoá cứng)
-        $existingNotification = DB::table('notifications')
-            ->where('type', 'order_overdue')
-            ->where('reference_id', $order->invoice_id)
-            // ->whereNull('deleted_at') // Chỉ lấy những thông báo chưa bị xóa mềm
-            ->first();
+            // Kiểm tra xem thông báo cho đơn hàng này đã tồn tại và chưa bị xoá (xoá cứng)
+            $existingNotification = DB::table('notifications')
+                ->where('type', 'order_overdue')
+                ->where('reference_id', $order->invoice_id)
+                // ->whereNull('deleted_at') // Chỉ lấy những thông báo chưa bị xóa mềm
+                ->first();
 
 
-        // Chỉ tạo thông báo nếu chưa có thông báo tương ứng
-        // Nếu thông báo chưa tồn tại
-        if (!$existingNotification) {
-            // Tạo thông báo tùy thuộc vào trạng thái của đơn hàng
-            $message = '';
+            // Chỉ tạo thông báo nếu chưa có thông báo tương ứng
+            // Nếu thông báo chưa tồn tại
+            if (!$existingNotification) {
+                // Tạo thông báo tùy thuộc vào trạng thái của đơn hàng
+                $message = '';
 
-            if ($order->order_status === 'pending') {
-                $message = "Đơn hàng #{$order->invoice_id} chưa được xử lý.";
-            }
+                if ($order->order_status === 'pending') {
+                    $message = "Đơn hàng #{$order->invoice_id} chưa được xử lý.";
+                }
 
-            if ($order->payment_status === 'pending') {
-                $message = "Đơn hàng #{$order->invoice_id} chưa được thanh toán.";
-            } elseif ($order->payment_status === 'failed') {
-                $message = "Đơn hàng #{$order->invoice_id} thanh toán thất bại.";
-            }
-// 'message' => "Đơn hàng #{$order->invoice_id} đã quá hạn thanh toán {$order->time_ago}."
-            // Chỉ tạo thông báo nếu message không rỗng
-            if (!empty($message)) {
-                DB::table('notifications')->insert([
-                    'type' => 'order_overdue', // Loại thông báo
-                    'reference_id' => $order->invoice_id, // ID của đơn hàng liên quan
-                    'message' => $message,
-                    'is_read' => false, // Thông báo mặc định là chưa đọc
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                if ($order->payment_status === 'pending') {
+                    $message = "Đơn hàng #{$order->invoice_id} chưa được thanh toán.";
+                } elseif ($order->payment_status === 'failed') {
+                    $message = "Đơn hàng #{$order->invoice_id} thanh toán thất bại.";
+                }
+                // 'message' => "Đơn hàng #{$order->invoice_id} đã quá hạn thanh toán {$order->time_ago}."
+                // Chỉ tạo thông báo nếu message không rỗng
+                if (!empty($message)) {
+                    DB::table('notifications')->insert([
+                        'type' => 'order_overdue', // Loại thông báo
+                        'reference_id' => $order->invoice_id, // ID của đơn hàng liên quan
+                        'message' => $message,
+                        'is_read' => false, // Thông báo mặc định là chưa đọc
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
             }
         }
-    }
 
         return $orderOvers;
     }

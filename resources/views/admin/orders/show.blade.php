@@ -111,7 +111,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Ngày Thanh Toán</th>
-                                                <td>{{ $order->payment_approve_date ? $order->payment_approve_date->format('d/m/Y H:i') : 'Không Xác Định' }}
+                                                <td>{{ $order->payment_approve_date ? $order->payment_approve_date : 'Không Xác Định' }}
                                                 </td>
                                             </tr>
                                             <tr>

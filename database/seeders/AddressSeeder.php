@@ -13,6 +13,6 @@ class AddressSeeder extends Seeder
     public function run(): void
     {
         // Tạo 10 địa chỉ ngẫu nhiên cho người dùng
-        Address::factory()->count(10)->create();
+        Address::factory()->count(100)->create();
     }
 }

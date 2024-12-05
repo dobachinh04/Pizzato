@@ -32,20 +32,5 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             ProductReviewSeeder::class,
         ]);
-
-        DB::table('users')->insert([
-            [
-                'name' => 'admin',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('password'),
-                'role_id' => '2',
-            ],
-            [
-                'name' => 'user',
-                'email' => 'user2@gmail.com',
-                'password' => Hash::make('password'),
-                'role_id' => '1',
-            ],
-        ]);
     }
 }
