@@ -123,11 +123,45 @@
                                                 }
 
                                                 .gallery-item {
+                                                    position: relative;
                                                     display: inline-block;
+                                                    margin: 5px;
+                                                    /* Khoảng cách giữa các ảnh */
+                                                }
+
+                                                .gallery-item img {
+                                                    border: 1px solid #ddd;
+                                                    border-radius: 5px;
+                                                    width: 100px;
+                                                    /* Đặt kích thước ảnh nếu cần */
+                                                    height: 100px;
+                                                    object-fit: cover;
+                                                }
+
+                                                .delete-gallery {
+                                                    /* position: absolute !important; */
+                                                    /* top: -5px !important; Căn chỉnh khoảng cách từ đỉnh */
+                                                    /* right: -5px !important; Căn chỉnh khoảng cách từ bên phải */
+                                                    background-color: red;
+                                                    color: white;
+                                                    border: none;
+                                                    border-radius: 50%;
+                                                    /* width: 20px; */
+                                                    /* height: 20px; */
+                                                    /* text-align: center; */
+                                                    /* line-height: 23px; Để chữ X nằm giữa nút */
+                                                    /* font-size: 14px; */
+                                                    /* cursor: pointer; */
+                                                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                                                }
+
+                                                .delete-gallery:hover {
+                                                    background-color: darkred;
+                                                    /* Hiệu ứng khi hover */
                                                 }
                                             </style>
 
-                                            <div class="form-group mt-3">
+                                            {{-- <div class="form-group mt-3">
                                                 <label for="galleries" class="form-label">Các Ảnh Phụ</label>
                                                 <input type="file" class="form-control" id="galleries" name="galleries[]"
                                                     multiple>
@@ -148,7 +182,37 @@
                                                     @endforeach
                                                 </div>
 
+                                            </div> --}}
+
+                                            <div class="form-group mt-3">
+                                                <label for="galleries" class="form-label">Các Ảnh Phụ</label>
+                                                <input type="file" class="form-control" id="galleries" name="galleries[]"
+                                                    multiple>
+                                                @error('galleries.*')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+
+                                                <div class="product-galleries d-flex flex-wrap mt-2">
+                                                    @foreach ($product->productGalleries as $item)
+                                                        @if ($item->galleries && \Storage::exists($item->galleries))
+                                                            <div class="gallery-item position-relative me-2 mb-2">
+                                                                <img src="{{ \Storage::url($item->galleries) }}"
+                                                                    width="65px" height="65px" style="object-fit: cover"
+                                                                    alt="">
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-sm position-absolute top-0 end-0 delete-gallery"
+                                                                    data-id="{{ $item->id }}"
+                                                                    style="transform: translate(50%, -50%);">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                                <input type="hidden" name="keep_galleries[]"
+                                                                    value="{{ $item->id }}">
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
                                             </div>
+
                                         </div>
 
                                         <div class="col-6">
@@ -229,7 +293,7 @@
 
                                     <div class="row" id="variantFields" style="display: none;">
                                         <h3>Biến Thể Sản Phẩm</h3>
-                                          <!-- Sizes -->
+                                        <!-- Sizes -->
                                         <div class="col-4">
                                             <div class="form-group mt-3">
                                                 <div class="form-check form-switch form-switch-lg" dir="ltr">
@@ -276,7 +340,7 @@
                                             </div>
                                         </div>
 
-                                          <!-- Đế bánh -->
+                                        <!-- Đế bánh -->
                                         <div class="col-4">
                                             <div class="form-group mt-3">
                                                 <div class="form-check form-switch form-switch-lg" dir="ltr">
@@ -336,6 +400,18 @@
             toggleVariantFields();
         });
 
+        //  JS: Xóa ảnh khỏi UI và ghi lại ID ảnh bị xóa
+        // Ảnh phụ
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.delete-gallery');
+            galleryItems.forEach(button => {
+                button.addEventListener('click', function() {
+                    const galleryItem = this.closest('.gallery-item');
+                    galleryItem.remove(); // Loại bỏ ảnh khỏi giao diện
+                });
+            });
+        });
+
         // Biến thể
         document.addEventListener('DOMContentLoaded', function() {
             // Lấy danh sách tất cả các nút switch
@@ -382,16 +458,16 @@
         //     // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
         //     addSizeFieldsButton.addEventListener('click', function() {
         //         const newSizeFieldHTML = `
-        //     <div class="row">
-        //         <div class="col-6">
-        //             <label>Tên Size Bánh</label>
-        //             <input type="text" name="size_name[]" class="form-control">
-        //         </div>
-        //         <div class="col-6">
-        //             <label>Giá Tiền</label>
-        //             <input type="number" name="size_price[]" class="form-control">
-        //         </div>
-        //     </div>`;
+    //     <div class="row">
+    //         <div class="col-6">
+    //             <label>Tên Size Bánh</label>
+    //             <input type="text" name="size_name[]" class="form-control">
+    //         </div>
+    //         <div class="col-6">
+    //             <label>Giá Tiền</label>
+    //             <input type="number" name="size_price[]" class="form-control">
+    //         </div>
+    //     </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newSizeFieldHTML;
         //         sizeFieldsContainer.appendChild(newRow);
@@ -417,16 +493,16 @@
         //     // Thêm cột input mới cho viền bánh khi nhấn vào nút "Thêm Viền"
         //     addEdgeFieldsButton.addEventListener('click', function() {
         //         const newEdgeFieldHTML = `
-        //     <div class="row">
-        //         <div class="col-6">
-        //             <label>Tên Viền Bánh</label>
-        //             <input type="text" name="edge_name[]" class="form-control">
-        //         </div>
-        //         <div class="col-6">
-        //             <label>Giá Tiền</label>
-        //             <input type="number" name="edge_price[]" class="form-control">
-        //         </div>
-        //     </div>`;
+    //     <div class="row">
+    //         <div class="col-6">
+    //             <label>Tên Viền Bánh</label>
+    //             <input type="text" name="edge_name[]" class="form-control">
+    //         </div>
+    //         <div class="col-6">
+    //             <label>Giá Tiền</label>
+    //             <input type="number" name="edge_price[]" class="form-control">
+    //         </div>
+    //     </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newEdgeFieldHTML;
         //         edgeFieldsContainer.appendChild(newRow);
@@ -453,16 +529,16 @@
         //     // Thêm cột input mới cho đế bánh khi nhấn vào nút "Thêm Đế"
         //     addBaseFieldsButton.addEventListener('click', function() {
         //         const newBaseFieldHTML = `
-        //     <div class="row">
-        //         <div class="col-6">
-        //             <label>Tên Đế Bánh</label>
-        //             <input type="text" name="base_name[]" class="form-control">
-        //         </div>
-        //         <div class="col-6">
-        //             <label>Giá Tiền</label>
-        //             <input type="number" name="base_price[]" class="form-control">
-        //         </div>
-        //     </div>`;
+    //     <div class="row">
+    //         <div class="col-6">
+    //             <label>Tên Đế Bánh</label>
+    //             <input type="text" name="base_name[]" class="form-control">
+    //         </div>
+    //         <div class="col-6">
+    //             <label>Giá Tiền</label>
+    //             <input type="number" name="base_price[]" class="form-control">
+    //         </div>
+    //     </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newBaseFieldHTML;
         //         baseFieldsContainer.appendChild(newRow);
