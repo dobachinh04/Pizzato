@@ -193,31 +193,24 @@ class ProductController extends Controller
     {
         try {
             DB::transaction(function () use ($request, $product) {
-                $data = $request->except('thumb_image');
 
+                // Xử lý ảnh thumb_image
+                $data = $request->except('thumb_image');
                 if ($request->hasFile('thumb_image')) {
                     $data['thumb_image'] = Storage::put(self::PATH_UPLOAD, $request->file('thumb_image'));
                 }
-
                 $currentImage = $product->thumb_image;
-
-
-                // Tạo slug từ tên sản phẩm
-                // $data['slug'] = $this->createSlug($request->name);
-                // Tạo slug từ tên sản phẩm
-                $data['slug'] = $this->createSlug($request->name);
 
                 // Tự động cập nhật trạng thái dựa vào qty
                 $data['status'] = $request->qty > 0 ? 1 : 0;
-
                 $product->update($data);
+
                 // Nếu có giá trị 'thumb_image' hiện tại và tệp tồn tại trong hệ thống lưu trữ
-        if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
-            Storage::delete($currentImage);
-        }
+                if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
+                    Storage::delete($currentImage);
+                }
 
                 // Cập nhật gallery
-
                 // Lấy danh sách ID các ảnh được giữ lại
                 $keepGalleries = $request->keep_galleries ?? [];
 
@@ -241,35 +234,66 @@ class ProductController extends Controller
                     }
                 }
 
+                // // Đồng bộ giá trị size
+                // if ($request->has('sizes')) {
+                //     $productSizesData = [];
+                //     foreach ($request->sizes as $key => $sizeId) {
+                //         $productSizesData[$sizeId] = ['price' => $request->size_price[$key] ?? 0];
+                //     }
+                //     $product->productSizes()->sync($productSizesData);
 
-                // Đồng bộ giá trị size
-                if ($request->has('sizes')) {
-                    $productSizesData = [];
-                    foreach ($request->sizes as $key => $sizeId) {
-                        $productSizesData[$sizeId] = ['price' => $request->size_price[$key] ?? 0];
-                    }
-                    $product->productSizes()->sync($productSizesData);
-                }
-                // Đồng bộ giá trị viền
-                if ($request->has('edges')) {
-                    $pizzaEdgesData = [];
-                    foreach ($request->edges as $key => $edgeId) {
-                        $pizzaEdgesData[$edgeId] = ['price' => $request->edge_price[$key] ?? 0];
-                    }
-                    $product->pizzaEdges()->sync($pizzaEdgesData);
-                }
+                // }
 
-                // Đồng bộ giá trị đế bánh
-                if ($request->has('bases')) {
-                    $pizzaBasesData = [];
-                    foreach ($request->bases as $key => $baseId) {
-                        $pizzaBasesData[$baseId] = ['price' => $request->base_price[$key] ?? 0];
-                    }
-                    $product->pizzaBases()->sync($pizzaBasesData);
-                }
+                // // Đồng bộ giá trị viền
+                // if ($request->has('edges')) {
+                //     $pizzaEdgesData = [];
+                //     foreach ($request->edges as $key => $edgeId) {
+                //         $pizzaEdgesData[$edgeId] = ['price' => $request->edge_price[$key] ?? 0];
+                //     }
+                //     $product->pizzaEdges()->sync($pizzaEdgesData);
+                // }
+
+                // // Đồng bộ giá trị đế bánh
+                // if ($request->has('bases')) {
+                //     $pizzaBasesData = [];
+                //     foreach ($request->bases as $key => $baseId) {
+                //         $pizzaBasesData[$baseId] = ['price' => $request->base_price[$key] ?? 0];
+                //     }
+                //     $product->pizzaBases()->sync($pizzaBasesData);
+                // }
+
                 // $product->productSizes()->sync($request->sizes);
                 // $product->pizzaEdges()->sync($request->edges);
                 // $product->pizzaBases()->sync($request->bases);
+
+                // Size
+                $productSizesData = [];
+                foreach ($request->sizes as $sizeId) {
+                    $size = ProductSize::find($sizeId);
+                    $productSizesData[$sizeId] = ['price' => $size->price];
+                }
+                $product->productSizes()->sync($productSizesData);
+
+
+                // Edge
+                $productEdgesData = [];
+                foreach ($request->edges as $edgeId) {
+                    $edge = PizzaEdge::find($edgeId);
+                    $productEdgesData[$edgeId] = ['price' => $edge->price];
+                }
+                $product->pizzaEdges()->sync($productEdgesData);
+
+
+                // Base
+                $productBasesData = [];
+                foreach ($request->bases as $baseId) {
+                    $base = PizzaBase::find($baseId);
+                    $productBasesData[$baseId] = ['price' => $base->price];
+                }
+                $product->pizzaBases()->sync($productBasesData);
+
+                // dd($request->all());
+
             });
 
             return back()->with('success', 'Cập Nhật thành công');

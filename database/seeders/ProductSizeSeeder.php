@@ -16,17 +16,17 @@ class ProductSizeSeeder extends Seeder
         $sizes = [
             [
                 'id' => 1,
-                'name' => 'S',
+                'name' => 'Nhỏ',
                 'price' => '0',
             ],
             [
                 'id' => 2,
-                'name' => 'M',
+                'name' => 'Vừa',
                 'price' => '20000',
             ],
             [
                 'id' => 3,
-                'name' => 'L',
+                'name' => 'Lớn',
                 'price' => '30000',
             ],
             [
