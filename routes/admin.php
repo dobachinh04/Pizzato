@@ -43,8 +43,6 @@ Route::prefix('admin/auth')->name('admin.')->group(function () {
 
 Route::view('403-page', 'admin.auth.403')->name('403Page');
 
-
-
 // Route::middleware('auth.role:admin')->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     // Admin - Dashboard:
@@ -61,7 +59,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{category}',                       [CategoryController::class, 'update'])->name('update');
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
     });
-
 
     Route::resource('products', AdminProductController::class);
 
@@ -86,8 +83,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{deliveryArea}',                [DeliveryAreaController::class, 'destroy'])->name('destroy');
     });
 
- 
-
     // Admin - Users:
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
@@ -109,7 +104,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/show/{blogCategory}',              [BlogCategoryController::class, 'show'])->name('show');
         Route::delete('/{blogCategory}',                [BlogCategoryController::class, 'destroy'])->name('destroy');
     });
-
 
     // Admin - Blogs:
     Route::prefix('blogs')->name('blogs.')->group(function () {
@@ -186,7 +180,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
     Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
 
-
     // Admin - products Categories:
     Route::prefix('categories')->name('categories.')->group(function () {
         Route::get('/',                                 [CategoryController::class, 'index'])->name('index');
@@ -216,9 +209,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     });
 
-
-
-
     //  Thông báo đơn hàng quá trễ
      Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
@@ -245,7 +235,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //  Route::delete('/notifications/delete', [NotificationController::class, 'delete'])->name('notifications.delete');
      Route::post('/admin/notifications/delete', [NotificationController::class, 'deleteNotifications'])->name('notifications.delete');
 
-
      Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
-
 });

@@ -73,7 +73,7 @@
                         </button>
 
                         <!-- App Search-->
-                        <form class="app-search d-none d-md-block">
+                        {{-- <form class="app-search d-none d-md-block">
                             <div class="position-relative">
                                 <input type="text" class="form-control" placeholder="Tìm Kiếm..." autocomplete="off"
                                     id="search-options" value="">
@@ -164,7 +164,7 @@
                                         Results <i class="ri-arrow-right-line ms-1"></i></a>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
 
                     <div class="d-flex align-items-center">
@@ -359,10 +359,7 @@
                             </div>
                         </div>
 
-
-
-
-                        <div class="dropdown ms-sm-3 header-item topbar-user">
+                        {{-- <div class="dropdown ms-sm-3 header-item topbar-user">
                             <button type="button" class="btn" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
@@ -398,7 +395,7 @@
                                         class="align-middle">Settings</span></a>
 
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -75,7 +75,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="card-title mb-0">Danh Mục Đơn Hàng</h5>
-                                <a href="{{ route('admin.orders.create') }}" class="btn btn-success ms-auto">Thêm Mới</a>
+                                {{-- <a href="{{ route('admin.orders.create') }}" class="btn btn-success ms-auto">Thêm Mới</a> --}}
                             </div>
 
                             <div class="card-body">
@@ -115,7 +115,20 @@
                                                 <td>{{ $order->address_id }}</td>
                                                 <td>{{ $order->delivery_charge }}</td>
                                                 <td>{{ $order->grand_total }}</td>
-                                                <td>{{ $order->payment_status }}</td>
+                                                <td>
+                                                    @if ($order->payment_status === 'completed')
+                                                        <span class="badge bg-success">Hoàn
+                                                            thành</span>
+                                                    @elseif($order->payment_status === 'pending')
+                                                        <span class="badge bg-warning">Đang
+                                                            chờ</span>
+                                                    @elseif($order->payment_status === 'failed')
+                                                        <span class="badge bg-danger">Thất
+                                                            bại</span>
+                                                    @else
+                                                        <span class="badge bg-secondary">{{ $order->payment_status }}</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $order->created_at }}</td>
 
                                                 <td>

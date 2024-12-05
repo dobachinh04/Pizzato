@@ -25,7 +25,7 @@
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
-            <i class="ri-record-circle-line"></i>
+            ngu <i class="ri-record-circle-line"></i>
         </button>
     </div>
 
@@ -43,17 +43,20 @@
                     </a>
                 </li>
 
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Thống Kê Doanh Thu</span>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.chart') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Doanh Thu Theo Tháng</span>
+                        <i class="fa-solid fa-chart-line"></i> <span data-key="t-dashboards">Theo Tháng</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.source') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarHome">
-                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Doanh Thu Theo Danh Mục</span>
+                        <i class="fa-solid fa-chart-pie"></i> <span data-key="t-dashboards">Theo Danh Mục</span>
                     </a>
                 </li>
 
@@ -167,14 +170,14 @@
                                     data-key="t-one-page">Danh
                                     Sách Đơn Hàng</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('admin.orders.create') }}" class="nav-link"
                                     data-key="t-nft-landing">Thêm Đơn Hàng</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.orders.deleted') }}" class="nav-link"
                                     data-key="t-nft-landing">Đơn Hàng Bị Hủy</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

@@ -270,7 +270,7 @@ class ProductSeeder extends Seeder
                 'long_description' => 'Pepsi, hương vị tuyệt vời, mát lạnh, sảng khoái.',
                 'price' => 14000,
                 'offer_price' => 12000,
-                'qty' => 150,
+                'qty' => 4,
                 'sku' => 'DRINK002',
                 'show_at_home' => 1,
                 'status' => 1
@@ -302,7 +302,7 @@ class ProductSeeder extends Seeder
                 'long_description' => 'Những que phô mai chiên giòn với lớp vỏ ngoài giòn tan, bên trong phô mai tan chảy.',
                 'price' => 35000,
                 'offer_price' => 30000,
-                'qty' => 60,
+                'qty' => 5,
                 'sku' => 'STARTER001',
                 'show_at_home' => 1,
                 'status' => 1
@@ -317,7 +317,7 @@ class ProductSeeder extends Seeder
                 'long_description' => 'Bánh mì bơ tỏi, thơm lừng với bơ và tỏi, giòn rụm khi thưởng thức.',
                 'price' => 30000,
                 'offer_price' => 25000,
-                'qty' => 100,
+                'qty' => 8,
                 'sku' => 'STARTER002',
                 'show_at_home' => 1,
                 'status' => 1

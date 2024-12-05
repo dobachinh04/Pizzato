@@ -437,8 +437,9 @@
                                                                         </div>
                                                                     </div>
                                                                 </td> --}}
-                                                            <a href="{{ route('admin.products.show', $product->id) }}">
-                                                                <td>
+                                                            <td>
+                                                                <a
+                                                                    href="{{ route('admin.products.show', $product->id) }}">
                                                                     @php
                                                                         $url = $product->thumb_image;
                                                                         if (!\Str::contains($url, 'http')) {
@@ -446,12 +447,12 @@
                                                                         }
                                                                     @endphp
                                                                     <img src="{{ $url }}" alt=""
-                                                                        width="100px">
-                                                                </td>
-                                                            </a>
+                                                                        width="100px" height="100px">
+                                                                </a>
+                                                            </td>
 
                                                             <td class="text-center">
-                                                                <a href="apps-ecommerce-order-details.html"
+                                                                <a href="{{ route('admin.products.show', $product->id) }}"
                                                                     class="fw-medium link-primary"
                                                                     style="font-size: 0.85rem;">{{ $product->qty }}</a>
                                                             </td>
