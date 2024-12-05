@@ -197,6 +197,7 @@ class ProductController extends Controller
 
                 $currentImage = $product->thumb_image;
 
+
                 // Tạo slug từ tên sản phẩm
                 // $data['slug'] = $this->createSlug($request->name);
                 // Tạo slug từ tên sản phẩm
@@ -206,30 +207,37 @@ class ProductController extends Controller
                 $data['status'] = $request->qty > 0 ? 1 : 0;
 
                 $product->update($data);
+                // Nếu có giá trị 'thumb_image' hiện tại và tệp tồn tại trong hệ thống lưu trữ
+                if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
+                    Storage::delete($currentImage);
+                }
 
-                foreach ($request->galleries ?? [] as $id => $image) {
-                    // Kiểm tra xem ID có phải là số hợp lệ
-                    if (is_numeric($id)) {
-                        // Tìm ProductGallery bằng ID
-                        $gallery = ProductGallery::find($id);
-                        if ($gallery) {
-                            // Nếu tìm thấy, cập nhật gallery
-                            $gallery->update([
-                                'product_id' => $product->id,
-                                'galleries' => Storage::put('galleries', $image),
-                            ]);
-                        } else {
-                            // Báo lỗi nếu không tìm thấy
-                            return back()->withErrors("Không tìm thấy gallery với ID: $id.");
+                // Cập nhật gallery
+
+                // Lấy danh sách ID các ảnh được giữ lại
+                $keepGalleries = $request->keep_galleries ?? [];
+
+                // Xóa các ảnh không nằm trong danh sách giữ lại
+                ProductGallery::where('product_id', $product->id)
+                    ->whereNotIn('id', $keepGalleries)
+                    ->each(function ($gallery) {
+                        if (Storage::exists($gallery->galleries)) {
+                            Storage::delete($gallery->galleries);
                         }
-                    } else {
-                        // Nếu không có ID, tạo mới gallery
+                        $gallery->delete();
+                    });
+
+                // Thêm mới ảnh nếu có
+                if ($request->hasFile('galleries')) {
+                    foreach ($request->file('galleries') as $image) {
                         ProductGallery::create([
                             'product_id' => $product->id,
                             'galleries' => Storage::put('galleries', $image),
                         ]);
                     }
                 }
+
+
                 // Đồng bộ giá trị size
                 if ($request->has('sizes')) {
                     $productSizesData = [];
@@ -301,8 +309,7 @@ class ProductController extends Controller
     {
         do {
             $sku = 'SKU-' . strtoupper(uniqid());
-        }
-        while (Product::where('sku', $sku)->exists());
+        } while (Product::where('sku', $sku)->exists());
 
         return $sku;
     }
