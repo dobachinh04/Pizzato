@@ -146,6 +146,10 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        // $productSizes = $product->productSizes;
+        $product->load(['category', 'productGalleries', 'productSizes', 'pizzaEdges', 'pizzaBases']);
+
+        // return view("admin.products.show", compact('product', 'productSizes'));
         return view("admin.products.show", compact('product'));
     }
 
@@ -208,9 +212,9 @@ class ProductController extends Controller
 
                 $product->update($data);
                 // Nếu có giá trị 'thumb_image' hiện tại và tệp tồn tại trong hệ thống lưu trữ
-                if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
-                    Storage::delete($currentImage);
-                }
+        if ($request->hasFile('thumb_image') && $currentImage && Storage::exists($currentImage)) {
+            Storage::delete($currentImage);
+        }
 
                 // Cập nhật gallery
 
