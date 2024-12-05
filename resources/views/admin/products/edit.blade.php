@@ -377,7 +377,19 @@
         </div>
     </div>
 
+
     <script>
+        //  JS: Xóa ảnh khỏi UI và ghi lại ID ảnh bị xóa
+        // Ảnh phụ
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.delete-gallery');
+            galleryItems.forEach(button => {
+                button.addEventListener('click', function() {
+                    const galleryItem = this.closest('.gallery-item');
+                    galleryItem.remove(); // Loại bỏ ảnh khỏi giao diện
+                });
+            });
+        });
         document.addEventListener("DOMContentLoaded", function() {
             // Lấy các phần tử cần thiết
             const categorySelect = document.getElementById("category_id");
@@ -400,17 +412,7 @@
             toggleVariantFields();
         });
 
-        //  JS: Xóa ảnh khỏi UI và ghi lại ID ảnh bị xóa
-        // Ảnh phụ
-        document.addEventListener('DOMContentLoaded', function() {
-            const galleryItems = document.querySelectorAll('.delete-gallery');
-            galleryItems.forEach(button => {
-                button.addEventListener('click', function() {
-                    const galleryItem = this.closest('.gallery-item');
-                    galleryItem.remove(); // Loại bỏ ảnh khỏi giao diện
-                });
-            });
-        });
+
 
         // Biến thể
         document.addEventListener('DOMContentLoaded', function() {
@@ -458,21 +460,22 @@
         //     // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
         //     addSizeFieldsButton.addEventListener('click', function() {
         //         const newSizeFieldHTML = `
-    //     <div class="row">
-    //         <div class="col-6">
-    //             <label>Tên Size Bánh</label>
-    //             <input type="text" name="size_name[]" class="form-control">
-    //         </div>
-    //         <div class="col-6">
-    //             <label>Giá Tiền</label>
-    //             <input type="number" name="size_price[]" class="form-control">
-    //         </div>
-    //     </div>`;
+        // <div class="row">
+        //     <div class="col-6">
+        //         <label>Tên Size Bánh</label>
+        //         <input type="text" name="size_name[]" class="form-control">
+        //     </div>
+        //     <div class="col-6">
+        //         <label>Giá Tiền</label>
+        //         <input type="number" name="size_price[]" class="form-control">
+        //     </div>
+        // </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newSizeFieldHTML;
         //         sizeFieldsContainer.appendChild(newRow);
         //     });
         // });
+
         // // Edge
         // document.addEventListener('DOMContentLoaded', function() {
         //     const addEdgeFieldsButton = document.getElementById('addEdgeFields');
@@ -493,16 +496,16 @@
         //     // Thêm cột input mới cho viền bánh khi nhấn vào nút "Thêm Viền"
         //     addEdgeFieldsButton.addEventListener('click', function() {
         //         const newEdgeFieldHTML = `
-    //     <div class="row">
-    //         <div class="col-6">
-    //             <label>Tên Viền Bánh</label>
-    //             <input type="text" name="edge_name[]" class="form-control">
-    //         </div>
-    //         <div class="col-6">
-    //             <label>Giá Tiền</label>
-    //             <input type="number" name="edge_price[]" class="form-control">
-    //         </div>
-    //     </div>`;
+        // <div class="row">
+        //     <div class="col-6">
+        //         <label>Tên Viền Bánh</label>
+        //         <input type="text" name="edge_name[]" class="form-control">
+        //     </div>
+        //     <div class="col-6">
+        //         <label>Giá Tiền</label>
+        //         <input type="number" name="edge_price[]" class="form-control">
+        //     </div>
+        // </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newEdgeFieldHTML;
         //         edgeFieldsContainer.appendChild(newRow);
@@ -529,16 +532,16 @@
         //     // Thêm cột input mới cho đế bánh khi nhấn vào nút "Thêm Đế"
         //     addBaseFieldsButton.addEventListener('click', function() {
         //         const newBaseFieldHTML = `
-    //     <div class="row">
-    //         <div class="col-6">
-    //             <label>Tên Đế Bánh</label>
-    //             <input type="text" name="base_name[]" class="form-control">
-    //         </div>
-    //         <div class="col-6">
-    //             <label>Giá Tiền</label>
-    //             <input type="number" name="base_price[]" class="form-control">
-    //         </div>
-    //     </div>`;
+        // <div class="row">
+        //     <div class="col-6">
+        //         <label>Tên Đế Bánh</label>
+        //         <input type="text" name="base_name[]" class="form-control">
+        //     </div>
+        //     <div class="col-6">
+        //         <label>Giá Tiền</label>
+        //         <input type="number" name="base_price[]" class="form-control">
+        //     </div>
+        // </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newBaseFieldHTML;
         //         baseFieldsContainer.appendChild(newRow);

@@ -42,12 +42,34 @@
                                                     $url = \Storage::url($url);
                                                 }
                                             @endphp
-                                            <img src="{{ $url }}" class="img-fluid rounded"
+                                            <img id="mainImage" src="{{ $url }}" class="img-fluid rounded"
                                                 style="width: 100%; max-width: 250px;" alt="Image">
                                         @else
                                             <p class="text-muted">Không có hình ảnh</p>
                                         @endif
+                                        <!-- Ảnh chi tiết -->
+                                        <h4>Hình ảnh chi tiết</h4>
+                                        <div class="d-flex justify-content-center flex-wrap">
+                                            <!-- Thêm ảnh chính vào danh sách ảnh chi tiết -->
+                                            <img src="{{ $url }}" class="img-thumbnail m-1 gallery-image"
+                                                alt="Hình chính" style="width: 80px; cursor: pointer;"
+                                                onclick="changeMainImage(this)">
+
+                                            <!-- Vòng lặp ảnh chi tiết -->
+                                            @foreach ($product->productGalleries as $gallery)
+                                                @php
+                                                    $thumbUrl = $gallery->galleries;
+                                                    if (!\Str::contains($thumbUrl, 'http')) {
+                                                        $thumbUrl = \Storage::url($thumbUrl);
+                                                    }
+                                                @endphp
+                                                <img src="{{ $thumbUrl }}" class="img-thumbnail m-1 gallery-image"
+                                                    alt="Hình chi tiết" style="width: 80px; cursor: pointer;"
+                                                    onclick="changeMainImage(this)">
+                                            @endforeach
+                                        </div>
                                     </div>
+
 
 
                                     <div class="col-md-8">
@@ -137,15 +159,14 @@
                                                         <tr>
                                                             <td>{{ $index + 1 }}</td>
                                                             <td>
-                                                                {{-- @if($gallery->galleries) --}}
+                                                                {{-- @if ($gallery->galleries) --}}
                                                                 @php
                                                                     // Lấy đường dẫn từ cơ sở dữ liệu
                                                                     $url = $gallery->galleries;
 
                                                                     // Kiểm tra nếu đường dẫn không chứa 'http' thì thêm thư mục 'galleries/'
                                                                     if (!\Str::contains($url, 'http')) {
-                                                                        $url = \Storage::url( $url);
-
+                                                                        $url = \Storage::url($url);
                                                                     }
                                                                 @endphp
                                                                 <img src="{{ $url }}" alt="Gallery Image"
@@ -248,7 +269,6 @@
                                             <p class="text-muted">Không có kích thước.</p>
                                         @endif
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -257,4 +277,20 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        function changeMainImage(element) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = element.src;
+        }
+
+         // Thay đổi slide khi click vào ảnh nhỏ
+    function showSlide(index) {
+        const carousel = new bootstrap.Carousel(document.getElementById('productCarousel'));
+        carousel.to(index); // Chuyển đến slide có chỉ số index
+    }
+    </script>
+
+
 @endsection
