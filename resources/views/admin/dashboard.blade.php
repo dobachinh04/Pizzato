@@ -446,7 +446,7 @@
                                                                         }
                                                                     @endphp
                                                                     <img src="{{ $url }}" alt=""
-                                                                        width="100px">
+                                                                    class="avatar-xs rounded-circle">
                                                                 </td>
                                                             </a>
 
