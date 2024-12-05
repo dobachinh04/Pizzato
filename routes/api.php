@@ -49,6 +49,7 @@ Route::get('/pizza-rating-on-top', [MenuController::class, 'getPizzaRatingOnTop'
 // DetailController
 Route::get('/detail/{id}', [DetailController::class, 'getDetailPizza']);
 Route::get('/similar-pizza/{id}', [DetailController::class, 'getSimilarPizzas']);
+Route::post('/increment-view/{id}', [DetailController::class, 'incrementView']);
 
 // BlogController
 // http://127.0.0.1:8000/api/blogs
