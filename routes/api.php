@@ -43,6 +43,8 @@ Route::get('/hot-product', [IndexController::class, 'getHotProduct']);
 
 // MenuController
 Route::get('/menus', [MenuController::class, 'getMenuPizza']);
+Route::get('/pizza-rating', [MenuController::class, 'getPizzaRating']);
+Route::get('/pizza-rating-on-top', [MenuController::class, 'getPizzaRatingOnTop']);
 
 // DetailController
 Route::get('/detail/{id}', [DetailController::class, 'getDetailPizza']);

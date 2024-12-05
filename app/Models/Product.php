@@ -74,4 +74,9 @@ class Product extends Model
     {
         return $this->qty > 0;
     }
+
+    public function productReviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
 }
