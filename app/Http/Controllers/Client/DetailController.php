@@ -35,6 +35,7 @@ class DetailController extends Controller
                     ],
                     'price' => $pizza->price,
                     'offer_price' => $pizza->offer_price,
+                    'view' => $pizza->view,
                     'qty' => $pizza->qty,
                     'sku' => $pizza->sku,
                     'short_description' => $pizza->short_description,
@@ -78,9 +79,22 @@ class DetailController extends Controller
         }
     }
 
-    public function rating(Request $request)
+    public function incrementView(String $id)
     {
-        // Hàm đánh giá sản phẩm
+        $product = Product::find($id);
+
+        // Kiểm tra nếu sản phẩm không tồn tại
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
+        $product->view += 1;
+        $product->save();
+
+        return response()->json([
+            'message' => 'Cập nhật thành công',
+            'product' => $product
+        ]);
     }
 
     public function getSimilarPizzas(string $id)
