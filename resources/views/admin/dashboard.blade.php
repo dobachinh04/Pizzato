@@ -447,9 +447,9 @@
                                                                         }
                                                                     @endphp
                                                                     <img src="{{ $url }}" alt=""
-                                                                        width="100px" height="100px">
-                                                                </a>
-                                                            </td>
+                                                                    class="avatar-xs rounded-circle">
+                                                                </td>
+                                                            </a>
 
                                                             <td class="text-center">
                                                                 <a href="{{ route('admin.products.show', $product->id) }}"

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Doanh Thu 
+Doanh Thu Theo Danh Mục
 @endsection
 
 @section('content')

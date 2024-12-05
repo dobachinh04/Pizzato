@@ -64,8 +64,8 @@ Thêm Mới Danh Mục Blog - Pizzato
                                         <label>Trạng Thái</label>
                                         <select name="status" class="form-control input-default">
                                             <option disabled>Chọn Trạng Thái</option>
-                                            <option value="1" selected>Bật</option>
-                                            <option value="0">Tắt</option>
+                                            <option value="1" selected>Hoạt động</option>
+                                            <option value="0">Không hoạt động</option>
                                         </select>
                                         <br>
                                     </div>
