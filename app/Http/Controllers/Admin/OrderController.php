@@ -54,8 +54,13 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        // Tải trước quan hệ 'users' và 'addresses.delivery_area' cho một đơn hàng cụ thể
+        $order->load(['users', 'addresses.delivery_area']);
+
+        // Truyền đơn hàng vào view
+        return view('admin.orders.show', compact('order'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

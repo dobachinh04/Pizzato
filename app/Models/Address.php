@@ -18,15 +18,20 @@ class Address extends Model
         'phone',
         'address',
         'type'
-      ];
+    ];
 
-      public function users()
-      {
-          return $this->belongsTo(User::class);
-      }
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-      public function delivery_area()
-      {
-          return $this->belongsTo(DeliveryArea::class);
-      }
+    public function delivery_area()
+    {
+        return $this->belongsTo(DeliveryArea::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

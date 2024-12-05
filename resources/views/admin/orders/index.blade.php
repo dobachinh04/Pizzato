@@ -178,7 +178,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{{ route('admin.orders.show', $order) }}"
+                                                    <a href="{{ route('admin.orders.show', $order->id) }}"
                                                         class="btn btn-info"><i class="fa fa-info-circle"></i></a>
 
                                                     @if (!in_array($order->order_status, ['canceled', 'processing', 'completed']))

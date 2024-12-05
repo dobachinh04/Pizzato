@@ -25,8 +25,8 @@ return new class extends Migration {
             $table->integer('product_qty');
             $table->string('payment_method')->nullable();
             $table->string('payment_status')->default('pending');
-            $table->timestamp('payment_approve_date')->nullable();
-            $table->json('coupon_info')->nullable();
+            $table->dateTime('payment_approve_date')->nullable();
+            $table->string('coupon_info')->nullable();
             $table->string('currency_name')->default('VND');
             $table->string('order_status')->default('pending');
             $table->timestamps();

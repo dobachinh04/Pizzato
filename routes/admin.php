@@ -137,7 +137,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/deleted',                          [OrderController::class, 'deleted'])->name('deleted');
 
         Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
-        Route::put('/{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+        Route::put('/{order}/cancel',                   [OrderController::class, 'cancel'])->name('cancel');
 
     });
 
@@ -145,10 +145,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/create',                           [UserController::class, 'create'])->name('create');
         Route::post('/',                                [UserController::class, 'store'])->name('store');
-        Route::get('/{shipping}/edit',                      [UserController::class, 'edit'])->name('edit');
-        Route::put('/{shipping}',                           [UserController::class, 'update'])->name('update');
-        Route::get('/show/{shipping}',                      [UserController::class, 'show'])->name('show');
-        Route::delete('/{shipping}',                        [UserController::class, 'destroy'])->name('destroy');
+    Route::get('/{shipping}/edit',                      [UserController::class, 'edit'])->name('edit');
+    Route::put('/{shipping}',                           [UserController::class, 'update'])->name('update');
+    Route::get('/show/{shipping}',                      [UserController::class, 'show'])->name('show');
+    Route::delete('/{shipping}',                        [UserController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('payment')->name('payment.')->group(function () {
