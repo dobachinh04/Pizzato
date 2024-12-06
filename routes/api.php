@@ -42,6 +42,8 @@ Route::get('/categories', [IndexController::class, 'getCategories']);
 Route::get('/hot-product', [IndexController::class, 'getHotProduct']);
 
 // MenuController
+// http://127.0.0.1:8000/api/all-categories
+Route::get('/all-categories', [MenuController::class, 'getCategories']);
 Route::get('/menus', [MenuController::class, 'getMenuPizza']);
 Route::get('/pizza-rating', [MenuController::class, 'getPizzaRating']);
 Route::get('/pizza-rating-on-top', [MenuController::class, 'getPizzaRatingOnTop']);
@@ -51,13 +53,6 @@ Route::get('/detail/{id}', [DetailController::class, 'getDetailPizza']);
 Route::get('/similar-pizza/{id}', [DetailController::class, 'getSimilarPizzas']);
 Route::post('/increment-view/{id}', [DetailController::class, 'incrementView']);
 
-// BlogController
-// http://127.0.0.1:8000/api/blogs
-Route::get('/blogs', [BlogController::class, 'getBlog']);
-
-// http://127.0.0.1:8000/api/blog/1
-Route::get('/blog/{id}', [BlogController::class, 'getBlogDetail']);
-
 // CheckoutController
 Route::post('/checkout', [CheckoutController::class, 'store']);
 Route::get('/get-delivery-area', [CheckoutController::class, 'getDeliveryArea']);
@@ -65,19 +60,12 @@ Route::post('/add-to-address', [CheckoutController::class, 'addToAddress']);
 Route::get('/payment-status', [VnpayController::class, 'callback']);
 
 // CouponController
-// http://127.0.0.1:8000/api/coupons
 Route::get('/coupons', [CouponController::class, 'getListCoupon']);
-// http://127.0.0.1:8000/api/show/code (code coupon not id)
 Route::get('/coupon/{code}', [CouponController::class, 'getCouponDetail']);
 
 // ProductReviewController
 Route::post('/reviews', [ProductReviewController::class, 'createReview']);
 Route::get('/products/{productId}/reviews', [ProductReviewController::class, 'getReviews']);
-
-// shttp://127.0.0.1:8000/api/reviews/13
-Route::put('/reviews/{id}', [ProductReviewController::class, 'updateReview']);
-
-Route::delete('/reviews/{id}', [ProductReviewController::class, 'deleteReview']);
 
 // OrderController
 Route::get('/orders', [OrderController::class, 'index']);
