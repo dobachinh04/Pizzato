@@ -8,18 +8,6 @@
         .mr-5 {
             margin-right: 10px;
         }
-        .btn-prev{
-            color: black;
-            background-color: black;
-            border-radius: 50%;
-        }
-        .btn-next{
-            color: black;
-            background-color: black;
-            border-radius: 50%;
-
-        }
-
     </style>
 @endsection
 @section('content')
@@ -54,7 +42,7 @@
                                                 }
                                             @endphp
                                             <img id="mainImage" src="{{ $url }}" class="img-fluid rounded mb-3"
-                                                style="width: 100%; max-width: 100%;" alt="Image">
+                                                style="width: 100%; max-width: 250px;" alt="Image">
                                         @else
                                             <p class="text-muted">Không có hình ảnh</p>
                                         @endif
@@ -84,19 +72,19 @@
                                             </div>
 
                                             <!-- Indicators -->
-                                            {{-- <div class="carousel-indicators">
+                                            <div class="carousel-indicators">
                                                 @foreach ($chunks as $chunkIndex => $chunk)
                                                     <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{ $chunkIndex }}"
                                                         class="{{ $chunkIndex == 0 ? 'active' : '' }}"></button>
                                                 @endforeach
-                                            </div> --}}
+                                            </div>
 
                                             <!-- Controls -->
-                                            <button class="carousel-control-prev " type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon btn-prev"></span>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon"></span>
                                             </button>
-                                            <button class="carousel-control-next " type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon btn-next"></span>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon"></span>
                                             </button>
                                         </div>
                                     </div>
@@ -175,7 +163,41 @@
                                             </tbody>
                                         </table>
 
+                                        {{-- Product Galleries --}}
+                                        <h4>Hình ảnh chi tiết</h4>
+                                        @if ($product->productGalleries->isNotEmpty())
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Hình ảnh</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($product->productGalleries as $index => $gallery)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>
+                                                                {{-- @if ($gallery->galleries) --}}
+                                                                @php
+                                                                    // Lấy đường dẫn từ cơ sở dữ liệu
+                                                                    $url = $gallery->galleries;
 
+                                                                    // Kiểm tra nếu đường dẫn không chứa 'http' thì thêm thư mục 'galleries/'
+                                                                    if (!\Str::contains($url, 'http')) {
+                                                                        $url = \Storage::url($url);
+                                                                    }
+                                                                @endphp
+                                                                <img src="{{ $url }}" alt="Gallery Image"
+                                                                    width="50">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <p class="text-muted">Không có hình ảnh chi tiết.</p>
+                                        @endif
 
 
                                         {{-- Pizza Edges --}}
@@ -264,42 +286,6 @@
                                             </table>
                                         @else
                                             <p class="text-muted">Không có kích thước.</p>
-                                        @endif
-
-                                        {{-- Product Galleries --}}
-                                        <h4>Hình ảnh chi tiết</h4>
-                                        @if ($product->productGalleries->isNotEmpty())
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>STT</th>
-                                                        <th>Hình ảnh</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($product->productGalleries as $index => $gallery)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>
-                                                                {{-- @if ($gallery->galleries) --}}
-                                                                @php
-                                                                    // Lấy đường dẫn từ cơ sở dữ liệu
-                                                                    $url = $gallery->galleries;
-
-                                                                    // Kiểm tra nếu đường dẫn không chứa 'http' thì thêm thư mục 'galleries/'
-                                                                    if (!\Str::contains($url, 'http')) {
-                                                                        $url = \Storage::url($url);
-                                                                    }
-                                                                @endphp
-                                                                <img src="{{ $url }}" alt="Gallery Image"
-                                                                    width="50">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p class="text-muted">Không có hình ảnh chi tiết.</p>
                                         @endif
                                     </div>
                                 </div>
