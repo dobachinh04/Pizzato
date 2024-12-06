@@ -9,6 +9,17 @@ use App\Http\Controllers\Controller;
 
 class MenuController extends Controller
 {
+    public function getCategories()
+    {
+        $categories = DB::table('categories')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'categories' => $categories
+        ], 200);
+    }
+
     public function getMenuPizza(Request $request)
     {
         $page = $request->input('currentPage', 1);

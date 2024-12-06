@@ -10,54 +10,50 @@ use Illuminate\Support\Facades\Log;
 class MomoController extends Controller
 {
     public function createPayment(Request $request)
-{
-    $partnerCode = config('services.momo.partner_code');
-    $accessKey = config('services.momo.access_key');
-    $secretKey = config('services.momo.secret_key');
-    $endpoint = config('services.momo.endpoint');
-    $returnUrl = config('services.momo.return_url');
-    $notifyUrl = config('services.momo.notify_url');
+    {
+        $partnerCode = config('services.momo.partner_code');
+        $accessKey = config('services.momo.access_key');
+        $secretKey = config('services.momo.secret_key');
+        $endpoint = config('services.momo.endpoint');
+        $returnUrl = config('services.momo.return_url');
+        $notifyUrl = config('services.momo.notify_url');
 
-    // Chuyển đổi orderId và requestId thành chuỗi
-    $orderId = (string) time();
-    $orderInfo = "Thanh toán qua MoMo";
-    $amount = $request->amount;
-    $extraData = "";
+        $orderId = (string) time();
+        $orderInfo = "Thanh toán qua MoMo";
+        $amount = $request->amount;
+        $extraData = "";
+        $requestId = (string) time();
+        $rawHash = "partnerCode={$partnerCode}&accessKey={$accessKey}&requestId={$requestId}&amount={$amount}&orderId={$orderId}&orderInfo={$orderInfo}&returnUrl={$returnUrl}&notifyUrl={$notifyUrl}&extraData={$extraData}";
 
-    // Chuyển đổi requestId thành chuỗi
-    $requestId = (string) time();
-    $rawHash = "partnerCode={$partnerCode}&accessKey={$accessKey}&requestId={$requestId}&amount={$amount}&orderId={$orderId}&orderInfo={$orderInfo}&returnUrl={$returnUrl}&notifyUrl={$notifyUrl}&extraData={$extraData}";
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
 
-    $signature = hash_hmac("sha256", $rawHash, $secretKey);
+        $paymentData = [
+            'partnerCode' => $partnerCode,
+            'accessKey' => $accessKey,
+            'requestId' => $requestId,
+            'amount' => $amount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            'returnUrl' => $returnUrl,
+            'notifyUrl' => $notifyUrl,
+            'extraData' => $extraData,
+            'requestType' => 'captureMoMoWallet',
 
-    $paymentData = [
-        'partnerCode' => $partnerCode,
-        'accessKey' => $accessKey,
-        'requestId' => $requestId,
-        'amount' => $amount,
-        'orderId' => $orderId,
-        'orderInfo' => $orderInfo,
-        'returnUrl' => $returnUrl,
-        'notifyUrl' => $notifyUrl,
-        'extraData' => $extraData,
-        'requestType' => 'captureMoMoWallet',
+            // 'requestType' => 'payWithMoMoATM',
+            // lỗi ko tìm thấy URL
+            // chịu ko biết fix sao :v
+            'signature' => $signature,
+        ];
 
-        // 'requestType' => 'payWithMoMoATM',
-        // lỗi ko tìm thấy URL
-        // chịu ko biết fix sao :v
-        'signature' => $signature,
-    ];
+        $response = Http::post($endpoint, $paymentData);
 
-    $response = Http::post($endpoint, $paymentData);
+        $payUrl = $response['payUrl'] ?? null;
+        if (empty($payUrl)) {
+            return redirect()->back()->with('error', 'Không thể tạo liên kết thanh toán MoMo. Vui lòng thử lại sau.');
+        }
 
-    // dd($response->json());
-    $payUrl = $response['payUrl'] ?? null;
-    if (empty($payUrl)) {
-        return redirect()->back()->with('error', 'Không thể tạo liên kết thanh toán MoMo. Vui lòng thử lại sau.');
+        return redirect()->away($payUrl);
     }
-
-    return redirect()->away($payUrl);
-}
 
 
     public function callback(Request $request)

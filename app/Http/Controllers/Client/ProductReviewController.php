@@ -11,10 +11,8 @@ use App\Http\Requests\UpdateProductReviewRequest as UpdateReviewRequest;
 
 class ProductReviewController extends Controller
 {
-    // tạo đánh giá mới
     public function createReview(StoreReviewRequest $request)
     {
-        // Tạo đánh giá mới
         ProductReview::create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
@@ -29,7 +27,6 @@ class ProductReviewController extends Controller
             ], 201);
     }
 
-    // hiển thị tất cả các đánh giá của một sản phẩm
     public function getReviews($productId)
     {
         $reviews = ProductReview::query()
@@ -38,22 +35,5 @@ class ProductReviewController extends Controller
             ->get();
 
         return response()->json($reviews);
-    }
-
-    // sửa đánh giá của người dùng
-    // sửa theo
-    public function updateReview(UpdateReviewRequest $request, $id)
-    {
-        // Kiểm tra xem đánh giá có tồn tại và thuộc về người dùng hiện tại hay không
-        $review = ProductReview::where('id', $id)
-            ->where('user_id', 1)
-            ->firstOrFail();
-
-        $review->update([
-            'rating' => $request->rating,
-            'review' => $request->review,
-        ]);
-
-        return response()->json(['message' => 'Sửa đánh giá thành công!', 'data' => $review], 200);
     }
 }
