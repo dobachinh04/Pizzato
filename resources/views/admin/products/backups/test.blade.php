@@ -8,17 +8,64 @@
         .mr-5 {
             margin-right: 10px;
         }
-        .btn-prev{
-            color: black;
-            background-color: black;
-            border-radius: 50%;
-        }
-        .btn-next{
-            color: black;
-            background-color: black;
-            border-radius: 50%;
 
-        }
+        /* Container for carousel */
+.image-carousel-container {
+    position: relative;
+    max-width: 320px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Wrapper for images */
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: 8px;
+}
+
+/* Individual images */
+.gallery-image {
+    width: 80px;
+    cursor: pointer;
+}
+
+/* Buttons for carousel */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2; /* Đảm bảo nút nằm trên cùng */
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+    border-color: #999;
+}
+
+/* Position of buttons */
+#prevBtn {
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+#nextBtn {
+    right: 0;
+    transform: translate(50%, -50%);
+}
 
     </style>
 @endsection
@@ -44,6 +91,7 @@
 
                             <div class="card-body">
                                 <div class="row">
+
                                     <div class="col-md-4 text-center">
                                         <h4>Hình Ảnh Sản Phẩm</h4>
                                         @if ($product->thumb_image)
@@ -53,53 +101,40 @@
                                                     $url = \Storage::url($url);
                                                 }
                                             @endphp
-                                            <img id="mainImage" src="{{ $url }}" class="img-fluid rounded mb-3"
-                                                style="width: 100%; max-width: 100%;" alt="Image">
+                                            <img id="mainImage" src="{{ $url }}" class="img-fluid rounded"
+                                                alt="Image">
                                         @else
                                             <p class="text-muted">Không có hình ảnh</p>
                                         @endif
 
-                                        <!-- Carousel -->
                                         <h4>Hình ảnh chi tiết</h4>
-                                        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner">
-                                                @php
-                                                    $images = collect([$url])->merge($product->productGalleries->pluck('galleries')->map(function ($gallery) {
-                                                        return \Str::contains($gallery, 'http') ? $gallery : \Storage::url($gallery);
-                                                    }));
-                                                    $chunks = $images->chunk(4); // Chia ảnh thành từng nhóm 4 cái
-                                                @endphp
+                                        <div class="image-carousel-container">
+                                            <button id="prevBtn" class="carousel-btn">‹</button>
 
-                                                @foreach ($chunks as $chunkIndex => $chunk)
-                                                    <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
-                                                        <div class="d-flex justify-content-center">
-                                                            @foreach ($chunk as $thumbUrl)
-                                                                <img src="{{ $thumbUrl }}" class="img-thumbnail m-1 gallery-image"
-                                                                    alt="Hình chi tiết" style="width: 80px; cursor: pointer;"
-                                                                    onclick="changeMainImage(this)">
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
+                                            <div id="imageCarousel" class="carousel-wrapper">
+                                                <!-- Ảnh chính -->
+                                                <img src="{{ $url }}" class="gallery-image" alt="Hình chính" onclick="changeMainImage(this)">
+
+                                                <!-- Ảnh chi tiết -->
+                                                @foreach ($product->productGalleries as $gallery)
+                                                    @php
+                                                        $thumbUrl = $gallery->galleries;
+                                                        if (!\Str::contains($thumbUrl, 'http')) {
+                                                            $thumbUrl = \Storage::url($thumbUrl);
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ $thumbUrl }}" class="gallery-image" alt="Hình chi tiết" onclick="changeMainImage(this)">
                                                 @endforeach
                                             </div>
 
-                                            <!-- Indicators -->
-                                            {{-- <div class="carousel-indicators">
-                                                @foreach ($chunks as $chunkIndex => $chunk)
-                                                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{ $chunkIndex }}"
-                                                        class="{{ $chunkIndex == 0 ? 'active' : '' }}"></button>
-                                                @endforeach
-                                            </div> --}}
-
-                                            <!-- Controls -->
-                                            <button class="carousel-control-prev " type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon btn-prev"></span>
-                                            </button>
-                                            <button class="carousel-control-next " type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon btn-next"></span>
-                                            </button>
+                                            <button id="nextBtn" class="carousel-btn">›</button>
                                         </div>
                                     </div>
+
+
+
+
+
 
 
 
@@ -175,7 +210,41 @@
                                             </tbody>
                                         </table>
 
+                                        {{-- Product Galleries --}}
+                                        <h4>Hình ảnh chi tiết</h4>
+                                        @if ($product->productGalleries->isNotEmpty())
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Hình ảnh</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($product->productGalleries as $index => $gallery)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>
+                                                                {{-- @if ($gallery->galleries) --}}
+                                                                @php
+                                                                    // Lấy đường dẫn từ cơ sở dữ liệu
+                                                                    $url = $gallery->galleries;
 
+                                                                    // Kiểm tra nếu đường dẫn không chứa 'http' thì thêm thư mục 'galleries/'
+                                                                    if (!\Str::contains($url, 'http')) {
+                                                                        $url = \Storage::url($url);
+                                                                    }
+                                                                @endphp
+                                                                <img src="{{ $url }}" alt="Gallery Image"
+                                                                    width="50">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <p class="text-muted">Không có hình ảnh chi tiết.</p>
+                                        @endif
 
 
                                         {{-- Pizza Edges --}}
@@ -265,42 +334,6 @@
                                         @else
                                             <p class="text-muted">Không có kích thước.</p>
                                         @endif
-
-                                        {{-- Product Galleries --}}
-                                        <h4>Hình ảnh chi tiết</h4>
-                                        @if ($product->productGalleries->isNotEmpty())
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>STT</th>
-                                                        <th>Hình ảnh</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($product->productGalleries as $index => $gallery)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>
-                                                                {{-- @if ($gallery->galleries) --}}
-                                                                @php
-                                                                    // Lấy đường dẫn từ cơ sở dữ liệu
-                                                                    $url = $gallery->galleries;
-
-                                                                    // Kiểm tra nếu đường dẫn không chứa 'http' thì thêm thư mục 'galleries/'
-                                                                    if (!\Str::contains($url, 'http')) {
-                                                                        $url = \Storage::url($url);
-                                                                    }
-                                                                @endphp
-                                                                <img src="{{ $url }}" alt="Gallery Image"
-                                                                    width="50">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p class="text-muted">Không có hình ảnh chi tiết.</p>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -318,12 +351,38 @@
             mainImage.src = element.src;
         }
 
-         // Thay đổi slide khi click vào ảnh nhỏ
-    function showSlide(index) {
-        const carousel = new bootstrap.Carousel(document.getElementById('productCarousel'));
-        carousel.to(index); // Chuyển đến slide có chỉ số index
-    }
+        // Thay đổi slide khi click vào ảnh nhỏ
+        function showSlide(index) {
+            const carousel = new bootstrap.Carousel(document.getElementById('productCarousel'));
+            carousel.to(index); // Chuyển đến slide có chỉ số index
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousel = document.getElementById("imageCarousel");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const images = carousel.querySelectorAll("img");
+
+            let scrollIndex = 0;
+            const maxScrollIndex = Math.max(images.length - 4, 0); // Hiển thị tối đa 4 ảnh cùng lúc
+
+            function updateCarouselPosition() {
+                const scrollAmount = scrollIndex * 88; // 80px (ảnh) + 8px (khoảng cách)
+                carousel.style.transform = `translateX(-${scrollAmount}px)`;
+            }
+
+            prevBtn.addEventListener("click", () => {
+                if (scrollIndex > 0) {
+                    scrollIndex--;
+                    updateCarouselPosition();
+                }
+            });
+
+            nextBtn.addEventListener("click", () => {
+                if (scrollIndex < maxScrollIndex) {
+                    scrollIndex++;
+                    updateCarouselPosition();
+                }
+            });
+        });
     </script>
-
-
 @endsection
