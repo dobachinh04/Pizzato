@@ -19,6 +19,7 @@ class DashboardController extends Controller
             'productCount' => $this->getProductCount(),
             'orderCount' => $this->getOrderCount(),
             'revenue' => $this->getTotalRevenue(),
+            'profit' => $this->getTotalProfit(),
             'totalViews' => $this->getTotalViews(),
             'totalReviews' => $this->getTotalReviews(),
             'reviews' => $this->getRecentReviews(),
@@ -44,7 +45,16 @@ class DashboardController extends Controller
 
     private function getTotalRevenue()
     {
+
         return Order::sum('grand_total');
+        // return DB::table('orders')
+        // ->where('order_status', 'completed')
+        // ->sum('grand_total');
+    }
+    private function getToTalProfit(){
+        return DB::table('orders')
+        ->where('order_status', 'completed')
+        ->sum('grand_total');
     }
 
     private function getTotalViews()
