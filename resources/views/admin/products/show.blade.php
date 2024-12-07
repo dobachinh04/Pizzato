@@ -8,18 +8,27 @@
         .mr-5 {
             margin-right: 10px;
         }
-        .btn-prev{
+
+        .btn-prev {
             color: black;
             background-color: black;
             border-radius: 50%;
         }
-        .btn-next{
+
+        .btn-next {
             color: black;
             background-color: black;
             border-radius: 50%;
 
         }
 
+        .img-fixed-height {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            /* Tùy chọn để thêm màu nền */
+        }
     </style>
 @endsection
 @section('content')
@@ -53,8 +62,9 @@
                                                     $url = \Storage::url($url);
                                                 }
                                             @endphp
-                                            <img id="mainImage" src="{{ $url }}" class="img-fluid rounded mb-3"
-                                                style="width: 100%; max-width: 100%;" alt="Image">
+
+                                            <img id="mainImage" src="{{ $url }}"
+                                                class="img-fluid rounded mb-3 img-fixed-height" alt="Image">
                                         @else
                                             <p class="text-muted">Không có hình ảnh</p>
                                         @endif
@@ -64,9 +74,15 @@
                                         <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                                             <div class="carousel-inner">
                                                 @php
-                                                    $images = collect([$url])->merge($product->productGalleries->pluck('galleries')->map(function ($gallery) {
-                                                        return \Str::contains($gallery, 'http') ? $gallery : \Storage::url($gallery);
-                                                    }));
+                                                    $images = collect([$url])->merge(
+                                                        $product->productGalleries
+                                                            ->pluck('galleries')
+                                                            ->map(function ($gallery) {
+                                                                return \Str::contains($gallery, 'http')
+                                                                    ? $gallery
+                                                                    : \Storage::url($gallery);
+                                                            }),
+                                                    );
                                                     $chunks = $images->chunk(4); // Chia ảnh thành từng nhóm 4 cái
                                                 @endphp
 
@@ -74,8 +90,10 @@
                                                     <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
                                                         <div class="d-flex justify-content-center">
                                                             @foreach ($chunk as $thumbUrl)
-                                                                <img src="{{ $thumbUrl }}" class="img-thumbnail m-1 gallery-image"
-                                                                    alt="Hình chi tiết" style="width: 80px; cursor: pointer;"
+                                                                <img src="{{ $thumbUrl }}"
+                                                                    class="img-thumbnail m-1 gallery-image"
+                                                                    alt="Hình chi tiết"
+                                                                    style="width: 80px; cursor: pointer;"
                                                                     onclick="changeMainImage(this)">
                                                             @endforeach
                                                         </div>
@@ -92,16 +110,16 @@
                                             </div> --}}
 
                                             <!-- Controls -->
-                                            <button class="carousel-control-prev " type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                            <button class="carousel-control-prev " type="button"
+                                                data-bs-target="#productCarousel" data-bs-slide="prev">
                                                 <span class="carousel-control-prev-icon btn-prev"></span>
                                             </button>
-                                            <button class="carousel-control-next " type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                            <button class="carousel-control-next " type="button"
+                                                data-bs-target="#productCarousel" data-bs-slide="next">
                                                 <span class="carousel-control-next-icon btn-next"></span>
                                             </button>
                                         </div>
                                     </div>
-
-
 
                                     <div class="col-md-8">
                                         <h4>Thông Tin Chi Tiết</h4>
@@ -134,6 +152,8 @@
                                                 'qty',
                                                 'status',
                                                 'view',
+                                                'short_description',
+                                                'long_description',
                                                 'created_at',
                                                 'updated_at',
                                             ];
@@ -175,114 +195,143 @@
                                             </tbody>
                                         </table>
 
+                                        @php
+                                            $pizzaCategory = $product->category->name === 'Pizza';
+                                        @endphp
+                                        <div class="row">
+
+                                            {{-- Pizza Bases --}}
+                                            @if ($pizzaCategory)
+                                                <div class="col-md-6">
+                                                    <h4>Đế bánh</h4>
+                                                    @if ($product->pizzaBases->isNotEmpty())
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tên đế</th>
+                                                                    <th>Giá</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($product->pizzaBases as $base)
+                                                                    <tr>
+                                                                        <td>{{ $base->name }}</td>
+                                                                        <td>{{ number_format($base->pivot->price, 0, ',', '.') }}
+                                                                            VND
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    @else
+                                                        <p class="text-muted">Không có đế bánh.</p>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                            {{-- Pizza Edges --}}
+                                            @if ($pizzaCategory)
+                                                <div class="col-md-6">
+                                                    <h4>Viền bánh</h4>
+                                                    @if ($product->pizzaEdges->isNotEmpty())
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tên viền</th>
+                                                                    <th>Giá</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($product->pizzaEdges as $edge)
+                                                                    <tr>
+                                                                        <td>{{ $edge->name }}</td>
+                                                                        <td>{{ number_format($edge->pivot->price, 0, ',', '.') }}
+                                                                            VND
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    @else
+                                                        <p class="text-muted">Không có viền bánh.</p>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </div>
 
 
-
-                                        {{-- Pizza Edges --}}
-                                        <h4>Viền bánh</h4>
-                                        @if ($product->pizzaEdges->isNotEmpty())
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tên viền</th>
-                                                        <th>Giá</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($product->pizzaEdges as $edge)
-                                                        <tr>
-                                                            <td>{{ $edge->name }}</td>
-                                                            <td>{{ number_format($edge->pivot->price, 0, ',', '.') }} VND
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p class="text-muted">Không có viền bánh.</p>
-                                        @endif
-
-                                        {{-- Pizza Bases --}}
-                                        <h4>Đế bánh</h4>
-                                        @if ($product->pizzaBases->isNotEmpty())
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tên đế</th>
-                                                        <th>Giá</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($product->pizzaBases as $base)
-                                                        <tr>
-                                                            <td>{{ $base->name }}</td>
-                                                            <td>{{ number_format($base->pivot->price, 0, ',', '.') }} VND
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p class="text-muted">Không có đế bánh.</p>
-                                        @endif
 
                                         {{-- Product Sizes --}}
-                                        <h4>Kích thước sản phẩm</h4>
-                                        @if ($product->productSizes->isNotEmpty())
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tên kích thước</th>
-                                                        <th>Giá</th>
-                                                        <th>Hình ảnh</th>
-                                                        <th>Giá riêng (pivot)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($product->productSizes as $size)
-                                                        <tr>
-                                                            <td>{{ $size->name }}</td>
-                                                            <td>{{ number_format($size->price, 0, ',', '.') }} VND</td>
-                                                            <td>
-                                                                @if ($size->image)
-                                                                    @php
-                                                                        $imageUrl = \Str::contains($size->image, 'http')
-                                                                            ? $size->image
-                                                                            : \Storage::url($size->image);
-                                                                    @endphp
-                                                                    <img src="{{ $imageUrl }}"
-                                                                        alt="{{ $size->name }}" width="50">
-                                                                @else
-                                                                    <p class="text-muted">Không có hình ảnh</p>
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ number_format($size->pivot->price, 0, ',', '.') }} VND
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p class="text-muted">Không có kích thước.</p>
+                                        @if ($pizzaCategory)
+                                            <div class="div">
+                                                <h4>Kích thước sản phẩm</h4>
+                                                @if ($product->productSizes->isNotEmpty())
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tên kích thước</th>
+                                                                <th>Giá</th>
+                                                                <th>Hình ảnh</th>
+                                                                <th>Giá</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($product->productSizes as $size)
+                                                                <tr>
+                                                                    <td>{{ $size->name }}</td>
+                                                                    <td>{{ number_format($size->price, 0, ',', '.') }} VND
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($size->image)
+                                                                            @php
+                                                                                $imageUrl = \Str::contains(
+                                                                                    $size->image,
+                                                                                    'http',
+                                                                                )
+                                                                                    ? $size->image
+                                                                                    : \Storage::url($size->image);
+                                                                            @endphp
+                                                                            <img src="{{ $imageUrl }}"
+                                                                                alt="{{ $size->name }}" width="50">
+                                                                        @else
+                                                                            <p class="text-muted">Không có hình ảnh</p>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ number_format($size->pivot->price, 0, ',', '.') }}
+                                                                        VND
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                @else
+                                                    <p class="text-muted">Không có kích thước.</p>
+                                                @endif
+                                            </div>
                                         @endif
 
-                                        {{-- Product Galleries --}}
-                                        <h4>Hình ảnh chi tiết</h4>
-                                        @if ($product->productGalleries->isNotEmpty())
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>STT</th>
-                                                        <th>Hình ảnh</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($product->productGalleries as $index => $gallery)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>
-                                                                {{-- @if ($gallery->galleries) --}}
-                                                                @php
+
+
+                                    </div>
+                                    {{-- Product Galleries --}}
+
+                                    <!-- <div class="div">
+                                                        <h4>Hình ảnh chi tiết</h4>
+                                                        @if ($product->productGalleries->isNotEmpty())
+    <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>STT</th>
+                                                                        <th>Hình ảnh</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($product->productGalleries as $index => $gallery)
+    <tr>
+                                                                            <td>{{ $index + 1 }}</td>
+                                                                            <td>
+                                                                                {{-- @if ($gallery->galleries) --}}
+
+                                                                                {{-- @php
                                                                     // Lấy đường dẫn từ cơ sở dữ liệu
                                                                     $url = $gallery->galleries;
 
@@ -292,16 +341,17 @@
                                                                     }
                                                                 @endphp
                                                                 <img src="{{ $url }}" alt="Gallery Image"
-                                                                    width="50">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p class="text-muted">Không có hình ảnh chi tiết.</p>
-                                        @endif
-                                    </div>
+                                                                    width="50"> --}}
+                                                                            </td>
+                                                                        </tr>
+    @endforeach
+                                                                </tbody>
+                                                            </table>
+@else
+    <p class="text-muted">Không có hình ảnh chi tiết.</p>
+    @endif
+                                                    </div> -->
+
                                 </div>
                             </div>
                         </div>
@@ -318,12 +368,10 @@
             mainImage.src = element.src;
         }
 
-         // Thay đổi slide khi click vào ảnh nhỏ
-    function showSlide(index) {
-        const carousel = new bootstrap.Carousel(document.getElementById('productCarousel'));
-        carousel.to(index); // Chuyển đến slide có chỉ số index
-    }
+        // Thay đổi slide khi click vào ảnh nhỏ
+        function showSlide(index) {
+            const carousel = new bootstrap.Carousel(document.getElementById('productCarousel'));
+            carousel.to(index); // Chuyển đến slide có chỉ số index
+        }
     </script>
-
-
 @endsection
