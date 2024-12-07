@@ -86,7 +86,7 @@ class OrderFactory extends Factory
             'product_qty' => $this->faker->numberBetween(1, 10),
 
             // Phương thức thanh toán và trạng thái thanh toán
-            'payment_method' => $this->faker->randomElement(['credit_card', 'paypal', 'cash']),
+            'payment_method' => $this->faker->randomElement(['credit_card', 'paypal', 'cash', 'vn_pay']),
 
             'payment_status' => $this->faker->randomElement(['pending', 'completed', 'failed']),
 

@@ -54,10 +54,11 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $order->load(['users', 'addresses.delivery_area']);
+        $order->load(['users', 'addresses.delivery_area', 'items.product']);
 
         return view('admin.orders.show', compact('order'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
