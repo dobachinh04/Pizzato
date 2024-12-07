@@ -22,15 +22,15 @@ class MenuController extends Controller
 
     public function getMenuPizza(Request $request)
     {
-        $page = $request->input('currentPage', 1);
-        $pageSize = $request->input('pageSize', 9);
         $categoryId = $request->input('categoryId', null);
         $search = $request->input('search', null);
 
         $query = DB::table('products')
             ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.*', 'categories.name as category_name')
-            ->orderByDesc('id');
+            ->leftJoin('product_reviews', 'products.id', '=', 'product_reviews.product_id')
+            ->select('products.*', 'categories.name as category_name', DB::raw('AVG(product_reviews.rating) as avg_rating'))
+            ->groupBy('products.id')
+            ->orderByDesc('products.id');
 
         if ($categoryId) {
             $query->where('category_id', $categoryId);
@@ -41,7 +41,7 @@ class MenuController extends Controller
         }
 
         $totalPizza = $query->count();
-        $menus = $query->skip(($page - 1) * $pageSize)->take($pageSize)->get();
+        $menus = $query->get();
 
 
         return response()->json([
