@@ -24,10 +24,18 @@ class ProductController extends Controller
 
     const PATH_VIEW = 'admin.products.';
     const PATH_UPLOAD = 'products';
+    const CATEGORY_NULL = 'Chưa Phân Loại';
     public function index()
     {
         $data = Product::query()->with('category')->latest('id')->get();
 
+        // Kiểm tra và thay thế name khi category là null
+        $data = $data->map(function ($product) {
+            if (is_null($product->category)) {
+                $product->category = (object) ['name' => self::CATEGORY_NULL];
+            }
+            return $product;
+        });
         return view("admin.products.index", compact('data'));
     }
 
@@ -149,6 +157,10 @@ class ProductController extends Controller
         // $productSizes = $product->productSizes;
         $product->load(['category', 'productGalleries', 'productSizes', 'pizzaEdges', 'pizzaBases']);
 
+        // Kiểm tra và thay thế name của category nếu nó là null
+        if (is_null($product->category)) {
+            $product->category = (object) ['name' => self::CATEGORY_NULL];
+        }
         // return view("admin.products.show", compact('product', 'productSizes'));
         return view("admin.products.show", compact('product'));
     }
@@ -163,6 +175,8 @@ class ProductController extends Controller
         // $data['sku'] = $this->generateUniqueSku();
 
         $categories = Category::query()->pluck('name', 'id')->all();
+
+        $productCategoryName = $product->category ? $product->category->name : self::CATEGORY_NULL;
 
         $sizes = ProductSize::all();
         $productSizes = $product->productSizes->pluck('id')->all();

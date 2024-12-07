@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -110,22 +111,105 @@ class CategoryController extends Controller
             ->with('success', 'Cập nhật thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $count = Product::where('category_id', '=', $id)->count();
+    // public function destroy(Request $request, string $id)
+    // {
+    //     $category = Category::findOrFail($id);
 
-        if ($count !== 0) {
-            return back()->with('success', '<span style="color: red;">Danh mục còn ' . $count . ' Sản phẩm không thể xóa!</span>');
+    //     // Kiểm tra hành động từ người dùng
+    //     $action = $request->input('action');
+
+    //     if ($category->products()->exists()) {
+    //         if ($action === 'delete_products') {
+    //             // Xóa tất cả sản phẩm và các biến thể liên quan
+    //             DB::transaction(function () use ($category) {
+    //                 $category->products->each(function ($product) {
+    //                     // Xóa các mối quan hệ liên quan đến biến thể
+    //                     $product->productSizes()->sync([]);
+    //                     $product->pizzaEdges()->sync([]);
+    //                     $product->pizzaBases()->sync([]);
+
+    //                     $product->productGalleries()->delete();
+
+    //                     // Xóa sản phẩm
+    //                     $product->delete();
+    //                 });
+    //             });
+    //         } elseif ($action === 'move_products') {
+    //             // Chuyển sản phẩm sang danh mục khác
+    //             $newCategoryId = $request->input('new_category_id');
+    //             if ($newCategoryId) {
+    //                 $category->products()->update(['category_id' => $newCategoryId]);
+    //             }
+    //         } else {
+    //             // Gắn nhãn "Chưa có danh mục" (category_id = null)
+    //             $category->products()->update(['category_id' => null]);
+    //         }
+    //     }
+
+    //     // Xóa danh mục
+    //     $category->delete();
+
+    //     return redirect()
+    //         ->route('admin.categories.index')
+    //         ->with('success', 'Xóa danh mục và các biến thể thành công.');
+    // }
+
+    public function destroy(Request $request, string $id)
+    {
+        $category = Category::findOrFail($id);
+        $message = 'Xóa danh mục thành công.';
+        // Kiểm tra hành động từ người dùng
+        $action = $request->input('action');
+
+        if ($category->products()->exists()) {
+            if ($action === 'delete_products') {
+                // Xóa tất cả sản phẩm và các biến thể liên quan
+                DB::transaction(function () use ($category) {
+                    $category->products->each(function ($product) {
+                        // Xóa các mối quan hệ liên quan đến biến thể
+                        $product->productSizes()->sync([]);
+                        $product->pizzaEdges()->sync([]);
+                        $product->pizzaBases()->sync([]);
+
+                        $product->productGalleries()->delete();
+
+                        // Xóa sản phẩm
+                        $product->delete();
+                    });
+                });
+                $message = 'Xóa danh mục và tất cả sản phẩm thành công.';
+            } elseif ($action === 'move_products') {
+                // Chuyển sản phẩm sang danh mục khác
+                $newCategoryId = $request->input('new_category_id');
+                if ($newCategoryId) {
+                    DB::transaction(function () use ($category, $newCategoryId) {
+                        $category->products->each(function ($product) use ($category, $newCategoryId) {
+                            // Kiểm tra xem danh mục hiện tại có phải là "pizza" hay không
+                            if ($category->name != 'pizza') {
+                                // Xóa các biến thể liên quan
+                                $product->productSizes()->sync([]);
+                                $product->pizzaEdges()->sync([]);
+                                $product->pizzaBases()->sync([]);
+                            }
+
+                            // Cập nhật danh mục cho sản phẩm
+                            $product->update(['category_id' => $newCategoryId]);
+                        });
+                    });
+                    $message = 'Xóa danh mục và chuyển sản phẩm sang danh mục khác thành công.';
+                }
+            } else {
+                // Gắn nhãn "Chưa có danh mục" (category_id = null)
+                $category->products()->update(['category_id' => null]);
+                $message = 'Xóa danh mục và gắn nhãn "Chưa Phân Loại" cho sản phẩm thành công.';
+            }
         }
 
-        $categories = Category::findOrFail($id);
-        $categories->delete();
+        // Xóa danh mục
+        $category->delete();
 
         return redirect()
             ->route('admin.categories.index')
-            ->with('success', 'Xóa thành công');
+            ->with('success', $message);
     }
 }

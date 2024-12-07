@@ -74,7 +74,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="form-group mt-3">
+                                            {{-- <div class="form-group mt-3">
                                                 <label for="category_id" class="form-label">Catalogue</label>
                                                 <select type="text" class="form-select" id="category_id"
                                                     name="category_id">
@@ -88,7 +88,27 @@
                                                 @error('category_id')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
+                                            </div> --}}
+                                            <div class="form-group mt-3">
+                                                <label for="category_id" class="form-label">Catalogue</label>
+                                                <select type="text" class="form-select" id="category_id" name="category_id">
+                                                    <!-- Hiển thị "Chưa Phân Loại" chỉ khi category_id của sản phẩm là null -->
+                                                    @if (is_null($product->category_id))
+                                                        <option value="" selected>{{ \App\Http\Controllers\Admin\ProductController::CATEGORY_NULL }}</option>
+                                                    @endif
+
+                                                    <!-- Các danh mục khác -->
+                                                    @foreach ($categories as $id => $name)
+                                                        <option value="{{ $id }}" {{ $product->category_id == $id ? 'selected' : '' }}>
+                                                            {{ $name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('category_id')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
+
 
                                             <div class="form-group mt-3">
                                                 <label>View</label>
