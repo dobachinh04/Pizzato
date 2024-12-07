@@ -233,64 +233,35 @@ class ProductController extends Controller
                         ]);
                     }
                 }
-
-                // // Đồng bộ giá trị size
-                // if ($request->has('sizes')) {
-                //     $productSizesData = [];
-                //     foreach ($request->sizes as $key => $sizeId) {
-                //         $productSizesData[$sizeId] = ['price' => $request->size_price[$key] ?? 0];
-                //     }
-                //     $product->productSizes()->sync($productSizesData);
-
-                // }
-
-                // // Đồng bộ giá trị viền
-                // if ($request->has('edges')) {
-                //     $pizzaEdgesData = [];
-                //     foreach ($request->edges as $key => $edgeId) {
-                //         $pizzaEdgesData[$edgeId] = ['price' => $request->edge_price[$key] ?? 0];
-                //     }
-                //     $product->pizzaEdges()->sync($pizzaEdgesData);
-                // }
-
-                // // Đồng bộ giá trị đế bánh
-                // if ($request->has('bases')) {
-                //     $pizzaBasesData = [];
-                //     foreach ($request->bases as $key => $baseId) {
-                //         $pizzaBasesData[$baseId] = ['price' => $request->base_price[$key] ?? 0];
-                //     }
-                //     $product->pizzaBases()->sync($pizzaBasesData);
-                // }
-
-                // $product->productSizes()->sync($request->sizes);
-                // $product->pizzaEdges()->sync($request->edges);
-                // $product->pizzaBases()->sync($request->bases);
-
                 // Size
-                $productSizesData = [];
-                foreach ($request->sizes as $sizeId) {
-                    $size = ProductSize::find($sizeId);
-                    $productSizesData[$sizeId] = ['price' => $size->price];
+                if (!empty($request->sizes)) {
+                    $productSizesData = [];
+                    foreach ($request->sizes as $sizeId) {
+                        $size = ProductSize::find($sizeId);
+                        $productSizesData[$sizeId] = ['price' => $size->price];
+                    }
+                    $product->productSizes()->sync($productSizesData);
                 }
-                $product->productSizes()->sync($productSizesData);
-
 
                 // Edge
-                $productEdgesData = [];
-                foreach ($request->edges as $edgeId) {
-                    $edge = PizzaEdge::find($edgeId);
-                    $productEdgesData[$edgeId] = ['price' => $edge->price];
+                if (!empty($request->edges)) {
+                    $productEdgesData = [];
+                    foreach ($request->edges as $edgeId) {
+                        $edge = PizzaEdge::find($edgeId);
+                        $productEdgesData[$edgeId] = ['price' => $edge->price];
+                    }
+                    $product->pizzaEdges()->sync($productEdgesData);
                 }
-                $product->pizzaEdges()->sync($productEdgesData);
-
 
                 // Base
-                $productBasesData = [];
-                foreach ($request->bases as $baseId) {
-                    $base = PizzaBase::find($baseId);
-                    $productBasesData[$baseId] = ['price' => $base->price];
+                if (!empty($request->bases)) {
+                    $productBasesData = [];
+                    foreach ($request->bases as $baseId) {
+                        $base = PizzaBase::find($baseId);
+                        $productBasesData[$baseId] = ['price' => $base->price];
+                    }
+                    $product->pizzaBases()->sync($productBasesData);
                 }
-                $product->pizzaBases()->sync($productBasesData);
 
                 // dd($request->all());
 
@@ -326,6 +297,7 @@ class ProductController extends Controller
             if ($product->galleries && Storage::exists($product->galleries)) {
                 Storage::delete($product->galleries);
             }
+
 
             return redirect()->route('admin.products.index')->with('success', 'Xóa thành công');
         } catch (Exception $exception) {
