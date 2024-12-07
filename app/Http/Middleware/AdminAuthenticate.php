@@ -18,17 +18,6 @@ class AdminAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $validators = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        if($validators->fails()){
-            return response()->json([
-                'errors' => ($validators->errors())
-            ], 400);
-        }
-        
-        return $next($request);
+        return redirect('http://127.0.0.1:3000');
     }
 }

@@ -113,13 +113,13 @@ class OrderController extends Controller
                 return redirect()->back()->with('error', 'Đơn hàng "Đang Được Giao", không thể hủy.');
             } elseif (in_array($order->order_status, ['completed'])) {
                 return redirect()->back()->with('error', 'Đơn hàng "Đã Hoàn Thành", không thể hủy.');
-            } elseif (in_array($order->order_status, ['cancelled'])) {
+            } elseif (in_array($order->order_status, ['canceled'])) {
                 return redirect()->back()->with('error', 'Đơn hàng "Đã Bị Hủy", không thể hủy lần nữa.');
             }
 
             // Cập nhật trạng thái đơn hàng
             $order->update([
-                'order_status' => 'cancelled',
+                'order_status' => 'canceled',
                 'updated_at' => now(),
             ]);
 
