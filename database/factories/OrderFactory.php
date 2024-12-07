@@ -87,10 +87,31 @@ class OrderFactory extends Factory
 
             // Phương thức thanh toán và trạng thái thanh toán
             'payment_method' => $this->faker->randomElement(['credit_card', 'paypal', 'cash']),
+
             'payment_status' => $this->faker->randomElement(['pending', 'completed', 'failed']),
 
             // Ngày duyệt thanh toán (tùy chọn)
-            'payment_approve_date' => $this->faker->optional()->dateTime,
+            'payment_approve_date' => function (array $attributes) {
+                // Nếu payment_status là 'pending', thì không có ngày thanh toán
+                if ($attributes['payment_status'] === 'pending') {
+                    return null;
+                }
+
+                // Nếu payment_status là 'completed', chắc chắn có ngày thanh toán
+                if ($attributes['payment_status'] === 'completed') {
+                    return $this->faker->dateTimeBetween(now()->subMinutes(rand(1, 30)), now()->addHours(rand(1, 3))); // ngày trong khoảng 1 đến 3 giờ sau hoặc trước
+                }
+
+                // Nếu payment_status là 'failed', chỉ một số ít đơn hàng sẽ có ngày thanh toán
+                if ($attributes['payment_status'] === 'failed') {
+                    // Xác suất 30% có ngày thanh toán
+                    return rand(1, 100) <= 30
+                        ? $this->faker->dateTimeBetween(now()->subMinutes(rand(1, 30)), now()->addHours(rand(1, 3)))
+                        : null; // Không có ngày thanh toán trong 70% trường hợp
+                }
+
+                return null; // Mặc định trả về null
+            },
 
             // Thông tin mã giảm giá (nếu có)
             'coupon_info' => Coupon::inRandomOrder()->first()?->name ?? '',

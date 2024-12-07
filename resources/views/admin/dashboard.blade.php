@@ -145,7 +145,7 @@
                                     </div><!-- end card -->
                                 </div><!-- end col -->
 
-                                <div class="col-xl-3 col-md-6">
+                                {{-- <div class="col-xl-3 col-md-6">
                                     <!-- card -->
                                     <div class="card card-animate">
                                         <div class="card-body">
@@ -182,7 +182,7 @@
                                             </div>
                                         </div><!-- end card body -->
                                     </div><!-- end card -->
-                                </div><!-- end col -->
+                                </div><!-- end col --> --}}
 
                                 <div class="col-xl-3 col-md-6">
                                     <!-- card -->
@@ -191,7 +191,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                                        Doanh
+                                                        Tổng Doanh
                                                         Thu
                                                     </p>
                                                 </div>
@@ -204,7 +204,8 @@
                                                         VNĐ
                                                     </h4> --}}
                                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                        <span class="counter-value" data-target="{{ $revenue }}"></span>
+                                                        <span class="counter-value"
+                                                            data-target="{{ floor($revenue) }}"></span>
                                                         VNĐ
                                                     </h4>
 
@@ -258,12 +259,13 @@
                                                         VNĐ
                                                     </h4> --}}
                                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                        <span class="counter-value" data-target="{{ $profit }}"></span>
+                                                        <span class="counter-value"
+                                                            data-target="{{ floor($profit) }}"></span>
                                                         VNĐ
                                                     </h4>
 
-                                                    {{-- <a href="{{ route('admin.chart') }}"
-                                                        class="text-decoration-underline">Xem Chi Tiết</a> --}}
+                                                    <a href="#" class="text-decoration-underline">Xem Chi
+                                                        Tiết</a>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     {{-- <div>
@@ -285,9 +287,11 @@
                                                     </style>
                                                     <div class="avatar-sm flex-shrink-0">
                                                         <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                                            <i class="fa-solid fa-coins revenue-icon"></i>
+                                                            <i class="fa-solid fa-hand-holding-dollar"
+                                                                style="color: #28a745;"></i>
                                                         </span>
                                                     </div>
+
                                                 </div>
                                             </div><!-- end card body -->
                                         </div><!-- end card -->

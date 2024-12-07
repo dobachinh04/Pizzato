@@ -45,16 +45,16 @@ class DashboardController extends Controller
 
     private function getTotalRevenue()
     {
-
         return Order::sum('grand_total');
         // return DB::table('orders')
         // ->where('order_status', 'completed')
         // ->sum('grand_total');
     }
-    private function getToTalProfit(){
+    private function getToTalProfit()
+    {
         return DB::table('orders')
-        ->where('order_status', 'completed')
-        ->sum('grand_total');
+            ->where('order_status', 'completed')
+            ->sum('grand_total');
     }
 
     private function getTotalViews()
