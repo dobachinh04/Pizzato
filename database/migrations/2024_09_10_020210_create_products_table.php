@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('thumb_image')->nullable();
 
-            $table->foreignId('category_id')->constrained('categories');
+            // $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
 
             $table->integer('view')->default(0);
             $table->text('short_description')->nullable();

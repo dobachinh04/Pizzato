@@ -29,7 +29,8 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="card-title mb-0">Danh Mục Món Ăn</h5>
-                                <a href="{{ route('admin.categories.create') }}" class="btn btn-success ms-auto">Thêm mới </a>
+                                <a href="{{ route('admin.categories.create') }}" class="btn btn-success ms-auto">Thêm mới
+                                </a>
                             </div>
 
                             <div class="card-body">
@@ -75,8 +76,7 @@
                                                         if (!\Str::contains($url, 'http')) {
                                                             // $url = \Storage::url($url);
                                                             $url = asset('uploads/categories/' . $category->image);
-                                                        }else {
-
+                                                        } else {
                                                         }
                                                     @endphp
                                                     <img src="{{ $url }}" alt="" width="100px">
@@ -88,13 +88,103 @@
                                                 <td>
                                                     <a href="{{ route('admin.categories.edit', $category->id) }}"
                                                         class="btn btn-warning"><i class="fa fa-edit"> </i></a>
-                                                    <form action="{{ route('admin.categories.destroy', $category) }}"
+                                                    {{-- <form action="{{ route('admin.categories.destroy', $category) }}"
                                                         method="POST" style="display:inline;"
                                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                                    </form>
+                                                    </form> --}}
+
+                                                    @if ($category->products()->exists())
+                                                        <!-- Modal trigger button -->
+                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteCategoryModal-{{ $category->id }}"
+                                                            data-url="{{ route('admin.categories.destroy', $category->id) }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="deleteCategoryModal-{{ $category->id }}"
+                                                            tabindex="-1"
+                                                            aria-labelledby="deleteCategoryModalLabel-{{ $category->id }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="deleteCategoryModalLabel-{{ $category->id }}">
+                                                                            Xác nhận xóa danh mục
+                                                                        </h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <form id="deleteCategoryForm-{{ $category->id }}"
+                                                                        method="POST"
+                                                                        action="{{ route('admin.categories.destroy', $category->id) }}">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <div class="modal-body">
+                                                                            <p>Danh mục này còn sản phẩm, bạn muốn thực hiện
+                                                                                hành động nào?</p>
+                                                                            <div>
+                                                                                <label>
+                                                                                    <input type="radio" name="action"
+                                                                                        value="delete_products" required>
+                                                                                    Xóa tất cả sản phẩm trong danh mục
+                                                                                </label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <label>
+                                                                                    <input type="radio" name="action"
+                                                                                        value="move_products">
+                                                                                    Chuyển sản phẩm sang danh mục khác:
+                                                                                </label>
+                                                                                <select name="new_category_id">
+                                                                                    <option value="">-- Chọn danh mục
+                                                                                        --</option>
+                                                                                    @foreach ($categories as $otherCategory)
+                                                                                        @if ($otherCategory->id !== $category->id)
+                                                                                            <option
+                                                                                                value="{{ $otherCategory->id }}">
+                                                                                                {{ $otherCategory->name }}
+                                                                                            </option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            <div>
+                                                                                <label>
+                                                                                    <input type="radio" name="action"
+                                                                                        value="nullify_products">
+                                                                                    Gắn nhãn "Chưa Phân Loại"
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Hủy</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger">Xóa</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <!-- Simple delete form -->
+                                                        <form action="{{ route('admin.categories.destroy', $category) }}"
+                                                            method="POST" style="display:inline;"
+                                                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger"><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    @endif
+
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -107,6 +197,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -123,4 +215,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script src="/velzon/assets/js/pages/datatables.init.js"></script>
+@endsection
+
+@section('script ')
+    <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const deleteCategoryModal = document.getElementById('deleteCategoryModal');
+        //     const deleteCategoryForm = document.getElementById('deleteCategoryForm');
+
+        //     deleteCategoryModal.addEventListener('show.bs.modal', function(event) {
+        //         const button = event.relatedTarget; // Nút được bấm để mở modal
+        //         const actionUrl = button.getAttribute('data-url'); // Lấy URL từ thuộc tính data-url
+        //         deleteCategoryForm.setAttribute('action', actionUrl); // Cập nhật action của form
+        //     });
+        // });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteCategoryModal = document.querySelectorAll('[data-bs-toggle="modal"]');
+
+            deleteCategoryModal.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = button.getAttribute('data-bs-target').replace('#', '');
+                    const actionUrl = button.getAttribute('data-url');
+                    const form = document.querySelector(`#${modalId} form`);
+
+                    if (form) {
+                        form.setAttribute('action', actionUrl);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

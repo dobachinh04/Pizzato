@@ -24,4 +24,9 @@ class Category extends Model
     // {
     //     return $query->where('show_at_home', 1);
     // }
+    // Định nghĩa quan hệ 1-nhiều với Product
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
 }

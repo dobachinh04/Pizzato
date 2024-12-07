@@ -198,6 +198,7 @@
                                         @php
                                             $pizzaCategory = $product->category->name === 'Pizza';
                                         @endphp
+
                                         <div class="row">
 
                                             {{-- Pizza Bases --}}
@@ -309,49 +310,7 @@
                                             </div>
                                         @endif
 
-
-
                                     </div>
-                                    {{-- Product Galleries --}}
-
-                                    <!-- <div class="div">
-                                                        <h4>Hình ảnh chi tiết</h4>
-                                                        @if ($product->productGalleries->isNotEmpty())
-    <table class="table table-bordered">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>STT</th>
-                                                                        <th>Hình ảnh</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($product->productGalleries as $index => $gallery)
-    <tr>
-                                                                            <td>{{ $index + 1 }}</td>
-                                                                            <td>
-                                                                                {{-- @if ($gallery->galleries) --}}
-
-                                                                                {{-- @php
-                                                                    // Lấy đường dẫn từ cơ sở dữ liệu
-                                                                    $url = $gallery->galleries;
-
-                                                                    // Kiểm tra nếu đường dẫn không chứa 'http' thì thêm thư mục 'galleries/'
-                                                                    if (!\Str::contains($url, 'http')) {
-                                                                        $url = \Storage::url($url);
-                                                                    }
-                                                                @endphp
-                                                                <img src="{{ $url }}" alt="Gallery Image"
-                                                                    width="50"> --}}
-                                                                            </td>
-                                                                        </tr>
-    @endforeach
-                                                                </tbody>
-                                                            </table>
-@else
-    <p class="text-muted">Không có hình ảnh chi tiết.</p>
-    @endif
-                                                    </div> -->
-
                                 </div>
                             </div>
                         </div>
