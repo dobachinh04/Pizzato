@@ -17,6 +17,13 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $invoiceId = 'INV-' . $request->user_id . '-' . time();
+
+        if (Cache::has("orderData:$invoiceId")) {
+            return response()->json([
+                'error' => 'Đơn hàng này đã được thanh toán hoặc đang trong quá trình thanh toán.',
+            ], 400);
+        }
+
         $orderData = [
             'invoice_id' => $invoiceId,
             'user_id' => $request->user_id,
@@ -26,6 +33,8 @@ class CheckoutController extends Controller
             'product_qty' => $request->product_qty,
             'address_id' => $request->address_id,
             'payment_method' => $request->payment_method,
+            'delivery_charge' => $request->delivery_charge,
+            'coupon_info' => $request->coupon_info,
             'cartItems' => $request->cartItems,
         ];
 
@@ -55,25 +64,42 @@ class CheckoutController extends Controller
             'grand_total' => $request->grand_total,
             'product_qty' => $request->product_qty,
             'address_id' => $request->address_id,
-            'payment_method' => 'COD',
+            'payment_method' => 'cash',
+            'delivery_charge' => $request->delivery_charge,
+            'coupon_info' => $request->coupon_info,
             'order_status' => 'pending',
         ]);
 
         foreach ($request->cartItems as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item['id'],
-                'unit_price' => $item['price'],
-                'qty' => $item['quantity'],
-                'size' => $item['size'],
-            ]);
-
-            $product = Product::find($item['id']);
+            // Lock the product record for update
+            $product = Product::where('id', $item['id'])
+                              ->where('qty', '>=', $item['quantity'])
+                              ->lockForUpdate()  // Lock the record to avoid race condition
+                              ->first();
 
             if ($product) {
-                // Cập nhật lại số lượng tồn kho
-                $product->qty -= $item['quantity'];
-                $product->save();
+                $updated = Product::where('id', $item['id'])
+                    ->decrement('qty', $item['quantity']);
+
+                if (!$updated) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "Sản phẩm {$product->name} đã hết hàng hoặc không đủ số lượng.",
+                    ], 400);
+                }
+
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item['id'],
+                    'unit_price' => $item['price'],
+                    'qty' => $item['quantity'],
+                    'size' => $item['size'],
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Sản phẩm {$item['name']} đã hết hàng.",
+                ], 400);
             }
         }
 

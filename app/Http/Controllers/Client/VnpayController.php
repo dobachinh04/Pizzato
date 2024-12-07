@@ -100,12 +100,25 @@ class VnpayController extends Controller
         // Tạo hash với hmac sha512
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
 
-        // Kiểm tra xem chữ ký có hợp lệ không
-        if ($secureHash == $vnp_SecureHash) {
-            // Kiểm tra mã phản hồi từ VNPAY
-            if ($inputData['vnp_ResponseCode'] == '00') {
-                $invoiceId = $inputData['vnp_TxnRef'];
+        if ($secureHash != $vnp_SecureHash) {
+            return response()->json([
+                'error' => 'Chữ ký không hợp lệ!',
+            ], 400);
+        }
 
+        // Kiểm tra mã phản hồi từ VNPAY
+        if ($inputData['vnp_ResponseCode'] !== '00') {
+            return redirect()->away('http://127.0.0.1:3000/payment-failed');
+        }
+
+        // Lấy `invoiceId` từ callback
+        $invoiceId = $inputData['vnp_TxnRef'];
+
+        // Sử dụng Lock để đảm bảo callback chỉ xử lý một lần
+        $lock = Cache::lock("orderCallbackLock:$invoiceId", 30); // Thời gian khóa 30 giây
+
+        if ($lock->get()) {
+            try {
                 $orderData = Cache::get("orderData:$invoiceId");
 
                 if (!$orderData) {
@@ -114,7 +127,12 @@ class VnpayController extends Controller
                     ], 400);
                 }
 
-                // Lưu đơn hàng vào database
+                // Kiểm tra xem đơn hàng đã được xử lý chưa
+                $existingOrder = Order::where('invoice_id', $invoiceId)->first();
+                if ($existingOrder) {
+                    return redirect()->away('http://127.0.0.1:3000/payment-successed');
+                }
+
                 $order = Order::create([
                     'invoice_id' => $orderData['invoice_id'],
                     'user_id' => $orderData['user_id'],
@@ -126,9 +144,10 @@ class VnpayController extends Controller
                     'order_status' => 'pending',
                     'payment_status' => 'paid',
                     'payment_method' => $orderData['payment_method'],
+                    'delivery_charge' => $orderData['delivery_charge'],
+                    'coupon_info' => $orderData['coupon_info'],
                 ]);
 
-                // Lưu chi tiết đơn hàng
                 foreach ($orderData['cartItems'] as $item) {
                     OrderItem::create([
                         'order_id' => $order->id,
@@ -147,14 +166,18 @@ class VnpayController extends Controller
                     }
                 }
 
+                Cache::forget("orderData:$invoiceId");
+
                 return redirect()->away('http://127.0.0.1:3000/payment-successed');
-            } else {
-                return redirect()->away('http://127.0.0.1:3000/payment-failed');
+            } finally {
+                // Giải phóng Lock
+                $lock->release();
             }
         } else {
+            // Nếu không lấy được Lock, báo lỗi trùng lặp
             return response()->json([
-                'error' => 'Chữ ký không hợp lệ!',
-            ], 400);
+                'error' => 'Đơn hàng đang được xử lý bởi một tiến trình khác. Vui lòng thử lại sau.',
+            ], 429);
         }
     }
 }
