@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Coupon;
+use App\Models\DeliveryArea;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -60,6 +61,8 @@ class OrderFactory extends Factory
             }
         }
 
+        $deliveryArea = DeliveryArea::inRandomOrder()->first();
+
         return [
             // Mã invoice tăng dần từ 00001
             'invoice_id' => $invoiceId,
@@ -73,8 +76,8 @@ class OrderFactory extends Factory
 
             // Chọn ngẫu nhiên mức giảm giá, phí giao hàng, tổng số tiền
             'discount' => $discount, // Mức giảm giá đã tính
-            'delivery_charge' => $this->faker->randomFloat(2, 0, 50000), // Phí giao hàng từ 0 đến 50 nghìn VND
-            'sub_total' => $this->faker->randomFloat(2, 100000, 1000000),
+            'delivery_charge' => $deliveryArea ? $deliveryArea->delivery_fee : 0,
+            'sub_total' => $this->faker->randomFloat(2, 200000, 1000000),
 
             // Tính grand_total với giá trị số (không có đơn vị tiền tệ)
             'grand_total' => fn(array $attributes) => $attributes['sub_total'] - $attributes['discount'] + $attributes['delivery_charge'],

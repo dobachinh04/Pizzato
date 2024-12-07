@@ -53,12 +53,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>Giảm Giá</th>
-                                                <td>{{ number_format($order->discount, 0, ',', '.') }} VNĐ</td>
-                                            </tr>
-                                            <tr>
                                                 <th>Tổng Phụ</th>
                                                 <td>{{ number_format($order->sub_total, 0, ',', '.') }} VNĐ</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Giảm Giá</th>
+                                                <td>{{ number_format($order->discount, 0, ',', '.') }} VNĐ</td>
                                             </tr>
                                             <tr>
                                                 <th>Tổng Tiền</th>
@@ -132,25 +132,40 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <select name="order_status" class="form-select"
-                                                                onchange="this.form.submit();"
-                                                                {{ $order->order_status == 'completed' ? 'disabled' : '' }}>
-                                                                <option value="pending"
-                                                                    {{ $order->order_status == 'pending' ? 'selected' : '' }}>
-                                                                    Chờ Xác Nhận
-                                                                </option>
-                                                                <option value="processing"
-                                                                    {{ $order->order_status == 'processing' ? 'selected' : '' }}>
-                                                                    Đang Giao
-                                                                </option>
-                                                                <option value="completed"
-                                                                    {{ $order->order_status == 'completed' ? 'selected' : '' }}>
-                                                                    Hoàn Thành
-                                                                </option>
-                                                                <option value="canceled"
-                                                                    {{ $order->order_status == 'canceled' ? 'selected' : '' }}>
-                                                                    Hủy Đơn
-                                                                </option>
+                                                            <select class="form-select order-status-select"
+                                                                name="order_status" {{-- Disable select nếu trạng thái là "completed" hoặc "canceled" --}}
+                                                                {{ in_array($order->order_status, ['completed', 'canceled']) ? 'disabled' : '' }}
+                                                                onchange="this.className='form-select form-select-sm order-status-select ' + this.options[this.selectedIndex].className; this.form.submit();">
+
+                                                                {{-- Hiển thị option "pending" nếu trạng thái không phải "processing" hoặc "completed" --}}
+                                                                @if ($order->order_status != 'processing' && $order->order_status != 'completed')
+                                                                    <option value="pending" class="bg-warning text-dark"
+                                                                        {{ $order->order_status == 'pending' ? 'selected' : '' }}>
+                                                                        Chờ Xác Nhận
+                                                                    </option>
+                                                                @endif
+
+                                                                {{-- Hiển thị option "processing" nếu trạng thái không phải "completed" --}}
+                                                                @if ($order->order_status != 'completed')
+                                                                    <option value="processing" class="bg-primary text-white"
+                                                                        {{ $order->order_status == 'processing' ? 'selected' : '' }}>
+                                                                        Đang Giao
+                                                                    </option>
+                                                                @endif
+
+                                                                {{-- Hiển thị option "completed" nếu trạng thái không phải "canceled" --}}
+                                                                @if ($order->order_status != 'canceled')
+                                                                    <option value="completed" class="bg-success text-white"
+                                                                        {{ $order->order_status == 'completed' ? 'selected' : '' }}>
+                                                                        Hoàn Thành
+                                                                    </option>
+                                                                @endif
+
+                                                                {{-- Hiển thị option "canceled" --}}
+                                                                {{-- <option value="canceled" class="bg-danger text-white"
+                                                                {{ $order->order_status == 'canceled' ? 'selected' : '' }}>
+                                                                Hủy Đơn
+                                                            </option> --}}
                                                             </select>
                                                         </form>
                                                     @endif
