@@ -91,7 +91,6 @@
                                             <td>{{ $order->addresses->delivery_area->area_name ?? 'Không xác định' }}
                                             </td>
                                         </tr>
-
                                         <tr>
                                             <th>Phí Vận Chuyển</th>
                                             <td>{{ number_format($order->delivery_charge, 0, ',', '.') }} VNĐ
