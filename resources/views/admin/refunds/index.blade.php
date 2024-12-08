@@ -55,9 +55,9 @@
                                                 <td>{{ number_format($refund->refund_amount, 0, ',', '.') }}₫</td>
                                                 <td>
                                                     @if ($refund->status === 'pending')
-                                                        <span class="badge bg-success">Đang Chờ</span>
+                                                        <span class="badge bg-warning">Chờ Xác Nhận</span>
                                                     @elseif($refund->status === 'approved')
-                                                        <span class="badge bg-warning">Đã Duyệt</span>
+                                                        <span class="badge bg-success">Đã Duyệt</span>
                                                     @elseif($refund->status === 'rejected')
                                                         <span class="badge bg-danger">Bị Từ Chối</span>
                                                     @else
@@ -66,8 +66,45 @@
                                                 </td>
 
                                                 <td>
-                                                    <a class="btn btn-warning"
-                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Cập Nhật</a>
+                                                    @if ($refund->refund_status == 'rejected')
+                                                        {{-- Nếu trạng thái là "rejected", chỉ hiển thị badge --}}
+                                                        <span class="badge bg-danger text-dark">Bị Từ Chối</span>
+                                                    @else
+                                                        {{-- Nếu trạng thái không phải "rejected", hiển thị dropdown select --}}
+                                                        <form action="{{ route('admin.refunds.update_status', $refund) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+
+                                                            {{-- Dropdown cho các trạng thái khác --}}
+                                                            <select class="form-select form-select-sm refund-status-select"
+                                                                name="refund_status" {{-- Disable select nếu trạng thái là "approved" hoặc "rejected" --}}
+                                                                {{ in_array($refund->refund_status, ['approved', 'rejected']) ? 'disabled' : '' }}
+                                                                onchange="this.className='form-select form-select-sm refund-status-select ' + this.options[this.selectedIndex].className; this.form.submit();">
+
+                                                                {{-- Hiển thị option "pending" nếu trạng thái không phải "processing" hoặc "approved" --}}
+                                                                @if ($refund->refund_status != 'approved')
+                                                                    <option value="pending" class="bg-warning text-dark"
+                                                                        {{ $refund->refund_status == 'pending' ? 'selected' : '' }}>
+                                                                        Chờ Xác Nhận
+                                                                    </option>
+                                                                @endif
+
+                                                                {{-- Hiển thị option "approved" nếu trạng thái không phải "rejected" --}}
+                                                                @if ($refund->refund_status != 'rejected')
+                                                                    <option value="approved" class="bg-success text-white"
+                                                                        {{ $refund->refund_status == 'approved' ? 'selected' : '' }}>
+                                                                        Đã Duyệt
+                                                                    </option>
+                                                                @endif
+                                                            </select>
+                                                        </form>
+                                                    @endif
+                                                </td>
+
+                                                <td>
+                                                    <a class="btn btn-info"
+                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Chi Tiết</a>
                                                     <form action="{{ route('admin.refunds.destroy', $refund->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf

@@ -145,10 +145,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/create',                           [UserController::class, 'create'])->name('create');
         Route::post('/',                                [UserController::class, 'store'])->name('store');
-    Route::get('/{shipping}/edit',                      [UserController::class, 'edit'])->name('edit');
-    Route::put('/{shipping}',                           [UserController::class, 'update'])->name('update');
-    Route::get('/show/{shipping}',                      [UserController::class, 'show'])->name('show');
-    Route::delete('/{shipping}',                        [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/{shipping}/edit',                      [UserController::class, 'edit'])->name('edit');
+        Route::put('/{shipping}',                           [UserController::class, 'update'])->name('update');
+        Route::get('/show/{shipping}',                      [UserController::class, 'show'])->name('show');
+        Route::delete('/{shipping}',                        [UserController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('payment')->name('payment.')->group(function () {
@@ -174,11 +174,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/get-conversation/{senderId}',      [ChatController::class, 'getConversation'])->name('get-conversation');
         Route::post('/send-message',                    [ChatController::class, 'sendMessage'])->name('send-message');
     });
-    Route::resource('coupons', AdminCouponController::class);
 
-    Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
-    Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
+        Route::resource('coupons', AdminCouponController::class);
+
+        Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
+        Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
 
     // Admin - products Categories:
     Route::prefix('categories')->name('categories.')->group(function () {
@@ -198,6 +199,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
         Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
         Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
+
+        Route::put('/{refund}/update-status',            [RefundController::class, 'updateStatus'])->name('update_status');
     });
 
      /** Product Reviews Routes */
