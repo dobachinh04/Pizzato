@@ -22,32 +22,59 @@ class MenuController extends Controller
 
     public function getMenuPizza(Request $request)
     {
-        $categoryId = $request->input('categoryId', null);
-        $search = $request->input('search', null);
+        $categories = $request->input('categories', null);
+        $search = $request->input('searchTerm', null);
+        $sort = $request->input('sort', '1');
 
         $query = DB::table('products')
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->leftJoin('product_reviews', 'products.id', '=', 'product_reviews.product_id')
-            ->select('products.*', 'categories.name as category_name', DB::raw('AVG(product_reviews.rating) as avg_rating'))
-            ->groupBy('products.id')
-            ->orderByDesc('products.id');
+            ->select(
+                'products.*',
+                'categories.name as category_name',
+                DB::raw('COALESCE(AVG(product_reviews.rating), 0) as avg_rating'),
+            )
+            ->groupBy('products.id', 'categories.name');
 
-        if ($categoryId) {
-            $query->where('category_id', $categoryId);
+        if ($request->has('minPrice') && $request->has('maxPrice')) {
+            $query->whereBetween('offer_price', [$request->minPrice, $request->maxPrice]);
+        }
+
+        if ($categories) {
+            $query->whereIn('category_id', $categories);
         }
 
         if ($search) {
             $query->where('products.name', 'like', '%' . $search . '%');
         }
 
-        $totalPizza = $query->count();
-        $menus = $query->get();
+        switch ($sort) {
+            case '1':
+                $query->orderByDesc('products.created_at'); // Sắp xếp theo Mới nhất
+                break;
+            case '2':
+                $query->orderByDesc('products.view'); // Sắp xếp theo Phổ biến nhất
+                break;
+            case '3':
+                $query->orderBy('products.offer_price'); // Sắp xếp theo Giá cả tăng dần
+                break;
+            case '4':
+                $query->orderByDesc('products.offer_price'); // Sắp xếp theo Giá cả giảm dần
+                break;
+            default:
+                $query->orderByDesc('products.created_at'); // Mặc định sắp xếp theo Mới nhất
+                break;
+        }
 
+        $pageSize = $request->input('pageSize', 9);
+        $menus = $query->paginate($pageSize);
 
         return response()->json([
             'success' => true,
-            'menus' => $menus,
-            'totalPizza' => $totalPizza
+            'menus' => $menus->items(),
+            'totalPizza' => $menus->total(),
+            'currentPage' => $menus->currentPage(),
+            'lastPage' => $menus->lastPage(),
         ], 200);
     }
 
