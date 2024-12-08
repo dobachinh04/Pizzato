@@ -32,7 +32,8 @@
                             </div>
 
                             <div class="card-body">
-                                <table class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                <table id="example"
+                                    class="table table-bordered dt-responsive nowrap table-striped align-middle"
                                     style="width:100%">
                                     <thead>
                                         <tr>
@@ -63,9 +64,7 @@
                                                     @else
                                                         <span class="badge bg-secondary">{{ $refund->status }}</span>
                                                     @endif
-                                                </td>
 
-                                                <td>
                                                     @if ($refund->refund_status == 'rejected')
                                                         {{-- Nếu trạng thái là "rejected", chỉ hiển thị badge --}}
                                                         <span class="badge bg-danger text-dark">Bị Từ Chối</span>
