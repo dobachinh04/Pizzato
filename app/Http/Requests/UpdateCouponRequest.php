@@ -36,7 +36,24 @@ class UpdateCouponRequest extends FormRequest
                 }
             ],
             'discount_type' => 'required|in:percent,amount',
-            'discount' => 'required|numeric|min:0',
+            'discount' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) {
+                    // Nếu loại giảm giá là phần trăm thì không được vượt quá 100
+                    if (request()->discount_type === 'percent' && $value > 100) {
+                        $fail('Giảm giá theo phần trăm không được vượt quá 100%.');
+                    }
+                }
+            ],
+            // 'max_discount_amount' => 'required|numeric|min:0',
+            'max_discount_amount' => [
+                'required_if:discount_type,percent',
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
         ];
     }
 
@@ -64,6 +81,7 @@ class UpdateCouponRequest extends FormRequest
             // 'expire_date.date' => 'Ngày hết hạn phải là ngày hợp lệ.',
             // 'expire_date.after' => 'Ngày hết hạn phải sau ngày hôm nay.',
 
+
             'expire_date.required' => 'Vui lòng nhập ngày hết hạn.',
             'expire_date.date' => 'Ngày hết hạn phải là một ngày hợp lệ.',
             'expire_date.after_or_equal' => 'Ngày hết hạn không được trước hôm nay.',
@@ -75,6 +93,11 @@ class UpdateCouponRequest extends FormRequest
             'discount.required' => 'Giá trị giảm giá không được để trống.',
             'discount.numeric' => 'Giá trị giảm giá phải là số.',
             'discount.min' => 'Giá trị giảm giá không được nhỏ hơn 0.',
+
+            'max_discount_amount.numeric' => 'Số tiền giảm tối đa phải là một số.',
+            'max_discount_amount.min' => 'Số tiền giảm tối đa không được nhỏ hơn :min.',
+            // 'max_discount_amount.required' => 'Vui lòng nhập số tiền tối đa được giảm',
+            'max_discount_amount.required_if' => 'Số tiền giảm tối đa là bắt buộc.',
         ];
     }
 }

@@ -66,7 +66,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label>Loại giảm giá</label>
-                                                    <select name="discount_type" class="form-control @error('discount_type') is-invalid @enderror">
+                                                    <select name="discount_type"  id="discount_type" class="form-control @error('discount_type') is-invalid @enderror">
                                                         <option value="percent" {{ old('discount_type') == 'percent' ? 'selected' : '' }}>Phần trăm</option>
                                                         <option value="amount" {{ old('discount_type') == 'amount' ? 'selected' : '' }}>Số tiền (VNĐ)</option>
                                                     </select>
@@ -80,6 +80,15 @@
                                                     <input type="number" name="discount" class="form-control @error('discount') is-invalid @enderror"
                                                         value="{{ old('discount') }}" placeholder="Nhập giá trị giảm">
                                                     @error('discount')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group" id="max_discount_amount_group" style="display: none;">
+                                                    <label>Số tiền giảm tối đa</label>
+                                                    <input type="number" name="max_discount_amount" class="form-control @error('max_discount_amount') is-invalid @enderror"
+                                                        value="{{ old('max_discount_amount') }}" placeholder="Nhập số tiền giảm tối đa">
+                                                    @error('max_discount_amount')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -132,6 +141,7 @@
 
 @section('script')
 <script>
+    // gen code
     document.addEventListener('DOMContentLoaded', function () {
         const generateCodeButton = document.getElementById('generate-code');
         const couponCodeInput = document.getElementById('coupon-code');
@@ -147,6 +157,30 @@
             couponCodeInput.value = randomCode;
         });
     });
+
+
+
+    // ẩn/hiển thị trường max_discount_amount
+    document.addEventListener('DOMContentLoaded', function () {
+        const discountTypeSelect = document.getElementById('discount_type');
+        const maxDiscountAmountGroup = document.getElementById('max_discount_amount_group');
+
+        // Hàm kiểm tra và điều khiển hiển thị
+        function toggleMaxDiscountAmount() {
+            if (discountTypeSelect.value === 'percent') {
+                maxDiscountAmountGroup.style.display = 'block';
+            } else {
+                maxDiscountAmountGroup.style.display = 'none';
+            }
+        }
+
+        // Kiểm tra khi tải trang (giữ lại trạng thái nếu có lỗi)
+        toggleMaxDiscountAmount();
+
+        // Lắng nghe sự kiện thay đổi
+        discountTypeSelect.addEventListener('change', toggleMaxDiscountAmount);
+    });
+
 
 </script>
 
