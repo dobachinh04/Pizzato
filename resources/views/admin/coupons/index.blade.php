@@ -51,6 +51,7 @@
                                             <th>Giá Mua Tối Thiểu</th>
                                             <th>Loại Giảm Giá</th>
                                             <th>Giảm Giá</th>
+                                            <th>Giảm tối đa</th>
                                             <th>Giờ Hết Hạn</th>
                                             <th>Ngày Hết Hạn</th>
                                             <th>Trạng Thái</th>
@@ -80,6 +81,7 @@
 
                                                 <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount, 0, ',', '.') . ' ₫' }}
                                                 </td>
+                                                <td>{{ ucfirst($item->discount_type === 'percent' ? $item->max_discount_amount : 'Không có' )}}</td>
                                                 {{-- <td>{{ $item->expire_date }}</td> --}}
                                                 <!-- Giờ hết hạn -->
                                                 <td>{{ \Carbon\Carbon::parse($item->expire_date)->format('H:i') }}</td>

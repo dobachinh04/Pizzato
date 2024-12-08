@@ -16,6 +16,7 @@ class Coupon extends Model
         'expire_date',
         'discount_type',
         'discount',
+        'max_discount_amount',
         'status',
 
     ];
