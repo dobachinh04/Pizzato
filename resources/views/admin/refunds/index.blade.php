@@ -52,26 +52,29 @@
                                                 <td>{{ $refund->invoice_id }}</td>
                                                 <td>{{ $refund->name }}</td>
                                                 <td>{{ $refund->email }}</td>
-                                                <td>${{ number_format($refund->refund_amount, 2) }}</td>
+                                                <td>{{ number_format($refund->refund_amount, 0, ',', '.') }}₫</td>
                                                 <td>
-                                                    {!! $refund->status == 'Pending'
-                                                        ? '<span class="badge bg-warning">Pending</span>'
-                                                        : ($refund->status == 'Approved'
-                                                            ? '<span class="badge bg-primary">Approved</span>'
-                                                            : '<span class="badge bg-danger">Rejected</span>') !!}
+                                                    @if ($refund->status === 'pending')
+                                                        <span class="badge bg-success">Đang Chờ</span>
+                                                    @elseif($refund->status === 'approved')
+                                                        <span class="badge bg-warning">Đã Duyệt</span>
+                                                    @elseif($refund->status === 'rejected')
+                                                        <span class="badge bg-danger">Bị Từ Chối</span>
+                                                    @else
+                                                        <span class="badge bg-secondary">{{ $refund->status }}</span>
+                                                    @endif
                                                 </td>
+
                                                 <td>
-                                                    <a class="btn btn-info"
-                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Chi Tiết</a>
                                                     <a class="btn btn-warning"
-                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Sửa</a>
+                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Cập Nhật</a>
                                                     <form action="{{ route('admin.refunds.destroy', $refund->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button
                                                             onclick="return confirm('Bạn có chắc chắn muốn xóa yêu cầu hoàn tiền này?');"
-                                                            type="submit" class="btn btn-danger">Xóa</button>
+                                                            type="submit" class="btn btn-danger">Hủy Yêu Cầu</button>
                                                     </form>
                                                 </td>
                                             </tr>

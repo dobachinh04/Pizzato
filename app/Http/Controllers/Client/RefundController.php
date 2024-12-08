@@ -20,7 +20,7 @@ class RefundController extends Controller
             'refund_reason' => $request->refund_reason,
             'bank_number' => $request->bank_number,
             'bank_type' => $request->bank_type,
-            'status' => 'Đang xử lý',
+            'status' => 'pending',
         ]);
 
         $order = Order::where('invoice_id', $request->invoice_id)->first();

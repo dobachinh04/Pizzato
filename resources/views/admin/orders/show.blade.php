@@ -133,7 +133,7 @@
                                                             <span class="badge bg-success">Tiền Mặt</span>
                                                         @break
 
-                                                        @case('vn_pay')
+                                                        @case('vnpay')
                                                             <span class="badge bg-success">VN Pay</span>
                                                         @break
 
