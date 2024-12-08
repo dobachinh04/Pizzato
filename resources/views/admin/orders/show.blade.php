@@ -25,30 +25,44 @@
                                             <th>Tên Sản Phẩm</th>
                                             <th>Giá Tiền</th>
                                             <th>Số Lượng</th>
+                                            <th>Sỉzes Bánh</th>
+                                            <th>Viền Bánh</th>
+                                            <th>Đế Bánh</th>
                                             <th>Tổng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $totalQty = 0;
+                                            $totalPrice = 0;
+                                        @endphp
                                         @forelse ($order->items as $index => $item)
+                                            @php
+                                                $totalQty += $item->qty;
+                                                $totalPrice += $item->unit_price * $item->qty;
+
+                                                // Xử lý URL hình ảnh
+                                                $url = $item->product->thumb_image ?? null;
+                                                if ($url) {
+                                                    if (!\Str::contains($url, 'http')) {
+                                                        $url = \Storage::url($url);
+                                                    }
+                                                } else {
+                                                    $url = asset('default-image.jpg'); // Hình ảnh mặc định nếu không có
+                                                }
+                                            @endphp
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>
-                                                    @php
-                                                        $url = $item->product->thumb_image ?? null;
-                                                        if ($url) {
-                                                            if (!\Str::contains($url, 'http')) {
-                                                                $url = \Storage::url($url);
-                                                            }
-                                                        } else {
-                                                            $url = asset('default-image.jpg'); // Hình ảnh mặc định nếu không có
-                                                        }
-                                                    @endphp
                                                     <img src="{{ $url }}"
                                                         alt="{{ $item->product->name ?? 'Sản phẩm' }}" width="75px">
                                                 </td>
                                                 <td>{{ $item->product->name ?? 'Không Có' }}</td>
                                                 <td>{{ number_format($item->unit_price, 0, ',', '.') }} VNĐ</td>
                                                 <td>{{ $item->qty }}</td>
+                                                <td>Chưa có</td>
+                                                <td>Chưa có</td>
+                                                <td>Chưa có</td>
                                                 <td>{{ number_format($item->unit_price * $item->qty, 0, ',', '.') }} VNĐ
                                                 </td>
                                             </tr>
@@ -59,8 +73,17 @@
                                             </tr>
                                         @endforelse
                                     </tbody>
+                                    @if ($order->items->isNotEmpty())
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="8" class="text-end">Tổng Tiền Tạm Tính:</th>
+                                                <th>{{ number_format($totalPrice, 0, ',', '.') }} VNĐ</th>
+                                            </tr>
+                                        </tfoot>
+                                    @endif
                                 </table>
                             </div>
+
 
                             <div class="card-body">
                                 <h5>Thông Tin Đơn Hàng</h5>
