@@ -59,7 +59,7 @@
                                             <td>{{ $area->area_name }}</td>
                                             <td>{{ $area->min_delivery_time }}</td>
                                             <td>{{ $area->max_delivery_time }}</td>
-                                            <td>{{ $area->delivery_fee }}</td>
+                                            <td>{{ number_format($area->delivery_fee, 0, ',', '.') }}₫</td>
                                             <td>{{ $area->status == 1 ? 'Active' : 'Inactive'}}</td>
                                             <td>
                                                 <a href="{{ route('admin.delivery_areas.edit', $area->id) }}"

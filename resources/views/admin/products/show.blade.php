@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header d-flex align-items-center" style="justify-content: space-between">
                                 <h5 class="card-title mb-0 mr-5">Chi Tiết Sản Phẩm: {{ $product->name }}</h5>
 
                                 <div class="d-flex justify-content-center">

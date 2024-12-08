@@ -72,16 +72,17 @@
                                                 <td>{{ $item->code }}</td>
                                                 <td>{{ $item->qty }}</td>
                                                 {{-- <td>{{ number_format($item->min_purchase_amount) }} VND</td> --}}
-                                                <td>{{ number_format($item->min_purchase_amount, 0, ',', '.') }} ₫</td>
+                                                <td>{{ number_format($item->min_purchase_amount, 0, ',', '.') }}₫</td>
 
                                                 {{-- <td>{{ ucfirst($item->discount_type) }}</td> --}}
                                                 <td>
-                                                    {{ ucfirst($item->discount_type === 'amount' ? 'Giảm theo số tiền' : 'Giảm theo phần trăm' )}}
+                                                    {{ ucfirst($item->discount_type === 'amount' ? 'Giảm theo số tiền' : 'Giảm theo phần trăm') }}
                                                 </td>
 
                                                 <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount, 0, ',', '.') . ' ₫' }}
                                                 </td>
-                                                <td>{{ ucfirst($item->discount_type === 'percent' ? $item->max_discount_amount : 'Không có' )}}</td>
+                                                <td>{{ ucfirst($item->discount_type === 'percent' ? $item->max_discount_amount : 'Không có') }}
+                                                </td>
                                                 {{-- <td>{{ $item->expire_date }}</td> --}}
                                                 <!-- Giờ hết hạn -->
                                                 <td>{{ \Carbon\Carbon::parse($item->expire_date)->format('H:i') }}</td>
@@ -92,15 +93,18 @@
                                                     : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
                                                     <a class="btn btn-info"
-                                                        href="{{ route('admin.coupons.show', $item->id) }}"><i class="fa fa-info-circle"></i></a>
+                                                        href="{{ route('admin.coupons.show', $item->id) }}"><i
+                                                            class="fa fa-info-circle"></i></a>
                                                     <a class="btn btn-warning"
-                                                        href="{{ route('admin.coupons.edit', $item->id) }}"><i class="fa fa-edit"> </i></a>
+                                                        href="{{ route('admin.coupons.edit', $item->id) }}"><i
+                                                            class="fa fa-edit"> </i></a>
                                                     <form action="{{ route('admin.coupons.destroy', $item->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
-                                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                            type="submit" class="btn btn-danger"><i
+                                                                class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>
