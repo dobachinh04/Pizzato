@@ -25,6 +25,10 @@ class CouponFactory extends Factory
             ? $this->faker->numberBetween(5, 50) // Phần trăm giảm từ 5% đến 50%
             : $this->roundToNearest($this->faker->numberBetween(10000, 150000)); // Số tiền giảm từ 10,000 VND đến 150,000 VND, làm tròn
 
+        // Số tiền giảm tối đa, chỉ áp dụng khi loại là percent
+        $maxDiscountAmount = $discountType === 'percent'
+            ? $this->faker->numberBetween(50000, 200000) // Giới hạn số tiền giảm tối đa từ 50,000 VND đến 200,000 VND
+            : null;
         return [
             'name' => strtoupper($this->faker->unique()->word),  // Tên của coupon, viết hoa và unique
             'code' => strtoupper(Str::random(10)),  // Mã coupon ngẫu nhiên
@@ -33,6 +37,7 @@ class CouponFactory extends Factory
             'expire_date' => $this->faker->dateTimeBetween('now', '+1 year'),  // Ngày hết hạn từ hiện tại đến 1 năm
             'discount_type' => $discountType,  // Loại giảm giá: 'percent' hoặc 'amount'
             'discount' => $discount,  // Giá trị giảm giá tương ứng
+            'max_discount_amount' =>  $this->roundToNearest($maxDiscountAmount),  // Số tiền giảm tối đa nếu là percent
             'status' => $this->faker->boolean,  // Trạng thái: true hoặc false
         ];
     }

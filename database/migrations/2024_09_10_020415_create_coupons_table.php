@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('expire_date');
             $table->enum('discount_type', ['percent', 'amount']);
             $table->double('discount');
+            $table->double('max_discount_amount')->nullable()->comment('Giới hạn số tiền giảm tối đa nếu loại giảm giá là percent');
             $table->boolean('status')->default('1');
         });
     }

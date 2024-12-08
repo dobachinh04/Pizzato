@@ -4,12 +4,11 @@
     Chi Tiết Mã Giảm Giá - Pizzato
 @endsection
 @section('style')
-<style>
-
-    .mr-10{
-        margin-right: 10px;
-    }
-</style>
+    <style>
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="main-content">
@@ -44,6 +43,7 @@
                                                 'min_purchase_amount' => 'Số tiền tối thiểu',
                                                 'discount_type' => 'Loại giảm giá',
                                                 'discount' => 'Giá trị giảm',
+                                                'max_discount_amount' => 'Số tiền giảm tối da',
                                                 'expire_date' => 'Ngày hết hạn',
 
                                                 'status' => 'Trạng thái',
@@ -58,6 +58,9 @@
                                                     <th>Giá trị</th>
                                                 </tr>
                                                 @foreach ($coupon->toArray() as $field => $value)
+                                                    @if ($field == 'max_discount_amount' && $coupon->discount_type != 'percent')
+                                                        @continue {{-- Bỏ qua khi discount_type không phải percent --}}
+                                                    @endif
                                                     <tr>
                                                         <th>{{ $fieldNames[$field] ?? Str::ucfirst(str_replace('_', ' ', $field)) }}
                                                         </th>
@@ -66,6 +69,8 @@
                                                                 {{ $value == 'percent' ? 'Phần trăm' : 'Số tiền' }}
                                                             @elseif ($field == 'discount')
                                                                 {{ $coupon->discount_type == 'percent' ? $value . '%' : number_format($value) . ' VND' }}
+                                                            @elseif ($field == 'max_discount_amount')
+                                                                {{ number_format($value) }} VNĐ
                                                             @elseif ($field == 'status')
                                                                 <span
                                                                     class="badge {{ $value ? 'bg-primary' : 'bg-danger' }}">
@@ -73,7 +78,7 @@
                                                                 </span>
                                                             @elseif (is_numeric($value) && $field == 'min_purchase_amount')
                                                                 {{ number_format($value) }} VND
-                                                                @elseif ($field == 'created_at' || $field == 'updated_at')
+                                                            @elseif ($field == 'created_at' || $field == 'updated_at')
                                                                 {{ \Carbon\Carbon::parse($value)->format('d/m/Y') }}
                                                             @elseif ($field == 'expire_date')
                                                                 @php

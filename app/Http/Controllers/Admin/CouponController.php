@@ -38,11 +38,11 @@ class CouponController extends Controller
 
     public function create()
     {
-        $code = $this->generateUniqueCode();
+
 
         $discountTypes = ['percent' => 'Percent', 'amount' => 'Amount'];
 
-        return view("admin.coupons.create", compact('code', 'discountTypes'));
+        return view("admin.coupons.create", compact( 'discountTypes'));
     }
 
 
@@ -60,10 +60,7 @@ class CouponController extends Controller
         } else {
             $data['status'] = $request->status;
         }
-
-        // Tạo mã code unique cho mỗi coupon
-        $data['code'] = $this->generateUniqueCode();
-
+        // dd($data);
         Coupon::query()->create($data);
         return back()
             ->with('success', 'Thêm mã giảm giá thành công!');
@@ -80,7 +77,7 @@ class CouponController extends Controller
     public function edit(Coupon $coupon)
     {
         $discountTypes = ['percent' => 'Percent', 'amount' => 'Amount'];
-        // $data['code'] = $this->generateUniqueCode();
+
 
         return view("admin.coupons.edit", compact('coupon', 'discountTypes'));
     }
@@ -111,6 +108,12 @@ class CouponController extends Controller
             $data['code'] = $request->code; // Lấy mã mới từ request
         }
 
+         // Xử lý max_discount_amount dựa trên discount_type
+        if ($request->discount_type === 'percent') {
+            $data['max_discount_amount'] = $request->max_discount_amount; // Lưu giá trị từ request
+        } else {
+            $data['max_discount_amount'] = null; // Đặt null nếu không phải "phần trăm"
+        }
         $coupon->update($data);
 
         return back()

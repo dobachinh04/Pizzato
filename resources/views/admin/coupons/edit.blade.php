@@ -45,10 +45,11 @@
 
                                                 <div class="input-group">
                                                     <input type="text" id="coupon-code" name="code"
-                                                           class="form-control @error('code') is-invalid @enderror"
-                                                           value="{{ old('code', $coupon->code) }}"
-                                                           placeholder="Nhập mã giảm giá">
-                                                    <button type="button" id="generate-code" class="btn btn-secondary">Ngẫu nhiên</button>
+                                                        class="form-control @error('code') is-invalid @enderror"
+                                                        value="{{ old('code', $coupon->code) }}"
+                                                        placeholder="Nhập mã giảm giá">
+                                                    <button type="button" id="generate-code" class="btn btn-secondary">Ngẫu
+                                                        nhiên</button>
                                                 </div>
 
 
@@ -93,9 +94,10 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
+
                                             <div class="form-group">
                                                 <label>Loại giảm giá</label>
-                                                <select name="discount_type" class="form-control">
+                                                <select name="discount_type" id="discount_type" class="form-control">
                                                     <option value="percent"
                                                         {{ old('discount_type', $coupon->discount_type) == 'percent' ? 'selected' : '' }}>
                                                         Phần trăm
@@ -119,11 +121,25 @@
                                                 @enderror
                                             </div>
 
+                                            <div class="form-group" id="max_discount_amount_group"
+                                                style="{{ old('discount_type', $coupon->discount_type) == 'percent' ? '' : 'display: none;' }}">
+                                                <label>Số tiền giảm tối đa</label>
+                                                <input type="number" name="max_discount_amount" class="form-control"
+                                                    value="{{ old('max_discount_amount', $coupon->max_discount_amount) }}"
+                                                    placeholder="Nhập số tiền giảm tối đa">
+                                                @error('max_discount_amount')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
                                                 <select name="status" class="form-control">
-                                                    <option value="1" {{ $coupon->status == 1 ? 'selected' : '' }}>Kích hoạt</option>
-                                                    <option value="0" {{ $coupon->status == 0 ? 'selected' : '' }}>Không kích hoạt</option>
+                                                    <option value="1" {{ $coupon->status == 1 ? 'selected' : '' }}>
+                                                        Kích hoạt</option>
+                                                    <option value="0" {{ $coupon->status == 0 ? 'selected' : '' }}>
+                                                        Không kích hoạt</option>
                                                 </select>
                                                 @error('status')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -146,38 +162,62 @@
 @endsection
 
 @section('script')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const generateCodeButton = document.getElementById('generate-code');
-        const couponCodeInput = document.getElementById('coupon-code');
+    <script>
+        // gen code
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateCodeButton = document.getElementById('generate-code');
+            const couponCodeInput = document.getElementById('coupon-code');
 
-        // Lưu giá trị mã gốc để so sánh
-        const originalCode = couponCodeInput.value;
+            // Lưu giá trị mã gốc để so sánh
+            const originalCode = couponCodeInput.value;
 
-        generateCodeButton.addEventListener('click', function () {
-            // Random mã giảm giá (10 ký tự, chữ và số)
-            const randomCode = Array.from({ length: 10 }, () => {
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                return chars[Math.floor(Math.random() * chars.length)];
-            }).join('');
+            generateCodeButton.addEventListener('click', function() {
+                // Random mã giảm giá (10 ký tự, chữ và số)
+                const randomCode = Array.from({
+                    length: 10
+                }, () => {
+                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
 
-            // Gán mã vào ô input
-            couponCodeInput.value = randomCode;
+                // Gán mã vào ô input
+                couponCodeInput.value = randomCode;
+            });
+
+            // Thêm vào form để gửi mã giảm giá khi có sự thay đổi
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', function() {
+                // Kiểm tra xem mã có thay đổi không, nếu có thì sẽ gửi mã mới
+                if (couponCodeInput.value !== originalCode) {
+                    // Gửi mã mới
+                    couponCodeInput.name = 'code'; // Đảm bảo trường code được gửi
+                } else {
+                    // Giữ nguyên mã cũ
+                    couponCodeInput.name = 'code'; // Đảm bảo trường code được gửi
+                }
+            });
         });
 
-        // Thêm vào form để gửi mã giảm giá khi có sự thay đổi
-        const form = document.querySelector('form');
+        // ẩn/hiện trường giá trị giảm tối đa
+        document.addEventListener('DOMContentLoaded', function() {
+            const discountType = document.getElementById('discount_type');
+            const maxDiscountAmountGroup = document.getElementById('max_discount_amount_group');
 
-        form.addEventListener('submit', function () {
-            // Kiểm tra xem mã có thay đổi không, nếu có thì sẽ gửi mã mới
-            if (couponCodeInput.value !== originalCode) {
-                // Gửi mã mới
-                couponCodeInput.name = 'code';  // Đảm bảo trường code được gửi
-            } else {
-                // Giữ nguyên mã cũ
-                couponCodeInput.name = 'code';  // Đảm bảo trường code được gửi
+            // Hàm kiểm tra và thay đổi trạng thái hiển thị
+            function toggleMaxDiscountAmount() {
+                if (discountType.value === 'percent') {
+                    maxDiscountAmountGroup.style.display = 'block';
+                } else {
+                    maxDiscountAmountGroup.style.display = 'none';
+                }
             }
+
+            // Gọi hàm khi trang được tải
+            toggleMaxDiscountAmount();
+
+            // Lắng nghe sự kiện thay đổi giá trị
+            discountType.addEventListener('change', toggleMaxDiscountAmount);
         });
-    });
-</script>
+    </script>
 @endsection
