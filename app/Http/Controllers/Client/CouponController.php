@@ -27,6 +27,7 @@ class CouponController extends Controller
         ], 200);
     }
 
+
     // public function getCouponDetail($code)
     // {
     //     $coupon = Coupon::query()

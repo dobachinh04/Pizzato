@@ -45,6 +45,20 @@ return [
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
+        'notify' => [
+            'transport' => 'smtp',
+            'host' => env('NOTIFY_MAIL_HOST'),
+            'port' => env('NOTIFY_MAIL_PORT'),
+            'encryption' => env('NOTIFY_MAIL_ENCRYPTION'),
+            'username' => env('NOTIFY_MAIL_USERNAME'),
+            'password' => env('NOTIFY_MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'from' => [
+                'address' => env('NOTIFY_MAIL_FROM_ADDRESS'),
+                'name' => env('NOTIFY_MAIL_FROM_NAME'),
+            ],
+        ],
 
         'ses' => [
             'transport' => 'ses',

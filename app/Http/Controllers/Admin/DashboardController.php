@@ -8,8 +8,10 @@ use App\Models\ProductReview;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NotifyDelayOrderRequest;
+use App\Mail\NotifyOrderEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -250,7 +252,6 @@ class DashboardController extends Controller
     public function notifyOrder(Request $request)
     {
 
-
         // Lấy nội dung thông báo
         $message = $request->input('message') === 'Khác'
             ? $request->input('message_custom')
@@ -262,6 +263,7 @@ class DashboardController extends Controller
         $solution = $request->input('solution') === 'Khác'
             ? $request->input('solution_custom')
             : $request->input('solution_custom') ?? $request->input('solution');
+
         // Lưu vào bảng delay_notifications
         DB::table('delay_notifications')->insert([
             // 'id' => $request->input('order_id'),
@@ -272,6 +274,39 @@ class DashboardController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Lấy thông tin người dùng từ đơn hàng
+        // $order = DB::table('orders')
+        //     ->where('invoice_id', $request->input('invoice_id'))
+        //     ->first();
+
+        // Lấy thông tin đơn hàng
+        $order = DB::table('orders')
+            ->where('invoice_id', $request->input('invoice_id'))
+            ->first();
+
+        if ($order) {
+            // Lấy thông tin người dùng
+            $user = DB::table('users')->where('id', $order->user_id)->first();
+
+            if ($user) {
+                // Dữ liệu truyền vào email
+                $emailData = [
+                    'invoice_id' => $order->invoice_id,
+                    'user_name' => $user->name,
+                    'email' => $user->email,
+                    'message' => $message,
+                    'solution' => $solution,
+                ];
+
+                // Gửi email thông báo bằng Mailable
+                // Mail::to($user->email)->send(new NotifyOrderEmail($emailData));
+
+                // Gửi email với cấu hình mailer tùy chỉnh
+                Mail::mailer('notify') // Sử dụng mailer 'notify' đã cấu hình trong mail.php
+                    ->to($user->email)
+                    ->send(new NotifyOrderEmail($emailData));
+            }
+        }
         // Redirect lại trang với thông báo thành công
         return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
     }
