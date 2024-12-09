@@ -54,5 +54,4 @@ class OrderController extends Controller
             'message' => 'Đơn hàng đã được hủy thành công.',
         ]);
     }
-
 }

@@ -32,6 +32,7 @@ class CheckoutController extends Controller
             'grand_total' => $request->grand_total,
             'product_qty' => $request->product_qty,
             'address_id' => $request->address_id,
+            'discount' => $request->discount,
             'payment_method' => $request->payment_method,
             'delivery_charge' => $request->delivery_charge,
             'coupon_info' => $request->coupon_info,
@@ -67,6 +68,7 @@ class CheckoutController extends Controller
             'payment_method' => 'cash',
             'delivery_charge' => $request->delivery_charge,
             'coupon_info' => $request->coupon_info,
+            'discount' => $request->discount,
             'order_status' => 'pending',
         ]);
 
