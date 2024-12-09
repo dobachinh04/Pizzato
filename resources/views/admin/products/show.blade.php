@@ -272,7 +272,6 @@
                                                                 <th>Tên kích thước</th>
                                                                 <th>Giá</th>
                                                                 <th>Hình ảnh</th>
-                                                                <th>Giá</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -296,9 +295,6 @@
                                                                         @else
                                                                             <p class="text-muted">Không có hình ảnh</p>
                                                                         @endif
-                                                                    </td>
-                                                                    <td>{{ number_format($size->pivot->price, 0, ',', '.') }}
-                                                                        VND
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
