@@ -24,7 +24,9 @@ class NotifyOrderEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thông báo đơn hàng #' . $this->emailData['invoice_id']
+            // subject: 'Thông báo đơn hàng #' . $this->emailData['invoice_id']
+            subject: 'Đơn hàng #' . $this->emailData['invoice_id'] .' chưa được xử lý'
+
         );
     }
 

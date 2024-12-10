@@ -249,65 +249,189 @@ class DashboardController extends Controller
             ->get();
     }
 
-    public function notifyOrder(Request $request)
-    {
+    // public function notifyOrder(Request $request)
+    // {
 
-        // Lấy nội dung thông báo
+    //     // Lấy nội dung thông báo
+    //     $message = $request->input('message') === 'Khác'
+    //         ? $request->input('message_custom')
+    //         : $request->input('message');
+
+
+    //     // Nếu chọn "Khác", lấy nội dung từ solution_custom
+    //     // Lấy nội dung cách giải quyết
+    //     $solution = $request->input('solution') === 'Khác'
+    //         ? $request->input('solution_custom')
+    //         : $request->input('solution_custom') ?? $request->input('solution');
+
+    //     // Lưu vào bảng delay_notifications
+    //     DB::table('delay_notifications')->insert([
+    //         // 'id' => $request->input('order_id'),
+    //         'invoice_id' => $request->input('invoice_id'),
+    //         'reason' => $message,
+    //         'solution' => $solution, // Hiện tại chưa cần solution
+    //         'created_at' => now(),
+    //         'updated_at' => now(),
+    //     ]);
+
+    //
+    //     // $order = DB::table('orders')
+    //     //     ->where('invoice_id', $request->input('invoice_id'))
+    //     //     ->first();
+
+    //     // Lấy thông tin đơn hàng
+    //     $order = DB::table('orders')
+    //         ->where('invoice_id', $request->input('invoice_id'))
+    //         ->first();
+
+        // if ($order) {
+        //     // Lấy chi tiết sản phẩm trong đơn hàng
+        //     $orderItems = DB::table('order_items')
+        //         ->where('order_id', $order->id)
+        //         ->join('products', 'order_items.product_id', '=', 'products.id')
+        //         ->select(
+        //             'products.name as product_name',
+        //             'products.sku',
+        //             'order_items.qty',
+        //             'order_items.unit_price',
+        //             'order_items.product_size',
+        //             'order_items.product_option'
+        //         )
+        //         ->get();
+
+    //         // Gộp thông tin vào dữ liệu email
+    //         $emailData = [
+    //             'invoice_id' => $order->invoice_id,
+    //             'message' => $message,
+    //             'solution' => $solution,
+    //             'order_items' => $orderItems,
+    //             'sub_total' => $order->sub_total,
+    //             'shipping_fee' => $order->delivery_charge ?? 0,
+    //             'grand_total' => $order->grand_total,
+    //         ];
+
+    //         // Lấy thông tin người dùng
+    //         $user = DB::table('users')->where('id', $order->user_id)->first();
+
+    //         if ($user) {
+    //             // Dữ liệu truyền vào email
+    //             $emailData = [
+    //                 'invoice_id' => $order->invoice_id,
+    //                 'user_name' => $user->name,
+    //                 'email' => $user->email,
+    //                 'message' => $message,
+    //                 'solution' => $solution,
+    //             ];
+
+    //             // Gửi email thông báo bằng Mailable
+    //             // Mail::to($user->email)->send(new NotifyOrderEmail($emailData));
+
+    //             // Gửi email với cấu hình mailer tùy chỉnh
+    //             Mail::mailer('notify') // Sử dụng mailer 'notify' đã cấu hình trong mail.php
+    //                 ->to($user->email)
+    //                 ->send(new NotifyOrderEmail($emailData));
+    //         }
+    //     }
+    //     // Redirect lại trang với thông báo thành công
+    //     return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
+    // }
+
+
+
+    private function saveDelayNotification(Request $request)
+    {
+        // Xác định message và solution
         $message = $request->input('message') === 'Khác'
             ? $request->input('message_custom')
             : $request->input('message');
 
-
-        // Nếu chọn "Khác", lấy nội dung từ solution_custom
-        // Lấy nội dung cách giải quyết
         $solution = $request->input('solution') === 'Khác'
             ? $request->input('solution_custom')
             : $request->input('solution_custom') ?? $request->input('solution');
 
         // Lưu vào bảng delay_notifications
         DB::table('delay_notifications')->insert([
-            // 'id' => $request->input('order_id'),
             'invoice_id' => $request->input('invoice_id'),
             'reason' => $message,
-            'solution' => $solution, // Hiện tại chưa cần solution
+            'solution' => $solution,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        // Lấy thông tin người dùng từ đơn hàng
-        // $order = DB::table('orders')
-        //     ->where('invoice_id', $request->input('invoice_id'))
-        //     ->first();
+        return ['message' => $message, 'solution' => $solution];
+    }
 
+    // Lấy thông tin email và gửi email
+    private function sendNotificationEmail($invoiceId, $message, $solution)
+    {
         // Lấy thông tin đơn hàng
-        $order = DB::table('orders')
-            ->where('invoice_id', $request->input('invoice_id'))
-            ->first();
+        $order = DB::table('orders')->where('invoice_id', $invoiceId)->first();
 
-        if ($order) {
-            // Lấy thông tin người dùng
-            $user = DB::table('users')->where('id', $order->user_id)->first();
-
-            if ($user) {
-                // Dữ liệu truyền vào email
-                $emailData = [
-                    'invoice_id' => $order->invoice_id,
-                    'user_name' => $user->name,
-                    'email' => $user->email,
-                    'message' => $message,
-                    'solution' => $solution,
-                ];
-
-                // Gửi email thông báo bằng Mailable
-                // Mail::to($user->email)->send(new NotifyOrderEmail($emailData));
-
-                // Gửi email với cấu hình mailer tùy chỉnh
-                Mail::mailer('notify') // Sử dụng mailer 'notify' đã cấu hình trong mail.php
-                    ->to($user->email)
-                    ->send(new NotifyOrderEmail($emailData));
-            }
+        if (!$order) {
+            return false; // Không có đơn hàng phù hợp
         }
-        // Redirect lại trang với thông báo thành công
-        return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
+
+        // Lấy chi tiết sản phẩm trong đơn hàng
+        $orderItems = DB::table('order_items')
+            ->where('order_id', $order->id)
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->select(
+                'products.name as product_name',
+                'products.sku',
+                'products.thumb_image',
+                'order_items.qty',
+                'order_items.unit_price',
+                'order_items.product_size',
+                'order_items.product_option'
+            )
+            ->get();
+
+        // Lấy thông tin người dùng
+        $user = DB::table('users')->where('id', $order->user_id)->first();
+        if (!$user) {
+            return false; // Không có thông tin người dùng
+        }
+
+        // Dữ liệu truyền vào email
+        $emailData = [
+            'invoice_id' => $order->invoice_id,
+            'user_name' => $user->name,
+            'email' => $user->email,
+            'message' => $message,
+            'solution' => $solution,
+            'order_items' => $orderItems,
+            'sub_total' => $order->sub_total,
+            'shipping_fee' => $order->delivery_charge ?? 0,
+            'grand_total' => $order->grand_total,
+            'discount' => $order->discount,
+            'coupon_info' => $order->coupon_info,
+            'created_at' => $order->created_at,
+        ];
+
+        // Gửi email
+        Mail::mailer('notify')
+            ->to($user->email)
+            ->send(new NotifyOrderEmail($emailData));
+
+        return true;
+    }
+
+    public function notifyOrder(Request $request)
+    {
+        // Bước 1: Lưu thông báo
+        $notification = $this->saveDelayNotification($request);
+
+        // Bước 2: Gửi email thông báo
+        $emailSent = $this->sendNotificationEmail(
+            $request->input('invoice_id'),
+            $notification['message'],
+            $notification['solution']
+        );
+
+        if ($emailSent) {
+            return redirect()->back()->with('success', 'Thông báo đã được gửi thành công!');
+        } else {
+            return redirect()->back()->with('error', 'Gửi email thất bại!');
+        }
     }
 }
