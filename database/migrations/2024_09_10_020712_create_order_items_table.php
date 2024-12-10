@@ -19,8 +19,11 @@ return new class extends Migration
 
             $table->double('unit_price');
             $table->integer('qty');
-            $table->json('product_size')->nullable();
-            $table->json('product_option')->nullable();
+
+            $table->string('product_size')->nullable();
+            $table->string('pizza_edge')->nullable();
+            $table->string('pizza_base')->nullable();
+
             $table->timestamps();
         });
     }
