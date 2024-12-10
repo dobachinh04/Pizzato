@@ -13,7 +13,7 @@ class Order extends Model
         'invoice_id',
         'user_id',
         'address',
-        'discount ',
+        'discount',
         'delivery_charge',
         'sub_total',
         'grand_total',

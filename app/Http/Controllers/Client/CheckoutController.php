@@ -126,7 +126,7 @@ class CheckoutController extends Controller
             'email' => 'required|email',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'phone' => 'required|string',
+            'phone' => 'required|phone:VN',
             'address' => 'required|string',
         ], [
             'email.required' => 'Vui lòng nhập email',
@@ -134,6 +134,7 @@ class CheckoutController extends Controller
             'first_name.required' => 'Vui lòng nhập tên',
             'last_name.required' => 'Vui lòng nhập họ',
             'phone.required' => 'Vui lòng nhập số điện thoại',
+            'phone.phone' => 'Số điện thoại không hợp lệ',
             'address.required' => 'Vui lòng nhập thêm thông tin địa chỉ',
         ]);
 
@@ -151,6 +152,55 @@ class CheckoutController extends Controller
             'success' => true,
             'message' => 'Cập nhật thành công',
             'addressId' => $address->id
+        ]);
+    }
+
+    public function updateAddresses(Request $request)
+    {
+        $request->validate([
+            'address_id' => 'required|exists:addresses,id',
+            'email' => 'required|email',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone' => 'required|phone:VN',
+            'address' => 'required|string',
+        ], [
+            'email.required' => 'Vui lòng nhập email',
+            'email.email' => 'Email không hợp lệ',
+            'first_name.required' => 'Vui lòng nhập tên',
+            'last_name.required' => 'Vui lòng nhập họ',
+            'phone.required' => 'Vui lòng nhập số điện thoại',
+            'phone.phone' => 'Số điện thoại không hợp lệ',
+            'address.required' => 'Vui lòng nhập thêm thông tin địa chi',
+        ]);
+
+        $address = Address::find($request->address_id);
+        $address->update([
+            'email' => $request->email,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cập nhật thành công',
+        ]);
+    }
+
+    public function deleteAddress(Request $request)
+    {
+        $request->validate([
+            'address_id' => 'required|exists:addresses,id',
+        ]);
+
+        $address = Address::find($request->address_id);
+        $address->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Xóa thành công',
         ]);
     }
 }

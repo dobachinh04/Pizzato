@@ -57,6 +57,8 @@ Route::post('/increment-view/{id}', [DetailController::class, 'incrementView']);
 Route::post('/checkout', [CheckoutController::class, 'store']);
 Route::get('/get-delivery-area', [CheckoutController::class, 'getDeliveryArea']);
 Route::post('/add-to-address', [CheckoutController::class, 'addToAddress']);
+Route::put('/update-addresses', [CheckoutController::class, 'updateAddresses']);
+Route::delete('/delete-address', [CheckoutController::class, 'deleteAddress']);
 Route::get('/payment-status', [VnpayController::class, 'callback']);
 
 // CouponController
