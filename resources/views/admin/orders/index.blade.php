@@ -183,7 +183,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <a href="{{ route('admin.orders.show', $order->id) }}"
+                                                    <a href="{{ route('admin.orders.show', $order->invoice_id) }}"
                                                         class="btn btn-info"><i class="fa fa-info-circle"></i></a>
 
                                                     @if (!in_array($order->order_status, ['canceled', 'processing', 'completed']))

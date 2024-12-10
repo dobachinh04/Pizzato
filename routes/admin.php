@@ -132,7 +132,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/',                                [OrderController::class, 'store'])->name('store');
         Route::get('/{order}/edit',                     [OrderController::class, 'edit'])->name('edit');
         Route::put('/{order}',                          [OrderController::class, 'update'])->name('update');
-        Route::get('/show/{order}',                     [OrderController::class, 'show'])->name('show');
+        // Route::get('/show/{order}',                     [OrderController::class, 'show'])->name('show');
+        Route::get('show/{invoiceId}', [OrderController::class, 'show'])->name('show');
+
         Route::delete('/{order}',                       [OrderController::class, 'destroy'])->name('destroy');
         Route::get('/deleted',                          [OrderController::class, 'deleted'])->name('deleted');
 

@@ -273,7 +273,7 @@
                                                             <!-- Thông tin thông báo -->
                                                             <div class="flex-grow-1">
                                                                 @if ($notification->reference_id)
-                                                                    <a href="{{ route('admin.orders.show', ['order' => $notification->reference_id]) }}"
+                                                                    <a href="{{ route('admin.orders.show', ['invoiceId' => $notification->reference_id]) }}"
                                                                         class="stretched-link">
                                                                         <h6 class="mt-0 mb-1 fs-13 fw-semibold">
                                                                             {{ $notification->message }}
