@@ -364,14 +364,14 @@ class DashboardController extends Controller
     // Lấy thông tin email và gửi email
     private function sendNotificationEmail($invoiceId, $message, $solution)
     {
-        // Lấy thông tin đơn hàng
+
         $order = DB::table('orders')->where('invoice_id', $invoiceId)->first();
 
         if (!$order) {
-            return false; // Không có đơn hàng phù hợp
+            return false;
         }
 
-        // Lấy chi tiết sản phẩm trong đơn hàng
+        // Chi tiết đơn hfàng
         $orderItems = DB::table('order_items')
             ->where('order_id', $order->id)
             ->join('products', 'order_items.product_id', '=', 'products.id')
@@ -387,16 +387,23 @@ class DashboardController extends Controller
             ->get();
 
         // Lấy thông tin người dùng
-        $user = DB::table('users')->where('id', $order->user_id)->first();
-        if (!$user) {
-            return false; // Không có thông tin người dùng
-        }
-
+        // $user = DB::table('users')->where('id', $order->user_id)->first();
+        // if (!$user) {
+        //     return false;
+        // }
+ // Lấy thông tin email từ addresses
+        $address = DB::table('addresses')->where('id', $order->address_id)->first();
+    if (!$address) {
+        return false;
+    }
         // Dữ liệu truyền vào email
         $emailData = [
             'invoice_id' => $order->invoice_id,
-            'user_name' => $user->name,
-            'email' => $user->email,
+            // 'user_name' => $user->name,
+            // 'email' => $user->email,
+            'user_name' => $address->first_name . ' ' . ($address->last_name ?? ''),
+            'email' => $address->email,
+
             'message' => $message,
             'solution' => $solution,
             'order_items' => $orderItems,
@@ -408,9 +415,9 @@ class DashboardController extends Controller
             'created_at' => $order->created_at,
         ];
 
-        // Gửi email
+
         Mail::mailer('notify')
-            ->to($user->email)
+            ->to($address->email)
             ->send(new NotifyOrderEmail($emailData));
 
         return true;
@@ -418,10 +425,9 @@ class DashboardController extends Controller
 
     public function notifyOrder(Request $request)
     {
-        // Bước 1: Lưu thông báo
         $notification = $this->saveDelayNotification($request);
 
-        // Bước 2: Gửi email thông báo
+
         $emailSent = $this->sendNotificationEmail(
             $request->input('invoice_id'),
             $notification['message'],

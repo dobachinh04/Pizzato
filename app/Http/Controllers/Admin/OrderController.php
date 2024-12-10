@@ -18,7 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'desc')->get();
+        $orders = Order::get();
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -52,12 +52,22 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
-    {
-        $order->load(['users', 'addresses.delivery_area', 'items.product']);
+    // public function show(Order $order)
+    // {
+    //     $order->load(['users', 'addresses.delivery_area', 'items.product']);
 
-        return view('admin.orders.show', compact('order'));
-    }
+    //     return view('admin.orders.show', compact('order'));
+    // }
+
+    public function show($invoiceId)
+{
+    // Truy vấn Order theo invoice_id và eager load các quan hệ
+    $order = Order::with(['users', 'addresses.delivery_area', 'items.product'])
+                  ->where('invoice_id', $invoiceId)
+                  ->firstOrFail();
+
+    return view('admin.orders.show', compact('order'));
+}
 
 
     /**

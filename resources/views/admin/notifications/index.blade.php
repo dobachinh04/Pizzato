@@ -28,7 +28,7 @@
                                             <th>Nội dung</th>
                                             <th>Thời gian</th>
                                             <th>Trạng thái</th>
-                                            <th>Hành động</th>
+                                            {{-- <th>Hành động</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -45,22 +45,17 @@
                                                     @endif
                                                 </td>
                                                 {{-- <td>
-                        @if ($notification->deleted_at)
-                            <!-- Xóa cứng -->
-                            <form action="{{ route('admin.notifications.forceDelete', $notification->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa cứng thông báo này?')">Xóa cứng</button>
-                            </form>
-                        @else
-                            <!-- Xóa mềm -->
-                            <form action="{{ route('admin.notifications.softDelete', $notification->id) }}" method="POST" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Bạn có chắc muốn xóa mềm thông báo này?')">Xóa mềm</button>
-                            </form>
-                        @endif
-                    </td> --}}
+                                                    <form
+                                                        action="{{ route('admin.notifications.delete', $notification->id) }}"
+                                                        method="POST" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-warning btn-sm"
+                                                            onclick="return confirm('Bạn có chắc muốn xóa mềm thông báo này?')">Xóa
+                                                            mềm</button>
+                                                    </form>
+                                                </td> --}}
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -72,7 +67,19 @@
             </div>
         </div>
     </div>
+    {{-- <td>
+                        @if ($notification->deleted_at)
+                            <!-- Xóa cứng -->
+                            <form action="{{ route('admin.notifications.forceDelete', $notification->id) }}" method="POST" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa cứng thông báo này?')">Xóa cứng</button>
+                            </form>
+                        @else
+                            <!-- Xóa mềm -->
 
+                        @endif
+                    </td> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 

@@ -36,5 +36,16 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ]);
+
+        User::create([
+            'name' => 'User',
+            'email' => 'flux.cql@gmail.com',
+            'password' => bcrypt('123456'), // Mật khẩu 123456
+            'role_id' => 1,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ]);
+
+
     }
 }
