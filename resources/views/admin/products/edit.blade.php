@@ -91,15 +91,19 @@
                                             </div> --}}
                                             <div class="form-group mt-3">
                                                 <label for="category_id" class="form-label">Catalogue</label>
-                                                <select type="text" class="form-select" id="category_id" name="category_id">
+                                                <select type="text" class="form-select" id="category_id"
+                                                    name="category_id">
                                                     <!-- Hiển thị "Chưa Phân Loại" chỉ khi category_id của sản phẩm là null -->
                                                     @if (is_null($product->category_id))
-                                                        <option value="" selected>{{ \App\Http\Controllers\Admin\ProductController::CATEGORY_NULL }}</option>
+                                                        <option value="" selected>
+                                                            {{ \App\Http\Controllers\Admin\ProductController::CATEGORY_NULL }}
+                                                        </option>
                                                     @endif
 
                                                     <!-- Các danh mục khác -->
                                                     @foreach ($categories as $id => $name)
-                                                        <option value="{{ $id }}" {{ $product->category_id == $id ? 'selected' : '' }}>
+                                                        <option value="{{ $id }}"
+                                                            {{ $product->category_id == $id ? 'selected' : '' }}>
                                                             {{ $name }}
                                                         </option>
                                                     @endforeach
@@ -325,7 +329,7 @@
                                             <div class="form-group toggle-target" id="inputSizeFields"
                                                 style="display: none;">
                                                 <select class="form-select mt-3" multiple
-                                                    aria-label="multiple select example" name="sizes[]">
+                                                    aria-label="multiple select example" name="sizes[]" id="sizeSelect">
                                                     @foreach ($sizes as $size)
                                                         <option @selected(in_array($size->id, $productSizes)) value="{{ $size->id }}">
                                                             {{ $size->name }} -
@@ -480,16 +484,16 @@
         //     // Thêm cột input mới khi nhấn vào nút Thêm Giá Trị
         //     addSizeFieldsButton.addEventListener('click', function() {
         //         const newSizeFieldHTML = `
-        // <div class="row">
-        //     <div class="col-6">
-        //         <label>Tên Size Bánh</label>
-        //         <input type="text" name="size_name[]" class="form-control">
-        //     </div>
-        //     <div class="col-6">
-        //         <label>Giá Tiền</label>
-        //         <input type="number" name="size_price[]" class="form-control">
-        //     </div>
-        // </div>`;
+    // <div class="row">
+    //     <div class="col-6">
+    //         <label>Tên Size Bánh</label>
+    //         <input type="text" name="size_name[]" class="form-control">
+    //     </div>
+    //     <div class="col-6">
+    //         <label>Giá Tiền</label>
+    //         <input type="number" name="size_price[]" class="form-control">
+    //     </div>
+    // </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newSizeFieldHTML;
         //         sizeFieldsContainer.appendChild(newRow);
@@ -516,16 +520,16 @@
         //     // Thêm cột input mới cho viền bánh khi nhấn vào nút "Thêm Viền"
         //     addEdgeFieldsButton.addEventListener('click', function() {
         //         const newEdgeFieldHTML = `
-        // <div class="row">
-        //     <div class="col-6">
-        //         <label>Tên Viền Bánh</label>
-        //         <input type="text" name="edge_name[]" class="form-control">
-        //     </div>
-        //     <div class="col-6">
-        //         <label>Giá Tiền</label>
-        //         <input type="number" name="edge_price[]" class="form-control">
-        //     </div>
-        // </div>`;
+    // <div class="row">
+    //     <div class="col-6">
+    //         <label>Tên Viền Bánh</label>
+    //         <input type="text" name="edge_name[]" class="form-control">
+    //     </div>
+    //     <div class="col-6">
+    //         <label>Giá Tiền</label>
+    //         <input type="number" name="edge_price[]" class="form-control">
+    //     </div>
+    // </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newEdgeFieldHTML;
         //         edgeFieldsContainer.appendChild(newRow);
@@ -552,16 +556,16 @@
         //     // Thêm cột input mới cho đế bánh khi nhấn vào nút "Thêm Đế"
         //     addBaseFieldsButton.addEventListener('click', function() {
         //         const newBaseFieldHTML = `
-        // <div class="row">
-        //     <div class="col-6">
-        //         <label>Tên Đế Bánh</label>
-        //         <input type="text" name="base_name[]" class="form-control">
-        //     </div>
-        //     <div class="col-6">
-        //         <label>Giá Tiền</label>
-        //         <input type="number" name="base_price[]" class="form-control">
-        //     </div>
-        // </div>`;
+    // <div class="row">
+    //     <div class="col-6">
+    //         <label>Tên Đế Bánh</label>
+    //         <input type="text" name="base_name[]" class="form-control">
+    //     </div>
+    //     <div class="col-6">
+    //         <label>Giá Tiền</label>
+    //         <input type="number" name="base_price[]" class="form-control">
+    //     </div>
+    // </div>`;
         //         const newRow = document.createElement('div');
         //         newRow.innerHTML = newBaseFieldHTML;
         //         baseFieldsContainer.appendChild(newRow);
@@ -606,6 +610,16 @@
                     ProductSkuInput.name = 'sku'; // Đảm bảo trường sku được gửi
                 }
             });
+        });
+
+        // Luôn chọn Size có id là 1 - Size nhỏ khi mà chọn các size khác
+        document.getElementById('sizeSelect').addEventListener('click', function() {
+            const sizeSelect = document.getElementById('sizeSelect');
+            const optionToSelect = Array.from(sizeSelect.options).find(option => option.value == 1);
+
+            if (optionToSelect && !optionToSelect.selected) {
+                optionToSelect.selected = true;
+            }
         });
 
         // Generate name to slug

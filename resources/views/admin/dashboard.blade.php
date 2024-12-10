@@ -322,7 +322,7 @@
                                                     @foreach ($orderOvers as $item)
                                                         <tr>
                                                             <td>
-                                                                <a href="{{ route('admin.orders.show', $item->id) }}"
+                                                                <a href="{{ route('admin.orders.show', $item->invoice_id) }}"
                                                                     class="fw-medium link-primary">{{ $item->invoice_id }}</a>
                                                             </td>
                                                             {{-- <td>{{ $item->grand_total }}</td> --}}

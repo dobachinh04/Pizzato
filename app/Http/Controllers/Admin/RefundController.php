@@ -10,7 +10,7 @@ class RefundController extends Controller
 {
     public function index()
     {
-        $refunds = RefundRequest::latest()->paginate(10);
+        $refunds = RefundRequest::orderBy('created_at', 'desc')->get();
         return view('admin.refunds.index', compact('refunds'));
     }
 

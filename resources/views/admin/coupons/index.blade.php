@@ -76,12 +76,12 @@
 
                                                 {{-- <td>{{ ucfirst($item->discount_type) }}</td> --}}
                                                 <td>
-                                                    {{ ucfirst($item->discount_type === 'amount' ? 'Giảm theo số tiền' : 'Giảm theo phần trăm') }}
+                                                    {{ ucfirst($item->discount_type === 'amount' ? 'Giảm Theo Số Tiền' : 'Giảm Theo %') }}
                                                 </td>
 
                                                 <td>{{ $item->discount_type == 'percent' ? $item->discount . '%' : number_format($item->discount, 0, ',', '.') . ' ₫' }}
                                                 </td>
-                                                <td>{{ ucfirst($item->discount_type === 'percent' ? $item->max_discount_amount : 'Không có') }}
+                                                <td>{{ ucfirst($item->discount_type === 'percent' ? number_format($item->max_discount_amount, 0, ',', '.') . '₫' : 'Không có') }}
                                                 </td>
                                                 {{-- <td>{{ $item->expire_date }}</td> --}}
                                                 <!-- Giờ hết hạn -->

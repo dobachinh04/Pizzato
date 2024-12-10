@@ -316,7 +316,7 @@
                                                                             id="inputSizeFields" style="display: none;">
                                                                             <select class="form-select mt-3" multiple
                                                                                 aria-label="multiple select example"
-                                                                                name="sizes[]">
+                                                                                name="sizes[]" id="sizeSelect">
                                                                                 @foreach ($sizes as $size)
                                                                                     <option value="{{ $size->id }}">
                                                                                         {{ $size->name }} -
@@ -327,6 +327,8 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
+
+
 
                                                                     <div class="col-4">
                                                                         <div class="form-group mt-3">
@@ -687,6 +689,16 @@
 
             // Gọi hàm khi tải trang lần đầu
             toggleVariantFields();
+        });
+
+        // Luôn chọn Size có id là 1 - Size nhỏ khi mà chọn các size khác
+        document.getElementById('sizeSelect').addEventListener('click', function() {
+            const sizeSelect = document.getElementById('sizeSelect');
+            const optionToSelect = Array.from(sizeSelect.options).find(option => option.value == 1);
+
+            if (optionToSelect && !optionToSelect.selected) {
+                optionToSelect.selected = true;
+            }
         });
     </script>
 
