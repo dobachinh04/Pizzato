@@ -127,6 +127,7 @@
                                             $fieldNames = [
                                                 'id' => 'ID',
                                                 'name' => 'Tên sản phẩm',
+                                                'sku' => 'Mã sản phẩm',
                                                 'thumb_image' => 'Hình ảnh',
                                                 'category' => 'Danh mục',
                                                 'price' => 'Giá',
@@ -145,6 +146,7 @@
                                             $fieldsToDisplay = [
                                                 'id',
                                                 'name',
+                                                'sku',
                                                 'thumb_image',
                                                 'category',
                                                 'price',
