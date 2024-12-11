@@ -24,6 +24,7 @@ class ProductController extends Controller
 
     const PATH_VIEW = 'admin.products.';
     const PATH_UPLOAD = 'products';
+    const PATH_DELETED = 'deleted_images';
     const CATEGORY_NULL = 'Chưa Phân Loại';
     public function index()
     {
@@ -291,6 +292,22 @@ class ProductController extends Controller
     {
         try {
             DB::transaction(function () use ($product) {
+                // Lưu thông tin sản phẩm vào bảng product_archives
+                DB::table('product_archives')->insert([
+                    'product_id'=>$product->id,
+                    'name' => $product->name,
+                    'slug' => $product->slug,
+                    'thumb_image' => $product->thumb_image,
+                    'category_id' => $product->category_id,
+                    'short_description' => $product->short_description,
+                    'long_description' => $product->long_description,
+                    'price' => $product->price,
+                    'offer_price' => $product->offer_price,
+                    'qty' => $product->qty,
+                    'sku' => $product->sku,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
                 // Làm trống sizes - Xóa sizes
                 $product->productSizes()->sync([]);
                 $product->pizzaEdges()->sync([]);
@@ -303,9 +320,14 @@ class ProductController extends Controller
             });
 
             // Xóa ảnh trong product
+            // if ($product->thumb_image && Storage::exists($product->thumb_image)) {
+            //     // Xóa file thumb_image từ storage
+            //     Storage::delete($product->thumb_image);
+            // }
             if ($product->thumb_image && Storage::exists($product->thumb_image)) {
-                // Xóa file thumb_image từ storage
-                Storage::delete($product->thumb_image);
+                $filename = basename($product->thumb_image);
+                $newPath = self::PATH_DELETED . '/'  . $filename;
+                Storage::move($product->thumb_image, $newPath);
             }
 
             if ($product->galleries && Storage::exists($product->galleries)) {
