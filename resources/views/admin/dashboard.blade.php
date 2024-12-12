@@ -313,7 +313,7 @@
                                                         <th>Mã đơn hàng</th>
                                                         <th>Tổng tiền</th>
                                                         <th>Thanh toán</th>
-                                                        <th>Thời gian đặt hàng</th>
+                                                        <th>Ngày đặt hàng</th>
                                                         <th>Trạng thái</th>
                                                         <th>Hành động</th>
                                                     </tr>

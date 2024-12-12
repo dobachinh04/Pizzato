@@ -3,8 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\PizzaBase;
+use App\Models\PizzaEdge;
 use App\Models\Product;
+use App\Models\ProductSize;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
@@ -434,7 +438,50 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
-            Product::create($product);
+            $createdProduct = Product::create($product);
+
+            // Nếu sản phẩm thuộc danh mục Pizza
+            if ($createdProduct->category_id === 1) {
+                // Random từ 1 đến 3 kích thước từ bảng product_sizes, đảm bảo luôn có size ID = 1
+                $randomSizes = ProductSize::where('id', 1)->get()->merge(
+                    ProductSize::where('id', '!=', 1)->inRandomOrder()->take(rand(0, 2))->get()
+                );
+
+                // Lưu dữ liệu vào bảng product_product_sizes
+                foreach ($randomSizes as $size) {
+                    DB::table('product_product_sizes')->insert([
+                        'product_id' => $createdProduct->id,
+                        'product_size_id' => $size->id,
+                        'price' => $size->price, // Giá lấy y nguyên từ bảng product_sizes
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                $randomPizzaEdges = PizzaEdge::inRandomOrder()->take(rand(1, 3))->get(); // Lấy ngẫu nhiên từ 1 đến 3 pizza edge
+
+                foreach ($randomPizzaEdges as $edge) {
+                    DB::table('product_pizza_edges')->insert([
+                        'product_id' => $createdProduct->id,  // ID sản phẩm đã được tạo
+                        'pizza_edge_id' => $edge->id,  // ID của pizza edge từ bảng pizza_edges
+                        'price' => $edge->price, // Giá lấy y nguyên từ bảng product_sizes
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                $randomPizzaBases = PizzaBase::inRandomOrder()->take(rand(1, 3))->get(); // Lấy ngẫu nhiên từ 1 đến 3 pizza base
+
+                foreach ($randomPizzaBases as $base) {
+                    DB::table('product_pizza_bases')->insert([
+                        'product_id' => $createdProduct->id,  // ID sản phẩm đã được tạo
+                        'pizza_base_id' => $base->id,  // ID của pizza base từ bảng pizza_bases
+                        'price' => $base->price, // Giá lấy y nguyên từ bảng product_sizes
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
         }
     }
 }

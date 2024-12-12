@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
-            ProductSeeder::class,
             ProductSizeSeeder::class,
             PizzaBaseSeeder::class,
             PizzaEdgeSeeder::class,
+            ProductSeeder::class,
 
             DeliveryAreaSeeder::class,
             RoleSeeder::class,
