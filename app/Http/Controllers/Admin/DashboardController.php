@@ -382,7 +382,7 @@ class DashboardController extends Controller
                 'order_items.qty',
                 'order_items.unit_price',
                 'order_items.product_size',
-                'order_items.product_option'
+                // 'order_items.product_option'
             )
             ->get();
 
