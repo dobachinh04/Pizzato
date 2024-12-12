@@ -86,8 +86,7 @@
 <body>
     <div class="container">
         <div>
-            <img src="https://media.istockphoto.com/id/1168754685/photo/pizza-margarita-with-cheese-top-view-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=psLRwd-hX9R-S_iYU-sihB4Jx2aUlUr26fkVrxGDfNg="
-                alt="">
+            {{-- <img src="{{ asset('velzon/images/logo-pizzato-3.png') }}" alt="">       --}
             {{-- <h1>Thông báo về đơn hàng </h1> --}}
             <p>Xin chào {{ $emailData['user_name'] }}, </p>
             <p>Đơn hàng <strong>{{ $emailData['invoice_id'] }} </strong> của bạn chưa được xử lý</p>
@@ -119,9 +118,9 @@
                         @if ($item->product_size)
                             <p><strong>Kích cỡ:</strong> {{ json_decode($item->product_size) }}</p>
                         @endif
-                        @if ($item->product_option)
+                        {{-- @if ($item->product_option)
                             <p><strong>Tùy chọn:</strong> {{ json_decode($item->product_option) }}</p>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
             @endforeach

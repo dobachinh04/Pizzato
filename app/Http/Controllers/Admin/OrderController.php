@@ -90,9 +90,9 @@ class OrderController extends Controller
                             'name' => $archivedProduct->name,
                             'thumb_image' => $archivedProduct->thumb_image,
                         ];
-                        if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
-                            $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
-                        }
+                        // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
+                        //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
+                        // }
                     }
                 }
             }
