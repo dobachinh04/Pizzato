@@ -38,15 +38,20 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
-        // Kiểm tra nếu trạng thái đơn hàng là processing hoặc completed
         if (in_array($order->order_status, ['processing', 'completed'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Không thể hủy đơn hàng đang xử lý hoặc đã hoàn thành.',
-            ], 400); // HTTP status code 400: Bad Request
+            ], 400);
         }
 
-        // Cập nhật trạng thái đơn hàng thành canceled
+        if (in_array($order->order_status, ['canceled'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Đơn hàng đã được hủy trước đó.',
+            ], 400);
+        }
+
         $order->update(['order_status' => 'canceled']);
 
         return response()->json([
