@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
+// use DB;
+use App\Models\ProductArchive;
+use Illuminate\Support\Facades\DB;
 use id;
 use App\Models\Order;
 use App\Models\Invoice;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -59,15 +62,44 @@ class OrderController extends Controller
     //     return view('admin.orders.show', compact('order'));
     // }
 
-    public function show($invoiceId)
-{
-    // Truy vấn Order theo invoice_id và eager load các quan hệ
-    $order = Order::with(['users', 'addresses.delivery_area', 'items.product'])
-                  ->where('invoice_id', $invoiceId)
-                  ->firstOrFail();
+    //     public function show($invoiceId)
+    // {
+    //     // Truy vấn Order theo invoice_id và eager load các quan hệ
+    //     $order = Order::with(['users', 'addresses.delivery_area', 'items.product'])
+    //                 ->where('invoice_id', $invoiceId)
+    //                 ->firstOrFail();
 
-    return view('admin.orders.show', compact('order'));
-}
+    //     return view('admin.orders.show', compact('order'));
+    // }
+
+
+    public function show($invoiceId)
+    {
+        // Truy vấn Order theo invoice_id và eager load các quan hệ
+        $order = Order::with(['users', 'addresses.delivery_area', 'items.product', 'items.productArchive'])
+            ->where('invoice_id', $invoiceId)
+            ->firstOrFail();
+
+            foreach ($order->items as $item) {
+                // Kiểm tra nếu không có sản phẩm trong bảng products
+                if (!$item->product) {
+                    // Lấy thông tin từ bảng product_archives
+                    $archivedProduct = $item->productArchive;
+                    if ($archivedProduct) {
+                        $item->product = (object)[
+                            'name' => $archivedProduct->name,
+                            'thumb_image' => $archivedProduct->thumb_image,
+                        ];
+                        // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
+                        //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
+                        // }
+                    }
+                }
+            }
+
+        return view('admin.orders.show', compact('order'));
+    }
+
 
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\Client\VnpayController;
 use App\Http\Controllers\Client\DetailController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\Auth\AuthenticationController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\ProductReviewController;
@@ -84,3 +85,11 @@ Route::post('/refund-request', [RefundController::class, 'createRefundRequest'])
 
 Route::get('/chat/{adminId}', [ChatController::class, 'getMessages']);
 Route::post('/chat/send', [ChatController::class, 'sendMessage']);
+
+Route::prefix('cart')->group(function () {
+    Route::post('/add', [CartController::class, 'addToCart']);
+    Route::get('/', [CartController::class, 'viewCart']);
+    Route::put('/update/{id}', [CartController::class, 'updateCart']);
+    Route::delete('/remove/{id}', [CartController::class, 'removeFromCart']);
+    Route::delete('/clear', [CartController::class, 'clearCart']);
+});
