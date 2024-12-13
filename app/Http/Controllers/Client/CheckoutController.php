@@ -126,7 +126,7 @@ class CheckoutController extends Controller
             'email' => 'required|email',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'phone' => 'required|phone:VN',
+            'phone' => 'required|number',
             'address' => 'required|string',
         ], [
             'email.required' => 'Vui lòng nhập email',
