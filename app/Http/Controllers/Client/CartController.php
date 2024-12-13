@@ -6,50 +6,69 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\CartRequest;
+use App\Http\Requests\UpdateCartRequest;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function addToCart(CartRequest $request)
     {
-        $carts = Cart::get();
-        // dd($carts);
-        return view('admin.carts.cart', compact('carts'));
+        try {
+            $validated = $request->validated();
+
+            // Kiểm tra sản phẩm có tồn tại không
+            $product = Product::findOrFail($validated['product_id']);
+
+            // Tạo mới trong giỏ hàng
+            $cartItem = Cart::create([
+                'product_id' => $product->id,
+                'price' => $product->price, // Lấy giá từ product
+                'qty' => $validated['qty'],
+                'product_size' => $validated['product_size'],
+                'pizza_edge' => $validated['pizza_edge'],
+                'pizza_base' => $validated['pizza_base'],
+            ]);
+
+            return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng', 'cart' => $cartItem], 201);
+        } catch (\Exception $e) {
+            // Log lỗi và trả về thông tin lỗi
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Có lỗi gì đó', 'details' => $e->getMessage()], 500);
+        }
+    }
+    public function viewCart()
+    {
+        $cartItems = Cart::with('product')->get();
+
+        $total = $cartItems->sum(function ($item) {
+            return $item->price * $item->qty;
+        });
+
+        return response()->json(['cart' => $cartItems, 'total' => $total]);
     }
 
-    public function update(Request $request, string $id)
+    public function updateCart(UpdateCartRequest $request, $id)
     {
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-        ]);
+        $validated = $request->validated();
 
-        $cart = Cart::findOrFail($id);
-        $cart->quantity = $request->quantity;
-        $cart->grand_total = $cart->product->price * $cart->quantity;
-        $cart->save();
+        $cartItem = Cart::findOrFail($id);
+        $cartItem->update(['qty' => $validated['qty']]);
 
-        return redirect()->route('client.carts.cart')->with('success', 'Giỏ hàng đã được cập nhật.');
+        return response()->json(['message' => 'Đã cập nhật giỏ hàng', 'cart' => $cartItem]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function removeFromCart($id)
     {
-        $cart = Cart::findOrFail($id);
+        $cartItem = Cart::findOrFail($id);
+        $cartItem->delete();
 
-        $cart->delete();
-
-        return redirect()->route('admin.carts.cart')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
+        return response()->json(['message' => 'Sản phẩm đã được xoá khỏi giỏ hàng']);
     }
 
-    public function destroyAll()
+    // Xóa toàn bộ giỏ hàng
+    public function clearCart()
     {
-        $userId = auth()->id();
-        Cart::where('user_id', $userId)->delete();
-
-        return redirect()->route('admin.carts.cart')->with('success', 'Đã xóa tất cả sản phẩm trong giỏ hàng.');
+        Cart::truncate(); // Xóa toàn bộ bản ghi
+        return response()->json(['message' => 'Xoá giỏ hàng thành công']);
     }
 }

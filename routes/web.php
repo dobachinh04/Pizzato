@@ -41,10 +41,10 @@ Route::post('/reset-password', [AuthenticationController::class, 'resetPassword'
 
 
 
-Route::get('/client/carts', [CartController::class, 'index'])->name('client.carts.cart');
-Route::put('/carts/{id}', [CartController::class, 'update'])->name('carts.update');
-Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
-Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
+// Route::get('/client/carts', [CartController::class, 'index'])->name('client.carts.cart');
+// Route::put('/carts/{id}', [CartController::class, 'update'])->name('carts.update');
+// Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
+// Route::delete('/carts/destroy-all', [CartController::class, 'destroyAll'])->name('carts.destroyAll');
 
 
 
