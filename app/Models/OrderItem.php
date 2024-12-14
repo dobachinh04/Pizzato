@@ -27,8 +27,9 @@ class OrderItem extends Model
     {
         return $this->belongsTo(ProductArchive::class, 'product_id', 'product_id');
     }
-    // public function productArchive()
-    // {
-    //     return $this->belongsTo(ProductArchive::class, 'sku', 'sku');
-    // }
+
+    public function productReviews()
+    {
+        return $this->belongsTo(ProductReview::class, 'product_id', 'product_id');
+    }
 }

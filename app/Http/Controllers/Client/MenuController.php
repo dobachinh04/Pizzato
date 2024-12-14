@@ -33,6 +33,7 @@ class MenuController extends Controller
                 'products.*',
                 'categories.name as category_name',
                 DB::raw('COALESCE(AVG(product_reviews.rating), 0) as avg_rating'),
+                DB::raw('COUNT(product_reviews.id) as rating_count')
             )
             ->groupBy('products.id', 'categories.name');
 

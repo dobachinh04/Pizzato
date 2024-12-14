@@ -13,6 +13,12 @@ class ProductReviewController extends Controller
 {
     public function createReview(StoreReviewRequest $request)
     {
+        $request->validate([
+            'review' => 'required|string',
+        ], [
+            'review.required' => 'Vui lòng nhập đánh giá',
+        ]);
+
         ProductReview::create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
