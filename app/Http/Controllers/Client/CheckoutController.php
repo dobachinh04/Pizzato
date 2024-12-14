@@ -126,7 +126,7 @@ class CheckoutController extends Controller
             'email' => 'required|email',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'phone' => 'required|number|length:10',
+            'phone' => ['required', 'regex:/^0[0-9]{9}$/'],
             'address' => 'required|string',
         ], [
             'email.required' => 'Vui lòng nhập email',
@@ -134,8 +134,7 @@ class CheckoutController extends Controller
             'first_name.required' => 'Vui lòng nhập tên',
             'last_name.required' => 'Vui lòng nhập họ',
             'phone.required' => 'Vui lòng nhập số điện thoại',
-            'phone.phone' => 'Số điện thoại không hợp lệ',
-            'phone.length' => 'Số điện thoại phải cô 10 số',
+            'phone.regex' => 'Số điện thoại không hợp lệ',
             'address.required' => 'Vui lòng nhập thêm thông tin địa chỉ',
         ]);
 
