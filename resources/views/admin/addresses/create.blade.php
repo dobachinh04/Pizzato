@@ -98,7 +98,6 @@
                                                 placeholder="Nhập loại địa chỉ (ví dụ: nhà riêng, công ty)" required>
                                         </div>
 
-                                        <!-- Button Quay Lại và Thêm Mới -->
                                         <a href="{{ route('admin.addresses.index') }}" class="btn btn-secondary">Quay
                                             Lại</a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>
