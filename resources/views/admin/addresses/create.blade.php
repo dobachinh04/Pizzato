@@ -62,28 +62,25 @@
                                             </select>
                                         </div>
 
-                                        <!-- Tên Đệm -->
+                                       
                                         <div class="form-group">
                                             <label for="first_name">Tên Đệm</label>
                                             <input type="text" name="first_name" class="form-control input-default"
                                                 placeholder="Nhập tên đệm" required>
                                         </div>
-
-                                        <!-- Tên -->
+   
                                         <div class="form-group">
                                             <label for="last_name">Tên</label>
                                             <input type="text" name="last_name" class="form-control input-default"
                                                 placeholder="Nhập tên" required>
                                         </div>
 
-                                        <!-- Email -->
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" name="email" class="form-control input-default"
                                                 placeholder="Nhập email" required>
                                         </div>
 
-                                        <!-- Số Điện Thoại -->
                                         <div class="form-group">
                                             <label for="phone">Số Điện Thoại</label>
                                             <input type="text" name="phone" class="form-control input-default"
@@ -94,14 +91,13 @@
                                             <label for="address">Địa chỉ</label>
                                             <input type="text" name="address" class="form-control" placeholder="Địa chỉ">
                                         </div>
-                                        <!-- Loại -->
+                                       
                                         <div class="form-group">
                                             <label for="type">Loại</label>
                                             <input type="text" name="type" class="form-control input-default"
                                                 placeholder="Nhập loại địa chỉ (ví dụ: nhà riêng, công ty)" required>
                                         </div>
 
-                                        <!-- Button Quay Lại và Thêm Mới -->
                                         <a href="{{ route('admin.addresses.index') }}" class="btn btn-secondary">Quay
                                             Lại</a>
                                         <button type="submit" class="btn btn-success">Thêm Mới</button>
