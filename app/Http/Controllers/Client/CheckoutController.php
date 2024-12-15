@@ -155,7 +155,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function updateAddresses(Request $request)
+    public function updateAddresses(Request $request, String $id)
     {
         $request->validate([
             'address_id' => 'required|exists:addresses,id',
@@ -174,7 +174,7 @@ class CheckoutController extends Controller
             'address.required' => 'Vui lòng nhập thêm thông tin địa chi',
         ]);
 
-        $address = Address::find($request->address_id);
+        $address = Address::find($id);
         $address->update([
             'email' => $request->email,
             'first_name' => $request->first_name,
@@ -189,13 +189,13 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function deleteAddress(Request $request)
+    public function deleteAddress(Request $request, String $id)
     {
         $request->validate([
             'address_id' => 'required|exists:addresses,id',
         ]);
 
-        $address = Address::find($request->address_id);
+        $address = Address::find($id);
         $address->delete();
 
         return response()->json([
