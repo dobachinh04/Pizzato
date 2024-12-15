@@ -62,14 +62,14 @@
                                             </select>
                                         </div>
 
-                                        <!-- Tên Đệm -->
+                                       
                                         <div class="form-group">
                                             <label for="first_name">Tên Đệm</label>
                                             <input type="text" name="first_name" class="form-control input-default"
                                                 placeholder="Nhập tên đệm" required>
                                         </div>
 
-                                        <!-- Tên -->
+                                        
                                         <div class="form-group">
                                             <label for="last_name">Tên</label>
                                             <input type="text" name="last_name" class="form-control input-default"
