@@ -68,22 +68,19 @@
                                             <input type="text" name="first_name" class="form-control input-default"
                                                 placeholder="Nhập tên đệm" required>
                                         </div>
-
-                                        
+   
                                         <div class="form-group">
                                             <label for="last_name">Tên</label>
                                             <input type="text" name="last_name" class="form-control input-default"
                                                 placeholder="Nhập tên" required>
                                         </div>
 
-                                        <!-- Email -->
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" name="email" class="form-control input-default"
                                                 placeholder="Nhập email" required>
                                         </div>
 
-                                        <!-- Số Điện Thoại -->
                                         <div class="form-group">
                                             <label for="phone">Số Điện Thoại</label>
                                             <input type="text" name="phone" class="form-control input-default"
@@ -94,7 +91,7 @@
                                             <label for="address">Địa chỉ</label>
                                             <input type="text" name="address" class="form-control" placeholder="Địa chỉ">
                                         </div>
-                                        <!-- Loại -->
+                                       
                                         <div class="form-group">
                                             <label for="type">Loại</label>
                                             <input type="text" name="type" class="form-control input-default"
