@@ -140,7 +140,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
         Route::put('/{order}/cancel',                   [OrderController::class, 'cancel'])->name('cancel');
-
     });
 
     Route::prefix('shipping')->name('shipping.')->group(function () {
@@ -177,11 +176,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/send-message',                    [ChatController::class, 'sendMessage'])->name('send-message');
     });
 
-        Route::resource('coupons', AdminCouponController::class);
+    Route::resource('coupons', AdminCouponController::class);
 
-        Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
-        Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
+    Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
+    Route::get('/source',                                [DashboardController::class, 'source'])->name('source');
 
     // Admin - products Categories:
     Route::prefix('categories')->name('categories.')->group(function () {
@@ -193,8 +192,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
     });
 
-     // Admin - refund
-     Route::prefix('refunds')->name('refunds.')->group(function () {
+    // Admin - refund
+    Route::prefix('refunds')->name('refunds.')->group(function () {
         Route::get('/',                   [RefundController::class, 'index'])->name('index');
         Route::get('/create',             [RefundController::class, 'create'])->name('create');
         Route::post('/',                  [RefundController::class, 'store'])->name('store');
@@ -205,17 +204,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{refund}/update-status',            [RefundController::class, 'updateStatus'])->name('update_status');
     });
 
-     /** Product Reviews Routes */
-     Route::prefix('product-reviews')->name('product-reviews.')->group(function(){
-         Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
-         Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
-         Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
-
-
+    /** Product Reviews Routes */
+    Route::prefix('product-reviews')->name('product-reviews.')->group(function () {
+        Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
+        Route::delete('/{id}',         [AdminProductReviewController::class, 'destroy'])->name('destroy');
+        Route::get('/show/{id}',                      [AdminProductReviewController::class, 'show'])->name('show');
     });
 
     //  Thông báo đơn hàng quá trễ
-     Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
+    Route::post('/notify-order', [DashboardController::class, 'notifyOrder'])->name('notify.order');
 
     //  chat
     Route::prefix('chat')->name('chat.')->group(function () {
@@ -231,14 +228,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // biến thể sản phẩm
     // Route::prefix('products')->name('products.')->group(function () {
-        Route::resource('pizza-edges', PizzaEdgeController::class);
-        Route::resource('pizza-bases', PizzaBaseController::class);
-        Route::resource('product-sizes', ProductSizeController::class);
+    Route::resource('pizza-edges', PizzaEdgeController::class);
+    Route::resource('pizza-bases', PizzaBaseController::class);
+    Route::resource('product-sizes', ProductSizeController::class);
     // });
     // notification header
-     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //het loi
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //het loi
     //  Route::delete('/notifications/delete', [NotificationController::class, 'delete'])->name('notifications.delete');
-     Route::post('/admin/notifications/delete', [NotificationController::class, 'deleteNotifications'])->name('notifications.delete');
+    Route::post('/admin/notifications/delete', [NotificationController::class, 'deleteNotifications'])->name('notifications.delete');
 
-     Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
+    Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
 });
