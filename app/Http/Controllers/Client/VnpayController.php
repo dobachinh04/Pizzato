@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Models\Order;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
@@ -133,44 +135,78 @@ class VnpayController extends Controller
                     return redirect()->away('http://127.0.0.1:3000/payment-successed');
                 }
 
-                $order = Order::create([
-                    'invoice_id' => $orderData['invoice_id'],
-                    'user_id' => $orderData['user_id'],
-                    'address' => $orderData['address'],
-                    'sub_total' => $orderData['sub_total'],
-                    'grand_total' => $orderData['grand_total'],
-                    'product_qty' => $orderData['product_qty'],
-                    'address_id' => $orderData['address_id'],
-                    'order_status' => 'pending',
-                    'payment_status' => 'paid',
-                    'payment_method' => $orderData['payment_method'],
-                    'delivery_charge' => $orderData['delivery_charge'],
-                    'coupon_info' => $orderData['coupon_info'],
-                ]);
-
-                foreach ($orderData['cartItems'] as $item) {
-                    OrderItem::create([
-                        'order_id' => $order->id,
-                        'product_id' => $item['id'],
-                        'unit_price' => $item['price'],
-                        'qty' => $item['quantity'],
-                        'size' => $item['size'],
+                DB::transaction(function () use ($request, $orderData) {
+                    $order = Order::create([
+                        'invoice_id' => $orderData['invoice_id'],
+                        'user_id' => $orderData['user_id'],
+                        'address' => $orderData['address'],
+                        'sub_total' => $orderData['sub_total'],
+                        'grand_total' => $orderData['grand_total'],
+                        'product_qty' => $orderData['product_qty'],
+                        'address_id' => $orderData['address_id'],
+                        'discount' => $orderData['discount'],
+                        'order_status' => 'pending',
+                        'payment_status' => 'paid',
+                        'payment_method' => $orderData['payment_method'],
+                        'delivery_charge' => $orderData['delivery_charge'],
+                        'coupon_info' => $orderData['coupon_info'],
                     ]);
 
-                    $product = Product::find($item['id']);
+                    if (!empty($request->coupon_info)) {
+                        // Giải mã JSON nếu coupon_info lưu dưới dạng JSON
+                        $couponData = json_decode($request->coupon_info, true);
+                        $couponCode = $couponData['code'] ?? null;
 
-                    if ($product) {
-                        // Cập nhật lại số lượng tồn kho
-                        $product->qty -= $item['quantity'];
-                        $product->save();
+                        if ($couponCode) {
+                            $coupon = Coupon::where('code', $couponCode)
+                                ->where('expire_date', '>=', now())
+                                ->where('qty', '>', 0)
+                                ->lockForUpdate()
+                                ->first();
+
+                            if ($coupon) {
+                                $coupon->decrement('qty', 1);
+                            } else {
+                                throw new \Exception("Mã giảm giá không hợp lệ hoặc đã hết hạn.");
+                            }
+                        } else {
+                            throw new \Exception("Mã giảm giá không hợp lệ.");
+                        }
                     }
-                }
+
+                    foreach ($orderData['cartItems'] as $item) {
+                        $product = Product::where('id', $item['id'])
+                            ->where('qty', '>=', $item['quantity'])
+                            ->lockForUpdate()
+                            ->first();
+
+                        if ($product) {
+                            $updated = Product::where('id', $item['id'])
+                                ->decrement('qty', $item['quantity']);
+
+                            if (!$updated) {
+                                throw new \Exception("Sản phẩm {$product->name} đã hết hàng hoặc không đủ số lượng.");
+                            }
+
+                            OrderItem::create([
+                                'order_id' => $order->id,
+                                'product_id' => $item['id'],
+                                'unit_price' => $item['price'],
+                                'qty' => $item['quantity'],
+                                'product_size' => $item['size'],
+                                'pizza_edge' => $item['border'],
+                                'pizza_base' => $item['crust'],
+                            ]);
+                        } else {
+                            throw new \Exception("Sản phẩm {$item['name']} đã hết hàng.");
+                        }
+                    }
+                });
 
                 Cache::forget("orderData:$invoiceId");
 
                 return redirect()->away('http://127.0.0.1:3000/payment-successed');
             } finally {
-                // Giải phóng Lock
                 $lock->release();
             }
         } else {

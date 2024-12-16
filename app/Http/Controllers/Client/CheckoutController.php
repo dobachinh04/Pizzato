@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Client;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Coupon;
 use App\Models\Address;
 use App\Models\Product;
 use App\Models\OrderItem;
 use App\Models\DeliveryArea;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
@@ -57,53 +59,72 @@ class CheckoutController extends Controller
             ], 400);
         }
 
-        $order = Order::create([
-            'invoice_id' => $invoiceId,
-            'user_id' => $request->user_id,
-            'address' => $request->address,
-            'sub_total' => $request->sub_total,
-            'grand_total' => $request->grand_total,
-            'product_qty' => $request->product_qty,
-            'address_id' => $request->address_id,
-            'payment_method' => 'cash',
-            'delivery_charge' => $request->delivery_charge,
-            'coupon_info' => $request->coupon_info,
-            'discount' => $request->discount,
-            'order_status' => 'pending',
-        ]);
+        DB::transaction(function () use ($request, $invoiceId) {
+            $order = Order::create([
+                'invoice_id' => $invoiceId,
+                'user_id' => $request->user_id,
+                'address' => $request->address,
+                'sub_total' => $request->sub_total,
+                'grand_total' => $request->grand_total,
+                'product_qty' => $request->product_qty,
+                'address_id' => $request->address_id,
+                'payment_method' => 'cash',
+                'delivery_charge' => $request->delivery_charge,
+                'coupon_info' => $request->coupon_info,
+                'discount' => $request->discount,
+                'order_status' => 'pending',
+            ]);
 
-        foreach ($request->cartItems as $item) {
-            // Lock the product record for update
-            $product = Product::where('id', $item['id'])
-                              ->where('qty', '>=', $item['quantity'])
-                              ->lockForUpdate()  // Lock the record to avoid race condition
-                              ->first();
+            if (!empty($request->coupon_info)) {
+                // Giải mã JSON nếu coupon_info lưu dưới dạng JSON
+                $couponData = json_decode($request->coupon_info, true);
+                $couponCode = $couponData ?? null;
 
-            if ($product) {
-                $updated = Product::where('id', $item['id'])
-                    ->decrement('qty', $item['quantity']);
+                if ($couponCode) {
+                    $coupon = Coupon::where('code', $couponCode)
+                        ->where('expire_date', '>=', now())
+                        ->where('qty', '>', 0)
+                        ->lockForUpdate()
+                        ->first();
 
-                if (!$updated) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => "Sản phẩm {$product->name} đã hết hàng hoặc không đủ số lượng.",
-                    ], 400);
+                    if ($coupon) {
+                        $coupon->decrement('qty', 1);
+                    } else {
+                        throw new \Exception("Mã giảm giá không hợp lệ hoặc đã hết hạn.");
+                    }
+                } else {
+                    throw new \Exception("Mã giảm giá không hợp lệ.");
                 }
-
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item['id'],
-                    'unit_price' => $item['price'],
-                    'qty' => $item['quantity'],
-                    'size' => $item['size'],
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => "Sản phẩm {$item['name']} đã hết hàng.",
-                ], 400);
             }
-        }
+
+            foreach ($request->cartItems as $item) {
+                $product = Product::where('id', $item['id'])
+                    ->where('qty', '>=', $item['quantity'])
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($product) {
+                    $updated = Product::where('id', $item['id'])
+                        ->decrement('qty', $item['quantity']);
+
+                    if (!$updated) {
+                        throw new \Exception("Sản phẩm {$product->name} đã hết hàng hoặc không đủ số lượng.");
+                    }
+
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item['id'],
+                        'unit_price' => $item['price'],
+                        'qty' => $item['quantity'],
+                        'product_size' => $item['size'],
+                        'pizza_edge' => $item['border'],
+                        'pizza_base' => $item['crust'],
+                    ]);
+                } else {
+                    throw new \Exception("Sản phẩm {$item['name']} đã hết hàng.");
+                }
+            }
+        });
 
         return response()->json([
             'success' => true,

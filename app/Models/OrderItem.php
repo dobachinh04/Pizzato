@@ -15,7 +15,8 @@ class OrderItem extends Model
         'unit_price',
         'qty',
         'product_size',
-        'product_option',
+        'pizza_base',
+        'pizza_edge',
     ];
     public function product()
     {
