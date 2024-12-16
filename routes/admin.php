@@ -142,6 +142,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/{order}/cancel',                   [OrderController::class, 'cancel'])->name('cancel');
     });
 
+    // Admin - refund
+    Route::prefix('refunds')->name('refunds.')->group(function () {
+        Route::get('/',                   [RefundController::class, 'index'])->name('index');
+        Route::get('/create',             [RefundController::class, 'create'])->name('create');
+        Route::post('/',                  [RefundController::class, 'store'])->name('store');
+        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
+        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
+        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
+        
+        Route::put('/{refund}/update-status',               [RefundController::class, 'updateStatus'])->name('update_status');
+    });
+
     Route::prefix('shipping')->name('shipping.')->group(function () {
         Route::get('/',                                 [UserController::class, 'index'])->name('index');
         Route::get('/create',                           [UserController::class, 'create'])->name('create');
@@ -190,18 +202,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/{category}/edit',                  [CategoryController::class, 'edit'])->name('edit');
         Route::put('/{category}',                       [CategoryController::class, 'update'])->name('update');
         Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
-    });
-
-    // Admin - refund
-    Route::prefix('refunds')->name('refunds.')->group(function () {
-        Route::get('/',                   [RefundController::class, 'index'])->name('index');
-        Route::get('/create',             [RefundController::class, 'create'])->name('create');
-        Route::post('/',                  [RefundController::class, 'store'])->name('store');
-        Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
-        Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
-        Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
-
-        Route::put('/{refund}/update-status',            [RefundController::class, 'updateStatus'])->name('update_status');
     });
 
     /** Product Reviews Routes */

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RefundRequest;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class RefundController extends Controller
 {
@@ -30,15 +32,15 @@ class RefundController extends Controller
         // Lấy yêu cầu hoàn tiền
         $refund = RefundRequest::findOrFail($id);
 
-        // Cập nhật trạng thái của yêu cầu hoàn tiền
+        // Cập nhật trạng thái và ghi chú
         $refund->update([
             'status' => $validated['status'],
             'admin_note' => $validated['admin_note'],
         ]);
 
-        // Nếu trạng thái là Approved, cập nhật trạng thái của đơn hàng
+        // Nếu trạng thái là Approved, cập nhật trạng thái đơn hàng
         if ($validated['status'] === 'Approved') {
-            $order = $refund->order;
+            $order = Order::where('invoice_id', $refund->invoice_id)->first();
             if ($order) {
                 $order->update([
                     'order_status' => 'Refunded', // Cập nhật trạng thái đơn hàng
@@ -47,6 +49,33 @@ class RefundController extends Controller
         }
 
         return redirect()->route('admin.refunds.index')->with('success', 'Yêu cầu hoàn tiền đã được cập nhật.');
+    }
+
+    public function show($invoiceId)
+    {
+        // Truy vấn Order theo invoice_id và eager load các quan hệ
+        $order = Order::with(['users', 'addresses.delivery_area', 'items.product', 'items.productArchive'])
+            ->where('invoice_id', $invoiceId)
+            ->firstOrFail();
+
+        foreach ($order->items as $item) {
+            // Kiểm tra nếu không có sản phẩm trong bảng products
+            if (!$item->product) {
+                // Lấy thông tin từ bảng product_archives
+                $archivedProduct = $item->productArchive;
+                if ($archivedProduct) {
+                    $item->product = (object) [
+                        'name' => $archivedProduct->name,
+                        'thumb_image' => $archivedProduct->thumb_image,
+                    ];
+                    // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
+                    //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
+                    // }
+                }
+            }
+        }
+
+        return view('admin.orders.show', compact('order'));
     }
 
     public function updateStatus(Request $request, $id)
@@ -63,17 +92,21 @@ class RefundController extends Controller
         return redirect()->back()->with('success', 'Yêu cầu hoàn tiền đã được cập nhật thành công.');
     }
 
-    public function cancel(RefundRequest $order)
+    public function cancel($id)
     {
         try {
             DB::beginTransaction();
 
+            // Lấy thông tin đơn hàng từ `invoice_id` của yêu cầu hoàn tiền
+            $refund = RefundRequest::findOrFail($id);
+            $order = Order::where('invoice_id', $refund->invoice_id)->firstOrFail();
+
             // Kiểm tra trạng thái đơn hàng
-            if (in_array($order->order_status, ['processing'])) {
+            if ($order->order_status === 'processing') {
                 return redirect()->back()->with('error', 'Đơn hàng "Đang Được Giao", không thể hủy.');
-            } elseif (in_array($order->order_status, ['completed'])) {
+            } elseif ($order->order_status === 'completed') {
                 return redirect()->back()->with('error', 'Đơn hàng "Đã Hoàn Thành", không thể hủy.');
-            } elseif (in_array($order->order_status, ['canceled'])) {
+            } elseif ($order->order_status === 'canceled') {
                 return redirect()->back()->with('error', 'Đơn hàng "Đã Bị Hủy", không thể hủy lần nữa.');
             }
 
@@ -82,11 +115,6 @@ class RefundController extends Controller
                 'order_status' => 'canceled',
                 'updated_at' => now(),
             ]);
-
-            // Cập nhật lại stock nếu cần (tuỳ vào nghiệp vụ)
-            // foreach ($order->orderItems as $item) {
-            //     $item->product->increment('stock', $item->quantity);
-            // }
 
             DB::commit();
             return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công.');
