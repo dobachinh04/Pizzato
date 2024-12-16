@@ -82,38 +82,5 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBlogRequest $request, Blog $blog)
-    {
 
-        $blog->fill($request->except('image'));
-
-        if ($request->hasFile('image')) {
-            // Xóa hình ảnh cũ nếu có
-            if ($blog->image) {
-                Storage::disk('public')->delete($blog->image);
-            }
-            $blog->image = $request->file('image')->store('uploads/blog', 'public');
-        }
-
-        $blog->save();
-
-        return redirect()
-            ->route('admin.blogs.index')
-            ->with('success', 'Cập nhật thành công');
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Blog $blog)
-    {
-        if ($blog->image) {
-            Storage::disk('public')->delete($blog->image);
-        }
-
-        $blog->delete();
-
-        return redirect()->route('admin.blogs.index')->with('success', 'Xóa thành công');
-    }
 }
