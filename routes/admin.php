@@ -45,12 +45,12 @@ Route::view('403-page', 'admin.auth.403')->name('403Page');
 
 Route::middleware('auth.role:admin')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
-      
+
     // Admin - Dashboard:
 
     Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
-      
+
     // Admin - Blogs:
     Route::prefix('blogs')->name('blogs.')->group(function () {
         Route::get('/',                                 [BlogController::class, 'index'])->name('index');
@@ -96,7 +96,7 @@ Route::middleware('auth.role:admin')->group(function () {
         Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
         Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
         Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
-        
+
         Route::put('/{refund}/update-status',               [RefundController::class, 'updateStatus'])->name('update_status');
     });
 
@@ -287,3 +287,5 @@ Route::middleware('auth.role:admin')->group(function () {
 
     Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
 });
+});
+
