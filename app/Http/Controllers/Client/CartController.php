@@ -31,7 +31,7 @@ class CartController extends Controller
 
             return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng', 'cart' => $cartItem], 201);
         } catch (\Exception $e) {
-            // Log lỗi và trả về thông tin lỗi
+
             \Log::error($e->getMessage());
             return response()->json(['error' => 'Có lỗi gì đó', 'details' => $e->getMessage()], 500);
         }
@@ -65,7 +65,7 @@ class CartController extends Controller
         return response()->json(['message' => 'Sản phẩm đã được xoá khỏi giỏ hàng']);
     }
 
-    // Xóa toàn bộ giỏ hàng
+    // Xóa all cart
     public function clearCart()
     {
         Cart::truncate(); // Xóa toàn bộ bản ghi

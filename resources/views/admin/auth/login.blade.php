@@ -24,7 +24,7 @@
     <link href="/velzon/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 
     <style>
-        .ml-10{
+        .ml-10 {
             margin-right: 15px;
         }
     </style>
@@ -53,7 +53,10 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="{{ route('admin.login') }}" class="d-inline-block auth-logo">
-                                    <img src="/velzon/assets/images/logo-light.png" alt="" height="20">
+                                    {{-- <img src="/velzon/assets/images/logo-light.png" alt="" height="20"> --}}
+                                    <img src="/velzon/images/logo-pizzato-3.png" alt="" height="300"
+                                        width="300">
+
                                 </a>
                             </div>
                             <p class="mt-3 fs-15 fw-medium"></p>
@@ -76,8 +79,9 @@
                                         @csrf
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
-                                                placeholder="Nhập email" value="{{ old('email') }}">
+                                            <input type="text"
+                                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                                id="email" placeholder="Nhập email" value="{{ old('email') }}">
 
                                             @error('email')
                                                 <span class="text-danger error-message"> * {{ $message }}</span>
@@ -91,7 +95,8 @@
                                             </div> --}}
                                             <label class="form-label" for="password-input">Mật khẩu</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password" class="form-control pe-5 password-input @error('password') is-invalid @enderror"
+                                                <input type="password"
+                                                    class="form-control pe-5 password-input @error('password') is-invalid @enderror"
                                                     placeholder="Nhập mật khẩu" id="password-input" name="password">
                                                 <button
                                                     class="ml-10 btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
@@ -119,10 +124,11 @@
                         </div>
                         <!-- end card -->
 
-                        <div class="mt-4 text-center">
-                            <p class="mb-0">Không có tài khoản? chuyển khoản 100k admin để được cấp tài khoản<a href="https://www.facebook.com/profile.php?id=100040455924045"
+                        {{-- <div class="mt-4 text-center">
+                            <p class="mb-0">Không có tài khoản? chuyển khoản 100k admin để được cấp tài khoản<a
+                                    href="https://www.facebook.com/profile.php?id=100040455924045"
                                     class="fw-semibold text-primary text-decoration-underline"> Liên hệ </a> </p>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -141,7 +147,7 @@
                             <p class="mb-0 text-muted">&copy;
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i>
+                                </script> Pizzato. Design by <i class="mdi mdi-heart text-danger"></i>
                                 by Linh Chu
                             </p>
                         </div>
@@ -153,14 +159,14 @@
     </div>
     <!-- end auth-page-wrapper -->
     <script>
-        <script>
-    if (window.history && window.history.pushState) {
-        window.history.pushState(null, null, window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, null, window.location.href);
-        };
-    }
-</script>
+        < script >
+            if (window.history && window.history.pushState) {
+                window.history.pushState(null, null, window.location.href);
+                window.onpopstate = function() {
+                    window.history.pushState(null, null, window.location.href);
+                };
+            }
+    </script>
     </script>
     <!-- JAVASCRIPT -->
     <script src="/velzon/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>

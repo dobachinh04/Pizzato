@@ -284,20 +284,20 @@ class DashboardController extends Controller
     //         ->where('invoice_id', $request->input('invoice_id'))
     //         ->first();
 
-        // if ($order) {
-        //     // Lấy chi tiết sản phẩm trong đơn hàng
-        //     $orderItems = DB::table('order_items')
-        //         ->where('order_id', $order->id)
-        //         ->join('products', 'order_items.product_id', '=', 'products.id')
-        //         ->select(
-        //             'products.name as product_name',
-        //             'products.sku',
-        //             'order_items.qty',
-        //             'order_items.unit_price',
-        //             'order_items.product_size',
-        //             'order_items.product_option'
-        //         )
-        //         ->get();
+    // if ($order) {
+    //     // Lấy chi tiết sản phẩm trong đơn hàng
+    //     $orderItems = DB::table('order_items')
+    //         ->where('order_id', $order->id)
+    //         ->join('products', 'order_items.product_id', '=', 'products.id')
+    //         ->select(
+    //             'products.name as product_name',
+    //             'products.sku',
+    //             'order_items.qty',
+    //             'order_items.unit_price',
+    //             'order_items.product_size',
+    //             'order_items.product_option'
+    //         )
+    //         ->get();
 
     //         // Gộp thông tin vào dữ liệu email
     //         $emailData = [
@@ -391,11 +391,11 @@ class DashboardController extends Controller
         // if (!$user) {
         //     return false;
         // }
- // Lấy thông tin email từ addresses
+        // Lấy thông tin email từ addresses
         $address = DB::table('addresses')->where('id', $order->address_id)->first();
-    if (!$address) {
-        return false;
-    }
+        if (!$address) {
+            return false;
+        }
         // Dữ liệu truyền vào email
         $emailData = [
             'invoice_id' => $order->invoice_id,
