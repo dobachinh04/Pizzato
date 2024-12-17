@@ -142,6 +142,18 @@ Route::middleware('auth.role:admin')->group(function () {
             Route::put('/{order}/cancel',                   [OrderController::class, 'cancel'])->name('cancel');
         });
 
+        // Admin - refund
+        Route::prefix('refunds')->name('refunds.')->group(function () {
+            Route::get('/',                   [RefundController::class, 'index'])->name('index');
+            Route::get('/create',             [RefundController::class, 'create'])->name('create');
+            Route::post('/',                  [RefundController::class, 'store'])->name('store');
+            Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
+            Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
+            Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
+
+            Route::put('/{refund}/update-status',               [RefundController::class, 'updateStatus'])->name('update_status');
+        });
+
         Route::prefix('shipping')->name('shipping.')->group(function () {
             Route::get('/',                                 [UserController::class, 'index'])->name('index');
             Route::get('/create',                           [UserController::class, 'create'])->name('create');
@@ -192,18 +204,6 @@ Route::middleware('auth.role:admin')->group(function () {
             Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
         });
 
-        // Admin - refund
-        Route::prefix('refunds')->name('refunds.')->group(function () {
-            Route::get('/',                   [RefundController::class, 'index'])->name('index');
-            Route::get('/create',             [RefundController::class, 'create'])->name('create');
-            Route::post('/',                  [RefundController::class, 'store'])->name('store');
-            Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
-            Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
-            Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
-
-            Route::put('/{refund}/update-status',            [RefundController::class, 'updateStatus'])->name('update_status');
-        });
-
         /** Product Reviews Routes */
         Route::prefix('product-reviews')->name('product-reviews.')->group(function () {
             Route::get('/',                               [AdminProductReviewController::class, 'index'])->name('index');
@@ -231,6 +231,7 @@ Route::middleware('auth.role:admin')->group(function () {
         Route::resource('pizza-edges', PizzaEdgeController::class);
         Route::resource('pizza-bases', PizzaBaseController::class);
         Route::resource('product-sizes', ProductSizeController::class);
+        // });
         // notification header
         Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications'); //het loi
         //  Route::delete('/notifications/delete', [NotificationController::class, 'delete'])->name('notifications.delete');

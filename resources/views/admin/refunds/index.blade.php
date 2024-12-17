@@ -13,11 +13,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
     @if (Session::has('success'))
-        <div class="alert alert-success solid alert-dismissible fade show">
-            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i
-                        class="mdi mdi-close"></i></span>
-            </button>
-            <strong>Hoàn Tất!</strong> {{ Session::get('success') }}.
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
+    @if (Session::has('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+            {{ Session::get('error') }}
         </div>
     @endif
 
@@ -55,16 +60,6 @@
                                                 <td>{{ $refund->email }}</td>
                                                 <td>{{ number_format($refund->refund_amount, 0, ',', '.') }}₫</td>
                                                 <td>
-                                                    @if ($refund->status === 'pending')
-                                                        <span class="badge bg-warning">Chờ Xác Nhận</span>
-                                                    @elseif($refund->status === 'approved')
-                                                        <span class="badge bg-success">Đã Duyệt</span>
-                                                    @elseif($refund->status === 'rejected')
-                                                        <span class="badge bg-danger">Bị Từ Chối</span>
-                                                    @else
-                                                        <span class="badge bg-secondary">{{ $refund->status }}</span>
-                                                    @endif
-
                                                     @if ($refund->refund_status == 'rejected')
                                                         {{-- Nếu trạng thái là "rejected", chỉ hiển thị badge --}}
                                                         <span class="badge bg-danger text-dark">Bị Từ Chối</span>
@@ -77,47 +72,55 @@
 
                                                             {{-- Dropdown cho các trạng thái khác --}}
                                                             <select class="form-select form-select-sm refund-status-select"
-                                                                name="refund_status" {{-- Disable select nếu trạng thái là "approved" hoặc "rejected" --}}
+                                                                name="refund_status"
                                                                 {{ in_array($refund->refund_status, ['approved', 'rejected']) ? 'disabled' : '' }}
                                                                 onchange="this.className='form-select form-select-sm refund-status-select ' + this.options[this.selectedIndex].className; this.form.submit();">
-
-                                                                {{-- Hiển thị option "pending" nếu trạng thái không phải "processing" hoặc "approved" --}}
-                                                                @if ($refund->refund_status != 'approved')
-                                                                    <option value="pending" class="bg-warning text-dark"
-                                                                        {{ $refund->refund_status == 'pending' ? 'selected' : '' }}>
-                                                                        Chờ Xác Nhận
-                                                                    </option>
-                                                                @endif
-
-                                                                {{-- Hiển thị option "approved" nếu trạng thái không phải "rejected" --}}
-                                                                @if ($refund->refund_status != 'rejected')
-                                                                    <option value="approved" class="bg-success text-white"
-                                                                        {{ $refund->refund_status == 'approved' ? 'selected' : '' }}>
-                                                                        Đã Duyệt
-                                                                    </option>
-                                                                @endif
+                                                                <option value="pending" class="bg-warning text-dark"
+                                                                    {{ $refund->refund_status == 'pending' ? 'selected' : '' }}>
+                                                                    Chờ Xác Nhận
+                                                                </option>
+                                                                <option value="approved" class="bg-success text-white"
+                                                                    {{ $refund->refund_status == 'approved' ? 'selected' : '' }}>
+                                                                    Đã Duyệt
+                                                                </option>
+                                                                <option value="rejected" class="bg-danger text-white"
+                                                                    {{ $refund->refund_status == 'rejected' ? 'selected' : '' }}>
+                                                                    Bị Từ Chối
+                                                                </option>
                                                             </select>
                                                         </form>
                                                     @endif
                                                 </td>
 
                                                 <td>
-                                                    <a class="btn btn-info"
-                                                        href="{{ route('admin.refunds.edit', $refund->id) }}">Chi Tiết</a>
-                                                    <form action="{{ route('admin.refunds.destroy', $refund->id) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button
-                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa yêu cầu hoàn tiền này?');"
-                                                            type="submit" class="btn btn-danger">Hủy Yêu Cầu</button>
-                                                    </form>
+                                                    <a href="{{ route('admin.refunds.edit', $refund->id) }}"
+                                                        class="btn btn-info"><i class="fa fa-info-circle"></i></a>
+
+                                                    @if (!in_array($refund->order_status, ['canceled', 'processing', 'completed']))
+                                                        {{-- <a href="{{ route('admin.orders.edit', $refund) }}"
+                                                            class="btn btn-warning"><i class="fa fa-edit"></i></a> --}}
+
+                                                        {{-- Form hủy đơn hàng --}}
+                                                        <form action="{{ route('admin.orders.cancel', $refund) }}"
+                                                            method="POST" style="display: inline;"
+                                                            onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?');">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-danger"> <i
+                                                                    class="fas fa-times-circle"></i></button>
+                                                        </form>
+                                                    @elseif (in_array($refund->order_status, ['canceled']))
+                                                        <button class="btn btn-warning notify-btn"
+                                                            data-id="{{ $refund->id }}"
+                                                            data-invoice="{{ $refund->id }}">
+                                                            <i class="fa-regular fa-bell fa-lg"></i>
+                                                        </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div><!--end col-->
@@ -125,6 +128,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.refund-status-select').forEach(function(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            select.className = 'form-select form-select-sm refund-status-select ' + selectedOption.className;
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

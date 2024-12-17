@@ -88,7 +88,6 @@ Thêm Mới Địa Chỉ Giao Hàng - Pizzato
                                     <br>
                                 </div>
 
-                                <!-- Button Quay Lại và Thêm Mới -->
                                 <a href="{{ route('admin.delivery_areas.index') }}" class="btn btn-secondary">Quay Lại</a>
                                 <button type="submit" class="btn btn-success">Thêm Mới</button>
                             </form>
