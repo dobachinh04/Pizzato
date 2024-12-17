@@ -16,7 +16,7 @@ class LoginController extends Controller
             // Nếu đã đăng nhập, chuyển hướng về trang dashboard hoặc trang chủ
             return redirect()->route('admin.dashboard')->with('message', 'Bạn đã đăng nhập');
         }
-       
+
         return response()
             ->view('admin.auth.login')
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
@@ -41,7 +41,7 @@ class LoginController extends Controller
             if (Auth::user()->role->name !== 'admin') {
                 Auth::logout(); // Đăng xuất người dùng
                 // ko quyền
-                return redirect()->route('403Page')->with('error', 'Bạn không có quyền truy cập trang này');
+                return back()->with('error', 'Bạn không có quyền truy cập trang này');
                 }
                 // có quyền
             return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công');
