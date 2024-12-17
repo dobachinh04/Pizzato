@@ -80,27 +80,25 @@ class OrderController extends Controller
             ->where('invoice_id', $invoiceId)
             ->firstOrFail();
 
-            foreach ($order->items as $item) {
-                // Kiểm tra nếu không có sản phẩm trong bảng products
-                if (!$item->product) {
-                    // Lấy thông tin từ bảng product_archives
-                    $archivedProduct = $item->productArchive;
-                    if ($archivedProduct) {
-                        $item->product = (object)[
-                            'name' => $archivedProduct->name,
-                            'thumb_image' => $archivedProduct->thumb_image,
-                        ];
-                        // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
-                        //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
-                        // }
-                    }
+        foreach ($order->items as $item) {
+            // Kiểm tra nếu không có sản phẩm trong bảng products
+            if (!$item->product) {
+                // Lấy thông tin từ bảng product_archives
+                $archivedProduct = $item->productArchive;
+                if ($archivedProduct) {
+                    $item->product = (object) [
+                        'name' => $archivedProduct->name,
+                        'thumb_image' => $archivedProduct->thumb_image,
+                    ];
+                    // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
+                    //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
+                    // }
                 }
             }
+        }
 
         return view('admin.orders.show', compact('order'));
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
