@@ -35,20 +35,23 @@ class AuthenticationController extends Controller
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ],
-        [
-            'name.required' => 'Vui lòng nhập tên tài khoản!',
-            'email.required' => 'Vui lòng nhập email!',
-            'email.email' => 'Email không hợp lệ!',
-            'email.unique' => 'Email nây đã tồn tại!',
-            'password.required' => 'Vui lòng nhập mật khẩu!',
-            'password.min' => 'Mật khẻu tối thiểu 6 ký tự!',
-            'password.confirmed' => 'Mật khẩu xác nhận không khóp!',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ],
+            [
+                'name.required' => 'Vui lòng nhập tên tài khoản!',
+                'email.required' => 'Vui lòng nhập email!',
+                'email.email' => 'Email không hợp lệ!',
+                'email.unique' => 'Email nây đã tồn tại!',
+                'password.required' => 'Vui lòng nhập mật khẩu!',
+                'password.min' => 'Mật khẻu tối thiểu 6 ký tự!',
+                'password.confirmed' => 'Mật khẩu xác nhận không khóp!',
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json([
@@ -72,39 +75,30 @@ class AuthenticationController extends Controller
         ]);
     }
 
-    public function resetPassword(Request $request)
+    public function updateUser(Request $request, String $id)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        $user = User::find($id);
 
-        $user = User::where('email', $request->email)->first();
-
-        if ($user) {
-            $user->update([
-                'password' => Hash::make($request->password),
-                'remember_token' => Str::random(60),
-            ]);
-
-            return redirect()->route('client.login')->with('status', 'Mật khẩu của bạn đã được đặt lại thành công. Vui lòng đăng nhập.');
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $filename = Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/avatars', $filename);
+            $user->avatar = $filename;
         }
 
-        return back()->withErrors(['email' => 'Không tìm thấy người dùng với email này.']);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
+
+        if ($request->has('changePassword') && $request->changePassword) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        if (isset($filename)) {
+            $data['avatar'] = $filename;
+        }
+
+        $user->update($data);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
