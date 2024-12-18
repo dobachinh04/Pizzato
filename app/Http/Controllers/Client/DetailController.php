@@ -68,7 +68,7 @@ class DetailController extends Controller
 
         // Kiểm tra nếu sản phẩm không tồn tại
         if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
+            return response()->json(['message' => 'Sản phẩm không tồn tại'], 404);
         }
 
         $product->view += 1;

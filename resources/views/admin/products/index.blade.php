@@ -102,19 +102,44 @@
                                                     ? '<span class="badge bg-primary">Active</span>'
                                                     : '<span class="badge bg-danger">Inactive</span>' !!}</td>
                                                 <td>
-                                                    <a class="btn btn-info"
-                                                        href="{{ route('admin.products.show', $item->id) }}"><i class="fa fa-info-circle"></i></a>
+                                                    @if (!$item->trashed())
+                                                        <a class="btn btn-info"
+                                                            href="{{ route('admin.products.show', $item->id) }}"><i
+                                                                class="fa fa-info-circle"></i></a>
 
-                                                    <a class="btn btn-warning"
-                                                        href="{{ route('admin.products.edit', $item->id) }}"><i class="fa fa-edit"> </i></a>
+                                                        <a class="btn btn-warning"
+                                                            href="{{ route('admin.products.edit', $item->id) }}"><i
+                                                                class="fa fa-edit"> </i></a>
+                                                    @endif
 
-                                                    <form action="{{ route('admin.products.destroy', $item->id) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button onclick='return confirm("Bạn có chắc là muốn xóa không?")'
-                                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                                    </form>
+                                                    <!--  Xóa mềm -->
+                                                    @if (!$item->trashed())
+                                                        <form action="{{ route('admin.products.destroy', $item->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button
+                                                                onclick='return confirm("Bạn có chắc là muốn xóa không?")'
+                                                                type="submit" class="btn btn-danger"><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    @endif
+
+                                                    <!-- Nút Khôi phục -->
+                                                    @if ($item->trashed())
+                                                    <span class="badge bg-danger">Đã xoá</span>
+
+                                                        <form action="{{ route('admin.products.restore', $item->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button
+                                                                onclick='return confirm("Bạn có chắc là muốn khôi phục không?")'
+                                                                type="submit" class="btn btn-success">
+                                                                <i class="fa fa-recycle"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
