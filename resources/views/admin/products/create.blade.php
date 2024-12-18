@@ -673,14 +673,23 @@
             // Lấy các phần tử cần thiết
             const categorySelect = document.getElementById("category_id");
             const variantFields = document.getElementById("variantFields");
+            const selects = document.querySelectorAll(".toggle-target select");
 
             // Hàm kiểm tra và cập nhật hiển thị của variantFields
             function toggleVariantFields() {
                 const selectedCategory = categorySelect.options[categorySelect.selectedIndex].text.trim();
+
                 if (selectedCategory === "Pizza") {
                     variantFields.style.display = "flex"; // Giữ bố cục ngang
                 } else {
                     variantFields.style.display = "none"; // Ẩn
+
+                    // Hủy chọn tất cả các lựa chọn trong các select
+                    selects.forEach(select => {
+                        Array.from(select.options).forEach(option => {
+                            option.selected = false;
+                        });
+                    });
                 }
             }
 
@@ -689,16 +698,42 @@
 
             // Gọi hàm khi tải trang lần đầu
             toggleVariantFields();
+
+            // Luôn chọn Size có id là 1 - Size nhỏ khi mà chọn các size khác
+            document.getElementById('sizeSelect').addEventListener('click', function() {
+                const sizeSelect = document.getElementById('sizeSelect');
+                const optionToSelect = Array.from(sizeSelect.options).find(option => option.value == 1);
+
+                if (optionToSelect && !optionToSelect.selected) {
+                    optionToSelect.selected = true;
+                }
+            });
         });
 
-        // Luôn chọn Size có id là 1 - Size nhỏ khi mà chọn các size khác
-        document.getElementById('sizeSelect').addEventListener('click', function() {
-            const sizeSelect = document.getElementById('sizeSelect');
-            const optionToSelect = Array.from(sizeSelect.options).find(option => option.value == 1);
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy tất cả các toggle inputs và liên kết với select
+            const toggles = document.querySelectorAll(".toggle-input");
 
-            if (optionToSelect && !optionToSelect.selected) {
-                optionToSelect.selected = true;
-            }
+            toggles.forEach(toggle => {
+                toggle.addEventListener("change", function() {
+                    // Tìm các phần tử liên quan
+                    const toggleTarget = this.closest(".col-4").querySelector(".toggle-target");
+                    const multiSelect = toggleTarget.querySelector("select");
+
+                    if (this.checked) {
+                        toggleTarget.style.display = "block";
+                    } else {
+                        toggleTarget.style.display = "none";
+
+                        // Hủy chọn tất cả các lựa chọn
+                        if (multiSelect) {
+                            Array.from(multiSelect.options).forEach(option => {
+                                option.selected = false;
+                            });
+                        }
+                    }
+                });
+            });
         });
     </script>
 

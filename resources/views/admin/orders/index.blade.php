@@ -91,7 +91,7 @@
                                                 </div>
                                             </th>
                                             <th>ID Hóa Đơn</th>
-                                            <th>Khách Hàng</th>
+                                            <th>Tên Tài Khoản</th>
                                             <th>Địa Chỉ</th>
                                             <th>Phí Vận Chuyển</th>
                                             <th>Tổng Tiền</th>
