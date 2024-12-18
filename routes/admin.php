@@ -21,7 +21,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PizzaBaseController;
@@ -45,10 +45,70 @@ Route::view('403-page', 'admin.auth.403')->name('403Page');
 
 Route::middleware('auth.role:admin')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
+
         // Admin - Dashboard:
 
         Route::get('/dashboard',                            [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/chart',                                [DashboardController::class, 'chart'])->name('chart');
+
+        // Admin - Blogs:
+        Route::prefix('blogs')->name('blogs.')->group(function () {
+            Route::get('/',                                 [BlogController::class, 'index'])->name('index');
+            Route::get('/create',                           [BlogController::class, 'create'])->name('create');
+            Route::post('/',                                [BlogController::class, 'store'])->name('store');
+            Route::get('/edit/{blog}',                      [BlogController::class, 'edit'])->name('edit');
+            Route::put('/{blog}',                           [BlogController::class, 'update'])->name('update');
+            Route::get('/show/{blog}',                      [BlogController::class, 'show'])->name('show');
+            Route::delete('/{blog}',                        [BlogController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('sliders')->name('sliders.')->group(function () {
+            Route::get('/',                                 [SliderController::class, 'index'])->name('index');
+            Route::get('/create',                           [SliderController::class, 'create'])->name('create');
+            Route::post('/',                                [SliderController::class, 'store'])->name('store');
+            Route::get('/edit/{slider}',                      [SliderController::class, 'edit'])->name('edit');
+            Route::put('/{slider}',                           [SliderController::class, 'update'])->name('update');
+            Route::get('/show/{slider}',                      [SliderController::class, 'show'])->name('show');
+            Route::delete('/{slider}',                        [SliderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('orders')->name('orders.')->group(function () {
+            Route::get('/',                                 [OrderController::class, 'index'])->name('index');
+            Route::get('/create',                           [OrderController::class, 'create'])->name('create');
+            Route::post('/',                                [OrderController::class, 'store'])->name('store');
+            Route::get('/{order}/edit',                     [OrderController::class, 'edit'])->name('edit');
+            Route::put('/{order}',                          [OrderController::class, 'update'])->name('update');
+            // Route::get('/show/{order}',                     [OrderController::class, 'show'])->name('show');
+            Route::get('show/{invoiceId}', [OrderController::class, 'show'])->name('show');
+
+            Route::delete('/{order}',                       [OrderController::class, 'destroy'])->name('destroy');
+            Route::get('/deleted',                          [OrderController::class, 'deleted'])->name('deleted');
+
+            Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
+            Route::put('/{order}/cancel',                   [OrderController::class, 'cancel'])->name('cancel');
+        });
+
+        // Admin - refund
+        Route::prefix('refunds')->name('refunds.')->group(function () {
+            Route::get('/',                   [RefundController::class, 'index'])->name('index');
+            Route::get('/create',             [RefundController::class, 'create'])->name('create');
+            Route::post('/',                  [RefundController::class, 'store'])->name('store');
+            Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
+            Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
+            Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
+
+            Route::put('/{refund}/update-status',               [RefundController::class, 'updateStatus'])->name('update_status');
+        });
+
+        Route::prefix('shipping')->name('shipping.')->group(function () {
+            Route::get('/',                                 [UserController::class, 'index'])->name('index');
+            Route::get('/create',                           [UserController::class, 'create'])->name('create');
+            Route::post('/',                                [UserController::class, 'store'])->name('store');
+            Route::get('/{shipping}/edit',                      [UserController::class, 'edit'])->name('edit');
+            Route::put('/{shipping}',                           [UserController::class, 'update'])->name('update');
+            Route::get('/show/{shipping}',                      [UserController::class, 'show'])->name('show');
+            Route::delete('/{shipping}',                        [UserController::class, 'destroy'])->name('destroy');
+        });
 
         // Admin - products Categories:
         Route::prefix('categories')->name('categories.')->group(function () {
@@ -60,7 +120,9 @@ Route::middleware('auth.role:admin')->group(function () {
             Route::delete('/{category}',                    [CategoryController::class, 'destroy'])->name('destroy');
         });
 
-        Route::resource('products', AdminProductController::class);
+        Route::resource('products', ProductController::class);
+        Route::delete('products/{id}/force-delete', [ProductController::class, 'forceDelete'])->name('products.force-delete');
+        Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
         //Admin - Addresses:
         Route::prefix('addresses')->name('addresses.')->group(function () {
@@ -140,18 +202,6 @@ Route::middleware('auth.role:admin')->group(function () {
 
             Route::put('/{order}/update-status',            [OrderController::class, 'updateStatus'])->name('update_status');
             Route::put('/{order}/cancel',                   [OrderController::class, 'cancel'])->name('cancel');
-        });
-
-        // Admin - refund
-        Route::prefix('refunds')->name('refunds.')->group(function () {
-            Route::get('/',                   [RefundController::class, 'index'])->name('index');
-            Route::get('/create',             [RefundController::class, 'create'])->name('create');
-            Route::post('/',                  [RefundController::class, 'store'])->name('store');
-            Route::get('/{refund}/edit',      [RefundController::class, 'edit'])->name('edit');
-            Route::put('/{refund}',           [RefundController::class, 'update'])->name('update');
-            Route::delete('/{refund}',        [RefundController::class, 'destroy'])->name('destroy');
-
-            Route::put('/{refund}/update-status',               [RefundController::class, 'updateStatus'])->name('update_status');
         });
 
         Route::prefix('shipping')->name('shipping.')->group(function () {

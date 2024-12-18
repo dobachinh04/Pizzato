@@ -31,6 +31,7 @@ return new class extends Migration
             $table->boolean('show_at_home')->default(0);
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes(); // Thêm cột xóa mềm
         });
     }
 
