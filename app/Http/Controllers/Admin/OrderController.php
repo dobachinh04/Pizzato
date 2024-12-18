@@ -62,43 +62,49 @@ class OrderController extends Controller
     //     return view('admin.orders.show', compact('order'));
     // }
 
-    //     public function show($invoiceId)
-    // {
-    //     // Truy vấn Order theo invoice_id và eager load các quan hệ
-    //     $order = Order::with(['users', 'addresses.delivery_area', 'items.product'])
-    //                 ->where('invoice_id', $invoiceId)
-    //                 ->firstOrFail();
-
-    //     return view('admin.orders.show', compact('order'));
-    // }
-
-
     public function show($invoiceId)
     {
         // Truy vấn Order theo invoice_id và eager load các quan hệ
-        $order = Order::with(['users', 'addresses.delivery_area', 'items.product', 'items.productArchive'])
-            ->where('invoice_id', $invoiceId)
-            ->firstOrFail();
-
-        foreach ($order->items as $item) {
-            // Kiểm tra nếu không có sản phẩm trong bảng products
-            if (!$item->product) {
-                // Lấy thông tin từ bảng product_archives
-                $archivedProduct = $item->productArchive;
-                if ($archivedProduct) {
-                    $item->product = (object) [
-                        'name' => $archivedProduct->name,
-                        'thumb_image' => $archivedProduct->thumb_image,
-                    ];
-                    // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
-                    //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
-                    // }
-                }
+        $order = Order::with([
+            'users',
+            'addresses.delivery_area',
+            'items.product' => function ($query) {
+                $query->withTrashed();
             }
-        }
+        ])->where('invoice_id', $invoiceId)
+          ->firstOrFail();
 
         return view('admin.orders.show', compact('order'));
     }
+
+
+
+    // public function show($invoiceId)
+    // {
+    //     // Truy vấn Order theo invoice_id và eager load các quan hệ
+    //     $order = Order::with(['users', 'addresses.delivery_area', 'items.product', 'items.productArchive'])
+    //         ->where('invoice_id', $invoiceId)
+    //         ->firstOrFail();
+
+    //     foreach ($order->items as $item) {
+    //         // nếu không có sản phẩm trong bảng products
+    //         if (!$item->product) {
+    //             // Lấy thông tin từ bảng product_archives
+    //             $archivedProduct = $item->productArchive;
+    //             if ($archivedProduct) {
+    //                 $item->product = (object) [
+    //                     'name' => $archivedProduct->name,
+    //                     'thumb_image' => $archivedProduct->thumb_image,
+    //                 ];
+    //                 // if ($item->product->thumb_image && !Storage::exists($item->product->thumb_image)) {
+    //                 //     $item->product->thumb_image = 'deleted_images/' . basename($item->product->thumb_image);
+    //                 // }
+    //             }
+    //         }
+    //     }
+
+    //     return view('admin.orders.show', compact('order'));
+    // }
 
     /**
      * Show the form for editing the specified resource.

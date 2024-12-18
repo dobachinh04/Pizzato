@@ -26,9 +26,26 @@ class ProductController extends Controller
     const PATH_UPLOAD = 'products';
     const PATH_DELETED = 'deleted_images';
     const CATEGORY_NULL = 'Chưa Phân Loại';
+    // public function index()
+    // {
+    //     $data = Product::query()->with('category')->latest('id')->get();
+
+    //     // Kiểm tra và thay thế name khi category là null
+    //     $data = $data->map(function ($product) {
+    //         if (is_null($product->category)) {
+    //             $product->category = (object) ['name' => self::CATEGORY_NULL];
+    //         }
+    //         return $product;
+    //     });
+    //     return view("admin.products.index", compact('data'));
+    // }
     public function index()
     {
-        $data = Product::query()->with('category')->latest('id')->get();
+        $data = Product::query()
+            ->with(['category'])
+            ->withTrashed()
+            ->latest('id')
+            ->get();
 
         // Kiểm tra và thay thế name khi category là null
         $data = $data->map(function ($product) {
@@ -37,8 +54,10 @@ class ProductController extends Controller
             }
             return $product;
         });
+
         return view("admin.products.index", compact('data'));
     }
+
 
 
     public function create()
@@ -294,7 +313,7 @@ class ProductController extends Controller
             DB::transaction(function () use ($product) {
                 // Lưu thông tin sản phẩm vào bảng product_archives
                 DB::table('product_archives')->insert([
-                    'product_id'=>$product->id,
+                    'product_id' => $product->id,
                     'name' => $product->name,
                     'slug' => $product->slug,
                     'thumb_image' => $product->thumb_image,
@@ -308,34 +327,26 @@ class ProductController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+
                 // Làm trống sizes - Xóa sizes
-                $product->productSizes()->sync([]);
-                $product->pizzaEdges()->sync([]);
-                $product->pizzaBases()->sync([]);
+                // $product->productSizes()->sync([]);
+                // $product->pizzaEdges()->sync([]);
+                // $product->pizzaBases()->sync([]);
 
-                $product->productGalleries()->delete();
+                // $product->productGalleries()->delete();
 
-                // Xóa product
+                // Xóa mềm sản phẩm
                 $product->delete();
             });
 
-            // Xóa ảnh trong product
-            // if ($product->thumb_image && Storage::exists($product->thumb_image)) {
-            //     // Xóa file thumb_image từ storage
-            //     Storage::delete($product->thumb_image);
-            // }
+            // Di chuyển ảnh thumb_image vào thư mục deleted
             if ($product->thumb_image && Storage::exists($product->thumb_image)) {
                 $filename = basename($product->thumb_image);
-                $newPath = self::PATH_DELETED . '/'  . $filename;
+                $newPath = self::PATH_DELETED . '/' . $filename;
                 Storage::move($product->thumb_image, $newPath);
             }
 
-            if ($product->galleries && Storage::exists($product->galleries)) {
-                Storage::delete($product->galleries);
-            }
-
-
-            return redirect()->route('admin.products.index')->with('success', 'Xóa thành công');
+            return redirect()->route('admin.products.index')->with('success', 'Xóa và lưu trữ thành công');
         } catch (Exception $exception) {
             return back()->withErrors($exception->getMessage())->withInput();
         }
@@ -358,5 +369,35 @@ class ProductController extends Controller
         // slug->exist ?  thêm số vào sau :  no
         $count = Product::where('slug', $slug)->count();
         return $count > 0 ? "{$slug}-{$count}" : $slug;
+    }
+
+    public function restore($id)
+    {
+        try {
+
+            DB::transaction(function () use ($id) {
+                // Khôi phục sản phẩm trong bảng products
+                $product = Product::withTrashed()->findOrFail($id);
+                $product->restore();
+
+
+                DB::table('product_archives')->where('product_id', $id)->delete();
+            });
+
+            return redirect()->route('admin.products.index')->with('success', 'Khôi phục sản phẩm thành công và đã xóa bản ghi lưu trữ.');
+        } catch (\Exception $exception) {
+            return back()->withErrors('Có lỗi xảy ra: ' . $exception->getMessage());
+        }
+    }
+
+    public function forceDelete($id)
+    {
+        $product = Product::withTrashed()->findOrFail($id);
+
+        DB::transaction(function () use ($product) {
+            $product->forceDelete();
+        });
+
+        return redirect()->route('admin.products.index')->with('success', 'Xóa cứng thành công');
     }
 }
