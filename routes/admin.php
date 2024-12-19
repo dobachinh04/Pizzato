@@ -287,3 +287,4 @@ Route::middleware('auth.role:admin')->group(function () {
 
     Route::post('/admin/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
 });
+});
