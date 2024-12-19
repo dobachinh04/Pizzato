@@ -138,7 +138,6 @@
             <p class="total-info"><strong>Tổng thanh toán:</strong>
                 {{ number_format($emailData['grand_total'], 0, ',', '.') }}₫</p>
         </div>
-        <p><a href="http://localhost:3000/profile/notification">Bấm vào để xem chi tiết</a></p>
     </div>
 </body>
 
