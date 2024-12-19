@@ -75,18 +75,18 @@ class OrderController extends Controller
         ])->where('invoice_id', $invoiceId)->firstOrFail();
 
         // Xử lý các sản phẩm bị xóa hoặc không có trong bảng products
-        foreach ($order->items as $item) {
-            if (!$item->product) {
-                // Lấy thông tin từ bảng product_archives
-                $archivedProduct = $item->productArchive;
-                if ($archivedProduct) {
-                    $item->product = (object) [
-                        'name' => $archivedProduct->name,
-                        'thumb_image' => $archivedProduct->thumb_image,
-                    ];
-                }
-            }
-        }
+        // foreach ($order->items as $item) {
+        //     if (!$item->product) {
+        //         // Lấy thông tin từ bảng product_archives
+        //         $archivedProduct = $item->productArchive;
+        //         if ($archivedProduct) {
+        //             $item->product = (object) [
+        //                 'name' => $archivedProduct->name,
+        //                 'thumb_image' => $archivedProduct->thumb_image,
+        //             ];
+        //         }
+        //     }
+        // }
 
         // Lấy thông tin địa chỉ từ quan hệ 'addresses'
         $address = $order->addresses; // Đây là một Address duy nhất liên quan tới Order
