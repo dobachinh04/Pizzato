@@ -340,11 +340,11 @@ class ProductController extends Controller
             });
 
             // Di chuyển ảnh thumb_image vào thư mục deleted
-            if ($product->thumb_image && Storage::exists($product->thumb_image)) {
-                $filename = basename($product->thumb_image);
-                $newPath = self::PATH_DELETED . '/' . $filename;
-                Storage::move($product->thumb_image, $newPath);
-            }
+            // if ($product->thumb_image && Storage::exists($product->thumb_image)) {
+            //     $filename = basename($product->thumb_image);
+            //     $newPath = self::PATH_DELETED . '/' . $filename;
+            //     Storage::move($product->thumb_image, $newPath);
+            // }
 
             return redirect()->route('admin.products.index')->with('success', 'Xóa và lưu trữ thành công');
         } catch (Exception $exception) {

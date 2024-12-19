@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -11,8 +12,7 @@ class IndexController extends Controller
 {
     public function getHotProduct()
     {
-        $hotPizza = DB::table('products')
-            ->orderByDesc('view')
+        $hotPizza = Product::orderByDesc('view')
             ->limit(1)
             ->get();
 
@@ -43,24 +43,18 @@ class IndexController extends Controller
 
     public function getMenuPizza()
     {
-        $categories = DB::table('categories')
-            ->limit(6)
-            ->get();
+        $categories = Category::with(['products' => function ($query) {
+            $query->orderByDesc('id')->limit(6);
+        }])
+        ->limit(6)
+        ->get();
 
-        $result = [];
-
-        foreach ($categories as $category) {
-            $pizzas = DB::table('products')
-                ->where('category_id', $category->id)
-                ->orderByDesc('id')
-                ->limit(6)
-                ->get();
-
-            $result[] = [
+        $result = $categories->map(function ($category) {
+            return [
                 'category' => $category,
-                'pizzas' => $pizzas
+                'pizzas' => $category->products,
             ];
-        }
+        });
 
         return response()->json([
             'success' => true,

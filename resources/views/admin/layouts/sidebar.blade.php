@@ -241,7 +241,7 @@
                         </ul>
                     </div>
                 </li> --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarRefunds" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRefunds">
                         <i class="fa-solid fa-comments-dollar"></i> <span data-key="t-landing">Hoàn Tiền</span>
@@ -255,7 +255,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('admin.chat.index')}}">
@@ -287,7 +287,7 @@
                     </div>
                 </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebardelivery_areas" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebardelivery_areas">
                         <i class="fa-solid fa-map-location"></i> <span data-key="t-landing">Địa Chỉ Giao Hàng</span>
@@ -303,7 +303,7 @@
                                     data-key="t-nft-landing">Thêm Địa chỉ giao hàng</a>
                             </li>
                     </div>
-                </li>
+                </li> --}}
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.chat.index') }}">
