@@ -36,6 +36,7 @@ use App\Http\Controllers\Client\ChatController;
 // AuthController
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
+Route::put('/update-user/{id}', [AuthenticationController::class, 'updateUser']);
 
 // IndexController
 Route::get('/menu', [IndexController::class, 'getMenuPizza']);

@@ -25,9 +25,15 @@ class OrderController extends Controller
     public function detailOrder($orderId)
     {
         $order = Order::where('id', $orderId)
-            ->with(['users', 'addresses', 'items.product', 'items.productReviews'])
+            ->with([
+                'users',
+                'addresses',
+                'items.product' => function ($query) {
+                    $query->withTrashed();
+                },
+                'items.productReviews'
+            ])
             ->first();
-
         return response()->json([
             'success' => true,
             'order' => $order

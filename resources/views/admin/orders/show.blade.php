@@ -25,9 +25,9 @@
                                             <th>Tên Sản Phẩm</th>
                                             <th>Giá Tiền</th>
                                             <th>Số Lượng</th>
-                                            <th>Sỉzes Bánh</th>
+                                            {{-- <th>Sỉzes Bánh</th>
                                             <th>Viền Bánh</th>
-                                            <th>Đế Bánh</th>
+                                            <th>Đế Bánh</th> --}}
                                             <th>Tổng</th>
                                         </tr>
                                     </thead>
@@ -60,9 +60,9 @@
                                                 <td>{{ $item->product->name ?? 'Không Có' }}</td>
                                                 <td>{{ number_format($item->unit_price, 0, ',', '.') }} VNĐ</td>
                                                 <td>{{ $item->qty }}</td>
+                                                {{-- <td>Chưa có</td>
                                                 <td>Chưa có</td>
-                                                <td>Chưa có</td>
-                                                <td>Chưa có</td>
+                                                <td>Chưa có</td> --}}
                                                 <td>{{ number_format($item->unit_price * $item->qty, 0, ',', '.') }} VNĐ
                                                 </td>
                                             </tr>
@@ -76,7 +76,7 @@
                                     @if ($order->items->isNotEmpty())
                                         <tfoot>
                                             <tr>
-                                                <th colspan="8" class="text-end">Tổng Tiền Tạm Tính:</th>
+                                                <th colspan="5" class="text-end">Tổng Tiền Tạm Tính:</th>
                                                 <th>{{ number_format($totalPrice, 0, ',', '.') }} VNĐ</th>
                                             </tr>
                                         </tfoot>
@@ -165,11 +165,12 @@
                                         </tr>
                                         <tr>
                                             <th>Khách Hàng</th>
-                                            <td>{{ $order->users->name ?? 'Trống' }}</td>
+                                            <td>{{ $addressDetails['first_name'] }}
+                                                {{ $addressDetails['last_name'] ?? 'Trống' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Email</th>
-                                            <td>{{ $order->users->email ?? 'Trống' }}</td>
+                                            <td>{{ $addressDetails['email'] ?? 'Trống' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Số Điện Thoại</th>

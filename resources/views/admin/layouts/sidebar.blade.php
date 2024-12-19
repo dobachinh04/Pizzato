@@ -222,7 +222,7 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarSliders" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarSliders">
                         <i class="fa-solid fa-images"></i> <span data-key="t-landing">Sliders</span>
@@ -240,7 +240,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarRefunds" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRefunds">
@@ -331,14 +331,14 @@
                     </div>
                 </li> --}}
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Điều Hướng</span></li>
+                {{-- <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Điều Hướng</span></li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="http://localhost:3000" role="button" aria-expanded="false"
                         aria-controls="sidebarHome">
                         <i class="fa-solid fa-door-open"></i> <span data-key="t-dashboards">Quay Về Trang Chủ</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
 

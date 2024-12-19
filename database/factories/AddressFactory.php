@@ -80,7 +80,9 @@ class AddressFactory extends Factory
             'delivery_area_id' => $deliveryArea->id,
             'first_name' => $user->name,                       // Lấy tên từ bảng `users`
             'last_name' => '',                                 // Bỏ qua họ, chỉ giữ tên
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => $this->faker->boolean(50)               // 50% xác suất
+                ? 'dobachinh04@gmail.com'
+                : $this->faker->unique()->safeEmail,
             'phone' => $this->faker->numerify('09########'),   // Số điện thoại Việt Nam
             'address' => $address,                            // Địa chỉ chi tiết
         ];
