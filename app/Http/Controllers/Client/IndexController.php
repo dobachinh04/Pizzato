@@ -43,18 +43,24 @@ class IndexController extends Controller
 
     public function getMenuPizza()
     {
-        $categories = Category::with(['products' => function ($query) {
-            $query->orderByDesc('id')->limit(6);
-        }])
-        ->limit(6)
-        ->get();
+        $categories = DB::table('categories')
+            ->limit(6)
+            ->get();
 
-        $result = $categories->map(function ($category) {
-            return [
+        $result = [];
+
+        foreach ($categories as $category) {
+            $pizzas = Product::where('category_id', $category->id)
+                ->whereNull('deleted_at')
+                ->orderByDesc('id')
+                ->limit(6)
+                ->get();
+
+            $result[] = [
                 'category' => $category,
-                'pizzas' => $category->products,
+                'pizzas' => $pizzas
             ];
-        });
+        }
 
         return response()->json([
             'success' => true,
