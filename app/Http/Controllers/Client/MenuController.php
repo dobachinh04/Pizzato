@@ -26,8 +26,7 @@ class MenuController extends Controller
         $search = $request->input('searchTerm', null);
         $sort = $request->input('sort', '1');
 
-        $query = DB::table('products')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
+        $query = Product::with('category')
             ->leftJoin('product_reviews', 'products.id', '=', 'product_reviews.product_id')
             ->select(
                 'products.*',
