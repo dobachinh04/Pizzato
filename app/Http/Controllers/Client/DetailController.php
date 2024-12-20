@@ -11,13 +11,14 @@ class DetailController extends Controller
 {
     public function getDetailPizza(string $id)
     {
-        $pizza = Product::with([
-            'category',
-            'productGalleries',
-            'productSizes',
-            'pizzaEdges',
-            'pizzaBases',
-        ])->findOrFail($id);
+        $pizza = Product::withTrashed()
+            ->with([
+                'category',
+                'productGalleries',
+                'productSizes',
+                'pizzaEdges',
+                'pizzaBases',
+            ])->findOrFail($id);
 
         // Chuẩn bị dữ liệu trả về
         return response()->json([
@@ -38,6 +39,7 @@ class DetailController extends Controller
                 'sku' => $pizza->sku,
                 'short_description' => $pizza->short_description,
                 'long_description' => $pizza->long_description,
+                'deleted_at' => $pizza->deleted_at,
                 'status' => $pizza->status,
                 'sizes' => $pizza->productSizes->map(fn($size) => [
                     'id' => $size->id,
@@ -82,7 +84,8 @@ class DetailController extends Controller
 
     public function getSimilarPizzas(string $id)
     {
-        $pizza = Product::findOrFail($id);
+        $pizza = Product::withTrashed()
+            ->findOrFail($id);
         $similarPizzas = Product::where('category_id', $pizza->category_id)
             ->where('id', '!=', $pizza->id)
             ->limit(4)

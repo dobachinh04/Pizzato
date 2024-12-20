@@ -42,12 +42,15 @@ class StoreCouponRequest extends FormRequest
                 'numeric',
                 'min:0',
                 function ($attribute, $value, $fail) {
-                    // Nếu loại giảm giá là phần trăm thì không được vượt quá 100
                     if (request()->discount_type === 'percent' && $value > 100) {
                         $fail('Giảm giá theo phần trăm không được vượt quá 100%.');
                     }
+                    if (request()->discount_type === 'amount' && $value > 750000) {
+                        $fail('Giảm giá không được vượt quá 750.000 VND.');
+                    }
                 }
             ],
+
             // 'max_discount_amount' => 'nullable|numeric|min:0',
             'max_discount_amount' => [
                 'required_if:discount_type,percent',
