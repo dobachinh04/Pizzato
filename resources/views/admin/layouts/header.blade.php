@@ -372,10 +372,10 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
 
-                                <a class="dropdown-item" href="pages-profile.html"><i
+                                {{-- <a class="dropdown-item" href="pages-profile.html"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                                        class="align-middle">Hồ Sơ</span></a>
-                                <a class="dropdown-item" href="pages-profile.html"><i
+                                        class="align-middle">Hồ Sơ</span></a> --}}
+                                <a class="dropdown-item" href="{{route('admin.logout')}}"><i
                                         class="fa-solid fa-door-open text-muted"></i> <span class="align-middle">Đăng
                                         Xuất</span></a>
                                 {{-- <a class="dropdown-item" href="apps-chat.html"><i

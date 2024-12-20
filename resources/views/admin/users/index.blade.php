@@ -68,7 +68,7 @@
                                                 <td>
                                                     <a href="{{ route('admin.users.show', $user) }}"
                                                         class="btn btn-info"><i class="fa fa-info-circle"></i></a>
-                                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                                    {{-- <a href="{{ route('admin.users.edit', $user) }}"
                                                         class="btn btn-warning"><i class="fa fa-edit"> </i></a>
 
                                                     <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
@@ -78,7 +78,7 @@
                                                         @method('DELETE')
 
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                                    </form>
+                                                    </form> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
